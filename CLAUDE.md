@@ -4,6 +4,8 @@ New website for **Daniela a Martin Kosovi**, a porcelain studio in Prague. It re
 
 The owner of this repo is Sami (architect, iOS developer). He makes the design and content decisions. Ask him whenever a fact, price or decision is missing.
 
+**Talk to Sami in Czech.**
+
 ## The core idea
 
 One studio, two pairs of hands. **Martin Kos throws porcelain on the potter's wheel. Daniela Kosová paints it** (cobalt under the glaze) and also makes her own artwork.
@@ -16,11 +18,12 @@ One studio, two pairs of hands. **Martin Kos throws porcelain on the potter's wh
 
 ## Stack
 
-- **Astro** (current stable, pinned), static output, TypeScript strict.
+- **Astro** (current stable, pinned), static output, TypeScript strict. Node 24 LTS (`.node-version`).
 - Content collections in `src/content/` with zod schemas.
 - `astro:assets` `<Image>` for all imagery. Never ship raw originals.
 - Plain CSS with custom properties. No CSS framework, no UI framework unless a feature truly needs one. The cart is a small vanilla TS island.
-- **Hosting: Cloudflare Pages**, a preview URL per branch. One Pages Function for orders. If Cloudflare now recommends Workers static assets over Pages for Astro, say so and propose the switch before doing it.
+- **Hosting: Cloudflare Pages**, a preview URL per branch. One Pages Function for orders. If Cloudflare now recommends Workers static assets over Pages for Astro, say so and propose the switch before doing it. (It does, as of 2026. Proposed to Sami, not switched. `wrangler.toml` is ready but not connected.)
+- **Previews until Cloudflare is connected: GitHub Pages.** `main` deploys to `https://samiabdulnour.github.io/kosovi.cz/`, every pull request to `.../pr-preview/pr-<n>/` with the link in a PR comment (`.github/workflows/preview-*.yml`, branch `gh-pages`). The build reads `SITE_URL`, `BASE_PATH` and `PUBLIC_PREVIEW_LABEL`, so every internal link goes through `withBase()` from `src/i18n/utils.ts`. Previews get `noindex`.
 - **Email: Resend**, called from the function.
 - **Analytics: Cloudflare Web Analytics** (cookieless). No third-party trackers, so no cookie banner.
 - Spam protection on forms: honeypot field plus Cloudflare Turnstile.
@@ -34,10 +37,13 @@ src/
     pages/             # long-form page copy (cs + en)
   assets/products/     # imported images, one folder per product slug
   components/
+    wire/              # preview-only placeholders and notes, removed before launch
   layouts/
-  pages/               # routes, see "Pages" below
-  config/              # shipping.ts, order.ts, site.ts
-  i18n/                # UI strings cs/en
+  pages/               # routes, see "Pages" below (thin, they render views)
+  views/               # page bodies shared by cs and en routes
+  lib/                 # products helpers, Czech typography (cz, formatCzk)
+  config/              # shipping.ts, order.ts, site.ts, lines.ts, facts.ts
+  i18n/                # UI strings cs/en, route map cs/en
 functions/api/order.ts # order endpoint
 scripts/import-wp.ts   # one-off migration from the old site
 scripts/data/          # raw JSON dump from the old site (committed)
@@ -50,7 +56,7 @@ TODO.md                # open questions and missing facts
 ```
 npm run dev            # Astro dev server
 npm run build          # must pass before every commit
-npx astro check        # type check
+npx astro check        # type check (also npm run check)
 npm run import         # runs scripts/import-wp.ts
 npx wrangler pages dev # local run with the order function
 ```
@@ -113,7 +119,7 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 | Route | Content |
 |---|---|
 | `/` | Both of them, the joint line, signature pieces, how to order |
-| `/kolekce/` and `/kolekce/<line>/` | Collections, joint line first, filter by category |
+| `/kolekce/`, `/kolekce/<line>/`, `/kolekce/<line>/<category>/` | Collections, joint line first, filter by category (plain links to category pages). Line slugs: `modrobily-porcelan`, `martin-kos`, `daniela-kosova` (`src/config/lines.ts`) |
 | `/produkt/<slug>/` | Product page (same URL as the old site) |
 | `/martin-kos/`, `/daniela-kosova/` | Artist pages: bio, how they work, their pieces (old URLs, now real pages instead of shop menus) |
 | `/jak-vznika/` | Throwing, drying, painting with cobalt, firing. Photos or short video per step. This page justifies the price |
