@@ -1,0 +1,15 @@
+---
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import { formatCzk } from '../lib/typography';
+
+interface Props {
+  price: number | null;
+  lang: Lang;
+}
+
+const { price, lang } = Astro.props;
+const t = useTranslations(lang);
+---
+
+<p class="price">{price === null ? t('product.priceOnRequest') : formatCzk(price)}</p>

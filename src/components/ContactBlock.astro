@@ -1,0 +1,34 @@
+---
+import { studio } from '../config/site';
+import { cz, telHref } from '../lib/typography';
+---
+
+<address class="contact">
+  <p>
+    {cz(studio.name)}<br />
+    {studio.address.street}<br />
+    {cz(`${studio.address.postalCode} ${studio.address.city}`)}
+  </p>
+  <p>
+    {
+      studio.phones.map((phone, i) => (
+        <>
+          {i > 0 && <br />}
+          <a href={telHref(phone)}>{cz(phone)}</a>
+        </>
+      ))
+    }
+    <br />
+    <a href={`mailto:${studio.email}`}>{studio.email}</a>
+  </p>
+</address>
+
+<style>
+  .contact {
+    font-style: normal;
+  }
+
+  .contact > * + * {
+    margin-block-start: var(--space-3);
+  }
+</style>

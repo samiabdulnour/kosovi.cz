@@ -1,0 +1,55 @@
+---
+import { Image } from 'astro:assets';
+import MakerCredit from './MakerCredit.astro';
+import Price from './Price.astro';
+import Placeholder from './wire/Placeholder.astro';
+import { productPath } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+import type { Product } from '../lib/products';
+
+interface Props {
+  product: Product;
+  lang: Lang;
+}
+
+const { product, lang } = Astro.props;
+const [cover] = product.images;
+---
+
+<article class="card">
+  <a href={withBase(productPath(product.slug))}>
+    {
+      cover ? (
+        <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 60rem) 25vw, (min-width: 30rem) 50vw, 100vw" />
+      ) : (
+        <Placeholder label="chybí fotografie" ratio="1 / 1" />
+      )
+    }
+    <h3>{product.title}</h3>
+  </a>
+  <MakerCredit makers={product.makers} lang={lang} />
+  <Price price={product.price} lang={lang} />
+</article>
+
+<style>
+  .card > a {
+    display: block;
+    text-decoration: none;
+  }
+
+  .card :global(img) {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  h3 {
+    margin-block-start: var(--space-3);
+    font-size: var(--step-0);
+  }
+
+  .card :global(p) {
+    font-size: var(--step--1);
+  }
+</style>

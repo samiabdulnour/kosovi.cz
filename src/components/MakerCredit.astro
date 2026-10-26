@@ -1,0 +1,21 @@
+---
+// "Točil Martin, malovala Daniela". Shows only the makers the data names.
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+import type { Product } from '../lib/products';
+
+interface Props {
+  makers: Product['makers'];
+  lang: Lang;
+}
+
+const { makers, lang } = Astro.props;
+const t = useTranslations(lang);
+
+let credit = '';
+if (makers.thrownBy && makers.paintedBy) credit = `${t('product.thrownBy')}, ${t('product.paintedBy')}`;
+else if (makers.thrownBy) credit = t('product.thrownBy');
+else if (makers.paintedBy) credit = t('product.paintedByStart');
+---
+
+{credit && <p class="credit">{credit}</p>}

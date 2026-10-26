@@ -1,0 +1,51 @@
+---
+import '../styles/tokens.css';
+import '../styles/base.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import PreviewBar from '../components/PreviewBar.astro';
+import { studio } from '../config/site';
+import type { Alternates } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { langOf, useTranslations, withBase } from '../i18n/utils';
+
+interface Props {
+  /** Page title without the studio name. Leave empty on the homepage. */
+  title?: string;
+  description: string;
+  /** Paths of this page in each language, without the base path. */
+  alternates?: Alternates;
+}
+
+const { title, description, alternates = {} } = Astro.props;
+const lang: Lang = langOf(Astro.currentLocale);
+const t = useTranslations(lang);
+const fullTitle = title ? `${title} · ${studio.name}` : `${studio.name} · ${t('site.tagline')}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const previewLabel = import.meta.env.PUBLIC_PREVIEW_LABEL;
+const hreflangs = Object.entries(alternates) as [Lang, string][];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {hreflangs.map(([hreflang, path]) => <link rel="alternate" hreflang={hreflang} href={new URL(withBase(path), Astro.site)} />)}
+    {previewLabel && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body>
+    <a class="skip-link" href="#obsah">{t('skip.toMain')}</a>
+    {previewLabel && <PreviewBar label={previewLabel} />}
+    <Header lang={lang} alternates={alternates} />
+    <main id="obsah">
+      <slot />
+    </main>
+    <Footer lang={lang} />
+  </body>
+</html>

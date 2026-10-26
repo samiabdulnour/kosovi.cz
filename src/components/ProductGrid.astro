@@ -1,0 +1,55 @@
+---
+// Product grid. Until the import (phase 2) there are no products, so it shows
+// grey stand-in cards to give the layout its real density.
+import ProductCard from './ProductCard.astro';
+import Placeholder from './wire/Placeholder.astro';
+import type { Lang } from '../i18n/ui';
+import type { Product } from '../lib/products';
+
+interface Props {
+  products: Product[];
+  lang: Lang;
+  placeholders?: number;
+  limit?: number;
+}
+
+const { products, lang, placeholders = 8, limit } = Astro.props;
+const shown = limit ? products.slice(0, limit) : products;
+---
+
+<ul class="grid product-grid" role="list">
+  {
+    shown.length > 0
+      ? shown.map((product) => (
+          <li>
+            <ProductCard product={product} lang={lang} />
+          </li>
+        ))
+      : Array.from({ length: placeholders }, (_, i) => (
+          <li class="stand-in" aria-hidden="true">
+            <Placeholder label={`produkt ${i + 1}`} ratio="1 / 1" />
+            <p class="line" />
+            <p class="line line--short" />
+          </li>
+        ))
+  }
+</ul>
+
+<style>
+  .product-grid {
+    --grid-min: 9rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .line {
+    height: 0.7em;
+    margin-block-start: var(--space-3);
+    background: var(--color-wire);
+  }
+
+  .line--short {
+    width: 50%;
+    margin-block-start: var(--space-2);
+  }
+</style>
