@@ -5,13 +5,14 @@ import { lines } from '../config/lines';
 import Base from '../layouts/Base.astro';
 import { alternatesOf, collectionPath, pathOf, routes, type RouteKey } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
+import { getProducts } from '../lib/products';
 import { cz } from '../lib/typography';
 
-type Status = 'struktura' | 'čeká na data' | 'čeká na text' | 'fáze 5';
+type Status = 'struktura' | 'data z importu' | 'čeká na text' | 'fáze 5';
 
 const pages: { key: RouteKey; name: string; status: Status; note?: string }[] = [
   { key: 'home', name: 'Úvod', status: 'struktura', note: 'Oba autoři, společná řada, vybrané kusy, jak objednat' },
-  { key: 'collections', name: 'Kolekce', status: 'čeká na data', note: 'Společná řada první, filtr podle kategorie' },
+  { key: 'collections', name: 'Kolekce', status: 'data z importu', note: 'Společná řada první, filtr podle kategorie' },
   { key: 'martin', name: 'Martin Kos', status: 'struktura', note: 'Stará adresa, nově skutečná stránka autora' },
   { key: 'daniela', name: 'Daniela Kosová', status: 'struktura', note: 'Stará adresa, nově skutečná stránka autorky' },
   { key: 'process', name: 'Jak vzniká', status: 'čeká na text', note: 'Točení, sušení, malba kobaltem, výpal' },
@@ -24,6 +25,19 @@ const pages: { key: RouteKey; name: string; status: Status; note?: string }[] = 
   { key: 'privacy', name: 'Ochrana osobních údajů', status: 'čeká na text' },
   { key: 'returns', name: 'Reklamace a odstoupení', status: 'čeká na text' },
 ];
+
+const products = await getProducts();
+const count = (line: string, category?: string) =>
+  products.filter((p) => p.line === line && (!category || p.category === category)).length;
+
+// A few product pages that show the different cases of the template.
+const examples = [
+  { label: 'více fotografií', product: products.find((p) => p.images.length >= 4) },
+  { label: 'volba varianty', product: products.find((p) => p.options) },
+  { label: 'cena na dotaz', product: products.find((p) => p.price === null) },
+  { label: 'vyprodáno', product: products.find((p) => p.stock === 0) },
+  { label: 'bez fotografie', product: products.find((p) => p.images.length === 0) },
+].filter((e) => e.product);
 
 function enPath(key: RouteKey): string | undefined {
   const route: { cs: string; en?: string } = routes[key];
@@ -67,11 +81,19 @@ function enPath(key: RouteKey): string | undefined {
             })
           }
           <tr>
-            <th scope="row">Produkt (vzor)</th>
-            <td><a href={withBase('/produkt/vzor/')}>/produkt/vzor/</a></td>
+            <th scope="row">Produkty ({products.length})</th>
+            <td>/produkt/&lt;slug&gt;/</td>
             <td>–</td>
-            <td>čeká na data</td>
-            <td>Šablona produktu, skutečné produkty na adresách /produkt/&lt;slug&gt;/ jako dosud</td>
+            <td>data z importu</td>
+            <td>
+              Stejné adresy jako na starém webu. Ukázky:{' '}
+              {examples.map((e, i) => (
+                <>
+                  {i > 0 && ', '}
+                  <a href={withBase(`/produkt/${e.product?.slug}/`)}>{e.label}</a>
+                </>
+              ))}
+            </td>
           </tr>
         </tbody>
       </table>
@@ -82,14 +104,14 @@ function enPath(key: RouteKey): string | undefined {
       {
         lines.map((line) => (
           <li>
-            <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>{' '}
+            <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a> ({count(line.key)}){' '}
             <span class="muted">
               ({collectionPath(line.slug.cs, 'cs')}, anglicky {collectionPath(line.slug.en, 'en')})
             </span>
             <ul>
               {line.categories.map((c) => (
                 <li>
-                  <a href={withBase(collectionPath(line.slug.cs, 'cs', c.slug))}>{c.name}</a>
+                  <a href={withBase(collectionPath(line.slug.cs, 'cs', c.slug))}>{c.name}</a> ({count(line.key, c.slug)})
                 </li>
               ))}
             </ul>

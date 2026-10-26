@@ -6,7 +6,7 @@ import Placeholder from './wire/Placeholder.astro';
 import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
-import type { Product } from '../lib/products';
+import { makersOf, type Product } from '../lib/products';
 
 interface Props {
   product: Product;
@@ -28,7 +28,7 @@ const [cover] = product.images;
     }
     <h3>{product.title}</h3>
   </a>
-  <MakerCredit makers={product.makers} lang={lang} />
+  <MakerCredit makers={makersOf(product)} lang={lang} />
   <Price price={product.price} lang={lang} />
 </article>
 

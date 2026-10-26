@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import ContactBlock from '../components/ContactBlock.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
@@ -102,13 +103,13 @@ const t = (text: string) => typeset(text, lang);
     <h2 class="section-head">{copy.makersTitle}</h2>
     <div class="split">
       <article class="stack">
-        <Placeholder label="Martin u hrnčířského kruhu" ratio="4 / 5" />
+        <Image src={makers.martin.portrait.src} alt={makers.martin.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 60rem) 50vw, 100vw" />
         <h3>{makers.martin.name}</h3>
         <p>{t(makers.martin.role[lang])}</p>
         <p><a href={withBase(pathOf('martin', lang))}>{t(copy.more(makers.martin.name))}</a></p>
       </article>
       <article class="stack">
-        <Placeholder label="Daniela při malování kobaltem" ratio="4 / 5" />
+        <Image src={makers.daniela.portrait.src} alt={makers.daniela.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 60rem) 50vw, 100vw" />
         <h3>{makers.daniela.name}</h3>
         <p>{t(makers.daniela.role[lang])}</p>
         <p><a href={withBase(pathOf('daniela', lang))}>{t(copy.more(makers.daniela.name))}</a></p>
