@@ -1,0 +1,111 @@
+---
+import ProductGrid from '../components/ProductGrid.astro';
+import Note from '../components/wire/Note.astro';
+import { ORDER_MODE } from '../config/order';
+import { shippingMethods } from '../config/shipping';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, pathOf } from '../i18n/routes';
+import { withBase } from '../i18n/utils';
+import { formatCzk } from '../lib/typography';
+
+// Czech consumer law: a binding order button must state the obligation to pay.
+const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku' : 'Odeslat objednávku zavazující k platbě';
+---
+
+<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')}>
+  <div class="section wrap">
+    <h1 class="section-head">Košík</h1>
+
+    <ProductGrid products={[]} lang="cs" placeholders={2} />
+    <Note title="Košík">
+      <p>Obsah košíku drží prohlížeč (localStorage), malý ostrůvek ve vanilla TS ve fázi 5. Ceny se na serveru vždy přepočítají z dat produktů.</p>
+    </Note>
+
+    <form class="order stack" method="post" action="#" aria-describedby="order-note">
+      <fieldset class="stack">
+        <legend>Kontaktní údaje</legend>
+        <label>Jméno a příjmení <input name="name" autocomplete="name" required disabled /></label>
+        <label>E-mail <input name="email" type="email" autocomplete="email" required disabled /></label>
+        <label>Telefon <input name="phone" type="tel" autocomplete="tel" disabled /></label>
+        <label>Adresa <textarea name="address" rows="3" autocomplete="street-address" disabled></textarea></label>
+      </fieldset>
+
+      <fieldset class="stack">
+        <legend>Doprava</legend>
+        {
+          shippingMethods.map((m) => (
+            <label class="inline">
+              <input type="radio" name="shipping" value={m.id} disabled />
+              {m.name}, {m.price === null ? 'cena TODO' : formatCzk(m.price)}
+            </label>
+          ))
+        }
+      </fieldset>
+
+      <label>Poznámka <textarea name="note" rows="3" disabled></textarea></label>
+
+      <label class="inline">
+        <input type="checkbox" name="terms" required disabled />
+        <span>Souhlasím s&nbsp;<a href={withBase(pathOf('terms', 'cs'))}>obchodními podmínkami</a>.</span>
+      </label>
+
+      <div class="hp" aria-hidden="true">
+        <label>Nevyplňujte <input name="website" tabindex="-1" autocomplete="off" /></label>
+      </div>
+
+      <p class="muted">Místo pro Cloudflare Turnstile</p>
+
+      <p><button class="button" type="submit" disabled>{submitLabel}</button></p>
+    </form>
+
+    <Note title="Objednávka (fáze 5)">
+      <ul id="order-note">
+        <li>Žádná online platba. Zákazník pošle objednávku, ateliér ji potvrdí, platí se převodem.</li>
+        <li>Režim objednávky: {ORDER_MODE === 'request' ? 'nezávazná (zástupná volba)' : 'závazná'}. TODO(rozhodnutí): Sami ještě nerozhodl.</li>
+        <li>Doprava a ceny: TODO(fakta). Zásilkovna by měla vlastní widget pro výběr výdejního místa.</li>
+        <li>Ochrana proti spamu: skryté pole (honeypot) a Cloudflare Turnstile.</li>
+      </ul>
+    </Note>
+  </div>
+</Base>
+
+<style>
+  .order {
+    max-width: 36rem;
+    margin-block-start: var(--space-7);
+  }
+
+  fieldset {
+    padding: var(--space-4);
+    border: 1px solid var(--color-line);
+  }
+
+  legend {
+    padding-inline: var(--space-2);
+    font-weight: 600;
+  }
+
+  label {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  label.inline {
+    display: flex;
+    gap: var(--space-2);
+    align-items: baseline;
+  }
+
+  input:not([type='radio'], [type='checkbox']),
+  textarea {
+    width: 100%;
+    padding: var(--space-2);
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius);
+  }
+
+  .hp {
+    position: absolute;
+    left: -9999px;
+  }
+</style>

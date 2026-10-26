@@ -1,0 +1,81 @@
+---
+import Note from '../components/wire/Note.astro';
+import Placeholder from '../components/wire/Placeholder.astro';
+import Base from '../layouts/Base.astro';
+import { alternatesOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { typeset } from '../lib/typography';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = (text: string) => typeset(text, lang);
+
+// Steps from CLAUDE.md. Text uses only the source facts; the rest is TODO.
+const copy = {
+  cs: {
+    title: 'Jak vzniká',
+    description: 'Jak vzniká porcelán v ateliéru Daniely a Martina Kosových: točení na kruhu, sušení, malba kobaltem a výpal.',
+    steps: [
+      { name: 'Točení na kruhu', text: 'Martin Kos točí porcelán na hrnčířském kruhu, což u porcelánu není běžné.' },
+      { name: 'Sušení', text: '' },
+      {
+        name: 'Malba kobaltem',
+        text: 'Dekor se maluje kobaltem pod glazuru nebo do glazury. Vypaluje se spolu s porcelánem, a proto se neotírá.',
+      },
+      { name: 'Výpal', text: 'Porcelán se pálí při teplotě až 1 380 °C.' },
+    ],
+  },
+  en: {
+    title: 'How it’s made',
+    description: 'How porcelain is made in the Kos studio: throwing, drying, painting with cobalt and firing.',
+    steps: [
+      { name: 'Throwing', text: 'Martin Kos throws the porcelain on the potter’s wheel, which is unusual for porcelain.' },
+      { name: 'Drying', text: '' },
+      {
+        name: 'Painting with cobalt',
+        text: 'The decoration is painted with cobalt under the glaze or in the glaze. It is fired together with the porcelain, so it does not wear off.',
+      },
+      { name: 'Firing', text: 'The porcelain is fired at up to 1,380 °C.' },
+    ],
+  },
+}[lang];
+---
+
+<Base title={copy.title} description={copy.description} alternates={alternatesOf('process')}>
+  <div class="section wrap">
+    <h1 class="section-head">{copy.title}</h1>
+    <Note>
+      <p>Tahle stránka vysvětluje cenu: ruční točení porcelánu, malba, výpal. Ke každému kroku fotografie nebo krátké video.</p>
+      <p>TODO(fakta): potvrdit kroky a jejich pořadí (je mezi nimi přežah, glazování?). Délka sušení, počet výpalů.</p>
+    </Note>
+    <ol class="steps" role="list">
+      {
+        copy.steps.map((step, i) => (
+          <li class="split">
+            <Placeholder label={step.name.toLowerCase()} kind="video" ratio="16 / 9" />
+            <div class="stack">
+              <h2>
+                {i + 1}. {step.name}
+              </h2>
+              {step.text ? <p>{t(step.text)}</p> : <Note><p>TODO(fakta): popis kroku.</p></Note>}
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</Base>
+
+<style>
+  .steps {
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps > li + li {
+    margin-block-start: var(--space-7);
+  }
+</style>

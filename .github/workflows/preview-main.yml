@@ -1,0 +1,43 @@
+# Main preview on GitHub Pages: https://<owner>.github.io/<repo>/
+# Production will run on Cloudflare Pages (see CLAUDE.md).
+name: Náhled main
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: preview-main
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      ASTRO_TELEMETRY_DISABLED: 1
+      SITE_URL: https://${{ github.repository_owner }}.github.io
+      BASE_PATH: /${{ github.event.repository.name }}/
+      PUBLIC_PREVIEW_LABEL: main
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .node-version
+          cache: npm
+
+      - run: npm ci
+      - run: npx astro check
+      - run: npm run build
+
+      - uses: JamesIves/github-pages-deploy-action@fa24774553152dd7873cd16ebd8d959b010c5445 # v4.9.0
+        with:
+          folder: dist
+          branch: gh-pages
+          # PR previews live next to the main preview, keep them.
+          clean-exclude: pr-preview/
+          force: false

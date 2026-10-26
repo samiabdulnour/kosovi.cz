@@ -1,0 +1,71 @@
+---
+import ContactBlock from './ContactBlock.astro';
+import { pathOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations, withBase } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+// Legal pages exist only in Czech.
+const legal = [
+  { label: t('footer.terms'), path: pathOf('terms', 'cs') },
+  { label: t('footer.privacy'), path: pathOf('privacy', 'cs') },
+  { label: t('footer.returns'), path: pathOf('returns', 'cs') },
+];
+---
+
+<footer class="site-footer">
+  <div class="wrap cols">
+    <div>
+      <p class="tagline">{t('site.tagline')}</p>
+      <ContactBlock />
+    </div>
+    <nav aria-label={t('footer.legal')}>
+      <ul>
+        {
+          legal.map(({ label, path }) => (
+            <li>
+              <a href={withBase(path)} hreflang={lang === 'cs' ? undefined : 'cs'}>
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: var(--space-8);
+    padding-block: var(--space-7);
+    border-top: 1px solid var(--color-line);
+    font-size: var(--step--1);
+  }
+
+  .cols {
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  }
+
+  .tagline {
+    margin-block-end: var(--space-3);
+    font-weight: 600;
+  }
+
+  ul {
+    padding: 0;
+    list-style: none;
+  }
+
+  li + li {
+    margin-block-start: var(--space-2);
+  }
+</style>

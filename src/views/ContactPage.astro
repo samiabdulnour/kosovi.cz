@@ -1,0 +1,60 @@
+---
+import ContactBlock from '../components/ContactBlock.astro';
+import Note from '../components/wire/Note.astro';
+import Placeholder from '../components/wire/Placeholder.astro';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, pathOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+import { typeset } from '../lib/typography';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+
+const copy = {
+  cs: {
+    title: 'Kontakt',
+    description: 'Kontakt na porcelánový ateliér Daniely a Martina Kosových, Na Vlčovce 6, Praha 6.',
+    visit: 'Návštěva dílny',
+    courses: 'Kurzy keramiky a porcelánu na požádání.',
+    coursesLink: 'Kurzy',
+  },
+  en: {
+    title: 'Contact',
+    description: 'Contact the porcelain studio of Daniela and Martin Kos, Na Vlčovce 6, Prague 6.',
+    visit: 'Visiting the workshop',
+    courses: 'Ceramics and porcelain courses on request.',
+    coursesLink: '',
+  },
+}[lang];
+---
+
+<Base title={copy.title} description={copy.description} alternates={alternatesOf('contact')}>
+  <div class="section wrap">
+    <h1 class="section-head">{copy.title}</h1>
+    <div class="split">
+      <div class="stack">
+        <ContactBlock />
+        <p>
+          {typeset(copy.courses, lang)}
+          {lang === 'cs' && <a href={withBase(pathOf('courses', 'cs'))}>{copy.coursesLink}</a>}
+        </p>
+      </div>
+      <Placeholder label="mapa nebo fotografie vchodu" ratio="4 / 3" />
+    </div>
+    <h2 class="visit">{copy.visit}</h2>
+    <Note>
+      <p>TODO(rozhodnutí): mohou zákazníci navštívit dílnu? Sekce zůstane jen pokud to Sami potvrdí.</p>
+      <p>Mapa: odkaz na Mapy.cz místo vloženého widgetu, aby web neměl cizí sledovací kód.</p>
+    </Note>
+  </div>
+</Base>
+
+<style>
+  .visit {
+    margin-block-start: var(--space-7);
+  }
+</style>

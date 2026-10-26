@@ -1,0 +1,240 @@
+---
+import ContactBlock from '../components/ContactBlock.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import Note from '../components/wire/Note.astro';
+import Placeholder from '../components/wire/Placeholder.astro';
+import { porcelainFacts } from '../config/facts';
+import { getLine, JOINT_LINE_CONFIRMED } from '../config/lines';
+import { ORDER_MODE } from '../config/order';
+import { makers, studio } from '../config/site';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, collectionPath, pathOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+import { getFeaturedProducts } from '../lib/products';
+import { cz, typeset } from '../lib/typography';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const joint = getLine('spolecna');
+const martinLine = getLine('martin');
+const danielaLine = getLine('daniela');
+const featured = await getFeaturedProducts();
+
+const copy = {
+  cs: {
+    description: 'Porcelánový ateliér Daniely a Martina Kosových v Praze. Martin Kos točí porcelán na hrnčířském kruhu, Daniela Kosová ho maluje kobaltem.',
+    lead: 'Porcelánový ateliér v Praze. Martin Kos točí porcelán na hrnčířském kruhu, Daniela Kosová ho maluje kobaltem pod glazuru.',
+    makersTitle: 'Dva autoři',
+    more: (name: string) => `Více o autorovi: ${name}`,
+    jointLabel: 'Společná řada Martina a Daniely',
+    jointLink: 'Prohlédnout modrobílý porcelán',
+    featuredTitle: 'Vybrané kusy',
+    catalogLink: 'Celý katalog',
+    soloTitle: 'Samostatná tvorba',
+    martinSolo: 'Točený porcelán Martina Kose',
+    danielaSolo: 'Výtvarná práce Daniely Kosové',
+    processTitle: 'Jak porcelán vzniká',
+    processSteps: ['Točení na kruhu', 'Sušení', 'Malba kobaltem', 'Výpal'],
+    processLink: 'Celý postup krok za krokem',
+    orderTitle: 'Jak objednat',
+    orderSteps: [
+      'Vyberte kusy a vložte je do košíku.',
+      ORDER_MODE === 'request' ? 'Odešlete nezávaznou objednávku.' : 'Odešlete objednávku.',
+      ORDER_MODE === 'request'
+        ? 'Ateliér potvrdí, že jsou kusy k dispozici, a pošle vám platební údaje.'
+        : 'E-mailem dostanete platební údaje a variabilní symbol.',
+      'Zaplatíte bankovním převodem. Platba kartou na webu není.',
+    ],
+    contactTitle: 'Kontakt',
+    courses: 'Kurzy keramiky a porcelánu na požádání.',
+    coursesLink: 'Kurzy',
+  },
+  en: {
+    description: 'Porcelain studio of Daniela and Martin Kos in Prague. Martin Kos throws porcelain on the potter’s wheel, Daniela Kosová paints it with cobalt.',
+    lead: 'Porcelain studio in Prague. Martin Kos throws porcelain on the potter’s wheel, Daniela Kosová paints it with cobalt under the glaze.',
+    makersTitle: 'Two makers',
+    more: (name: string) => `More about ${name}`,
+    jointLabel: 'Joint line by Martin and Daniela',
+    jointLink: 'See the blue and white porcelain',
+    featuredTitle: 'Selected pieces',
+    catalogLink: 'Full catalogue',
+    soloTitle: 'Individual work',
+    martinSolo: 'Thrown porcelain by Martin Kos',
+    danielaSolo: 'Artwork by Daniela Kosová',
+    processTitle: 'How the porcelain is made',
+    processSteps: ['Throwing', 'Drying', 'Painting with cobalt', 'Firing'],
+    processLink: 'The whole process step by step',
+    orderTitle: 'How to order',
+    orderSteps: [
+      'Choose pieces and add them to the cart.',
+      ORDER_MODE === 'request' ? 'Send a non-binding order.' : 'Send your order.',
+      ORDER_MODE === 'request'
+        ? 'The studio confirms the pieces are available and sends you the payment details.'
+        : 'You receive the payment details by email.',
+      'Pay by bank transfer. There is no card payment on the site.',
+    ],
+    contactTitle: 'Contact',
+    courses: 'Ceramics and porcelain courses on request.',
+    coursesLink: 'Courses',
+  },
+}[lang];
+
+const t = (text: string) => typeset(text, lang);
+---
+
+<Base description={copy.description} alternates={alternatesOf('home')}>
+  <section class="section wrap hero">
+    <div class="stack">
+      <h1>{cz(studio.name)}</h1>
+      <p class="lead">{t(copy.lead)}</p>
+    </div>
+    <Placeholder label="Daniela a Martin v ateliéru (nové focení)" ratio="16 / 9" />
+    <Note title="Úvod">
+      <p>Stránka začíná oběma autory a jejich společnou prací, ne mřížkou produktů. Fotografie z roku 2020, nové focení se plánuje.</p>
+    </Note>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.makersTitle}</h2>
+    <div class="split">
+      <article class="stack">
+        <Placeholder label="Martin u hrnčířského kruhu" ratio="4 / 5" />
+        <h3>{makers.martin.name}</h3>
+        <p>{t(makers.martin.role[lang])}</p>
+        <p><a href={withBase(pathOf('martin', lang))}>{t(copy.more(makers.martin.name))}</a></p>
+      </article>
+      <article class="stack">
+        <Placeholder label="Daniela při malování kobaltem" ratio="4 / 5" />
+        <h3>{makers.daniela.name}</h3>
+        <p>{t(makers.daniela.role[lang])}</p>
+        <p><a href={withBase(pathOf('daniela', lang))}>{t(copy.more(makers.daniela.name))}</a></p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <div class="split">
+      <Placeholder label="sestava modrobílého porcelánu" ratio="3 / 2" />
+      <div class="stack">
+        <h2>{joint.name[lang]}</h2>
+        {joint.makers.length > 1 && <p class="muted">{t(copy.jointLabel)}</p>}
+        <ul class="facts">
+          {porcelainFacts[lang].map((fact) => <li>{t(fact)}</li>)}
+        </ul>
+        <p><a class="button" href={withBase(collectionPath(joint.slug[lang], lang))}>{copy.jointLink}</a></p>
+      </div>
+    </div>
+    {
+      !JOINT_LINE_CONFIRMED && (
+        <Note title="Nepotvrzeno">
+          <p>Je modrobílý porcelán společná práce (Martinovy tvary, Danielina malba)? Dokud to Sami nepotvrdí, mění se to jen v src/config/lines.ts.</p>
+        </Note>
+      )
+    }
+  </section>
+
+  <section class="section wrap">
+    <div class="section-head">
+      <h2>{copy.featuredTitle}</h2>
+    </div>
+    <ProductGrid products={featured} lang={lang} placeholders={12} limit={20} />
+    <p class="after-grid"><a href={withBase(pathOf('collections', lang))}>{copy.catalogLink}</a></p>
+    <Note title="Vybrané kusy">
+      <p>12–20 kusů, které vybere Sami (featured: true v datech produktu). Celý katalog, asi 416 kusů, je až v kolekcích.</p>
+    </Note>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.soloTitle}</h2>
+    <div class="split">
+      {
+        [
+          { line: martinLine, title: copy.martinSolo, photo: 'čajová souprava Martina Kose' },
+          { line: danielaLine, title: copy.danielaSolo, photo: 'obraz nebo obklad Daniely Kosové' },
+        ].map(({ line, title, photo }) => (
+          <article class="stack">
+            <Placeholder label={photo} ratio="3 / 2" />
+            <h3>
+              <a href={withBase(collectionPath(line.slug[lang], lang))}>{title}</a>
+            </h3>
+            <p class="muted">{line.categories.map((c) => c.name).join(', ')}</p>
+          </article>
+        ))
+      }
+    </div>
+    <Note>
+      <p>Samostatná tvorba v galerijní podobě. Kde cena není stanovená, zobrazí se „cena na dotaz“.</p>
+    </Note>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.processTitle}</h2>
+    <ol class="grid steps" role="list">
+      {
+        copy.processSteps.map((step, i) => (
+          <li class="stack">
+            <Placeholder label={step.toLowerCase()} ratio="1 / 1" />
+            <p>
+              {i + 1}. {step}
+            </p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="after-grid"><a href={withBase(pathOf('process', lang))}>{copy.processLink}</a></p>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.orderTitle}</h2>
+    <ol class="order-steps">
+      {copy.orderSteps.map((step) => <li>{t(step)}</li>)}
+    </ol>
+    <Note title="Nerozhodnuto">
+      <p>Text kroků závisí na režimu objednávky (nezávazná, nebo závazná) a na dopravě. Obojí čeká na Samiho rozhodnutí.</p>
+    </Note>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.contactTitle}</h2>
+    <div class="split">
+      <ContactBlock />
+      {
+        lang === 'cs' && (
+          <p>
+            {t(copy.courses)} <a href={withBase(pathOf('courses', 'cs'))}>{copy.coursesLink}</a>
+          </p>
+        )
+      }
+      {lang === 'en' && <p>{copy.courses}</p>}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .steps {
+    --grid-min: 8rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .order-steps {
+    padding-inline-start: 1.4em;
+  }
+
+  .order-steps > li + li {
+    margin-block-start: var(--space-2);
+  }
+
+  .after-grid {
+    margin-block-start: var(--space-5);
+  }
+</style>

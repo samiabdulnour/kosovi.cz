@@ -1,0 +1,82 @@
+---
+import { pathOf } from '../i18n/routes';
+import { withBase } from '../i18n/utils';
+
+interface Props {
+  label: string;
+}
+
+const { label } = Astro.props;
+---
+
+<div class="preview-bar">
+  <div class="wrap inner">
+    <p>Náhled struktury webu · {label}</p>
+    <p class="actions">
+      <a href={withBase(pathOf('structure', 'cs'))}>Přehled stránek</a>
+      <button type="button" data-notes-toggle aria-pressed="false">Skrýt poznámky</button>
+    </p>
+  </div>
+</div>
+
+<script>
+  const KEY = 'kosovi-notes';
+  const root = document.documentElement;
+  const button = document.querySelector<HTMLButtonElement>('[data-notes-toggle]');
+
+  function apply(off: boolean) {
+    root.dataset.notes = off ? 'off' : 'on';
+    if (button) {
+      button.setAttribute('aria-pressed', String(off));
+      button.textContent = off ? 'Zobrazit poznámky' : 'Skrýt poznámky';
+    }
+  }
+
+  let stored: string | null = null;
+  try {
+    stored = localStorage.getItem(KEY);
+  } catch {}
+  apply(stored === 'off');
+
+  button?.addEventListener('click', () => {
+    const off = root.dataset.notes !== 'off';
+    apply(off);
+    try {
+      localStorage.setItem(KEY, off ? 'off' : 'on');
+    } catch {}
+  });
+</script>
+
+<style>
+  .preview-bar {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+
+  .inner {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    justify-content: space-between;
+    align-items: center;
+    padding-block: var(--space-2);
+  }
+
+  .actions {
+    display: flex;
+    gap: var(--space-4);
+    align-items: center;
+  }
+
+  button {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: inherit;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    cursor: pointer;
+  }
+</style>
