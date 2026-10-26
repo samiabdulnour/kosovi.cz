@@ -1,0 +1,17 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { lines, type Category, type Line } from '../../../config/lines';
+import LinePage from '../../../views/LinePage.astro';
+
+export const getStaticPaths = (() =>
+  lines.flatMap((line) =>
+    line.categories.map((category) => ({
+      params: { line: line.slug.cs, category: category.slug },
+      props: { line, category },
+    })),
+  )) satisfies GetStaticPaths;
+
+const { line, category } = Astro.props as { line: Line; category: Category };
+---
+
+<LinePage line={line} category={category} lang="cs" />

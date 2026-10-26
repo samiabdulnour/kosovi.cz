@@ -1,0 +1,24 @@
+---
+import Note from '../components/wire/Note.astro';
+import { ORDER_MODE } from '../config/order';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, pathOf } from '../i18n/routes';
+import { withBase } from '../i18n/utils';
+import { cz } from '../lib/typography';
+
+const message =
+  ORDER_MODE === 'request'
+    ? 'Objednávku jsme přijali. Potvrdíme vám, že jsou kusy k dispozici, a pošleme platební údaje e-mailem.'
+    : 'Objednávku jsme přijali. Platební údaje a variabilní symbol najdete v e-mailu, který jsme vám právě poslali.';
+---
+
+<Base title="Objednávka odeslána" description="Potvrzení odeslané objednávky." alternates={alternatesOf('orderSent')}>
+  <div class="section wrap stack">
+    <h1>Objednávka odeslána</h1>
+    <p class="lead">{cz(message)}</p>
+    <p><a href={withBase(pathOf('collections', 'cs'))}>Zpět do kolekcí</a></p>
+    <Note>
+      <p>Text závisí na režimu objednávky. Zobrazí se i číslo objednávky (variabilní symbol).</p>
+    </Note>
+  </div>
+</Base>

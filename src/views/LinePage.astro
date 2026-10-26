@@ -1,0 +1,113 @@
+---
+import ProductGrid from '../components/ProductGrid.astro';
+import Note from '../components/wire/Note.astro';
+import { JOINT_LINE_CONFIRMED, type Category, type Line } from '../config/lines';
+import { makers } from '../config/site';
+import Base from '../layouts/Base.astro';
+import { collectionPath, pathOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations, withBase } from '../i18n/utils';
+import { getLineProducts } from '../lib/products';
+
+interface Props {
+  line: Line;
+  lang: Lang;
+  category?: Category;
+}
+
+const { line, lang, category } = Astro.props;
+const t = useTranslations(lang);
+const products = await getLineProducts(line.key, category?.slug);
+
+const title = category ? `${category.name} · ${line.name[lang]}` : line.name[lang];
+const description =
+  lang === 'cs'
+    ? `${line.name.cs}${category ? `, ${category.name.toLowerCase()}` : ''}. Porcelán z ateliéru Daniely a Martina Kosových v Praze.`
+    : `${line.name.en}. Porcelain from the Kos studio in Prague.`;
+
+// English has no category pages yet, so a category page links to the line.
+const alternates = {
+  cs: collectionPath(line.slug.cs, 'cs', category?.slug),
+  ...(category ? {} : { en: collectionPath(line.slug.en, 'en') }),
+};
+
+const showFilter = lang === 'cs';
+---
+
+<Base title={title} description={description} alternates={alternates}>
+  <div class="section wrap">
+    <div class="section-head">
+      <p class="muted">
+        <a href={withBase(pathOf('collections', lang))}>{t('nav.collections')}</a>
+      </p>
+      <h1>{category ? category.name : line.name[lang]}</h1>
+      <p class="muted">{line.makers.map((m) => makers[m].name).join(', ')}</p>
+    </div>
+
+    {
+      showFilter && (
+        <nav class="filter" aria-label={t('collection.categories')}>
+          <ul role="list">
+            <li>
+              <a href={withBase(collectionPath(line.slug.cs, 'cs'))} aria-current={category ? undefined : 'page'}>
+                {t('collection.all')}
+              </a>
+            </li>
+            {line.categories.map((c) => (
+              <li>
+                <a
+                  href={withBase(collectionPath(line.slug.cs, 'cs', c.slug))}
+                  aria-current={c.slug === category?.slug ? 'page' : undefined}
+                >
+                  {c.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+
+    <Note title="Úvod kolekce">
+      <p>TODO(fakta): krátký popis řady. Kdo ji dělá, technika, materiál.</p>
+      {line.key === 'spolecna' && !JOINT_LINE_CONFIRMED && <p>Nepotvrzeno, že jde o společnou práci.</p>}
+    </Note>
+
+    <ProductGrid products={products} lang={lang} />
+
+    <Note title="Mřížka produktů">
+      <ul>
+        <li>Filtr podle kategorie jsou obyčejné odkazy na samostatné stránky, fungují bez JavaScriptu a dají se na ně přesměrovat staré adresy /kategorie-produktu/.</li>
+        <li>Každá karta: fotografie, název, kdo kus vyrobil, cena nebo „cena na dotaz“.</li>
+        {lang === 'en' && <li>Anglické kategorie a produkty přijdou později (fáze 6).</li>}
+      </ul>
+    </Note>
+  </div>
+</Base>
+
+<style>
+  .filter {
+    margin-block-end: var(--space-6);
+  }
+
+  .filter ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    padding: 0;
+    list-style: none;
+  }
+
+  .filter a {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    border: 1px solid var(--color-line);
+    text-decoration: none;
+  }
+
+  .filter a[aria-current='page'] {
+    border-color: var(--color-ink);
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+</style>

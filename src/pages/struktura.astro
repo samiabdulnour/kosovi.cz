@@ -1,0 +1,146 @@
+---
+// Overview of the new site structure for the preview. Remove before launch.
+import Note from '../components/wire/Note.astro';
+import { lines } from '../config/lines';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, collectionPath, pathOf, routes, type RouteKey } from '../i18n/routes';
+import { withBase } from '../i18n/utils';
+import { cz } from '../lib/typography';
+
+type Status = 'struktura' | 'čeká na data' | 'čeká na text' | 'fáze 5';
+
+const pages: { key: RouteKey; name: string; status: Status; note?: string }[] = [
+  { key: 'home', name: 'Úvod', status: 'struktura', note: 'Oba autoři, společná řada, vybrané kusy, jak objednat' },
+  { key: 'collections', name: 'Kolekce', status: 'čeká na data', note: 'Společná řada první, filtr podle kategorie' },
+  { key: 'martin', name: 'Martin Kos', status: 'struktura', note: 'Stará adresa, nově skutečná stránka autora' },
+  { key: 'daniela', name: 'Daniela Kosová', status: 'struktura', note: 'Stará adresa, nově skutečná stránka autorky' },
+  { key: 'process', name: 'Jak vzniká', status: 'čeká na text', note: 'Točení, sušení, malba kobaltem, výpal' },
+  { key: 'about', name: 'O nás', status: 'čeká na text' },
+  { key: 'courses', name: 'Kurzy', status: 'čeká na text', note: 'Kurzy na požádání, dárkový poukaz' },
+  { key: 'contact', name: 'Kontakt', status: 'struktura' },
+  { key: 'cart', name: 'Košík', status: 'fáze 5', note: 'Stará adresa' },
+  { key: 'orderSent', name: 'Objednávka odeslána', status: 'fáze 5' },
+  { key: 'terms', name: 'Obchodní podmínky', status: 'čeká na text' },
+  { key: 'privacy', name: 'Ochrana osobních údajů', status: 'čeká na text' },
+  { key: 'returns', name: 'Reklamace a odstoupení', status: 'čeká na text' },
+];
+
+function enPath(key: RouteKey): string | undefined {
+  const route: { cs: string; en?: string } = routes[key];
+  return route.en;
+}
+---
+
+<Base title="Struktura webu" description="Přehled stránek nového webu kosovi.cz." alternates={alternatesOf('structure')}>
+  <div class="section wrap">
+    <div class="section-head">
+      <h1>Struktura webu</h1>
+      <p class="lead">Přehled všech stránek nového webu a jejich stavu. Slouží jen pro náhled, před spuštěním se odstraní.</p>
+    </div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Stránka</th>
+            <th scope="col">Česky</th>
+            <th scope="col">Anglicky</th>
+            <th scope="col">Stav</th>
+            <th scope="col">Poznámka</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            pages.map(({ key, name, status, note }) => {
+              const en = enPath(key);
+              return (
+                <tr>
+                  <th scope="row">{cz(name)}</th>
+                  <td>
+                    <a href={withBase(pathOf(key, 'cs'))}>{pathOf(key, 'cs')}</a>
+                  </td>
+                  <td>{en ? <a href={withBase(en)}>{en}</a> : '–'}</td>
+                  <td>{status}</td>
+                  <td>{note}</td>
+                </tr>
+              );
+            })
+          }
+          <tr>
+            <th scope="row">Produkt (vzor)</th>
+            <td><a href={withBase('/produkt/vzor/')}>/produkt/vzor/</a></td>
+            <td>–</td>
+            <td>čeká na data</td>
+            <td>Šablona produktu, skutečné produkty na adresách /produkt/&lt;slug&gt;/ jako dosud</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2 class="sub">Kolekce a kategorie</h2>
+    <ul class="tree">
+      {
+        lines.map((line) => (
+          <li>
+            <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>{' '}
+            <span class="muted">
+              ({collectionPath(line.slug.cs, 'cs')}, anglicky {collectionPath(line.slug.en, 'en')})
+            </span>
+            <ul>
+              {line.categories.map((c) => (
+                <li>
+                  <a href={withBase(collectionPath(line.slug.cs, 'cs', c.slug))}>{c.name}</a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))
+      }
+    </ul>
+
+    <Note title="Jak náhledy fungují">
+      <ul>
+        <li>Větev main: hlavní náhled na GitHub Pages.</li>
+        <li>Každý pull request dostane vlastní náhled, odkaz se objeví v komentáři u PR.</li>
+        <li>Poznámky jako tahle skryjete tlačítkem „Skrýt poznámky“ v horní liště.</li>
+      </ul>
+    </Note>
+  </div>
+</Base>
+
+<style>
+  .table-wrap {
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--step--1);
+  }
+
+  th,
+  td {
+    padding: var(--space-2) var(--space-3);
+    border-bottom: 1px solid var(--color-line);
+    text-align: start;
+    vertical-align: top;
+  }
+
+  thead th {
+    border-bottom-color: var(--color-ink);
+  }
+
+  .sub {
+    margin-block: var(--space-7) var(--space-4);
+  }
+
+  .tree ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-1) var(--space-4);
+    margin-block: var(--space-2) var(--space-4);
+    padding: 0;
+    list-style: none;
+  }
+</style>

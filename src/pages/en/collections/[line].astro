@@ -1,0 +1,12 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { lines, type Line } from '../../../config/lines';
+import LinePage from '../../../views/LinePage.astro';
+
+export const getStaticPaths = (() =>
+  lines.map((line) => ({ params: { line: line.slug.en }, props: { line } }))) satisfies GetStaticPaths;
+
+const { line } = Astro.props as { line: Line };
+---
+
+<LinePage line={line} lang="en" />

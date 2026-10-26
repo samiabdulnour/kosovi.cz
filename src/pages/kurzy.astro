@@ -1,0 +1,40 @@
+---
+import Note from '../components/wire/Note.astro';
+import Placeholder from '../components/wire/Placeholder.astro';
+import { studio } from '../config/site';
+import Base from '../layouts/Base.astro';
+import { alternatesOf } from '../i18n/routes';
+import { cz } from '../lib/typography';
+---
+
+<Base
+  title="Kurzy"
+  description="Kurzy keramiky a porcelánu v ateliéru Daniely a Martina Kosových v Praze, na požádání."
+  alternates={alternatesOf('courses')}
+>
+  <section class="section wrap">
+    <div class="split">
+      <div class="stack">
+        <h1>Kurzy</h1>
+        <p class="lead">{cz('Kurzy keramiky a porcelánu na požádání.')}</p>
+        <p>
+          Napište na <a href={`mailto:${studio.email}`}>{studio.email}</a>.
+        </p>
+      </div>
+      <Placeholder label="kurz v ateliéru" ratio="4 / 3" />
+    </div>
+    <Note title="Chybí">
+      <ul>
+        <li>TODO(fakta): formát, délka, počet lidí, cena.</li>
+        <li>TODO(fakta): dárkový poukaz. Jak se objednává, na jakou částku.</li>
+      </ul>
+    </Note>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">Dárkový poukaz</h2>
+    <Note>
+      <p>Sekce zůstane, pokud ateliér poukazy nabízí.</p>
+    </Note>
+  </section>
+</Base>

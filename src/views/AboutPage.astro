@@ -1,0 +1,96 @@
+---
+import ContactBlock from '../components/ContactBlock.astro';
+import Note from '../components/wire/Note.astro';
+import Placeholder from '../components/wire/Placeholder.astro';
+import { danielaCollections, porcelainFacts } from '../config/facts';
+import { makers } from '../config/site';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, pathOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+import { typeset } from '../lib/typography';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = (text: string) => typeset(text, lang);
+
+const copy = {
+  cs: {
+    title: 'O nás',
+    description: 'Porcelánový ateliér Daniely a Martina Kosových v Praze 6. Kdo jsme, jak pracujeme, kde jsou naše práce ve sbírkách.',
+    studio: 'Ateliér',
+    porcelain: 'Porcelán',
+    makers: 'Autoři',
+    more: 'Životopis a práce',
+    proof: 'Sbírky a výstavy',
+    collections: 'Práce Daniely Kosové jsou ve sbírkách:',
+    contact: 'Kde nás najdete',
+  },
+  en: {
+    title: 'About',
+    description: 'The porcelain studio of Daniela and Martin Kos in Prague 6. Who we are, how we work, where our work is held.',
+    studio: 'The studio',
+    porcelain: 'Porcelain',
+    makers: 'The makers',
+    more: 'Biography and work',
+    proof: 'Collections and exhibitions',
+    collections: 'Work by Daniela Kosová is held in:',
+    contact: 'Where to find us',
+  },
+}[lang];
+---
+
+<Base title={copy.title} description={copy.description} alternates={alternatesOf('about')}>
+  <section class="section wrap">
+    <h1 class="section-head">{t(copy.title)}</h1>
+    <div class="split">
+      <Placeholder label="ateliér na Vlčovce" ratio="3 / 2" />
+      <div class="stack">
+        <h2>{copy.studio}</h2>
+        <Note>
+          <p>TODO(fakta): krátce o ateliéru. Od kdy spolu pracují, jak ateliér vypadá, co v něm vzniká.</p>
+        </Note>
+        <h3>{copy.porcelain}</h3>
+        <ul class="facts">
+          {porcelainFacts[lang].map((fact) => <li>{t(fact)}</li>)}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.makers}</h2>
+    <div class="split">
+      {
+        (['martin', 'daniela'] as const).map((key) => (
+          <article class="stack">
+            <h3>{makers[key].name}</h3>
+            <p>{t(makers[key].role[lang])}</p>
+            <p>
+              <a href={withBase(pathOf(key, lang))}>{t(copy.more)}</a>
+            </p>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{t(copy.proof)}</h2>
+    <p>{copy.collections}</p>
+    <ul class="facts">
+      {danielaCollections[lang].map((c) => <li>{c}</li>)}
+    </ul>
+    <Note>
+      <p>TODO(fakta): výstavy obou autorů, sbírky s Martinovými pracemi.</p>
+    </Note>
+  </section>
+
+  <section class="section wrap">
+    <h2 class="section-head">{copy.contact}</h2>
+    <ContactBlock />
+  </section>
+</Base>

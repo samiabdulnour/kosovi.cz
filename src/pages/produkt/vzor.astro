@@ -1,0 +1,19 @@
+---
+// Template preview without data. Delete after the import (phase 2).
+import type { Product } from '../../lib/products';
+import ProductPage from '../../views/ProductPage.astro';
+
+const sample: Product = {
+  title: 'Vzorový produkt',
+  slug: 'vzor',
+  line: 'spolecna',
+  category: 'hrnky',
+  makers: { thrownBy: 'martin', paintedBy: 'daniela' },
+  price: null,
+  stock: 0,
+  featured: false,
+  images: [],
+};
+---
+
+<ProductPage product={sample} sample />

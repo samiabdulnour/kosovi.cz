@@ -1,0 +1,214 @@
+---
+import { getImage, Image } from 'astro:assets';
+import MakerCredit from '../components/MakerCredit.astro';
+import Price from '../components/Price.astro';
+import ProductGrid from '../components/ProductGrid.astro';
+import Note from '../components/wire/Note.astro';
+import Placeholder from '../components/wire/Placeholder.astro';
+import { getLine } from '../config/lines';
+import { studio } from '../config/site';
+import Base from '../layouts/Base.astro';
+import { collectionPath, productPath } from '../i18n/routes';
+import { withBase } from '../i18n/utils';
+import { getLineProducts, type Product } from '../lib/products';
+import { cz } from '../lib/typography';
+
+// Product pages are Czech only for now (English comes later, see CLAUDE.md).
+interface Props {
+  product: Product;
+  /** The /produkt/vzor/ template preview, before real products exist. */
+  sample?: boolean;
+}
+
+const { product, sample = false } = Astro.props;
+const line = getLine(product.line);
+const category = line.categories.find((c) => c.slug === product.category);
+
+// TODO: "related pieces from the same set" needs a set field in the data.
+// Until then, show other pieces from the same category.
+const related = (await getLineProducts(product.line, product.category))
+  .filter((p) => p.slug !== product.slug)
+  .slice(0, 4);
+
+const gallerySlots = ['celkový pohled', 'v ruce, pro měřítko', 'detail malby', 'pohled shora', 'další pohled'];
+
+// Large version for the zoom link. Never link to the raw original.
+const zoomed = await Promise.all(
+  product.images.map((img) => getImage({ src: img.src, width: Math.min(2400, img.src.width) })),
+);
+
+const askHref = `mailto:${studio.email}?subject=${encodeURIComponent(`Dotaz na cenu: ${product.title}`)}`;
+
+const { dimensions, care } = product;
+const params: [string, string | undefined][] = [
+  ['Výška', dimensions?.heightCm !== undefined ? cz(`${dimensions.heightCm} cm`) : undefined],
+  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${dimensions.diameterCm} cm`) : undefined],
+  ['Objem', dimensions?.volumeMl !== undefined ? cz(`${dimensions.volumeMl} ml`) : undefined],
+  ['Technika', product.technique],
+  ['Myčka', care?.dishwasher === undefined ? undefined : care.dishwasher ? 'ano' : 'ne'],
+  ['Mikrovlnná trouba', care?.microwave === undefined ? undefined : care.microwave ? 'ano' : 'ne'],
+  ['Katalogové číslo', product.catalogNo],
+];
+
+const description = product.description
+  ? product.description.slice(0, 155)
+  : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
+---
+
+<Base title={product.title} description={description} alternates={{ cs: productPath(product.slug) }}>
+  <div class="section wrap">
+    <p class="muted crumbs">
+      <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>
+      {
+        category && (
+          <>
+            {' / '}
+            <a href={withBase(collectionPath(line.slug.cs, 'cs', category.slug))}>{category.name}</a>
+          </>
+        )
+      }
+    </p>
+
+    <div class="product">
+      <div class="gallery">
+        {
+          product.images.length > 0
+            ? product.images.map((img, i) => (
+                <a href={zoomed[i]?.src}>
+                  <Image
+                    src={img.src}
+                    alt={img.alt}
+                    widths={[480, 800, 1200, 1600]}
+                    sizes="(min-width: 60rem) 55vw, 100vw"
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                  />
+                </a>
+              ))
+            : gallerySlots.map((label) => <Placeholder label={label} ratio="4 / 5" />)
+        }
+      </div>
+
+      <div class="info stack">
+        <h1>{product.title}</h1>
+        <MakerCredit makers={product.makers} lang="cs" />
+        <Price price={product.price} lang="cs" />
+        {
+          product.price === null ? (
+            <p>
+              <a class="button button--quiet" href={askHref}>
+                Zeptat se na cenu
+              </a>
+            </p>
+          ) : (
+            <p>
+              <button class="button" type="button" disabled>
+                Vložit do košíku
+              </button>
+            </p>
+          )
+        }
+
+        <dl class="params">
+          {
+            params.map(([label, value]) => (
+              <div class={value === undefined ? 'missing' : undefined}>
+                <dt>{label}</dt>
+                <dd>{value ?? 'TODO(fakta)'}</dd>
+              </div>
+            ))
+          }
+        </dl>
+
+        <p class="handmade">{cz('Každý kus je ručně vyrobený, a proto se od ostatních mírně liší.')}</p>
+
+        {product.description && <p>{cz(product.description)}</p>}
+
+        <Note title="Stránka produktu">
+          <ul>
+            <li>Kdo kus vyrobil, cena nebo „cena na dotaz“, rozměry a objem, technika, péče, poznámka o ruční výrobě.</li>
+            <li>4–6 velkých fotografií včetně záběru pro měřítko a detailu malby. Proklik na plnou velikost, lightbox ve fázi 4. Pinch zoom zůstává povolený.</li>
+            <li>Košík a dotaz na cenu přijdou ve fázi 5.</li>
+            {sample && <li>Tohle je vzorová stránka bez dat. Skutečné produkty přibudou importem (fáze 2) na stejných adresách jako na starém webu.</li>}
+          </ul>
+        </Note>
+      </div>
+    </div>
+  </div>
+
+  <section class="section wrap">
+    <h2 class="section-head">Ze stejné sady</h2>
+    <ProductGrid products={related} lang="cs" placeholders={4} />
+    <Note>
+      <p>Data zatím neříkají, které kusy patří do jedné sady. Do té doby se zobrazují kusy ze stejné kategorie.</p>
+    </Note>
+  </section>
+</Base>
+
+<style>
+  .crumbs {
+    margin-block-end: var(--space-5);
+  }
+
+  .product {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  @media (min-width: 60rem) {
+    .product {
+      grid-template-columns: 3fr 2fr;
+      align-items: start;
+    }
+
+    .info {
+      position: sticky;
+      top: var(--space-5);
+    }
+  }
+
+  .gallery {
+    display: grid;
+    gap: var(--space-4);
+  }
+
+  .gallery :global(img) {
+    width: 100%;
+  }
+
+  .params {
+    display: grid;
+    gap: var(--space-2);
+    padding-block: var(--space-4);
+    border-block: 1px solid var(--color-line);
+  }
+
+  .params > div {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-4);
+  }
+
+  dt {
+    color: var(--color-muted);
+  }
+
+  dd {
+    margin: 0;
+    text-align: end;
+  }
+
+  .missing dd {
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+    color: var(--color-muted);
+  }
+
+  /* Unknown values show only in the preview, the live page hides them. */
+  :global(html:not([data-notes='on'])) .missing {
+    display: none;
+  }
+
+  .handmade {
+    font-size: var(--step--1);
+  }
+</style>

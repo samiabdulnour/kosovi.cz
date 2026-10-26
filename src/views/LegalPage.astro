@@ -1,0 +1,24 @@
+---
+import Note from '../components/wire/Note.astro';
+import Base from '../layouts/Base.astro';
+import { alternatesOf, type RouteKey } from '../i18n/routes';
+
+// Legal pages are Czech only. Sami supplies or approves the text, which will
+// live in src/content/pages.
+interface Props {
+  route: RouteKey;
+  title: string;
+  description: string;
+}
+
+const { route, title, description } = Astro.props;
+---
+
+<Base title={title} description={description} alternates={alternatesOf(route)}>
+  <div class="section wrap stack">
+    <h1>{title}</h1>
+    <Note>
+      <p>TODO(text): text dodá nebo schválí Sami. Uloží se do src/content/pages.</p>
+    </Note>
+  </div>
+</Base>
