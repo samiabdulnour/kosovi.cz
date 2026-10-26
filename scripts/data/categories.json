@@ -1,0 +1,1199 @@
+[
+  {
+    "id": 70,
+    "name": "BÁBOVKY",
+    "slug": "babovky",
+    "description": "",
+    "parent": 32,
+    "count": 3,
+    "image": {
+      "id": 567,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "babovka_velka_modra",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/babovky/"
+  },
+  {
+    "id": 22,
+    "name": "Čajové soupravy",
+    "slug": "cajove-soupravy",
+    "description": "",
+    "parent": 18,
+    "count": 4,
+    "image": {
+      "id": 923,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "cajova_souprava5",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/cajove-soupravy/"
+  },
+  {
+    "id": 64,
+    "name": "CUKŘENKY",
+    "slug": "cukrenka",
+    "description": "",
+    "parent": 32,
+    "count": 9,
+    "image": {
+      "id": 521,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "cukrenka_velka_s_rybkami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/cukrenka/"
+  },
+  {
+    "id": 19,
+    "name": "DANIELA",
+    "slug": "daniela",
+    "description": "",
+    "parent": 0,
+    "count": 85,
+    "image": {
+      "id": 876,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret.jpg 1152w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-300x200.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-1024x683.jpg 1024w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-768x512.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-75x50.jpg 75w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-650x433.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-1000x667.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-50x33.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret-600x400.jpg 600w",
+      "sizes": "(max-width: 1152px) 100vw, 1152px",
+      "name": "daniela kosva–portret",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/"
+  },
+  {
+    "id": 79,
+    "name": "DEKORY",
+    "slug": "dekory",
+    "description": "",
+    "parent": 19,
+    "count": 42,
+    "image": {
+      "id": 869,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_1-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "talir_jidelni_1",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/"
+  },
+  {
+    "id": 25,
+    "name": "DESIGN",
+    "slug": "design",
+    "description": "",
+    "parent": 19,
+    "count": 41,
+    "image": {
+      "id": 1078,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "vesak_stredni_zvire_2",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/design/"
+  },
+  {
+    "id": 105,
+    "name": "hrnek na presso s podšálkem",
+    "slug": "hrhen-na-presso-s-podsalkem",
+    "description": "",
+    "parent": 33,
+    "count": 2,
+    "image": {
+      "id": 1870,
+      "src": "https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-scaled.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-scaled.jpg 2048w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-240x300.jpg 240w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-819x1024.jpg 819w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-768x960.jpg 768w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-1229x1536.jpg 1229w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-1638x2048.jpg 1638w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-40x50.jpg 40w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-650x813.jpg 650w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-1000x1250.jpg 1000w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-50x63.jpg 50w, https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-600x750.jpg 600w",
+      "sizes": "(max-width: 2048px) 100vw, 2048px",
+      "name": "mk_hrnek_kotva",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/hrhen-na-presso-s-podsalkem/"
+  },
+  {
+    "id": 33,
+    "name": "HRNKY",
+    "slug": "hrnky",
+    "description": "",
+    "parent": 32,
+    "count": 155,
+    "image": {
+      "id": 213,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_pr_s_andelem_na_kole",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/"
+  },
+  {
+    "id": 85,
+    "name": "Hrnky",
+    "slug": "hrnky-dekory",
+    "description": "",
+    "parent": 79,
+    "count": 2,
+    "image": {
+      "id": 808,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_soliter2a",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/hrnky-dekory/"
+  },
+  {
+    "id": 76,
+    "name": "Hrnky s plastickým dekorem",
+    "slug": "hrnky-s-plastickym-dekorem",
+    "description": "",
+    "parent": 18,
+    "count": 18,
+    "image": {
+      "id": 608,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_veliky_razitko_ctverce",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/hrnky-s-plastickym-dekorem/"
+  },
+  {
+    "id": 101,
+    "name": "Jídelní soupravy",
+    "slug": "jidelni-soupravy",
+    "description": "",
+    "parent": 42,
+    "count": 1,
+    "image": {
+      "id": 888,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "sada_na_objednavku",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/talire/jidelni-soupravy/"
+  },
+  {
+    "id": 84,
+    "name": "Jídelní soupravy na zakázku",
+    "slug": "jidelni-soupravy-na-zakazku",
+    "description": "",
+    "parent": 79,
+    "count": 1,
+    "image": {
+      "id": 952,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-300x200.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-768x512.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-75x50.jpg 75w, https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-650x434.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-50x33.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku-600x400.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "jidelni_servis_na_objednavku",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/jidelni-soupravy-na-zakazku/"
+  },
+  {
+    "id": 24,
+    "name": "Konve solitéry",
+    "slug": "konve-solitery",
+    "description": "",
+    "parent": 18,
+    "count": 9,
+    "image": {
+      "id": 896,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konvice_modra_s_plastovym_dekorem1",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/konve-solitery/"
+  },
+  {
+    "id": 57,
+    "name": "KONVICE KULATÉ",
+    "slug": "konvice-kulate",
+    "description": "",
+    "parent": 32,
+    "count": 8,
+    "image": {
+      "id": 439,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konev_kulata_stredni_s_tulipany",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-kulate/"
+  },
+  {
+    "id": 53,
+    "name": "KONVICE ROVNÉ",
+    "slug": "konvice-rovne",
+    "description": "",
+    "parent": 32,
+    "count": 30,
+    "image": {
+      "id": 479,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konvice_rovna_stredni_s_bicykly",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-rovne/"
+  },
+  {
+    "id": 48,
+    "name": "Malá",
+    "slug": "mala",
+    "description": "",
+    "parent": 46,
+    "count": 15,
+    "image": {
+      "id": 618,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_mala_s_bicykly",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/misky/mala/"
+  },
+  {
+    "id": 56,
+    "name": "Malá",
+    "slug": "mala-konvice-rovne",
+    "description": "",
+    "parent": 53,
+    "count": 15,
+    "image": {
+      "id": 449,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konev_rovna_mala_s_kockami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-rovne/mala-konvice-rovne/"
+  },
+  {
+    "id": 60,
+    "name": "Malá",
+    "slug": "mala-konvice-kulate",
+    "description": "",
+    "parent": 57,
+    "count": 3,
+    "image": {
+      "id": 433,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konev_kulata_mala_s_bicykly",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-kulate/mala-konvice-kulate/"
+  },
+  {
+    "id": 66,
+    "name": "Malá",
+    "slug": "mala-cukrenka",
+    "description": "",
+    "parent": 64,
+    "count": 5,
+    "image": {
+      "id": 511,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "cukrenka_mala_s_hvezdami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/cukrenka/mala-cukrenka/"
+  },
+  {
+    "id": 69,
+    "name": "Malá",
+    "slug": "mala-mlicenka",
+    "description": "",
+    "parent": 67,
+    "count": 4,
+    "image": {
+      "id": 531,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "mlicenka_mala_s_pruhy",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/mlicenka/mala-mlicenka/"
+  },
+  {
+    "id": 40,
+    "name": "Malý",
+    "slug": "maly",
+    "description": "",
+    "parent": 39,
+    "count": 1,
+    "image": {
+      "id": 545,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "podsalek_maly",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/podsalky/maly/"
+  },
+  {
+    "id": 99,
+    "name": "Malý",
+    "slug": "maly-hrnky-s-razitkem",
+    "description": "",
+    "parent": 76,
+    "count": 7,
+    "image": {
+      "id": 578,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_razitko_maly_s_letadly",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/hrnky-s-plastickym-dekorem/maly-hrnky-s-razitkem/"
+  },
+  {
+    "id": 18,
+    "name": "MARTIN",
+    "slug": "martin",
+    "description": "",
+    "parent": 0,
+    "count": 37,
+    "image": {
+      "id": 874,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret.jpg 1152w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-300x200.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-1024x683.jpg 1024w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-768x512.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-75x50.jpg 75w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-650x433.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-1000x667.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-50x33.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret-600x400.jpg 600w",
+      "sizes": "(max-width: 1152px) 100vw, 1152px",
+      "name": "martin kos–portret",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/"
+  },
+  {
+    "id": 38,
+    "name": "Mini",
+    "slug": "mini",
+    "description": "",
+    "parent": 33,
+    "count": 29,
+    "image": {
+      "id": 139,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "porcelanovy_mini_hrnek_s_velrybou",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/mini/"
+  },
+  {
+    "id": 46,
+    "name": "MISKY",
+    "slug": "misky",
+    "description": "",
+    "parent": 32,
+    "count": 49,
+    "image": {
+      "id": 646,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_polevkova_s_zelvami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/misky/"
+  },
+  {
+    "id": 28,
+    "name": "Misky hranaté",
+    "slug": "misky-hranate",
+    "description": "",
+    "parent": 79,
+    "count": 5,
+    "image": {
+      "id": 759,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_hranata_stredni3-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_hranata_stredni3",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/misky-hranate/"
+  },
+  {
+    "id": 80,
+    "name": "Misky kulaté",
+    "slug": "misky-kulate",
+    "description": "",
+    "parent": 79,
+    "count": 10,
+    "image": {
+      "id": 825,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_bicykl-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_polevkova_bicykl",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/misky-kulate/"
+  },
+  {
+    "id": 88,
+    "name": "Misky srdcove",
+    "slug": "misky-srdcove",
+    "description": "",
+    "parent": 79,
+    "count": 4,
+    "image": {
+      "id": 849,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_3-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_srdce_3",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/misky-srdcove/"
+  },
+  {
+    "id": 50,
+    "name": "MÍSY",
+    "slug": "misy",
+    "description": "",
+    "parent": 32,
+    "count": 1,
+    "image": {
+      "id": 719,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "misa_lodky",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/misy/"
+  },
+  {
+    "id": 67,
+    "name": "MLÍČENKY",
+    "slug": "mlicenka",
+    "description": "",
+    "parent": 32,
+    "count": 8,
+    "image": {
+      "id": 529,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "mlicenka_mama_se_srdci",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/mlicenka/"
+  },
+  {
+    "id": 32,
+    "name": "MODROBÍLÝ PORCELÁN",
+    "slug": "modrobily-porcelan",
+    "description": "",
+    "parent": 0,
+    "count": 294,
+    "image": {
+      "id": 97,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-scaled.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-scaled-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-scaled.jpg 2560w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-scaled-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-1024x932.jpg 1024w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-1536x1398.jpg 1536w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-2048x1865.jpg 2048w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-1000x910.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-50x46.jpg 50w",
+      "sizes": "(max-width: 2560px) 100vw, 2560px",
+      "name": "hrneksrybkami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/"
+  },
+  {
+    "id": 51,
+    "name": "Na ovoce",
+    "slug": "na-ovoce",
+    "description": "",
+    "parent": 50,
+    "count": 1,
+    "image": {
+      "id": 719,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "misa_lodky",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/misy/na-ovoce/"
+  },
+  {
+    "id": 29,
+    "name": "OBKLADY",
+    "slug": "obklady",
+    "description": "",
+    "parent": 19,
+    "count": 1,
+    "image": {
+      "id": 958,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "obklad_na_objednavkuthmb",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/obklady/"
+  },
+  {
+    "id": 93,
+    "name": "Obklady na zakázku",
+    "slug": "obklady-na-zakazku",
+    "description": "",
+    "parent": 29,
+    "count": 1,
+    "image": {
+      "id": 958,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavkuthmb-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "obklad_na_objednavkuthmb",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/obklady/obklady-na-zakazku/"
+  },
+  {
+    "id": 27,
+    "name": "OBRÁZKY",
+    "slug": "obrazky",
+    "description": "",
+    "parent": 19,
+    "count": 5,
+    "image": {
+      "id": 736,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/andel1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/andel1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/andel1.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/andel1-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/andel1-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/andel1-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/andel1-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/andel1-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/andel1-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "andel1",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/obrazky/"
+  },
+  {
+    "id": 90,
+    "name": "Obrázky na porcelánu",
+    "slug": "obrazky-na-porcelanu",
+    "description": "",
+    "parent": 27,
+    "count": 5,
+    "image": {
+      "id": 741,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/andel3.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/andel3-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/andel3.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/andel3-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/andel3-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/andel3-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/andel3-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/andel3-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/andel3-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "andel3",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/obrazky/obrazky-na-porcelanu/"
+  },
+  {
+    "id": 71,
+    "name": "PANÁKY",
+    "slug": "panaky",
+    "description": "",
+    "parent": 32,
+    "count": 17,
+    "image": {
+      "id": 551,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "panak_s_bleskem",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/panaky/"
+  },
+  {
+    "id": 34,
+    "name": "Pitný režim",
+    "slug": "pitny-rezim",
+    "description": "",
+    "parent": 33,
+    "count": 24,
+    "image": {
+      "id": 207,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_pr_s_jizdnim_kolem",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/pitny-rezim/"
+  },
+  {
+    "id": 39,
+    "name": "PODŠÁLKY A ODKÁDÁTKA",
+    "slug": "podsalky",
+    "description": "",
+    "parent": 32,
+    "count": 2,
+    "image": {
+      "id": 546,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "podsalek_maly1",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/podsalky/"
+  },
+  {
+    "id": 47,
+    "name": "Polévka/Snídaně",
+    "slug": "polevkova-snidanova",
+    "description": "",
+    "parent": 46,
+    "count": 20,
+    "image": {
+      "id": 672,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_polevkova_s_andelem_nakole",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/misky/polevkova-snidanova/"
+  },
+  {
+    "id": 49,
+    "name": "Salátová",
+    "slug": "salatova",
+    "description": "",
+    "parent": 46,
+    "count": 14,
+    "image": {
+      "id": 710,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "miska_salatova_rybky2",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/misky/salatova/"
+  },
+  {
+    "id": 83,
+    "name": "Šálky a podšálky",
+    "slug": "salky-a-podsalky",
+    "description": "",
+    "parent": 79,
+    "count": 5,
+    "image": {
+      "id": 793,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/salek_podsalek2-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "salek_podsalek2",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/salky-a-podsalky/"
+  },
+  {
+    "id": 37,
+    "name": "Široký",
+    "slug": "siroky",
+    "description": "",
+    "parent": 33,
+    "count": 21,
+    "image": {
+      "id": 240,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_siroky_s_zelvou",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/siroky/"
+  },
+  {
+    "id": 36,
+    "name": "Střední",
+    "slug": "stredni",
+    "description": "",
+    "parent": 33,
+    "count": 16,
+    "image": {
+      "id": 290,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_stredni_s_konem",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/stredni/"
+  },
+  {
+    "id": 55,
+    "name": "Střední",
+    "slug": "stredni-konvice-rovne",
+    "description": "",
+    "parent": 53,
+    "count": 8,
+    "image": {
+      "id": 481,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konvice_rovna_stredni_se_spiralou",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-rovne/stredni-konvice-rovne/"
+  },
+  {
+    "id": 59,
+    "name": "Střední",
+    "slug": "stredi",
+    "description": "",
+    "parent": 57,
+    "count": 3,
+    "image": {
+      "id": 441,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konev_kulata_stredni_s_rybkami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-kulate/stredi/"
+  },
+  {
+    "id": 98,
+    "name": "Střední",
+    "slug": "stredni-hrnky-s-razitkem",
+    "description": "",
+    "parent": 76,
+    "count": 7,
+    "image": {
+      "id": 600,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_razitko_velky_letadla",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/hrnky-s-plastickym-dekorem/stredni-hrnky-s-razitkem/"
+  },
+  {
+    "id": 82,
+    "name": "Tácy",
+    "slug": "tacy",
+    "description": "",
+    "parent": 79,
+    "count": 7,
+    "image": {
+      "id": 853,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "tac_ovalny",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/tacy/"
+  },
+  {
+    "id": 100,
+    "name": "Talíř Praktik",
+    "slug": "talir-praktik",
+    "description": "",
+    "parent": 42,
+    "count": 7,
+    "image": {
+      "id": 721,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "talir_praktik_tulipany",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/talire/talir-praktik/"
+  },
+  {
+    "id": 42,
+    "name": "TALÍŘE",
+    "slug": "talire",
+    "description": "",
+    "parent": 32,
+    "count": 12,
+    "image": {
+      "id": 728,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "talir_praktik_rybky3",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/talire/"
+  },
+  {
+    "id": 81,
+    "name": "Talíře",
+    "slug": "talire-dekory",
+    "description": "",
+    "parent": 79,
+    "count": 8,
+    "image": {
+      "id": 861,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/talire.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/talire-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/talire.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/talire-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/talire-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/talire-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/talire-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/talire-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/talire-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "talire",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/dekory/talire-dekory/"
+  },
+  {
+    "id": 102,
+    "name": "Talíře závěsné",
+    "slug": "talire-zavesne-talire",
+    "description": "",
+    "parent": 42,
+    "count": 4,
+    "image": {
+      "id": 883,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "talir_zavesny4",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/talire/talire-zavesne-talire/"
+  },
+  {
+    "id": 86,
+    "name": "Úchytky",
+    "slug": "uchytky",
+    "description": "",
+    "parent": 25,
+    "count": 14,
+    "image": {
+      "id": 966,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "uchytka_kocka_zelena",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/design/uchytky/"
+  },
+  {
+    "id": 95,
+    "name": "Úzký",
+    "slug": "uzky",
+    "description": "",
+    "parent": 33,
+    "count": 23,
+    "image": {
+      "id": 315,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_uzky_s_destnikem",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/uzky/"
+  },
+  {
+    "id": 72,
+    "name": "Vázy",
+    "slug": "vazy",
+    "description": "",
+    "parent": 18,
+    "count": 4,
+    "image": {
+      "id": 937,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "bila_vaza",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/vazy/"
+  },
+  {
+    "id": 54,
+    "name": "Velká",
+    "slug": "velka",
+    "description": "",
+    "parent": 53,
+    "count": 7,
+    "image": {
+      "id": 496,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_s_kockami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konvice_rovna_velk_s_kockami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-rovne/velka/"
+  },
+  {
+    "id": 58,
+    "name": "Velká",
+    "slug": "velka-konvice-kulate",
+    "description": "",
+    "parent": 57,
+    "count": 2,
+    "image": {
+      "id": 445,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "konev_kulata_velka_se_spiralami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/konvice-kulate/velka-konvice-kulate/"
+  },
+  {
+    "id": 65,
+    "name": "Velká",
+    "slug": "velka-cukrenka",
+    "description": "",
+    "parent": 64,
+    "count": 4,
+    "image": {
+      "id": 521,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "cukrenka_velka_s_rybkami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/cukrenka/velka-cukrenka/"
+  },
+  {
+    "id": 68,
+    "name": "Velká",
+    "slug": "velka-mlicenka",
+    "description": "",
+    "parent": 67,
+    "count": 4,
+    "image": {
+      "id": 537,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "mlicenka_velka_s_kockami",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/mlicenka/velka-mlicenka/"
+  },
+  {
+    "id": 35,
+    "name": "Velký",
+    "slug": "velky",
+    "description": "",
+    "parent": 33,
+    "count": 40,
+    "image": {
+      "id": 348,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-600x546.jpg 600w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem-50x46.jpg 50w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_velky_s_modelarem",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/hrnky/velky/"
+  },
+  {
+    "id": 41,
+    "name": "Velký",
+    "slug": "velky-podsalky",
+    "description": "",
+    "parent": 39,
+    "count": 1,
+    "image": {
+      "id": 548,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "podsalek_velky",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/modrobily-porcelan/podsalky/velky-podsalky/"
+  },
+  {
+    "id": 97,
+    "name": "Velký",
+    "slug": "velky-hrnky-s-razitkem",
+    "description": "",
+    "parent": 76,
+    "count": 4,
+    "image": {
+      "id": 606,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy.jpg 1000w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-300x273.jpg 300w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-768x699.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-55x50.jpg 55w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-650x592.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-50x46.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy-600x546.jpg 600w",
+      "sizes": "(max-width: 1000px) 100vw, 1000px",
+      "name": "hrnek_veliky_razitko_hvezdy",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/martin/hrnky-s-plastickym-dekorem/velky-hrnky-s-razitkem/"
+  },
+  {
+    "id": 26,
+    "name": "Věšáčky",
+    "slug": "vesacky",
+    "description": "",
+    "parent": 25,
+    "count": 23,
+    "image": {
+      "id": 1242,
+      "src": "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1.jpg",
+      "thumbnail": "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-300x300.jpg",
+      "srcset": "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1.jpg 910w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-273x300.jpg 273w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-768x844.jpg 768w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-46x50.jpg 46w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-650x714.jpg 650w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-50x55.jpg 50w, https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1-600x659.jpg 600w",
+      "sizes": "(max-width: 910px) 100vw, 910px",
+      "name": "vesak_stredni_zvire_1",
+      "alt": ""
+    },
+    "review_count": 0,
+    "permalink": "https://kosovi.cz/kategorie-produktu/daniela/design/vesacky/"
+  }
+]

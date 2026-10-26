@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "import": "node scripts/import-wp.ts"
   },
   "dependencies": {
     "astro": "7.4.2"

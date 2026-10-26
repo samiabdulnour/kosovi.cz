@@ -1,0 +1,1456 @@
+{
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5945-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5946-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-2/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5947-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-2/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5948-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-2/04.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5953-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5954-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-1/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5955-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-1/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5956-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-1/04.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5960-1-scaled.jpg": [
+    "src/assets/products/miska-hranata-mala/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5961-scaled.jpg": [
+    "src/assets/products/miska-hranata-mala-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5962-scaled.jpg": [
+    "src/assets/products/miska-hranata-mala-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5963-scaled.jpg": [
+    "src/assets/products/miska-hranata-mala-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5970-scaled.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-hvezdy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/IMG_5971-1.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-hvezd/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/andel1.jpg": [
+    "src/assets/products/andel-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/andel2.jpg": [
+    "src/assets/products/andel-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/andel3.jpg": [
+    "src/assets/products/andel-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/andel4.jpg": [
+    "src/assets/products/andel-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/andel5.jpg": [
+    "src/assets/products/andel-5/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/babovka_mala.jpg": [
+    "src/assets/products/babovka-mala/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_bila.jpg": [
+    "src/assets/products/babovka-velka-bila/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/babovka_velka_modra.jpg": [
+    "src/assets/products/babovka-velka-modra/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/bila_vaza.jpg": [
+    "src/assets/products/bila-vaza/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava1.jpg": [
+    "src/assets/products/cajova-souprava-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava3.jpg": [
+    "src/assets/products/cajova-souprava-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava4.jpg": [
+    "src/assets/products/cajova-souprava-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cajova_souprava5.jpg": [
+    "src/assets/products/cajova-souprava-5/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_hvezdami.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-mala-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_rybkou.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-mala-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_s_tulipany.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-mala-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_se_sluncem.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-mala-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_mala_se_srdci.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-mala-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_rybkami.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-velka-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_s_tulipany.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-velka-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_se_sardinkami.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-velka-se-sardinkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/cukrenka_velka_se_srdci.jpg": [
+    "src/assets/products/porcelanovy-cukrenka-velka-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/daniela-kosva–portret.jpg": [
+    "src/assets/pages/o-nas/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_hrnek1-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_hrnek2-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_miska_ctverec-scaled.jpg": [
+    "src/assets/products/tac-ctverec-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_miska_ctverec2-scaled.jpg": [
+    "src/assets/products/tac-hranaty-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_miska_srdce1-scaled.jpg": [
+    "src/assets/products/miska-srdce-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_podsalek1-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-3/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_podsalek2-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-4/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_tac_velky-scaled.jpg": [
+    "src/assets/products/tac-hranaty-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_tacek1-scaled-e1642361379489.jpg": [
+    "src/assets/products/tac-hranaty-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/dk_tacek2-scaled-e1642361466244.jpg": [
+    "src/assets/products/tac-hranaty/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-andelem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_andelem_na_kole.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-andelem-na-kole/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_auty.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-auty/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_bicykly.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_capi.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-capy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_delfinem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-delfinem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_hvezdami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_jizdnim_kolem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-jizdnim-kolem-kopirovat/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_kockami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-kockami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_kolobezkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-kolobezkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_kotvami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-kotvami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_letadly.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-letadly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_lodkami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_prouzky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-prouzky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_rybkami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_rybkami_2.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-rybkami-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_tulipany.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_s_zelvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-s-zelvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_se_sardinkami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-se-sardinkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_se_sluncem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_se_spiralami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_se_spiralou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_se_srdci.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_pr_se_srdicky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-pitny-rezim-se-srdicky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_kotvy.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-kotvy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_dulky.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-dulku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_letadly.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-letadel/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_leticimiptaky.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-leticich-ptaku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_s_schodistem.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-schodiste/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_maly_surfari.jpg": [
+    "src/assets/products/hrnek-maly-s-razitkem-surfaru/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_ctverce.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-ctverce/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_ctverce2.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-ctverce-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_kotvy.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-kotvy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_letadla.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-letadla/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_schodiste.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-schodiste/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_razitko_velky_surfari.jpg": [
+    "src/assets/products/hrnek-stredni-s-razitkem-surfaru/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_capem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_delfiny.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-delfiny/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_hvezdami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_kockou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_konem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-konem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_letadlem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-letadlem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_lodkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_nocni_kockou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-nocni-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_precliky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_rybkami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_rybkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_tulipany.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_velrybou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-velrybou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_s_zelvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-s-zelvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_se_sardinkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-se-sardinkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_se_sluncem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_se_sluncem_2.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-se-sluncem-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_se_spiralou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_se_srdcem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_siroky_se_srdicky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-siroky-se-srdicky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter1a.jpg": [
+    "src/assets/products/hrnek-soliter-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter1b.jpg": [
+    "src/assets/products/hrnek-soliter-1/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2a.jpg": [
+    "src/assets/products/hrnek-soliter-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_soliter2b.jpg": [
+    "src/assets/products/hrnek-soliter-2/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_autem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-autem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_capem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_kockou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-konem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_konskou_hlavou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-konskou-hlavou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_kotvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-kotvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_letadlem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-letadlem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_lodkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_rybkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_tulipany.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_velrybou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-velrybou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_s_zelvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-s-zelvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_se_sluncem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_se_spiralou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_stredni_se_srdcem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-stredni-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_autem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-autem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_capem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_destnikem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-destnikem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_hvezdami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_kockou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_konem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-konem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_konskou_hlavou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-konskou-hlavou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_kotvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-kotvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_letadlem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-letadlem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_lodkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_nocni_kockou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_precliky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_rybkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_rybkou_2.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-rybkou-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_sardinkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-se-sardinkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_sluncem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_sluncem_2.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-se-sluncem-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_spiralou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_srdcem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_srdci.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_tulipanem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-tulipanem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_uzky_s_velrybou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-uzky-s-velrybou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_ctverce.jpg": [
+    "src/assets/products/hrnek-velky-s-razitkem-ctverce/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_drak.jpg": [
+    "src/assets/products/hrnek-velky-s-razitkem-draka/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_hvezdy.jpg": [
+    "src/assets/products/hrnek-velky-s-razitkem-hvezdy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_veliky_razitko_kotva.jpg": [
+    "src/assets/products/hrnek-velky-s-razitkem-kotvy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_den.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-den-a-noc/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_noc.jpg": [
+    "src/assets/products/porcelanovy-hrnek-bily-s-kolem/02.jpg",
+    "src/assets/products/porcelanovy-hrnek-velky-den-a-noc/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_andelem_na_kole.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-andelem-na-kole/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_andelem_se_srdcem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-andelem-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_autem_v_ramecku.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-autem-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_bezcem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-bezcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_bicyklem_v_ramecku.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-bicyklem-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_capem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_delfinem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-delfinem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_delfinem_a_lodkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-delfinem-a-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_delfiny.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-delfiny/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_destnikem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-destnikem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_divkou_na_kolobezce.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-divkou-na-kolobezce/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_hvezdami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_kocarkem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-kocarkem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_kockou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_kolobezkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-kolobezkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_konem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-konem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_konskou_hlavou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-konskou-hlavou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_kotvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-kotvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_letadlem_v_ramecku.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-letadlem-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_lodkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_lyzarem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-lyzarem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_lyzarem2.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-lyzarem/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_modelarem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-modelarem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_pegasem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-pegasem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_precliky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_prouzky.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-prouzky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_rybkami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_rybkou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_rybkou_v_ramecku.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-rybkou-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_tulipanem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-tulipanem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_tulipany.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-kocarkem/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_zelvou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-zelvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_s_zokejem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-s-zokejem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_se_sluncem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_se_sovou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-se-sovou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_se_spiralami.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_se_spiralou.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_se_srdcem.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrnek_velky_se_srdci.jpg": [
+    "src/assets/products/porcelanovy-hrnek-velky-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrneksespiralou-scaled.jpg": [
+    "src/assets/products/hrnek-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/hrneksrybkami-scaled.jpg": [
+    "src/assets/products/hrnek-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_bicykly.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-mala-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_s_rybkami.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-mala-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_mala_se_srdci.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-mala-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_rybkami.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-stredni-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_s_tulipany.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-stredni-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_stredni_se_srdci.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-stredni-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_s_hvezdami.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-velka-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_kulata_velka_se_spiralami.jpg": [
+    "src/assets/products/porcelanova-konev-kulata-velka-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_bicykly.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_capy.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-capy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_capy2.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-capy-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_kockami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-kockami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_lodickami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-lodickami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_lodkami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_precliky.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_pruhy.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-pruhy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_rybkami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_rybkou.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_s_tulipany.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_se_sluncem.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_se_srdcem.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_se_srdci.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konev_rovna_mala_se_srdicky.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-mala-se-srdicky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_bila.jpg": [
+    "src/assets/products/konvice-bila/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra.jpg": [
+    "src/assets/products/konvice-modra/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem1.jpg": [
+    "src/assets/products/konvice-modra-s-plastickym-dekorem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_modra_s_plastovym_dekorem2.jpg": [
+    "src/assets/products/konvice-modra-s-plastickym-dekorem/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_bicykly_v_ramecku.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-s-bicykly-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_pruhy.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-s-pruhy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_rybkami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_s_rybkami2.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-s-rybkami-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_spiralou.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_srdcem.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_stredni_se_srdci.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-stredni-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velk_se_spiralou.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velka_s_capy.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-s-capy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velka_s_pruhy.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-s-kockami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velka_s_rybkami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velka_s_rybkami2.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-s-rybkami-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velka_s_rybkami_v_ramecku.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-s-rybkami-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_rovna_velka_se_spiralami.jpg": [
+    "src/assets/products/porcelanova-konev-rovna-velka-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_s_dekorem.jpg": [
+    "src/assets/products/konvice-s-dekorem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_s_dekorem1.jpg": [
+    "src/assets/products/konvice-s-dekorem/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_s_dekorem2.jpg": [
+    "src/assets/products/konvice-s-dekorem/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_s_plastickym_dekorem.jpg": [
+    "src/assets/products/konvice-s-plastickym-dekorem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_s_plastickym_dekorem1.jpg": [
+    "src/assets/products/konvice-s-plastickym-dekorem/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_s_plastickym_dekorem2.jpg": [
+    "src/assets/products/konvice-s-plastickym-dekorem/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_zelena_1.jpg": [
+    "src/assets/products/konvice-zelena-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_zelena_2.jpg": [
+    "src/assets/products/konvice-zelena-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_zelena_s_plastovym_dekorem1.jpg": [
+    "src/assets/products/konvice-zelena-s-plastickym-dekorem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvice_zelena_s_plastovym_dekorem2.jpg": [
+    "src/assets/products/konvice-zelena-s-plastickym-dekorem/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/konvicka_pozlacena.jpg": [
+    "src/assets/products/konvicka-pozlacena/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/kulata_miska_mala1.jpg": [
+    "src/assets/products/miska-kulata-mala-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/kulata_miska_mala2.jpg": [
+    "src/assets/products/miska-kulata-mala-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/kulata_miska_mala4.jpg": [
+    "src/assets/products/miska-kulata-mala-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/kulata_miska_mala5.jpg": [
+    "src/assets/products/miska-kulata-mala-5/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mala_vaza_s_pastickymi_pruhy.jpg": [
+    "src/assets/products/mala-vaza-s-plastickymi-pruhy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/martin-kos–portret.jpg": [
+    "src/assets/pages/o-nas/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/misa_lodky-1.jpg": [
+    "src/assets/products/misa-na-ovoce-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_kulata_salatova_lodky.jpg": [
+    "src/assets/products/miska-kulata-salatova-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_kulata_salatova_rybky.jpg": [
+    "src/assets/products/miska-kulata-salatova-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_kulata_salatova_vlastovky.jpg": [
+    "src/assets/products/miska-kulata-salatova-s-vlasovkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_autem.jpg": [
+    "src/assets/products/miska-mala-s-autem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicyklem.jpg": [
+    "src/assets/products/miska-mala-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_bicykly.jpg": [
+    "src/assets/products/miska-mala-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_capem.jpg": [
+    "src/assets/products/miska-mala-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_kockama.jpg": [
+    "src/assets/products/miska-mala-s-kockama/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_kruhyarybkou.jpg": [
+    "src/assets/products/miska-mala-s-kruhy-a-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_letadlem.jpg": [
+    "src/assets/products/miska-mala-s-letadlem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_lodkami.jpg": [
+    "src/assets/products/miska-mala-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_pegasem.jpg": [
+    "src/assets/products/miska-mala-s-pegasem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_rybkou.jpg": [
+    "src/assets/products/miska-mala-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_sluncem.jpg": [
+    "src/assets/products/miska-mala-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_spiralou.jpg": [
+    "src/assets/products/miska-mala-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_srdci.jpg": [
+    "src/assets/products/miska-mala-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_velrybou.jpg": [
+    "src/assets/products/miska-mala-s-velrybou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_mala_s_zelvou.jpg": [
+    "src/assets/products/miska-mala-s-zelvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_ovalna_a.jpg": [
+    "src/assets/products/miska-ovalna/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_ovalna_b.jpg": [
+    "src/assets/products/miska-ovalna/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_ovalna_c.jpg": [
+    "src/assets/products/miska-ovalna/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_Pegasem.jpg": [
+    "src/assets/products/miska-polevkova-s-pegasem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem.jpg": [
+    "src/assets/products/miska-polevkova-s-andelem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_andelem_nakole.jpg": [
+    "src/assets/products/miska-polevkova-s-andelem-na-kole/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_auty.jpg": [
+    "src/assets/products/miska-polevkova-s-auty/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_bicyklem.jpg": [
+    "src/assets/products/miska-polevkova-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_bicykly.jpg": [
+    "src/assets/products/miska-polevkova-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_capem.jpg": [
+    "src/assets/products/miska-polevkova-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_dvemanakolobezce.jpg": [
+    "src/assets/products/miska-polevkova-s-dvema-na-kolobezce/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_kockami.jpg": [
+    "src/assets/products/miska-polevkova-s-kockami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_lodkami.jpg": [
+    "src/assets/products/miska-polevkova-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_precliky.jpg": [
+    "src/assets/products/miska-polevkova-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_rybkami.jpg": [
+    "src/assets/products/miska-polevkova-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_rybkou.jpg": [
+    "src/assets/products/miska-polevkova-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_rybkou_vramecku.jpg": [
+    "src/assets/products/miska-polevkova-s-rybkou-v-ramecku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_sluncem.jpg": [
+    "src/assets/products/miska-polevkova-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_spiralami.jpg": [
+    "src/assets/products/miska-polevkova-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_spiralou.jpg": [
+    "src/assets/products/miska-polevkova-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_srdci.jpg": [
+    "src/assets/products/miska-polevkova-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_tulipany.jpg": [
+    "src/assets/products/miska-polevkova-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_polevkova_s_zelvami.jpg": [
+    "src/assets/products/miska-polevkova-s-zelvami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_a.jpg": [
+    "src/assets/products/miska-salatova/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_b.jpg": [
+    "src/assets/products/miska-salatova/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_bicykly.jpg": [
+    "src/assets/products/miska-salatova-s-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_capi.jpg": [
+    "src/assets/products/miska-salatova-s-capy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_kocky.jpg": [
+    "src/assets/products/miska-salatova-s-kockami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_konici.jpg": [
+    "src/assets/products/miska-salatova-s-koniky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_lodky.jpg": [
+    "src/assets/products/miska-salatova-s-lodkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_malymibicykly.jpg": [
+    "src/assets/products/miska-salatova-s-malymi-bicykly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky2.jpg": [
+    "src/assets/products/miska-salatova-s-rybkami-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky3.jpg": [
+    "src/assets/products/miska-salatova-s-rybkami-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_rybky5.jpg": [
+    "src/assets/products/miska-salatova-s-rybkami-5/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_slunce.jpg": [
+    "src/assets/products/miska-salatova-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_spiraly.jpg": [
+    "src/assets/products/miska-salatova-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_srdce.jpg": [
+    "src/assets/products/miska-salatova-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_tulipany.jpg": [
+    "src/assets/products/miska-salatova-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_salatova_vetvicky.jpg": [
+    "src/assets/products/miska-salatova-s-vetvickami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_snidane_a.jpg": [
+    "src/assets/products/miska-snidane/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_snidane_b.jpg": [
+    "src/assets/products/miska-snidane/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_1.jpg": [
+    "src/assets/products/miska-srdce-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/miska_srdce_2.jpg": [
+    "src/assets/products/miska-srdce-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_precliky.jpg": [
+    "src/assets/products/porcelanova-mlicenka-mala-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mala_s_pruhy.jpg": [
+    "src/assets/products/porcelanova-mlicenka-mala-s-pruhy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_s_lodkou.jpg": [
+    "src/assets/products/porcelanova-mlicenka-mala-s-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_mama_se_srdci.jpg": [
+    "src/assets/products/porcelanova-mlicenka-mala-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_kockami.jpg": [
+    "src/assets/products/porcelanova-mlicenka-velka-s-kockami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_precliky.jpg": [
+    "src/assets/products/porcelanova-mlicenka-velka-s-precliky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_rybkou.jpg": [
+    "src/assets/products/porcelanova-mlicenka-velka-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/mlicenka_velka_s_čápy.jpg": [
+    "src/assets/products/porcelanova-mlicenka-velka-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/modra_vaza.jpg": [
+    "src/assets/products/modra-vaza/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_bleskem.jpg": [
+    "src/assets/products/porcelanovy-panak-s-bleskem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_malym_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-panak-s-malym-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_srdci.jpg": [
+    "src/assets/products/porcelanovy-panak-se-srdci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_tercem.jpg": [
+    "src/assets/products/porcelanovy-panak-s-tercem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/panak_s_velkym_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-panak-s-velkym-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly.jpg": [
+    "src/assets/products/porcelanovy-podsalek-maly/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_maly1.jpg": [
+    "src/assets/products/porcelanovy-podsalek-maly/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky.jpg": [
+    "src/assets/products/porcelanovy-podsalek-velky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/podsalek_velky1.jpg": [
+    "src/assets/products/porcelanovy-podsalek-velky/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_autem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-autem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_bicyklem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-bicyklem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_capem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-capem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_delfiny.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-delfiny/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_destnikem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-destnikem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_hvezdami.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-hvezdami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_jizdnim_kolem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-jizdnim-kolem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_kockou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_kolecky.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-kolecky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_konem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-konem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_konem_2.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-konem-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_kotvou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-kotvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_letadlem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-letadlem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_lodkou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-lodkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_nocni_kockou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-nocni-kockou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_rybkou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-rybkou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_rybkou_2.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-rybkou-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_tulipanem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-tulipanem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_velrybou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-velrybou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_s_zelvou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-s-zelvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_se_sardinkami.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-se-sardinkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_se_sluncem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-se-sluncem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_se_sluncem_2.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-se-sluncem-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_se_spiralou.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-se-spiralou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_se_srdcem.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-se-srdcem-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/porcelanovy_mini_hrnek_se_srdci.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-se-srdcem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku.jpg": [
+    "src/assets/products/jidelni-souprava/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku_1.jpg": [
+    "src/assets/products/jidelni-souprava/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku_couvert.jpg": [
+    "src/assets/products/jidelni-souprava/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku_dezertni.jpg": [
+    "src/assets/products/jidelni-souprava/04.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku_hluboky.jpg": [
+    "src/assets/products/jidelni-souprava/05.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/sada_na_objednavku_jidelni.jpg": [
+    "src/assets/products/jidelni-souprava/06.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/tac_ovalny.jpg": [
+    "src/assets/products/tac-ovalny/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_hluboky_1.jpg": [
+    "src/assets/products/talir-hluboky-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_hluboky_2.jpg": [
+    "src/assets/products/talir-hluboky-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_hluboky_3.jpg": [
+    "src/assets/products/talir-hluboky-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_2.jpg": [
+    "src/assets/products/talir-jidelni-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_jidelni_3.jpg": [
+    "src/assets/products/talir-jidelni-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_capi.jpg": [
+    "src/assets/products/talir-praktik-s-capy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky.jpg": [
+    "src/assets/products/talir-praktik-s-rybkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky2.jpg": [
+    "src/assets/products/talir-praktik-s-rybkami-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_rybky3.jpg": [
+    "src/assets/products/talir-praktik-s-rybkami-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_spiraly.jpg": [
+    "src/assets/products/talir-praktik-se-spiralami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany.jpg": [
+    "src/assets/products/talir-praktik-s-tulipany/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_praktik_tulipany2.jpg": [
+    "src/assets/products/talir-praktik-s-tulipany-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny1.jpg": [
+    "src/assets/products/talir-zavesny-1/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny2.jpg": [
+    "src/assets/products/talir-zavesny-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny3.jpg": [
+    "src/assets/products/talir-zavesny-3/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/talir_zavesny4.jpg": [
+    "src/assets/products/talir-zavesny-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/vaza_s_vazkami.jpg": [
+    "src/assets/products/vaza-s-vazkami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/03/vaza_s_vazkami1.jpg": [
+    "src/assets/products/vaza-s-vazkami/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku.jpg": [
+    "src/assets/products/jidelni-servis-na-objednavku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/jidelni_servis_na_objednavku1.jpg": [
+    "src/assets/products/jidelni-servis-na-objednavku/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavku.jpg": [
+    "src/assets/products/obklad-na-objednavku/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/obklad_na_objednavku1.jpg": [
+    "src/assets/products/obklad-na-objednavku/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_cervena.jpg": [
+    "src/assets/products/uchytka-kocka-cervene-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_nastene.jpg": [
+    "src/assets/products/uchytka-kocka-cervene-oci/02.jpg",
+    "src/assets/products/uchytka-kocka-stredne-modre-oci/02.jpg",
+    "src/assets/products/uchytka-kocka-svetle-modre-oci/02.jpg",
+    "src/assets/products/uchytka-kocka-tmave-modre-oci/02.jpg",
+    "src/assets/products/uchytka-kocka-zelene-oci/02.jpg",
+    "src/assets/products/uchytka-kocka-zlute-oci/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_stredne_modra.jpg": [
+    "src/assets/products/uchytka-kocka-stredne-modre-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_svetle_modra.jpg": [
+    "src/assets/products/uchytka-kocka-svetle-modre-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_tmave_modra.jpg": [
+    "src/assets/products/uchytka-kocka-tmave-modre-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zelena.jpg": [
+    "src/assets/products/uchytka-kocka-zelene-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_kocka_zluta.jpg": [
+    "src/assets/products/uchytka-kocka-zlute-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_cervena.jpg": [
+    "src/assets/products/uchytka-medvidek-cervene-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_fialova.jpg": [
+    "src/assets/products/uchytka-medvidek-fialove-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_nastene.jpg": [
+    "src/assets/products/uchytka-medvidek-cervene-oci/02.jpg",
+    "src/assets/products/uchytka-medvidek-fialove-oci/02.jpg",
+    "src/assets/products/uchytka-medvidek-olivove-oci/02.jpg",
+    "src/assets/products/uchytka-medvidek-oranzove-oci/02.jpg",
+    "src/assets/products/uchytka-medvidek-svetle-modre-oci/02.jpg",
+    "src/assets/products/uchytka-medvidek-zelene-oci/02.jpg",
+    "src/assets/products/uchytka-medvidek-zlute-oci/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_olivova.jpg": [
+    "src/assets/products/uchytka-medvidek-olivove-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_oranzova.jpg": [
+    "src/assets/products/uchytka-medvidek-oranzove-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_svetle_modra.jpg": [
+    "src/assets/products/uchytka-medvidek-svetle-modre-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_zelena.jpg": [
+    "src/assets/products/uchytka-medvidek-zelene-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/uchytka_medvidek_zluta.jpg": [
+    "src/assets/products/uchytka-medvidek-zlute-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_modra_fialkove_a_olivove_skvrny_celek.jpg": [
+    "src/assets/products/vesak-mala-kocka-s-fialovymi-a-olivovymi-skvrnami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_modra_fialkove_a_olivove_skvrny_hlava.jpg": [
+    "src/assets/products/vesak-mala-kocka-s-fialovymi-a-olivovymi-skvrnami/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_modra_fialkove_skvrny_celek.jpg": [
+    "src/assets/products/vesak-mala-kocka-s-fialovymi-skvrnami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_modra_fialkove_skvrny_hlava.jpg": [
+    "src/assets/products/vesak-mala-kocka-s-fialovymi-skvrnami/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_modra_modre_skvrny_celek.jpg": [
+    "src/assets/products/vesak-mala-kocka-s-modrymi-skvrnami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_modra_modre_skvrny_hlava.jpg": [
+    "src/assets/products/vesak-mala-kocka-s-modrymi-skvrnami/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_zelena.jpg": [
+    "src/assets/products/vesak-mala-kocka-se-zelenyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_mala_kocka_zluta.jpg": [
+    "src/assets/products/vesak-mala-kocka-se-zlutyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_modre_skvrny_celek.jpg": [
+    "src/assets/products/vesak-male-zvire-se-skvrnami/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_modre_skvrny_hlava.jpg": [
+    "src/assets/products/vesak-male-zvire-se-skvrnami/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_oranzove_celek.jpg": [
+    "src/assets/products/vesak-male-zvire-se-oranzovyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_oranzove_hlava.jpg": [
+    "src/assets/products/vesak-male-zvire-se-oranzovyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_svetle_modre_celek.jpg": [
+    "src/assets/products/vesak-male-zvire-s-modryma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_svetle_modre_hlava.jpg": [
+    "src/assets/products/vesak-male-zvire-s-modryma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_tyrkys_celek.jpg": [
+    "src/assets/products/vesak-male-zvire-se-tyrkysovyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_male_zvire_tyrkys_hlava.jpg": [
+    "src/assets/products/vesak-male-zvire-se-tyrkysovyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_kocka_fialova_celek.jpg": [
+    "src/assets/products/vesak-stredni-kocka-s-fialovyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_kocka_fialova_hlava.jpg": [
+    "src/assets/products/vesak-stredni-kocka-s-fialovyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_kocka_modra_celek.jpg": [
+    "src/assets/products/vesak-stredni-kocka-s-modryma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_kocka_modra_hlava.jpg": [
+    "src/assets/products/vesak-stredni-kocka-s-modryma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_kocka_zluta_celek.jpg": [
+    "src/assets/products/vesak-stredni-kocka-se-zlutyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_kocka_zluta_hlava.jpg": [
+    "src/assets/products/vesak-stredni-kocka-se-zlutyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_1.jpg": [
+    "src/assets/products/vesak-stredni-zvire/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_2.jpg": [
+    "src/assets/products/vesak-stredni-zvire/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_stredni_zvire_3celek.jpg": [
+    "src/assets/products/vesak-stredni-zvire/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_uzke_modre_celek.jpg": [
+    "src/assets/products/vesak-uzke-zvire-s-modryma-ocima/01.jpg",
+    "src/assets/products/vesak-uzke-zvire-se-zlutyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_uzke_modre_hlava.jpg": [
+    "src/assets/products/vesak-uzke-zvire-s-modryma-ocima/02.jpg",
+    "src/assets/products/vesak-uzke-zvire-se-zlutyma-ocima/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_uzke_zlute_celek.jpg": [
+    "src/assets/products/vesak-uzke-zvire-se-zlutyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_fialova_celek.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-fialkovyma-ocima/01.jpg",
+    "src/assets/products/vesak-velka-kocka-s-napisy/06.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/04.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_fialova_hlava.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-fialkovyma-ocima/02.jpg",
+    "src/assets/products/vesak-velka-kocka-s-napisy/05.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/03.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_jenmodra_celek.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-fialkovyma-ocima/06.jpg",
+    "src/assets/products/vesak-velka-kocka-s-modryma-ocima/01.jpg",
+    "src/assets/products/vesak-velka-kocka-s-napisy/10.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/08.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_jenmodra_hlava.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-fialkovyma-ocima/05.jpg",
+    "src/assets/products/vesak-velka-kocka-s-modryma-ocima/02.jpg",
+    "src/assets/products/vesak-velka-kocka-s-napisy/09.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/07.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_modra_celek.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-napisy/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_modra_hlava.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-napisy/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_oranzova_celek.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-napisy/04.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_oranzova_hlava.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-napisy/03.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_zelena_celek.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-fialkovyma-ocima/04.jpg",
+    "src/assets/products/vesak-velka-kocka-s-napisy/08.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/06.jpg",
+    "src/assets/products/vesak-velka-kocka-se-zelenyma-ocima/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velka_kocka_zelena_hlava.jpg": [
+    "src/assets/products/vesak-velka-kocka-s-fialkovyma-ocima/03.jpg",
+    "src/assets/products/vesak-velka-kocka-s-napisy/07.jpg",
+    "src/assets/products/vesak-velka-kocka-s-oranzovyma-ocima/05.jpg",
+    "src/assets/products/vesak-velka-kocka-se-zelenyma-ocima/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velke_zvire2_celek.jpg": [
+    "src/assets/products/vesak-velke-zvire-ii/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velke_zvire2_hlava.jpg": [
+    "src/assets/products/vesak-velke-zvire-ii/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velke_zvire_celek_otoc.jpg": [
+    "src/assets/products/vesak-velke-zvire/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/04/vesak_velke_zvire_hlava.jpg": [
+    "src/assets/products/vesak-velke-zvire/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/05/uchytka_kocka_oranzove_nastene.jpg": [
+    "src/assets/products/uchytka-kocka-oranzove-oci/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/05/vesak_stredni_zvire2_1.jpg": [
+    "src/assets/products/vesak-stredni-zvire-ii/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/05/vesak_stredni_zvire2_2.jpg": [
+    "src/assets/products/vesak-stredni-zvire-ii/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/07/IMG_5949-scaled.jpg": [
+    "src/assets/products/talir-dezertni/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/07/IMG_5950-scaled.jpg": [
+    "src/assets/products/talir-hluboky-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/07/IMG_5951-scaled.jpg": [
+    "src/assets/products/talir-jidelni-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2020/07/IMG_5968-scaled.jpg": [
+    "src/assets/products/miska-hranata-mala-8/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/dk_hrnek3-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-5/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/dk_hrnek_kolo-scaled.jpg": [
+    "src/assets/products/porcelanovy-hrnek-bily-s-kolem/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/dk_miska_srdce2-scaled.jpg": [
+    "src/assets/products/miska-srdce-4/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/dk_podsalek4-scaled.jpg": [
+    "src/assets/products/salek-a-podsalek-5/02.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/dk_tac_velky2-scaled.jpg": [
+    "src/assets/products/tac-dlouhy-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_kotva-scaled.jpg": [
+    "src/assets/products/hrnek-na-presso-s-kotvou-2/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_hrnek_ryba-scaled.jpg": [
+    "src/assets/products/hrnek-na-presso-s-kotvou/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_panaky1-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-rybarsky/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_panaky2-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-zahradkar/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_panaky3-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-proti-viru/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_panaky4-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-na-imunitu/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/01/mk_panaky5-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-navod-na-pouziti-pro-cyklisty/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/02/IMG_2186-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-plachetnice/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/02/IMG_2187-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-kotva/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/02/IMG_2188-2-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-elktrokolo/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/02/IMG_2189-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-terc/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/02/IMG_2191-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-apreski/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2022/02/IMG_2192-scaled.jpg": [
+    "src/assets/products/porcelanovy-panak-smajlik/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2024/12/IMG_5998-scaled.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-bike-forever/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2024/12/IMG_5999-scaled.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-ski-forever/01.jpg"
+  ],
+  "https://kosovi.cz/wp-content/uploads/2024/12/IMG_6001-scaled.jpg": [
+    "src/assets/products/porcelanovy-mini-hrnek-wing-foil-forever/01.jpg"
+  ]
+}
