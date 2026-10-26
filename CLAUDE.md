@@ -57,7 +57,8 @@ TODO.md                # open questions and missing facts
 npm run dev            # Astro dev server
 npm run build          # must pass before every commit
 npx astro check        # type check (also npm run check)
-npm run import         # runs scripts/import-wp.ts
+npm run import         # runs scripts/import-wp.ts offline from scripts/data
+npm run import -- --fetch  # downloads fresh JSON and images from the old site first
 npx wrangler pages dev # local run with the order function
 ```
 
@@ -88,22 +89,26 @@ The old site is read-only for us. Never log in, never write to it.
 
 Old shop counts for sanity checks: 294 modrobílý porcelán, 37 Martin, 85 Daniela.
 
+**Done (phase 2).** The Store API works; the import matched all counts. Report in `scripts/data/import-report.md`. Images are the largest size WordPress serves; 48 of them WordPress had scaled to 2560 px on upload, the camera originals (about 150 MB) were not downloaded. Each product owns `src/assets/products/<slug>/01.jpg…`, even where the old shop reused a photo, so swapping a photo touches one product only. Re-running the import overwrites `src/content/products/`, so after hand edits start (featured, makers, fixes) stop re-running it or teach it to keep them.
+
 ## Product schema
 
 ```
 title: string
 slug: string                 # keep the old slug
 line: "spolecna" | "martin" | "daniela"
-category: string             # see categories below
-makers: { thrownBy?: "martin", paintedBy?: "daniela" }
+category?: string            # see categories below; 2 old products have none
+subcategory?: string         # old shop subcategory slug (size, shape)
+makers: { thrownBy?: "martin", paintedBy?: "daniela" }  # per-product override; empty = line default in src/config/lines.ts
 price: number | null         # CZK; null = "cena na dotaz"
-stock: number
+stock: number | null         # null = in stock, quantity not tracked by the old shop
 featured: boolean            # signature pieces, Sami picks them
 catalogNo?: string
 dimensions?: { heightCm?: number, diameterCm?: number, volumeMl?: number }
 technique?: string
 care?: { dishwasher?: boolean, microwave?: boolean }
 images: { src: image, alt: string }[]
+options?: { name: string, values: string[] }[]  # customer choices, e.g. eye colour
 description?: string
 oldUrl?: string
 ```
