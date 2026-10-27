@@ -8,11 +8,11 @@ The owner of this repo is Sami (architect, iOS developer). He makes the design a
 
 ## The core idea
 
-One studio, two pairs of hands. **Martin Kos throws porcelain on the potter's wheel. Daniela Kosová paints it** (cobalt under the glaze) and also makes her own artwork.
+Two trained artists, one studio. Martin Kos is the craftsman of the two (potter, ceramics school in Bechyně), Daniela Kosová studied at UMPRUM. **They founded the brand in 1995 with the blue-and-white porcelain**, which is what people know them for: it has its own clientele and still sells. For several years Martin threw the pieces and Daniela painted them. **In recent years Martin makes all of it himself**, and Daniela works on her own art. Martin is also turning more to his own art. (Source: Sami, October 2026.)
 
-- The homepage leads with both of them and their joint work, not with a product grid.
-- The blue-and-white porcelain (modrobílý porcelán) is presented as their joint line. **UNCONFIRMED:** the old site calls it "náš" porcelán, but nobody has confirmed it is his forms with her painting. Keep this easy to change until Sami confirms.
-- Solo work branches off: Martin's thrown pieces (tea sets, teapots, vases, mugs with relief decoration) and Daniela's art (decors, design, paintings, tiles, sculpture), presented at gallery level, with "cena na dotaz" where a price is not set.
+- The site presents mainly the blue-and-white porcelain, then the art of both of them.
+- The homepage leads with the two of them and the blue-and-white porcelain, not with a product grid.
+- Daniela's art (decors, design, paintings, tiles, sculpture) is poorly presented on the old site; give it a proper gallery-level presentation. Martin's own work (tea sets, teapots, vases, mugs with relief decoration) the same way, with "cena na dotaz" where a price is not set.
 - Every product says who made it.
 - Lead with 12 to 20 signature pieces. The full catalogue (about 416 items) sits behind them.
 
@@ -163,6 +163,7 @@ If `.claude/skills/propagace/` exists, follow it for every piece of public copy.
 - Banned: "unikátní", "jedinečný", "100% originál", "nejkvalitnější", "špičkový", any superlative or sales cliché.
 - No em dashes. Commas and full stops. No exclamation marks. No emoji.
 - Vykání when addressing customers.
+- **Homepage claim (Sami's decision):** abstract, not technical, measured praise is allowed there. It carries three things: the blue-and-white porcelain, the art of both, and handmade work with decades of experience behind it. The banned-words list still applies.
 - **Never invent facts.** Use only the source facts below. Where something is missing, write `TODO(fakta): what is needed` and add it to `TODO.md`.
 - Czech typography: „uvozovky“, a non-breaking space after one-letter words (k, s, v, z, o, u, a, i) and between number and unit (`4 000 Kč`, `1 380 °C`), a non-breaking space as thousands separator, an en dash for ranges.
 - UI microcopy: plain verbs, sentence case, buttons say exactly what happens.
@@ -176,6 +177,8 @@ From the current O nás page. These are the only facts copy may use.
 **Martin Kos:** born 1959 in Hradec Králové. Both parents were ceramicists. Apprenticed as a potter in Týniště nad Orlicí. Graduated from the ceramics school in Bechyně, as did his parents and his grandfather. Worked at ÚVD Keramo Praha, independent since 1987. Learned to throw porcelain and has worked only in porcelain for over 25 years.
 
 **Daniela Kosová:** born in Bratislava. Studied ceramics at SUPŠ in Bratislava, then at UMPRUM in Prague. Trained in Andrej Rudavský's studio and in the porcelain factories in Dubí and Duchcov. Decorates underglaze (fired at 1390 °C), in-glaze (1250 °C) and overglaze including gilding (800 °C). Work in the collections of UPM Praha, Alšova jihočeská galerie, Slovenské centrum dizajnu in Bratislava, the museum in Darney (France), Porvoo (Finland), and private collections.
+
+**Brand:** founded in 1995 with the blue-and-white porcelain. For several years Martin threw and Daniela painted; in recent years Martin makes it all. Both have worked in the visual arts for decades.
 
 **Studio:** Na Vlčovce 6, 160 00 Praha 6. +420 607 635 393, +420 728 717 232, danielakosova@gmail.com. Courses in ceramics and porcelain on request.
 
@@ -206,7 +209,7 @@ From the current O nás page. These are the only facts copy may use.
 
 ## Open questions (mirror in TODO.md)
 
-- Is the blue-and-white line their joint work (his forms, her painting)?
+- Blue-and-white product credit: Martin makes it all now, older pieces were painted by Daniela. Which credit should a product page show (src/config/lines.ts, default "Točil Martin, malovala Daniela")?
 - Order mode: request or binding?
 - Shipping methods, prices, pickup location. Do they use Zásilkovna?
 - Which 12 to 20 pieces are the signature pieces?
