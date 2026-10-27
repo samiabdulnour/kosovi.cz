@@ -5,7 +5,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 ## Rozhodnutí
 
 - [ ] Modrobílý porcelán: značka vznikla v roce 1995, několik let Martin točil a Daniela malovala, poslední léta vyrábí všechno Martin. Jaký podpis má mít produkt? Teď se u všech 294 kusů zobrazuje „Točil Martin, malovala Daniela“ (`src/config/lines.ts`), což u novějších kusů nesedí.
-- [ ] Claim na úvod webu: vybrat z návrhů (abstraktní, s mírou chvály, bez technického popisu).
+- [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [ ] Daniela, kategorie Design (věšáčky, úchytky): platí u nich „Malovala Daniela“? Výchozí autoři řady jsou v `src/config/lines.ts`, u jednotlivého produktu se dají přepsat polem `makers`.
 - [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“, stránka O nás „až 1380 °C“. Které číslo platí?
 - [ ] Režim objednávky: nezávazná (`request`), nebo závazná (`binding`)? `src/config/order.ts`, zatím zástupně `request`.
