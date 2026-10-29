@@ -68,7 +68,7 @@ Work one phase at a time, on its own branch. Stop at the end of each phase and s
 
 1. **Scaffold.** Astro project, Cloudflare config, base layout, CSS tokens placeholder, i18n setup (cs default at `/`, en at `/en/`).
 2. **Import the old content** (details below).
-3. **Design plan.** Propose the visual system (see "Design direction") and wait for Sami's approval before building UI.
+3. **Design plan.** Done by Sami: `docs/design/kosovi_navrh_01.pdf` (see "Design direction"), applied to the preview in October 2026.
 4. **Pages and product templates.**
 5. **Cart and order flow.**
 6. **English version** of the core pages.
@@ -123,19 +123,18 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 
 | Route | Content |
 |---|---|
-| `/` | Both of them, the joint line, signature pieces, how to order |
-| `/kolekce/`, `/kolekce/<line>/`, `/kolekce/<line>/<category>/` | Collections, joint line first, filter by category (plain links to category pages). Line slugs: `modrobily-porcelan`, `martin-kos`, `daniela-kosova` (`src/config/lines.ts`) |
+| `/` | Looping photo strip, the claim, four blue-and-white pieces (open in the e-shop), Daniela and Martin (open their pages) |
+| `/kolekce/`, `/kolekce/<line>/`, `/kolekce/<line>/<entry>/`, `…/<n>/` | E-shop. "E-shop" in the menu opens the blue-and-white line. Category menu in four columns from the design, mapped onto the old shop data in `src/config/lines.ts`; twelve products a page. Line slugs: `modrobily-porcelan`, `martin-kos`, `daniela-kosova` |
 | `/produkt/<slug>/` | Product page (same URL as the old site) |
-| `/martin-kos/`, `/daniela-kosova/` | Artist pages: bio, how they work, their pieces (old URLs, now real pages instead of shop menus) |
-| `/jak-vznika/` | Throwing, drying, painting with cobalt, firing. Photos or short video per step. This page justifies the price |
-| `/o-nas/` | The studio, both bios short, collections and exhibitions as proof |
+| `/martin-kos/`, `/daniela-kosova/` | Artist pages: two fields, "Volné" (`…/volna-tvorba/`, their own art) and "Užité" (their part of the e-shop). Old URLs |
+| `/o-nas/` | The couple, the blue-and-white porcelain, the porcelain's technical qualities, both biographies with a CV. (Replaces the former `/jak-vznika/` page.) |
 | `/kurzy/` | Courses on request, gift voucher |
 | `/kontakt/` | Contact, workshop visits if Sami confirms they are possible |
 | `/kosik/` | Cart and order form (old URL) |
 | `/objednavka-odeslana/` | Confirmation |
 | `/obchodni-podminky/`, `/ochrana-osobnich-udaju/`, `/reklamace-a-odstoupeni/` | Legal. Sami supplies or approves the text |
 
-English at `/en/...` for home, collections, artist pages, how it's made, about, contact. Product pages in English can come later.
+English at `/en/...` for home, e-shop listings, artist pages, about, contact. Product pages in English can come later.
 
 **Product page must show:** who made it ("Točil Martin, malovala Daniela"), price or "cena na dotaz", size and volume, technique, care (dishwasher, microwave), a note that every piece is handmade and varies slightly, 4 to 6 large zoomable images including a scale shot and a detail of the painting, related pieces from the same set.
 
@@ -186,9 +185,14 @@ From the current O nás page. These are the only facts copy may use.
 
 ## Design direction
 
-- Subject: hand-thrown porcelain, cobalt on white, two makers. Photography carries the site. The layout stays quiet and lets the pieces breathe.
-- **Before building any UI, propose a design plan and wait for approval:** 4 to 6 named colours, typefaces and their roles, a type scale, ASCII wireframes of the homepage, a collection page and a product page. Sami has a strong typographic eye and makes the final call on type.
-- Avoid the generic looks: cream background with terracotta accent, rounded SaaS cards with soft shadows, all-caps eyebrow labels, sliders and carousels, fade-up animation on every section, "→" on every link.
+- **The design is `docs/design/kosovi_navrh_01.pdf`** (Sami, October 2026; the comments in it say where each block links). It overrides the earlier "avoid" list where they disagree.
+  - Brand "Porcelán Kosovi" on the left, the page title on the label line (38 % across, `--label-start`), the menu on the right: E-shop, O nás, Kurzy, Kontakt, EN.
+  - Everything in one size, bold, capitals (CSS `text-transform`, the source text stays in sentence case). Typeface not final: Sami picks it.
+  - Photographs sit on flat colour fields (`--field-*` in `src/styles/tokens.css`). Product tiles show the whole photo (`object-fit: contain`).
+  - Homepage strip loops slowly; it pauses on hover, focus and its button, and stands still for `prefers-reduced-motion`.
+  - E-shop: four menu columns, a 4 × 3 grid, the yellow page bar.
+- Subject: hand-thrown porcelain, cobalt on white, two makers. Photography carries the site.
+- Avoid: cream background with terracotta accent, rounded SaaS cards with soft shadows, fade-up animation on every section.
 - Product images large, zoomable, with a simple lightbox. **Never disable pinch zoom.** The old site did, which is especially bad for detailed painting.
 - Quality floor: responsive down to 360 px, visible keyboard focus, `prefers-reduced-motion` respected, Czech alt text on every image, strong Lighthouse scores.
 - Current photos are from 2020 and a new shoot is planned. Make swapping images trivial.

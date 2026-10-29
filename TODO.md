@@ -6,6 +6,12 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 
 - [ ] Modrobílý porcelán: značka vznikla v roce 1995, několik let Martin točil a Daniela malovala, poslední léta vyrábí všechno Martin. Jaký podpis má mít produkt? Teď se u všech 294 kusů zobrazuje „Točil Martin, malovala Daniela“ (`src/config/lines.ts`), což u novějších kusů nesedí.
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
+- [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
+- [ ] Písmo: návrh používá tučný grotesk, náhled zatím systémový Helvetica/Arial. Které písmo?
+- [ ] Košík v hlavičce: v návrhu není, e-shop ho ale potřebuje (fáze 5). Kam ho dát?
+- [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Hrnek Štefan, Talíř jídelní, Talíř malý, Talíř polévkový, Odkládátka. Sporné mapování: „Hrnek malý“ = dřívější „Mini“? „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`)
+- [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
+- [ ] Výběr čtyř kusů modrobílého porcelánu na úvod a fotografie do pásu (`src/config/home.ts`).
 - [ ] Daniela, kategorie Design (věšáčky, úchytky): platí u nich „Malovala Daniela“? Výchozí autoři řady jsou v `src/config/lines.ts`, u jednotlivého produktu se dají přepsat polem `makers`.
 - [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“, stránka O nás „až 1380 °C“. Které číslo platí?
 - [ ] Režim objednávky: nezávazná (`request`), nebo závazná (`binding`)? `src/config/order.ts`, zatím zástupně `request`.
@@ -20,6 +26,11 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Písmo, barvy a typografická škála (fáze 3, návrh designu).
 
 ## Chybějící fakta
+
+- [ ] Společná fotografie manželů (O nás), fotografie z dílny.
+- [ ] Fotografie a popisky volné tvorby Martina i Daniely (stránky „Volné“).
+- [ ] Instagram: název účtu (patička).
+- [ ] CV Martina, výstavy obou.
 
 - [ ] Martin: „přes 25 let pracuje pouze s porcelánem“ je údaj z webu z roku 2020. Aktualizovat.
 - [ ] Martin: Galerie Svatoš uvádí třetí generaci hrnčířů a tenkostěnný porcelán s drobnými otvory (krajkový vzor). Použít?
