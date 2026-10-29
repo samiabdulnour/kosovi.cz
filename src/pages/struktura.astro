@@ -1,7 +1,7 @@
 ---
 // Overview of the new site structure for the preview. Remove before launch.
 import Note from '../components/wire/Note.astro';
-import { lines } from '../config/lines';
+import { lines, matches, type Line, type MenuItem } from '../config/lines';
 import Base from '../layouts/Base.astro';
 import { alternatesOf, collectionPath, pathOf, routes, type RouteKey } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
@@ -11,12 +11,13 @@ import { cz } from '../lib/typography';
 type Status = 'struktura' | 'data z importu' | 'čeká na text' | 'fáze 5';
 
 const pages: { key: RouteKey; name: string; status: Status; note?: string }[] = [
-  { key: 'home', name: 'Úvod', status: 'struktura', note: 'Oba autoři, společná řada, vybrané kusy, jak objednat' },
-  { key: 'collections', name: 'Kolekce', status: 'data z importu', note: 'Společná řada první, filtr podle kategorie' },
-  { key: 'martin', name: 'Martin Kos', status: 'struktura', note: 'Stará adresa, nově skutečná stránka autora' },
-  { key: 'daniela', name: 'Daniela Kosová', status: 'struktura', note: 'Stará adresa, nově skutečná stránka autorky' },
-  { key: 'process', name: 'Jak vzniká', status: 'čeká na text', note: 'Točení, sušení, malba kobaltem, výpal' },
-  { key: 'about', name: 'O nás', status: 'čeká na text' },
+  { key: 'home', name: 'Úvod', status: 'struktura', note: 'Pás fotografií, claim, výběr modrobílého porcelánu, Daniela a Martin' },
+  { key: 'collections', name: 'E-shop', status: 'data z importu', note: 'Přehled tří kolekcí, odkaz E-shop v menu vede rovnou na modrobílý porcelán' },
+  { key: 'martin', name: 'Martin Kos', status: 'struktura', note: 'Volné a Užité, Užité vede do jeho části e-shopu' },
+  { key: 'martinFree', name: 'Martin Kos, volná tvorba', status: 'čeká na text', note: 'Chybí fotografie' },
+  { key: 'daniela', name: 'Daniela Kosová', status: 'struktura', note: 'Volné a Užité, Užité vede do její části e-shopu' },
+  { key: 'danielaFree', name: 'Daniela Kosová, volná tvorba', status: 'čeká na text', note: 'Chybí fotografie' },
+  { key: 'about', name: 'O nás', status: 'čeká na text', note: 'Manželé Kosovi, modrobílý porcelán, technologie, životopisy a CV' },
   { key: 'courses', name: 'Kurzy', status: 'čeká na text', note: 'Kurzy na požádání, dárkový poukaz' },
   { key: 'contact', name: 'Kontakt', status: 'struktura' },
   { key: 'cart', name: 'Košík', status: 'fáze 5', note: 'Stará adresa' },
@@ -27,8 +28,8 @@ const pages: { key: RouteKey; name: string; status: Status; note?: string }[] = 
 ];
 
 const products = await getProducts();
-const count = (line: string, category?: string) =>
-  products.filter((p) => p.line === line && (!category || p.category === category)).length;
+const count = (line: Line, entry?: MenuItem) =>
+  products.filter((p) => p.line === line.key && (!entry || matches(entry, p))).length;
 
 // A few product pages that show the different cases of the template.
 const examples = [
@@ -45,10 +46,9 @@ function enPath(key: RouteKey): string | undefined {
 }
 ---
 
-<Base title="Struktura webu" description="Přehled stránek nového webu kosovi.cz." alternates={alternatesOf('structure')}>
+<Base title="Struktura webu" description="Přehled stránek nového webu kosovi.cz." alternates={alternatesOf('structure')} label="Struktura webu">
   <div class="section wrap">
     <div class="section-head">
-      <h1>Struktura webu</h1>
       <p class="lead">Přehled všech stránek nového webu a jejich stavu. Slouží jen pro náhled, před spuštěním se odstraní.</p>
     </div>
 
@@ -99,22 +99,27 @@ function enPath(key: RouteKey): string | undefined {
       </table>
     </div>
 
-    <h2 class="sub">Kolekce a kategorie</h2>
+    <h2 class="sub">E-shop a kategorie</h2>
     <ul class="tree">
       {
         lines.map((line) => (
           <li>
-            <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a> ({count(line.key)}){' '}
+            <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a> ({count(line)}){' '}
             <span class="muted">
               ({collectionPath(line.slug.cs, 'cs')}, anglicky {collectionPath(line.slug.en, 'en')})
             </span>
-            <ul>
-              {line.categories.map((c) => (
+            {line.menu.map((group) => (
+              <ul>
                 <li>
-                  <a href={withBase(collectionPath(line.slug.cs, 'cs', c.slug))}>{c.name}</a> ({count(line.key, c.slug)})
+                  <a href={withBase(collectionPath(line.slug.cs, 'cs', group.slug))}>{group.name}</a> ({count(line, group)})
                 </li>
-              ))}
-            </ul>
+                {group.items.map((item) => (
+                  <li>
+                    <a href={withBase(collectionPath(line.slug.cs, 'cs', item.slug))}>{item.name}</a> ({count(line, item)})
+                  </li>
+                ))}
+              </ul>
+            ))}
           </li>
         ))
       }

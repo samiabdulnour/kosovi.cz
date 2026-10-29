@@ -1,0 +1,129 @@
+---
+// The looping strip of photographs on the homepage. It moves slowly, stops on
+// hover, focus or the button, and stays still for prefers-reduced-motion.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
+import type { Field } from '../config/home';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+export interface BandPhoto {
+  src: ImageMetadata;
+  alt: string;
+  field: Field;
+  inset?: boolean;
+}
+
+interface Props {
+  photos: BandPhoto[];
+  lang: Lang;
+}
+
+const { photos, lang } = Astro.props;
+const t = useTranslations(lang);
+// The strip is drawn twice so the loop has no seam; the copy is hidden from
+// assistive technology.
+const copies = [false, true];
+---
+
+<section class="band" aria-label={t('band.label')} data-band>
+  <div class="track">
+    {
+      copies.map((hidden) =>
+        photos.map((photo, i) => (
+          <div class:list={['panel', { inset: photo.inset }]} style={`--field: var(--field-${photo.field})`} aria-hidden={hidden ? 'true' : undefined}>
+            <Image
+              src={photo.src}
+              alt={hidden ? '' : photo.alt}
+              widths={[360, 640, 960]}
+              sizes="(min-width: 60rem) 32vw, 70vw"
+              loading={!hidden && i < 3 ? 'eager' : 'lazy'}
+            />
+          </div>
+        )),
+      )
+    }
+  </div>
+  <button type="button" class="toggle" data-band-toggle aria-pressed="false" data-pause={t('band.pause')} data-play={t('band.play')}>
+    {t('band.pause')}
+  </button>
+</section>
+
+<script>
+  for (const band of document.querySelectorAll<HTMLElement>('[data-band]')) {
+    const button = band.querySelector<HTMLButtonElement>('[data-band-toggle]');
+    button?.addEventListener('click', () => {
+      const paused = band.toggleAttribute('data-paused');
+      button.setAttribute('aria-pressed', String(paused));
+      button.textContent = (paused ? button.dataset.play : button.dataset.pause) ?? '';
+    });
+  }
+</script>
+
+<style>
+  .band {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    animation: band 90s linear infinite;
+  }
+
+  .band:hover .track,
+  .band:focus-within .track,
+  .band[data-paused] .track {
+    animation-play-state: paused;
+  }
+
+  .panel {
+    flex: none;
+    height: clamp(17rem, 44vw, 38rem);
+    background: var(--field);
+  }
+
+  .panel :global(img) {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .panel.inset {
+    padding: clamp(1.5rem, 5vw, 5rem) clamp(2.5rem, 7vw, 7rem);
+  }
+
+  .toggle {
+    position: absolute;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    padding: var(--space-1) var(--space-2);
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+
+  @keyframes band {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
+
+    .band {
+      overflow-x: auto;
+    }
+
+    .toggle {
+      display: none;
+    }
+  }
+</style>

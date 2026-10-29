@@ -1,0 +1,49 @@
+---
+// A large colour field with an optional photograph and a caption, as used for
+// the makers on the homepage and "Volné / Užité" on their pages.
+import { Image } from 'astro:assets';
+import type { Field } from '../config/home';
+import type { Photo } from '../lib/photos';
+
+interface Props {
+  href: string;
+  caption: string;
+  field: Field;
+  photo?: Photo;
+  /** Caption above the field (homepage) or below it (maker pages). */
+  captionAt?: 'top' | 'bottom';
+  ratio?: string;
+  headingLevel?: 'h2' | 'h3';
+}
+
+const { href, caption, field, photo, captionAt = 'top', ratio = '7 / 4', headingLevel = 'h2' } = Astro.props;
+const Heading = headingLevel;
+---
+
+<a class:list={['block', `caption-${captionAt}`]} href={href}>
+  <Heading class="caption">{caption}</Heading>
+  <span class="field" style={`--field: var(--field-${field}); aspect-ratio: ${ratio}`}>
+    {photo && <Image src={photo.src} alt={photo.alt} widths={[480, 800, 1200]} sizes="(min-width: 48rem) 45vw, 100vw" />}
+  </span>
+</a>
+
+<style>
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .block:hover {
+    text-decoration: none;
+  }
+
+  .block:hover .caption {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .caption-bottom .caption {
+    order: 2;
+  }
+</style>

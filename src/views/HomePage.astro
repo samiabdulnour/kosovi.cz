@@ -1,243 +1,130 @@
 ---
+// Homepage after the design kosovi_navrh_01.pdf: the photo strip, the claim,
+// a selection of the blue and white porcelain and the two makers.
 import { Image } from 'astro:assets';
-import ContactBlock from '../components/ContactBlock.astro';
-import ProductGrid from '../components/ProductGrid.astro';
+import FieldBlock from '../components/FieldBlock.astro';
+import PhotoBand, { type BandPhoto } from '../components/PhotoBand.astro';
 import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { porcelainFacts } from '../config/facts';
-import { getLine, JOINT_LINE_CONFIRMED } from '../config/lines';
-import { ORDER_MODE } from '../config/order';
+import { artistBlocks, blueWhiteSelection, heroBand } from '../config/home';
+import { getLine } from '../config/lines';
 import { makers, studio } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath, pathOf } from '../i18n/routes';
+import { alternatesOf, collectionPath, pathOf, productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
-import { getFeaturedProducts } from '../lib/products';
-import { cz, typeset } from '../lib/typography';
+import { photoOf } from '../lib/photos';
+import { getFeaturedProducts, getProductsBySlug } from '../lib/products';
+import { typeset } from '../lib/typography';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
-const joint = getLine('spolecna');
-const martinLine = getLine('martin');
-const danielaLine = getLine('daniela');
-const featured = await getFeaturedProducts();
+const blueWhite = getLine('spolecna');
+const shopPath = collectionPath(blueWhite.slug[lang], lang);
 
 const copy = {
   cs: {
     description: 'Porcelánový ateliér Daniely a Martina Kosových v Praze. Modrobílé nádobí pro každý den a autorská díla obou výtvarníků.',
-    // Homepage claim, chosen by Sami (October 2026).
-    lead: 'V ateliéru Daniely a Martina Kosových vzniká porcelán, který si lidé oblíbili pro jeho řemeslnou poctivost i krásu, od modrobílého nádobí pro každý den po autorská díla obou výtvarníků.',
-    makersTitle: 'Dva autoři',
-    more: (name: string) => `Více o autorovi: ${name}`,
-    jointLabel: 'Společná řada Martina a Daniely',
-    jointLink: 'Prohlédnout modrobílý porcelán',
-    featuredTitle: 'Vybrané kusy',
-    catalogLink: 'Celý katalog',
-    soloTitle: 'Samostatná tvorba',
-    martinSolo: 'Točený porcelán Martina Kose',
-    danielaSolo: 'Výtvarná práce Daniely Kosové',
-    processTitle: 'Jak porcelán vzniká',
-    processSteps: ['Točení na kruhu', 'Sušení', 'Malba kobaltem', 'Výpal'],
-    processLink: 'Celý postup krok za krokem',
-    orderTitle: 'Jak objednat',
-    orderSteps: [
-      'Vyberte kusy a vložte je do košíku.',
-      ORDER_MODE === 'request' ? 'Odešlete nezávaznou objednávku.' : 'Odešlete objednávku.',
-      ORDER_MODE === 'request'
-        ? 'Ateliér potvrdí, že jsou kusy k dispozici, a pošle vám platební údaje.'
-        : 'E-mailem dostanete platební údaje a variabilní symbol.',
-      'Zaplatíte bankovním převodem. Platba kartou na webu není.',
-    ],
-    contactTitle: 'Kontakt',
-    courses: 'Kurzy keramiky a porcelánu na požádání.',
-    coursesLink: 'Kurzy',
+    // Homepage claim from the design.
+    claim: 'Od modrobílého porcelánu pro každý den po autorská díla Daniely a Martina Kosových.',
   },
   en: {
     description: 'Porcelain studio of Daniela and Martin Kos in Prague. Blue and white tableware for every day and the artworks of both artists.',
-    // TODO(text): working translation of the Czech claim, final English copy in phase 6.
-    lead: 'In the studio of Daniela and Martin Kos, porcelain is made that people love for its honest craftsmanship and its beauty, from blue and white tableware for every day to the artworks of both artists.',
-    makersTitle: 'Two makers',
-    more: (name: string) => `More about ${name}`,
-    jointLabel: 'Joint line by Martin and Daniela',
-    jointLink: 'See the blue and white porcelain',
-    featuredTitle: 'Selected pieces',
-    catalogLink: 'Full catalogue',
-    soloTitle: 'Individual work',
-    martinSolo: 'Thrown porcelain by Martin Kos',
-    danielaSolo: 'Artwork by Daniela Kosová',
-    processTitle: 'How the porcelain is made',
-    processSteps: ['Throwing', 'Drying', 'Painting with cobalt', 'Firing'],
-    processLink: 'The whole process step by step',
-    orderTitle: 'How to order',
-    orderSteps: [
-      'Choose pieces and add them to the cart.',
-      ORDER_MODE === 'request' ? 'Send a non-binding order.' : 'Send your order.',
-      ORDER_MODE === 'request'
-        ? 'The studio confirms the pieces are available and sends you the payment details.'
-        : 'You receive the payment details by email.',
-      'Pay by bank transfer. There is no card payment on the site.',
-    ],
-    contactTitle: 'Contact',
-    courses: 'Ceramics and porcelain courses on request.',
-    coursesLink: 'Courses',
+    // TODO(text): working translation, final English copy in phase 6.
+    claim: 'From blue and white porcelain for every day to the artworks of Daniela and Martin Kos.',
   },
 }[lang];
 
-const t = (text: string) => typeset(text, lang);
+const band: BandPhoto[] = [];
+for (const item of heroBand) {
+  const photo = await photoOf(item);
+  if (photo) band.push({ ...photo, field: item.field, inset: item.inset });
+}
+
+const featured = (await getFeaturedProducts()).filter((p) => p.line === 'spolecna');
+const selection = (featured.length >= 4 ? featured : await getProductsBySlug(blueWhiteSelection)).slice(0, 4);
+const tileFields = ['honey', 'sky', 'honey', 'sky'] as const;
+
+const people = await Promise.all(
+  (['daniela', 'martin'] as const).map(async (key) => ({
+    key,
+    name: makers[key].name,
+    href: pathOf(key, lang),
+    field: artistBlocks[key].home.field,
+    photo: await photoOf(artistBlocks[key].home),
+  })),
+);
 ---
 
-<Base description={copy.description} alternates={alternatesOf('home')}>
-  <section class="section wrap hero">
-    <div class="stack">
-      <h1>{cz(studio.name)}</h1>
-      <p class="lead">{t(copy.lead)}</p>
-    </div>
-    <Placeholder label="Daniela a Martin v ateliéru (nové focení)" ratio="16 / 9" />
-    <Note title="Úvod">
-      <p>Stránka začíná oběma autory a jejich společnou prací, ne mřížkou produktů. Fotografie z roku 2020, nové focení se plánuje.</p>
-    </Note>
-  </section>
+<Base description={copy.description} alternates={alternatesOf('home')} label={studio.name}>
+  <PhotoBand photos={band} lang={lang} />
 
-  <section class="section wrap">
-    <h2 class="section-head">{copy.makersTitle}</h2>
-    <div class="split">
-      <article class="stack">
-        <Image src={makers.martin.portrait.src} alt={makers.martin.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 60rem) 50vw, 100vw" />
-        <h3>{makers.martin.name}</h3>
-        <p>{t(makers.martin.role[lang])}</p>
-        <p><a href={withBase(pathOf('martin', lang))}>{t(copy.more(makers.martin.name))}</a></p>
-      </article>
-      <article class="stack">
-        <Image src={makers.daniela.portrait.src} alt={makers.daniela.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 60rem) 50vw, 100vw" />
-        <h3>{makers.daniela.name}</h3>
-        <p>{t(makers.daniela.role[lang])}</p>
-        <p><a href={withBase(pathOf('daniela', lang))}>{t(copy.more(makers.daniela.name))}</a></p>
-      </article>
-    </div>
-  </section>
+  <div class="wrap">
+    <p class="claim from-label">{typeset(copy.claim, lang)}</p>
 
-  <section class="section wrap">
-    <div class="split">
-      <Placeholder label="sestava modrobílého porcelánu" ratio="3 / 2" />
-      <div class="stack">
-        <h2>{joint.name[lang]}</h2>
-        {joint.makers.length > 1 && <p class="muted">{t(copy.jointLabel)}</p>}
-        <ul class="facts">
-          {porcelainFacts[lang].map((fact) => <li>{t(fact)}</li>)}
-        </ul>
-        <p><a class="button" href={withBase(collectionPath(joint.slug[lang], lang))}>{copy.jointLink}</a></p>
-      </div>
-    </div>
-    {
-      !JOINT_LINE_CONFIRMED && (
-        <Note title="Nepotvrzeno">
-          <p>Je modrobílý porcelán společná práce (Martinovy tvary, Danielina malba)? Dokud to Sami nepotvrdí, mění se to jen v src/config/lines.ts.</p>
-        </Note>
-      )
-    }
-  </section>
+    <section class="section">
+      <h2 class="section-head"><a href={withBase(shopPath)}>{blueWhite.name[lang]}</a></h2>
+      <ul class="tiles" role="list">
+        {
+          selection.map((product, i) => {
+            const cover = product.images[0];
+            return (
+              <li>
+                <a class="field field--contain" href={withBase(productPath(product.slug))} style={`--field: var(--field-${tileFields[i]})`}>
+                  {cover && <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 48rem) 22vw, 50vw" />}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+      <Note>
+        <p>Výběr čtyř kusů, každý se otevře v e-shopu. TODO(rozhodnutí): vybere Sami (`featured: true` u produktu nebo seznam v src/config/home.ts).</p>
+      </Note>
+    </section>
 
-  <section class="section wrap">
-    <div class="section-head">
-      <h2>{copy.featuredTitle}</h2>
-    </div>
-    <ProductGrid products={featured} lang={lang} placeholders={12} limit={20} />
-    <p class="after-grid"><a href={withBase(pathOf('collections', lang))}>{copy.catalogLink}</a></p>
-    <Note title="Vybrané kusy">
-      <p>12–20 kusů, které vybere Sami (featured: true v datech produktu). Celý katalog, asi 416 kusů, je až v kolekcích.</p>
-    </Note>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.soloTitle}</h2>
-    <div class="split">
+    <section class="people">
       {
-        [
-          { line: martinLine, title: copy.martinSolo, photo: 'čajová souprava Martina Kose' },
-          { line: danielaLine, title: copy.danielaSolo, photo: 'obraz nebo obklad Daniely Kosové' },
-        ].map(({ line, title, photo }) => (
-          <article class="stack">
-            <Placeholder label={photo} ratio="3 / 2" />
-            <h3>
-              <a href={withBase(collectionPath(line.slug[lang], lang))}>{title}</a>
-            </h3>
-            <p class="muted">{line.categories.map((c) => c.name).join(', ')}</p>
-          </article>
+        people.map((person) => (
+          <FieldBlock href={withBase(person.href)} caption={person.name} field={person.field} photo={person.photo} />
         ))
       }
-    </div>
-    <Note>
-      <p>Samostatná tvorba v galerijní podobě. Kde cena není stanovená, zobrazí se „cena na dotaz“.</p>
-    </Note>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.processTitle}</h2>
-    <ol class="grid steps" role="list">
-      {
-        copy.processSteps.map((step, i) => (
-          <li class="stack">
-            <Placeholder label={step.toLowerCase()} ratio="1 / 1" />
-            <p>
-              {i + 1}. {step}
-            </p>
-          </li>
-        ))
-      }
-    </ol>
-    <p class="after-grid"><a href={withBase(pathOf('process', lang))}>{copy.processLink}</a></p>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.orderTitle}</h2>
-    <ol class="order-steps">
-      {copy.orderSteps.map((step) => <li>{t(step)}</li>)}
-    </ol>
-    <Note title="Nerozhodnuto">
-      <p>Text kroků závisí na režimu objednávky (nezávazná, nebo závazná) a na dopravě. Obojí čeká na Samiho rozhodnutí.</p>
-    </Note>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.contactTitle}</h2>
-    <div class="split">
-      <ContactBlock />
-      {
-        lang === 'cs' && (
-          <p>
-            {t(copy.courses)} <a href={withBase(pathOf('courses', 'cs'))}>{copy.coursesLink}</a>
-          </p>
-        )
-      }
-      {lang === 'en' && <p>{copy.courses}</p>}
-    </div>
-  </section>
+    </section>
+  </div>
 </Base>
 
 <style>
-  .hero {
-    display: grid;
-    gap: var(--space-6);
+  .claim {
+    padding-block: var(--space-4) var(--space-3);
   }
 
-  .steps {
-    --grid-min: 8rem;
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--gap);
     padding: 0;
     list-style: none;
   }
 
-  .order-steps {
-    padding-inline-start: 1.4em;
+  .tiles .field {
+    aspect-ratio: 4 / 3;
   }
 
-  .order-steps > li + li {
-    margin-block-start: var(--space-2);
+  .people {
+    display: grid;
+    gap: var(--space-6) var(--gap);
+    padding-block: var(--space-6);
   }
 
-  .after-grid {
-    margin-block-start: var(--space-5);
+  @media (min-width: 48rem) {
+    .tiles {
+      grid-template-columns: repeat(4, 1fr);
+    }
+
+    .people {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>
