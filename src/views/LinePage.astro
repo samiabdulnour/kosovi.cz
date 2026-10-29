@@ -1,113 +1,110 @@
 ---
+// E-shop listing after the design: the category menu in four columns, twelve
+// products a page and the page bar.
+import type { Page } from 'astro';
+import Pagination from '../components/Pagination.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
-import { JOINT_LINE_CONFIRMED, type Category, type Line } from '../config/lines';
-import { makers } from '../config/site';
+import type { Line, MenuItem } from '../config/lines';
 import Base from '../layouts/Base.astro';
-import { collectionPath, pathOf } from '../i18n/routes';
+import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { useTranslations, withBase } from '../i18n/utils';
-import { getLineProducts } from '../lib/products';
+import { withBase } from '../i18n/utils';
+import type { Product } from '../lib/products';
 
 interface Props {
   line: Line;
   lang: Lang;
-  category?: Category;
+  page: Page<Product>;
+  /** A menu column heading or item; none lists the whole line. */
+  entry?: MenuItem;
 }
 
-const { line, lang, category } = Astro.props;
-const t = useTranslations(lang);
-const products = await getLineProducts(line.key, category?.slug);
+const { line, lang, page, entry } = Astro.props;
+const lineName = line.name[lang];
+const pathFor = (n: number) => collectionPath(line.slug[lang], lang, entry?.slug, n);
 
-const title = category ? `${category.name} · ${line.name[lang]}` : line.name[lang];
+const pageSuffix = page.currentPage > 1 ? (lang === 'cs' ? `, strana ${page.currentPage}` : `, page ${page.currentPage}`) : '';
+const title = `${entry ? `${entry.name} · ` : ''}${lineName}${pageSuffix}`;
 const description =
   lang === 'cs'
-    ? `${line.name.cs}${category ? `, ${category.name.toLowerCase()}` : ''}. Porcelán z ateliéru Daniely a Martina Kosových v Praze.`
-    : `${line.name.en}. Porcelain from the Kos studio in Prague.`;
+    ? `${entry ? `${entry.name}, ` : ''}${lineName}. Ručně dělaný porcelán z ateliéru Daniely a Martina Kosových v Praze.`
+    : `${entry ? `${entry.name}, ` : ''}${lineName}. Handmade porcelain from the Kos studio in Prague.`;
 
-// English has no category pages yet, so a category page links to the line.
 const alternates = {
-  cs: collectionPath(line.slug.cs, 'cs', category?.slug),
-  ...(category ? {} : { en: collectionPath(line.slug.en, 'en') }),
+  cs: collectionPath(line.slug.cs, 'cs', entry?.slug, page.currentPage),
+  en: collectionPath(line.slug.en, 'en', entry?.slug, page.currentPage),
 };
 
-const showFilter = lang === 'cs';
+const isCurrent = (item: MenuItem) => (item.slug === entry?.slug ? 'page' : undefined);
+const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.length === 0);
 ---
 
-<Base title={title} description={description} alternates={alternates}>
-  <div class="section wrap">
-    <div class="section-head">
-      <p class="muted">
-        <a href={withBase(pathOf('collections', lang))}>{t('nav.collections')}</a>
-      </p>
-      <h1>{category ? category.name : line.name[lang]}</h1>
-      <p class="muted">{line.makers.map((m) => makers[m].name).join(', ')}</p>
-    </div>
+<Base title={title} description={description} alternates={alternates} label={lineName}>
+  <div class="wrap">
+    <nav class="menu" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
+      {
+        line.menu.map((group) => (
+          <div class="group">
+            <h2>
+              <a href={withBase(collectionPath(line.slug[lang], lang, group.slug))} aria-current={isCurrent(group)}>
+                {group.name}
+              </a>
+            </h2>
+            {group.items.length > 0 && (
+              <ul role="list">
+                {group.items.map((item) => (
+                  <li>
+                    <a href={withBase(collectionPath(line.slug[lang], lang, item.slug))} aria-current={isCurrent(item)}>
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        ))
+      }
+    </nav>
+
+    <ProductGrid products={page.data} lang={lang} />
+    <Pagination current={page.currentPage} last={page.lastPage} pathFor={pathFor} lang={lang} />
 
     {
-      showFilter && (
-        <nav class="filter" aria-label={t('collection.categories')}>
-          <ul role="list">
-            <li>
-              <a href={withBase(collectionPath(line.slug.cs, 'cs'))} aria-current={category ? undefined : 'page'}>
-                {t('collection.all')}
-              </a>
-            </li>
-            {line.categories.map((c) => (
-              <li>
-                <a
-                  href={withBase(collectionPath(line.slug.cs, 'cs', c.slug))}
-                  aria-current={c.slug === category?.slug ? 'page' : undefined}
-                >
-                  {c.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
+      emptyItems.length > 0 && (
+        <Note title="Kategorie bez produktů">
+          <p>
+            Z návrhu, ale ve starém e-shopu pro ně nejsou žádné kusy: {emptyItems.map((i) => i.name).join(', ')}. Ostatní kategorie jsou namapované na starý e-shop v src/config/lines.ts, sporné jsou „Hrnek malý“ (dřív „Mini“) a „Miska velká“ (dřív „Polévka/Snídaně“).
+          </p>
+        </Note>
       )
     }
-
-    <Note title="Úvod kolekce">
-      <p>TODO(fakta): krátký popis řady. Kdo ji dělá, technika, materiál.</p>
-      {line.key === 'spolecna' && !JOINT_LINE_CONFIRMED && <p>Nepotvrzeno, že jde o společnou práci.</p>}
-    </Note>
-
-    <ProductGrid products={products} lang={lang} />
-
-    <Note title="Mřížka produktů">
-      <ul>
-        <li>Filtr podle kategorie jsou obyčejné odkazy na samostatné stránky, fungují bez JavaScriptu a dají se na ně přesměrovat staré adresy /kategorie-produktu/.</li>
-        <li>Každá karta: fotografie, název, kdo kus vyrobil, cena nebo „cena na dotaz“.</li>
-        {lang === 'en' && <li>Anglické kategorie a produkty přijdou později (fáze 6).</li>}
-      </ul>
-    </Note>
   </div>
 </Base>
 
 <style>
-  .filter {
-    margin-block-end: var(--space-6);
+  .menu {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-6) var(--gap);
+    padding-block-end: var(--space-8);
   }
 
-  .filter ul {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
+  .menu ul {
+    margin-block-start: var(--space-4);
     padding: 0;
     list-style: none;
   }
 
-  .filter a {
-    display: inline-block;
-    padding: var(--space-1) var(--space-3);
-    border: 1px solid var(--color-line);
-    text-decoration: none;
+  [aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
   }
 
-  .filter a[aria-current='page'] {
-    border-color: var(--color-ink);
-    background: var(--color-ink);
-    color: var(--color-paper);
+  @media (min-width: 48rem) {
+    .menu {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 </style>

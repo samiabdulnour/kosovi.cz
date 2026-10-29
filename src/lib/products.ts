@@ -1,5 +1,5 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { getLine, type LineKey, type Makers } from '../config/lines';
+import { getLine, matches, type LineKey, type Makers, type MenuItem } from '../config/lines';
 
 export type Product = CollectionEntry<'products'>['data'];
 
@@ -14,8 +14,30 @@ export async function getProducts(filter?: (p: Product) => boolean): Promise<Pro
   return (filter ? products.filter(filter) : products).sort(byFeaturedThenTitle);
 }
 
-export function getLineProducts(line: LineKey, category?: string): Promise<Product[]> {
-  return getProducts((p) => p.line === line && (!category || p.category === category));
+/** Featured pieces first, then in the order of the e-shop menu (mugs before bowls).
+ * The sort is stable, so titles stay alphabetical within an entry. */
+function inMenuOrder(line: LineKey, products: Product[]): Product[] {
+  // Items in menu order, each column heading last as the catch-all for its column.
+  const entries = getLine(line).menu.flatMap((group) => [...group.items, group]);
+  const rank = (p: Product) => {
+    const i = entries.findIndex((e) => matches(e, p));
+    return i === -1 ? entries.length : i;
+  };
+  return [...products].sort((a, b) => Number(b.featured) - Number(a.featured) || rank(a) - rank(b));
+}
+
+export async function getLineProducts(line: LineKey, category?: string): Promise<Product[]> {
+  return inMenuOrder(line, await getProducts((p) => p.line === line && (!category || p.category === category)));
+}
+
+/** Products under one e-shop menu entry (a column heading or an item). */
+export async function getEntryProducts(line: LineKey, entry: MenuItem): Promise<Product[]> {
+  return inMenuOrder(line, await getProducts((p) => p.line === line && matches(entry, p)));
+}
+
+export async function getProductsBySlug(slugs: string[]): Promise<Product[]> {
+  const products = await getProducts();
+  return slugs.map((slug) => products.find((p) => p.slug === slug)).filter((p): p is Product => Boolean(p));
 }
 
 export function getFeaturedProducts(): Promise<Product[]> {

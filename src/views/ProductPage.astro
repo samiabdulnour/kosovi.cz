@@ -5,7 +5,7 @@ import Price from '../components/Price.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
 import Placeholder from '../components/wire/Placeholder.astro';
-import { getLine } from '../config/lines';
+import { getLine, placeOf } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
@@ -20,7 +20,8 @@ interface Props {
 
 const { product } = Astro.props;
 const line = getLine(product.line);
-const category = line.categories.find((c) => c.slug === product.category);
+const { group, item } = placeOf(line, product);
+const crumbs = [group, item].filter((e) => e !== undefined);
 
 // TODO: "related pieces from the same set" needs a set field in the data.
 // Until then, show pieces from the same category, same size or shape first.
@@ -56,17 +57,17 @@ const metaDescription = product.description
   : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
 ---
 
-<Base title={product.title} description={metaDescription} alternates={{ cs: productPath(product.slug) }}>
+<Base title={product.title} description={metaDescription} alternates={{ cs: productPath(product.slug) }} label={line.name.cs} labelIsHeading={false}>
   <div class="section wrap">
-    <p class="muted crumbs">
+    <p class="crumbs">
       <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>
       {
-        category && (
+        crumbs.map((entry) => (
           <>
             {' / '}
-            <a href={withBase(collectionPath(line.slug.cs, 'cs', category.slug))}>{category.name}</a>
+            <a href={withBase(collectionPath(line.slug.cs, 'cs', entry.slug))}>{entry.name}</a>
           </>
-        )
+        ))
       }
     </p>
 

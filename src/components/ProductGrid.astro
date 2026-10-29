@@ -1,55 +1,49 @@
 ---
-// Product grid. Until the import (phase 2) there are no products, so it shows
-// grey stand-in cards to give the layout its real density.
+// Four products a row (two on phones), as in the e-shop design.
 import ProductCard from './ProductCard.astro';
-import Placeholder from './wire/Placeholder.astro';
 import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
 import type { Product } from '../lib/products';
 
 interface Props {
   products: Product[];
   lang: Lang;
-  placeholders?: number;
-  limit?: number;
 }
 
-const { products, lang, placeholders = 8, limit } = Astro.props;
-const shown = limit ? products.slice(0, limit) : products;
+const { products, lang } = Astro.props;
+const t = useTranslations(lang);
 ---
 
-<ul class="grid product-grid" role="list">
-  {
-    shown.length > 0
-      ? shown.map((product) => (
-          <li>
-            <ProductCard product={product} lang={lang} />
-          </li>
-        ))
-      : Array.from({ length: placeholders }, (_, i) => (
-          <li class="stand-in" aria-hidden="true">
-            <Placeholder label={`produkt ${i + 1}`} ratio="1 / 1" />
-            <p class="line" />
-            <p class="line line--short" />
-          </li>
-        ))
-  }
-</ul>
+{
+  products.length > 0 ? (
+    <ul class="product-grid" role="list">
+      {products.map((product, i) => (
+        <li>
+          <ProductCard product={product} lang={lang} index={i} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">{t('collection.empty')}</p>
+  )
+}
 
 <style>
   .product-grid {
-    --grid-min: 9rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-7) var(--gap);
     padding: 0;
     list-style: none;
   }
 
-  .line {
-    height: 0.7em;
-    margin-block-start: var(--space-3);
-    background: var(--color-wire);
+  @media (min-width: 48rem) {
+    .product-grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
   }
 
-  .line--short {
-    width: 50%;
-    margin-block-start: var(--space-2);
+  .empty {
+    padding-block: var(--space-7);
   }
 </style>

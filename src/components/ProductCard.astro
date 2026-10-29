@@ -1,55 +1,45 @@
 ---
+// Product tile from the design: photo on a colour field, name, price.
 import { Image } from 'astro:assets';
-import MakerCredit from './MakerCredit.astro';
 import Price from './Price.astro';
-import Placeholder from './wire/Placeholder.astro';
 import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
-import { makersOf, type Product } from '../lib/products';
+import type { Product } from '../lib/products';
 
 interface Props {
   product: Product;
   lang: Lang;
+  /** Alternates the two light blues of the design. */
+  index?: number;
 }
 
-const { product, lang } = Astro.props;
+const { product, lang, index = 0 } = Astro.props;
 const [cover] = product.images;
+const field = index % 2 === 0 ? 'blue' : 'mist';
 ---
 
 <article class="card">
   <a href={withBase(productPath(product.slug))}>
-    {
-      cover ? (
-        <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 60rem) 25vw, (min-width: 30rem) 50vw, 100vw" />
-      ) : (
-        <Placeholder label="chybí fotografie" ratio="1 / 1" />
-      )
-    }
+    <span class="field field--contain" style={`--field: var(--field-${field})`}>
+      {cover && <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 48rem) 22vw, 50vw" />}
+    </span>
     <h3>{product.title}</h3>
   </a>
-  <MakerCredit makers={makersOf(product)} lang={lang} />
   <Price price={product.price} lang={lang} />
+  {product.stock === 0 && <p>{lang === 'cs' ? 'Vyprodáno' : 'Sold out'}</p>}
 </article>
 
 <style>
   .card > a {
     display: block;
-    text-decoration: none;
   }
 
-  .card :global(img) {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
+  .field {
+    aspect-ratio: 4 / 3;
   }
 
   h3 {
-    margin-block-start: var(--space-3);
-    font-size: var(--step-0);
-  }
-
-  .card :global(p) {
-    font-size: var(--step--1);
+    margin-block: var(--space-4) var(--space-3);
   }
 </style>

@@ -1,0 +1,79 @@
+---
+// The yellow page bar from the design: ← 1 2 3 … →
+import type { Lang } from '../i18n/ui';
+import { useTranslations, withBase } from '../i18n/utils';
+
+interface Props {
+  current: number;
+  last: number;
+  /** Path of page n, without the base path. */
+  pathFor: (n: number) => string;
+  lang: Lang;
+}
+
+const { current, last, pathFor, lang } = Astro.props;
+const t = useTranslations(lang);
+
+// First, last and the pages around the current one; gaps become an ellipsis.
+const shown = [...new Set([1, last, ...[-2, -1, 0, 1, 2].map((d) => current + d)])]
+  .filter((n) => n >= 1 && n <= last)
+  .sort((a, b) => a - b);
+const items: (number | null)[] = [];
+shown.forEach((n, i) => {
+  const prev = shown[i - 1];
+  if (prev !== undefined && n - prev > 1) items.push(null);
+  items.push(n);
+});
+---
+
+{
+  last > 1 && (
+    <nav class="pagination" aria-label={t('pagination.label')}>
+      {current > 1 ? (
+        <a href={withBase(pathFor(current - 1))} rel="prev" aria-label={t('pagination.prev')}>
+          ←
+        </a>
+      ) : (
+        <span aria-hidden="true">←</span>
+      )}
+      {items.map((n) =>
+        n === null ? (
+          <span aria-hidden="true">…</span>
+        ) : n === current ? (
+          <span aria-current="page">{n}</span>
+        ) : (
+          <a href={withBase(pathFor(n))}>{n}</a>
+        ),
+      )}
+      {current < last ? (
+        <a href={withBase(pathFor(current + 1))} rel="next" aria-label={t('pagination.next')}>
+          →
+        </a>
+      ) : (
+        <span aria-hidden="true">→</span>
+      )}
+    </nav>
+  )
+}
+
+<style>
+  .pagination {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-1) var(--space-3);
+    margin-block-start: var(--space-7);
+    padding: var(--space-2) var(--space-4);
+    background: var(--field-yellow);
+  }
+
+  [aria-current='page'] {
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  span[aria-hidden='true'] {
+    opacity: 0.4;
+  }
+</style>
