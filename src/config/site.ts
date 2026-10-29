@@ -3,6 +3,8 @@ import martinPortrait from '../assets/pages/o-nas/01.jpg';
 
 // Studio facts. Source: the O nás page of the old site (see CLAUDE.md).
 export const studio = {
+  // Brand in the header (design kosovi_navrh_01.pdf).
+  brand: 'Porcelán Kosovi',
   name: 'Daniela a Martin Kosovi',
   address: {
     street: 'Na Vlčovce 6',
@@ -11,6 +13,8 @@ export const studio = {
   },
   phones: ['+420 607 635 393', '+420 728 717 232'],
   email: 'danielakosova@gmail.com',
+  // TODO(fakta): the design links Instagram; the account name is missing.
+  instagram: null as string | null,
 } as const;
 
 export type MakerKey = 'martin' | 'daniela';

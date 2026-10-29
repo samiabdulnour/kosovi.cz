@@ -15,9 +15,12 @@ interface Props {
   description: string;
   /** Paths of this page in each language, without the base path. */
   alternates?: Alternates;
+  /** Page title in the middle of the header bar, the page's <h1> by default. */
+  label?: string;
+  labelIsHeading?: boolean;
 }
 
-const { title, description, alternates = {} } = Astro.props;
+const { title, description, alternates = {}, label, labelIsHeading } = Astro.props;
 const lang: Lang = langOf(Astro.currentLocale);
 const t = useTranslations(lang);
 const fullTitle = title ? `${title} · ${studio.name}` : `${studio.name} · ${t('site.tagline')}`;
@@ -42,7 +45,7 @@ const hreflangs = Object.entries(alternates) as [Lang, string][];
   <body>
     <a class="skip-link" href="#obsah">{t('skip.toMain')}</a>
     {previewLabel && <PreviewBar label={previewLabel} />}
-    <Header lang={lang} alternates={alternates} />
+    <Header lang={lang} alternates={alternates} label={label} labelIsHeading={labelIsHeading} />
     <main id="obsah">
       <slot />
     </main>

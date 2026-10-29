@@ -1,6 +1,8 @@
 ---
+// Brand on the left, the page title on the label line, navigation on the right.
+import { getLine } from '../config/lines';
 import { studio } from '../config/site';
-import { pathOf, type Alternates, type RouteKey } from '../i18n/routes';
+import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { cz } from '../lib/typography';
@@ -8,107 +10,99 @@ import { cz } from '../lib/typography';
 interface Props {
   lang: Lang;
   alternates: Alternates;
+  /** Page title shown in the middle of the bar. */
+  label?: string;
+  /** False when the page has its own <h1> (product pages). */
+  labelIsHeading?: boolean;
 }
 
-const { lang, alternates } = Astro.props;
+const { lang, alternates, label, labelIsHeading = true } = Astro.props;
 const t = useTranslations(lang);
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
-
-const items: { key: RouteKey; label: string }[] = [
-  { key: 'collections', label: t('nav.collections') },
-  { key: 'martin', label: t('nav.martin') },
-  { key: 'daniela', label: t('nav.daniela') },
-  { key: 'process', label: t('nav.process') },
-  { key: 'about', label: t('nav.about') },
-  ...(lang === 'cs' ? [{ key: 'courses' as const, label: t('nav.courses') }] : []),
-  { key: 'contact', label: t('nav.contact') },
-];
+const blueWhite = getLine('spolecna');
 
 const current = Astro.url.pathname;
-function isCurrent(path: string): 'page' | 'true' | undefined {
-  const href = withBase(path);
-  if (current === href) return 'page';
-  return current.startsWith(href) ? 'true' : undefined;
-}
+const inShop = [pathOf('collections', lang), '/produkt/'].some((p) => current.startsWith(withBase(p)));
+
+const items: { href: string; label: string; current: boolean }[] = [
+  { href: collectionPath(blueWhite.slug[lang], lang), label: t('nav.shop'), current: inShop },
+  { href: pathOf('about', lang), label: t('nav.about'), current: false },
+  ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses'), current: false }] : []),
+  { href: pathOf('contact', lang), label: t('nav.contact'), current: false },
+].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.name)}</a>
+    <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
+    {label && (labelIsHeading ? <h1 class="label">{cz(label)}</h1> : <p class="label">{cz(label)}</p>)}
     <nav aria-label={t('nav.label')}>
-      <ul class="nav">
+      <ul>
         {
-          items.map(({ key, label }) => {
-            const path = pathOf(key, lang);
-            return (
-              <li>
-                <a href={withBase(path)} aria-current={isCurrent(path)}>
-                  {label}
-                </a>
-              </li>
-            );
-          })
+          items.map((item) => (
+            <li>
+              <a href={withBase(item.href)} aria-current={item.current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
         }
+        <li>
+          <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>
+            <span aria-hidden="true">{otherLang.toUpperCase()}</span>
+            <span class="visually-hidden">{t('lang.switch')}</span>
+          </a>
+        </li>
       </ul>
     </nav>
-    <ul class="tools">
-      {
-        lang === 'cs' && (
-          <li>
-            <a href={withBase(pathOf('cart', 'cs'))} aria-current={isCurrent(pathOf('cart', 'cs'))}>
-              {t('nav.cart')}
-            </a>
-          </li>
-        )
-      }
-      <li>
-        <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>{t('lang.switch')}</a>
-      </li>
-    </ul>
   </div>
 </header>
 
 <style>
-  .site-header {
-    border-bottom: 1px solid var(--color-line);
-  }
-
   .bar {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand nav'
+      'label label';
+    gap: var(--space-4) var(--gap);
     align-items: baseline;
-    gap: var(--space-3) var(--space-6);
-    padding-block: var(--space-4);
+    padding-block: var(--space-6) var(--space-7);
   }
 
   .brand {
-    font-weight: 600;
-    text-decoration: none;
+    grid-area: brand;
+  }
+
+  .label {
+    grid-area: label;
   }
 
   nav {
-    flex: 1 1 auto;
+    grid-area: nav;
   }
 
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1) var(--space-4);
+    justify-content: flex-end;
+    gap: var(--space-2) clamp(1rem, 4vw, 4rem);
     padding: 0;
     list-style: none;
   }
 
-  a {
-    text-decoration: none;
-  }
-
-  a:hover,
-  [aria-current] {
-    text-decoration: underline;
-  }
-
   [aria-current='page'] {
+    text-decoration: underline;
     text-decoration-thickness: 2px;
+    text-underline-offset: 0.2em;
+  }
+
+  @media (min-width: 48rem) {
+    .bar {
+      grid-template-columns: var(--label-start) 1fr auto;
+      grid-template-areas: 'brand label nav';
+      column-gap: 0;
+    }
   }
 </style>
