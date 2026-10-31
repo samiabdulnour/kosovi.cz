@@ -12,11 +12,10 @@ const message =
     : 'Objednávku jsme přijali. Platební údaje a variabilní symbol najdete v e-mailu, který jsme vám právě poslali.';
 ---
 
-<Base title="Objednávka odeslána" description="Potvrzení odeslané objednávky." alternates={alternatesOf('orderSent')}>
+<Base title="Objednávka odeslána" description="Potvrzení odeslané objednávky." alternates={alternatesOf('orderSent')} label="Objednávka odeslána">
   <div class="section wrap stack">
-    <h1>Objednávka odeslána</h1>
     <p class="lead">{cz(message)}</p>
-    <p><a href={withBase(pathOf('collections', 'cs'))}>Zpět do kolekcí</a></p>
+    <p><a href={withBase(pathOf('collections', 'cs'))}>Zpět do e-shopu</a></p>
     <Note>
       <p>Text závisí na režimu objednávky. Zobrazí se i číslo objednávky (variabilní symbol).</p>
     </Note>

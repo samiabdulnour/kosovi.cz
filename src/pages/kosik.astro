@@ -1,5 +1,4 @@
 ---
-import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
 import { ORDER_MODE } from '../config/order';
 import { shippingMethods } from '../config/shipping';
@@ -12,11 +11,10 @@ import { formatCzk } from '../lib/typography';
 const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku' : 'Odeslat objednávku zavazující k platbě';
 ---
 
-<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')}>
+<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')} label="Košík">
   <div class="section wrap">
-    <h1 class="section-head">Košík</h1>
 
-    <ProductGrid products={[]} lang="cs" placeholders={2} />
+    <p class="muted">Košík je zatím prázdný.</p>
     <Note title="Košík">
       <p>Obsah košíku drží prohlížeč (localStorage), malý ostrůvek ve vanilla TS ve fázi 5. Ceny se na serveru vždy přepočítají z dat produktů.</p>
     </Note>
@@ -82,7 +80,7 @@ const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku'
 
   legend {
     padding-inline: var(--space-2);
-    font-weight: 600;
+    font-weight: var(--weight);
   }
 
   label {

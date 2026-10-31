@@ -1,0 +1,135 @@
+---
+// The looping photo strip on the homepage (src/config/band.ts). It keeps
+// moving under the pointer (Sami's call); only its button stops it, and it
+// stays still for prefers-reduced-motion.
+import { Image } from 'astro:assets';
+import { bandFields, bandPhotos, bandSize, type Frame } from '../config/band';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`;
+const place = (f: Frame) =>
+  `left:${pct(f.x, bandSize.w)};top:${pct(f.y, bandSize.h)};width:${pct(f.w, bandSize.w)};height:${pct(f.h, bandSize.h)}`;
+
+// The strip is as tall as --band-h: 17rem on phones, 44vw, at most 38rem.
+const sizes = (f: Frame) => {
+  const share = f.w / bandSize.h;
+  return `(max-width: 38.6rem) ${Math.round(share * 272)}px, (max-width: 86.4rem) ${(share * 44).toFixed(1)}vw, ${Math.round(share * 608)}px`;
+};
+
+// Drawn twice so the loop has no seam; the copy is hidden from assistive technology.
+const copies = [false, true];
+---
+
+<section class="band" aria-label={t('band.label')} data-band>
+  <div class="track">
+    {
+      copies.map((hidden) => (
+        <div class="strip" aria-hidden={hidden ? 'true' : undefined}>
+          {bandFields.map((f) => (
+            <span class="field-block" style={`${place(f)};background:${f.color}`} />
+          ))}
+          {bandPhotos.map((photo, i) => (
+            <Image
+              class="photo"
+              style={place(photo)}
+              src={photo.src}
+              alt={hidden ? '' : photo.alt}
+              widths={[240, 480, 720, 1080, 1440]}
+              sizes={sizes(photo)}
+              loading={!hidden && i < 4 ? 'eager' : 'lazy'}
+            />
+          ))}
+        </div>
+      ))
+    }
+  </div>
+  <button type="button" class="toggle" data-band-toggle aria-pressed="false" data-pause={t('band.pause')} data-play={t('band.play')}>
+    {t('band.pause')}
+  </button>
+</section>
+
+<script>
+  for (const band of document.querySelectorAll<HTMLElement>('[data-band]')) {
+    const button = band.querySelector<HTMLButtonElement>('[data-band-toggle]');
+    button?.addEventListener('click', () => {
+      const paused = band.toggleAttribute('data-paused');
+      button.setAttribute('aria-pressed', String(paused));
+      button.textContent = (paused ? button.dataset.play : button.dataset.pause) ?? '';
+    });
+  }
+</script>
+
+<style>
+  .band {
+    --band-h: clamp(17rem, 44vw, 38rem);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .track {
+    display: flex;
+    width: max-content;
+    animation: band 95s linear infinite;
+  }
+
+  .band[data-paused] .track {
+    animation-play-state: paused;
+  }
+
+  .strip {
+    position: relative;
+    flex: none;
+    height: var(--band-h);
+    aspect-ratio: 5760 / 630;
+  }
+
+  .field-block,
+  .strip :global(.photo) {
+    position: absolute;
+  }
+
+  .strip :global(.photo) {
+    max-width: none;
+    object-fit: cover;
+  }
+
+  .toggle {
+    position: absolute;
+    right: var(--space-4);
+    bottom: var(--space-4);
+    padding: var(--space-1) var(--space-2);
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: var(--step--1);
+    cursor: pointer;
+  }
+
+  @keyframes band {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .track {
+      animation: none;
+    }
+
+    .band {
+      overflow-x: auto;
+    }
+
+    .toggle {
+      display: none;
+    }
+  }
+</style>

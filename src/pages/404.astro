@@ -4,13 +4,12 @@ import { pathOf } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
 ---
 
-<Base title="Stránka nenalezena" description="Stránka nenalezena.">
+<Base title="Stránka nenalezena" description="Stránka nenalezena." label="Stránka nenalezena">
   <div class="section wrap stack">
-    <h1>Stránka nenalezena</h1>
     <p>Tato adresa na webu neexistuje. Možná byla přesunuta při přechodu na nový web.</p>
     <ul class="facts">
       <li><a href={withBase(pathOf('home', 'cs'))}>Úvodní stránka</a></li>
-      <li><a href={withBase(pathOf('collections', 'cs'))}>Kolekce</a></li>
+      <li><a href={withBase(pathOf('collections', 'cs'))}>E-shop</a></li>
       <li><a href={withBase(pathOf('contact', 'cs'))}>Kontakt</a></li>
     </ul>
     <p lang="en">This page does not exist. <a href={withBase(pathOf('home', 'en'))}>English homepage</a></p>

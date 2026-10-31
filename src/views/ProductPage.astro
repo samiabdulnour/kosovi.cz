@@ -5,98 +5,130 @@ import Price from '../components/Price.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
 import Placeholder from '../components/wire/Placeholder.astro';
-import { getLine } from '../config/lines';
+import { getLine, placeOf } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
-import { getLineProducts, type Product } from '../lib/products';
-import { cz } from '../lib/typography';
+import { getRelatedProducts, makersOf, type Product } from '../lib/products';
+import { productLabel } from '../lib/names';
+import { cz, formatNumber } from '../lib/typography';
 
 // Product pages are Czech only for now (English comes later, see CLAUDE.md).
 interface Props {
   product: Product;
-  /** The /produkt/vzor/ template preview, before real products exist. */
-  sample?: boolean;
 }
 
-const { product, sample = false } = Astro.props;
+const { product } = Astro.props;
+// Shown without "Porcelánový" (design eshop.pdf); the data keeps the old title.
+const name = productLabel(product.title);
 const line = getLine(product.line);
-const category = line.categories.find((c) => c.slug === product.category);
+const { group, item } = placeOf(line, product);
+const crumbs = [group, item].filter((e) => e !== undefined);
 
 // TODO: "related pieces from the same set" needs a set field in the data.
-// Until then, show other pieces from the same category.
-const related = (await getLineProducts(product.line, product.category))
-  .filter((p) => p.slug !== product.slug)
-  .slice(0, 4);
-
-const gallerySlots = ['celkový pohled', 'v ruce, pro měřítko', 'detail malby', 'pohled shora', 'další pohled'];
+// Until then, show pieces from the same category, same size or shape first.
+const related = await getRelatedProducts(product);
 
 // Large version for the zoom link. Never link to the raw original.
 const zoomed = await Promise.all(
   product.images.map((img) => getImage({ src: img.src, width: Math.min(2400, img.src.width) })),
 );
 
-const askHref = `mailto:${studio.email}?subject=${encodeURIComponent(`Dotaz na cenu: ${product.title}`)}`;
+const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
+const soldOut = product.stock === 0;
 
 const { dimensions, care } = product;
 const params: [string, string | undefined][] = [
-  ['Výška', dimensions?.heightCm !== undefined ? cz(`${dimensions.heightCm} cm`) : undefined],
-  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${dimensions.diameterCm} cm`) : undefined],
-  ['Objem', dimensions?.volumeMl !== undefined ? cz(`${dimensions.volumeMl} ml`) : undefined],
+  ['Výška', dimensions?.heightCm !== undefined ? cz(`${formatNumber(dimensions.heightCm)} cm`) : undefined],
+  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${formatNumber(dimensions.diameterCm)} cm`) : undefined],
+  ['Objem', dimensions?.volumeMl !== undefined ? cz(`${formatNumber(dimensions.volumeMl)} ml`) : undefined],
   ['Technika', product.technique],
   ['Myčka', care?.dishwasher === undefined ? undefined : care.dishwasher ? 'ano' : 'ne'],
   ['Mikrovlnná trouba', care?.microwave === undefined ? undefined : care.microwave ? 'ano' : 'ne'],
   ['Katalogové číslo', product.catalogNo],
 ];
 
-const description = product.description
-  ? product.description.slice(0, 155)
+// Old descriptions keep their line breaks: blank line = paragraph, newline = <br>.
+const paragraphs = (product.description ?? '')
+  .split(/\n{2,}/)
+  .map((p) => p.split('\n').map((line) => cz(line.trim())))
+  .filter((lines) => lines.some(Boolean));
+
+const metaDescription = product.description
+  ? product.description.replace(/\s+/g, ' ').slice(0, 155)
   : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
 ---
 
-<Base title={product.title} description={description} alternates={{ cs: productPath(product.slug) }}>
+<Base title={name} description={metaDescription} alternates={{ cs: productPath(product.slug) }}>
   <div class="section wrap">
-    <p class="muted crumbs">
+    <p class="crumbs">
       <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>
       {
-        category && (
+        crumbs.map((entry) => (
           <>
             {' / '}
-            <a href={withBase(collectionPath(line.slug.cs, 'cs', category.slug))}>{category.name}</a>
+            <a href={withBase(collectionPath(line.slug.cs, 'cs', entry.slug))}>{entry.name}</a>
           </>
-        )
+        ))
       }
     </p>
 
     <div class="product">
       <div class="gallery">
         {
-          product.images.length > 0
-            ? product.images.map((img, i) => (
-                <a href={zoomed[i]?.src}>
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    widths={[480, 800, 1200, 1600]}
-                    sizes="(min-width: 60rem) 55vw, 100vw"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                  />
-                </a>
-              ))
-            : gallerySlots.map((label) => <Placeholder label={label} ratio="4 / 5" />)
+          product.images.map((img, i) => (
+            <a href={zoomed[i]?.src}>
+              <Image
+                src={img.src}
+                alt={img.alt}
+                widths={[480, 800, 1200, 1600]}
+                sizes="(min-width: 60rem) 55vw, 100vw"
+                loading={i === 0 ? 'eager' : 'lazy'}
+              />
+            </a>
+          ))
+        }
+        {product.images.length === 0 && <Placeholder label="chybí fotografie" ratio="4 / 5" />}
+        {
+          product.images.length < 4 && (
+            <Note>
+              <p>
+                Fotografie: {product.images.length} z 4–6. Chybí hlavně záběr v ruce pro měřítko a detail malby (nové focení).
+              </p>
+            </Note>
+          )
         }
       </div>
 
       <div class="info stack">
-        <h1>{product.title}</h1>
-        <MakerCredit makers={product.makers} lang="cs" />
+        <h1>{name}</h1>
+        <MakerCredit makers={makersOf(product)} lang="cs" />
         <Price price={product.price} lang="cs" />
+        {soldOut && <p class="sold-out">Vyprodáno</p>}
+        {
+          product.options?.map((option, i) => (
+            <label class="option">
+              {option.name}
+              <select name={`option-${i}`} disabled>
+                {option.values.map((value) => (
+                  <option>{value}</option>
+                ))}
+              </select>
+            </label>
+          ))
+        }
         {
           product.price === null ? (
             <p>
-              <a class="button button--quiet" href={askHref}>
+              <a class="button button--quiet" href={ask('Dotaz na cenu')}>
                 Zeptat se na cenu
+              </a>
+            </p>
+          ) : soldOut ? (
+            <p>
+              <a class="button button--quiet" href={ask('Dotaz na dostupnost')}>
+                Zeptat se na dostupnost
               </a>
             </p>
           ) : (
@@ -121,27 +153,46 @@ const description = product.description
 
         <p class="handmade">{cz('Každý kus je ručně vyrobený, a proto se od ostatních mírně liší.')}</p>
 
-        {product.description && <p>{cz(product.description)}</p>}
+        {
+          paragraphs.length > 0 && (
+            <div class="description">
+              {paragraphs.map((lines) => (
+                <p>
+                  {lines.map((line, i) => (
+                    <>
+                      {i > 0 && <br />}
+                      {line}
+                    </>
+                  ))}
+                </p>
+              ))}
+            </div>
+          )
+        }
 
         <Note title="Stránka produktu">
           <ul>
             <li>Kdo kus vyrobil, cena nebo „cena na dotaz“, rozměry a objem, technika, péče, poznámka o ruční výrobě.</li>
             <li>4–6 velkých fotografií včetně záběru pro měřítko a detailu malby. Proklik na plnou velikost, lightbox ve fázi 4. Pinch zoom zůstává povolený.</li>
-            <li>Košík a dotaz na cenu přijdou ve fázi 5.</li>
-            {sample && <li>Tohle je vzorová stránka bez dat. Skutečné produkty přibudou importem (fáze 2) na stejných adresách jako na starém webu.</li>}
+            <li>Košík, volba varianty a dotaz na cenu přijdou ve fázi 5.</li>
+            <li>Popis je převzatý ze starého webu beze změny. Rozměry v tabulce jsou z něj vytažené tam, kde řádek uvádí jednu hodnotu.</li>
           </ul>
         </Note>
       </div>
     </div>
   </div>
 
-  <section class="section wrap">
-    <h2 class="section-head">Ze stejné sady</h2>
-    <ProductGrid products={related} lang="cs" placeholders={4} />
-    <Note>
-      <p>Data zatím neříkají, které kusy patří do jedné sady. Do té doby se zobrazují kusy ze stejné kategorie.</p>
-    </Note>
-  </section>
+  {
+    related.length > 0 && (
+      <section class="section wrap">
+        <h2 class="section-head">Ze stejné sady</h2>
+        <ProductGrid products={related} lang="cs" />
+        <Note>
+          <p>Data zatím neříkají, které kusy patří do jedné sady. Do té doby se zobrazují kusy ze stejné kategorie, nejdřív stejné velikosti.</p>
+        </Note>
+      </section>
+    )
+  }
 </Base>
 
 <style>
@@ -206,6 +257,25 @@ const description = product.description
   /* Unknown values show only in the preview, the live page hides them. */
   :global(html:not([data-notes='on'])) .missing {
     display: none;
+  }
+
+  .sold-out {
+    font-weight: var(--weight);
+  }
+
+  .option {
+    display: grid;
+    gap: var(--space-1);
+  }
+
+  .option select {
+    padding: var(--space-2);
+    border: 1px solid var(--color-muted);
+    border-radius: var(--radius);
+  }
+
+  .description > * + * {
+    margin-block-start: var(--space-3);
   }
 
   .handmade {

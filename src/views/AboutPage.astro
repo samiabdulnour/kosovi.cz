@@ -1,13 +1,14 @@
 ---
-import ContactBlock from '../components/ContactBlock.astro';
+// "O nás" after the design: the couple, the blue and white porcelain, the
+// porcelain's technical qualities, then both biographies with a CV.
+// Copy uses only the source facts in CLAUDE.md. TODO(text): Sami approves it.
+import { Image } from 'astro:assets';
 import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { danielaCollections, porcelainFacts } from '../config/facts';
+import { danielaCollections } from '../config/facts';
 import { makers } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, pathOf } from '../i18n/routes';
+import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
 import { typeset } from '../lib/typography';
 
 interface Props {
@@ -20,77 +21,202 @@ const t = (text: string) => typeset(text, lang);
 const copy = {
   cs: {
     title: 'O nás',
-    description: 'Porcelánový ateliér Daniely a Martina Kosových v Praze 6. Kdo jsme, jak pracujeme, kde jsou naše práce ve sbírkách.',
-    studio: 'Ateliér',
-    porcelain: 'Porcelán',
-    makers: 'Autoři',
-    more: 'Životopis a práce',
-    proof: 'Sbírky a výstavy',
-    collections: 'Práce Daniely Kosové jsou ve sbírkách:',
-    contact: 'Kde nás najdete',
+    description: 'Daniela a Martin Kosovi, výtvarníci a porcelánový ateliér v Praze 6. Modrobílý porcelán od roku 1995 a autorská tvorba obou.',
+    jointPhoto: 'Společná fotografie',
+    couple: 'Manželé Kosovi',
+    coupleText: [
+      'Daniela a Martin Kosovi jsou výtvarníci, kteří se porcelánu věnují desítky let. Martin je vyučený hrnčíř a absolvent keramické školy v Bechyni, Daniela vystudovala keramiku na UMPRUM v Praze. Svou značku založili v roce 1995.',
+    ],
+    blueWhite: 'Modrobílý porcelán',
+    blueWhiteText: [
+      'Modrobílým porcelánem značka začínala a lidé ji podle něj znají dodnes. Několik let ho Martin točil a Daniela malovala, poslední léta ho Martin vyrábí celý sám.',
+      'Každý kus vzniká ručně, od točení na hrnčířském kruhu po malbu kobaltem.',
+    ],
+    tech: 'Technologické kvality porcelánu',
+    techText: [
+      'Porcelán se na hrnčířském kruhu točí jen výjimečně, protože je náročný na zpracování. Martin s ním takto pracuje od devadesátých let.',
+      'Modrobílé kusy jsou zdobené kobaltem pod glazurou nebo v glazuře. Dekor se vypaluje spolu s porcelánem při teplotě až 1 380 °C, a proto se neotírá. Nádobí snese myčku i mikrovlnnou troubu.',
+    ],
+    bio: 'Životopis',
+    cv: 'CV',
+    collections: 'Práce ve sbírkách',
+    daniela: [
+      'Narodila se v Bratislavě. Keramiku studovala na SUPŠ v Bratislavě a poté na UMPRUM v Praze, praxi získala v ateliéru Andreje Rudavského a v porcelánkách v Dubí a Duchcově.',
+      'Porcelán dekoruje pod glazuru, do glazury i na glazuru včetně zlacení. Několik let malovala modrobílý porcelán, dnes se věnuje hlavně vlastní výtvarné tvorbě.',
+    ],
+    martin: [
+      'Narodil se v roce 1959 v Hradci Králové, oba jeho rodiče byli keramici. Vyučil se hrnčířem v Týništi nad Orlicí a vystudoval keramickou školu v Bechyni, stejně jako jeho rodiče a dědeček.',
+      'Pracoval v ÚVD Keramo Praha, od roku 1987 pracuje samostatně. Vyrábí modrobílý porcelán a stále víc se věnuje vlastní autorské tvorbě.',
+    ],
   },
   en: {
     title: 'About',
-    description: 'The porcelain studio of Daniela and Martin Kos in Prague 6. Who we are, how we work, where our work is held.',
-    studio: 'The studio',
-    porcelain: 'Porcelain',
-    makers: 'The makers',
-    more: 'Biography and work',
-    proof: 'Collections and exhibitions',
-    collections: 'Work by Daniela Kosová is held in:',
-    contact: 'Where to find us',
+    description: 'Daniela and Martin Kos, artists and a porcelain studio in Prague 6. Blue and white porcelain since 1995 and the artwork of both.',
+    jointPhoto: 'Photograph of the two of them',
+    couple: 'Daniela and Martin Kos',
+    coupleText: [
+      'Daniela and Martin Kos are artists who have worked with porcelain for decades. Martin is a trained potter and studied at the ceramics school in Bechyně, Daniela studied ceramics at UMPRUM in Prague. They founded their studio in 1995.',
+    ],
+    blueWhite: 'Blue and white porcelain',
+    blueWhiteText: [
+      'The studio started with blue and white porcelain, and people still know it for it. For several years Martin threw it and Daniela painted it; in recent years Martin makes all of it himself.',
+      'Every piece is made by hand, from throwing on the potter’s wheel to painting with cobalt.',
+    ],
+    tech: 'What makes the porcelain',
+    techText: [
+      'Porcelain is rarely thrown on the potter’s wheel, because it is demanding to work. Martin has worked it this way since the 1990s.',
+      'The blue and white pieces are decorated with cobalt under the glaze or in the glaze. The decoration is fired together with the porcelain at up to 1,380 °C, so it does not wear off. The tableware is dishwasher and microwave safe.',
+    ],
+    bio: 'Biography',
+    cv: 'CV',
+    collections: 'Work in collections',
+    daniela: [
+      'Born in Bratislava. She studied ceramics at SUPŠ in Bratislava, then at UMPRUM in Prague, and trained in Andrej Rudavský’s studio and in the porcelain factories in Dubí and Duchcov.',
+      'She decorates porcelain under the glaze, in the glaze and over the glaze, including gilding. For several years she painted the blue and white porcelain; today she works mainly on her own art.',
+    ],
+    martin: [
+      'Born in 1959 in Hradec Králové; both his parents were ceramicists. He apprenticed as a potter in Týniště nad Orlicí and graduated from the ceramics school in Bechyně, as did his parents and his grandfather.',
+      'He worked at ÚVD Keramo Praha and has been independent since 1987. He makes the blue and white porcelain and turns more and more to his own work.',
+    ],
   },
 }[lang];
+
+const people = [
+  { name: makers.daniela.name, bio: copy.daniela, collections: danielaCollections[lang] },
+  { name: makers.martin.name, bio: copy.martin, collections: [] as string[] },
+];
 ---
 
-<Base title={copy.title} description={copy.description} alternates={alternatesOf('about')}>
-  <section class="section wrap">
-    <h1 class="section-head">{t(copy.title)}</h1>
-    <div class="split">
-      <Placeholder label="ateliér na Vlčovce" ratio="3 / 2" />
-      <div class="stack">
-        <h2>{copy.studio}</h2>
-        <Note>
-          <p>TODO(fakta): krátce o ateliéru. Od kdy spolu pracují, jak ateliér vypadá, co v něm vzniká.</p>
-        </Note>
-        <h3>{copy.porcelain}</h3>
-        <ul class="facts">
-          {porcelainFacts[lang].map((fact) => <li>{t(fact)}</li>)}
-        </ul>
-      </div>
+<Base title={copy.title} description={copy.description} alternates={alternatesOf('about')} label={copy.title}>
+  <div class="wrap about">
+    <div class="field joint" style="--field: var(--field-olive)">
+      <span>{copy.jointPhoto}</span>
     </div>
-  </section>
 
-  <section class="section wrap">
-    <h2 class="section-head">{copy.makers}</h2>
-    <div class="split">
-      {
-        (['martin', 'daniela'] as const).map((key) => (
-          <article class="stack">
-            <h3>{makers[key].name}</h3>
-            <p>{t(makers[key].role[lang])}</p>
-            <p>
-              <a href={withBase(pathOf(key, lang))}>{t(copy.more)}</a>
-            </p>
-          </article>
-        ))
-      }
+    <section class="couple stack">
+      <h2>{copy.couple}</h2>
+      {copy.coupleText.map((p) => <p>{t(p)}</p>)}
+    </section>
+
+    <div class="field workshop-a" style="--field: var(--field-salmon)">
+      <Image src={makers.martin.portrait.src} alt={makers.martin.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 48rem) 45vw, 100vw" />
     </div>
-  </section>
 
-  <section class="section wrap">
-    <h2 class="section-head">{t(copy.proof)}</h2>
-    <p>{copy.collections}</p>
-    <ul class="facts">
-      {danielaCollections[lang].map((c) => <li>{c}</li>)}
-    </ul>
-    <Note>
-      <p>TODO(fakta): výstavy obou autorů, sbírky s Martinovými pracemi.</p>
+    <section class="blue-white stack">
+      <h2>{copy.blueWhite}</h2>
+      {copy.blueWhiteText.map((p) => <p>{t(p)}</p>)}
+    </section>
+
+    <div class="field workshop-b" style="--field: var(--field-blue)">
+      <Image src={makers.daniela.portrait.src} alt={makers.daniela.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 48rem) 45vw, 100vw" />
+    </div>
+
+    <section class="tech stack">
+      <h2>{copy.tech}</h2>
+      {copy.techText.map((p) => <p>{t(p)}</p>)}
+    </section>
+
+    {
+      people.map((person, i) => (
+        <section class:list={['bio', 'stack', i === 0 ? 'bio-a' : 'bio-b']}>
+          <h2>{person.name}</h2>
+          <h3>{copy.bio}</h3>
+          {person.bio.map((p) => (
+            <p>{t(p)}</p>
+          ))}
+          <h3>{copy.cv}</h3>
+          {person.collections.length > 0 ? (
+            <ul class="cv">
+              {person.collections.map((c) => (
+                <li>{c}</li>
+              ))}
+            </ul>
+          ) : (
+            <p class="muted">TODO(fakta)</p>
+          )}
+        </section>
+      ))
+    }
+  </div>
+
+  <div class="wrap">
+    <Note title="Texty">
+      <ul>
+        <li>Texty jsou složené jen z ověřených faktů (stará stránka O nás a údaje od Samiho) a čekají na schválení.</li>
+        <li>TODO(fakta): společná fotografie, výstavy obou, CV Martina, sbírky s jeho pracemi.</li>
+        <li>Teplota výpalu: popisy produktů uvádějí 1 400 °C, stará stránka O nás 1 380 °C. Které číslo platí?</li>
+      </ul>
     </Note>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.contact}</h2>
-    <ContactBlock />
-  </section>
+  </div>
 </Base>
+
+<style>
+  .about {
+    display: grid;
+    gap: var(--space-7) var(--gap);
+  }
+
+  .joint {
+    aspect-ratio: 1;
+    max-width: 24rem;
+    padding: var(--space-5);
+    align-items: end;
+    justify-items: start;
+  }
+
+  .workshop-a,
+  .workshop-b {
+    aspect-ratio: 4 / 3;
+  }
+
+  .cv {
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 48rem) {
+    .about {
+      grid-template-columns: 1fr 1fr;
+      grid-template-areas:
+        'joint couple'
+        'bluewhite workshop-a'
+        'workshop-b tech'
+        'bio-a bio-b';
+      align-items: start;
+    }
+
+    .joint {
+      grid-area: joint;
+    }
+
+    .couple {
+      grid-area: couple;
+    }
+
+    .workshop-a {
+      grid-area: workshop-a;
+    }
+
+    .blue-white {
+      grid-area: bluewhite;
+    }
+
+    .workshop-b {
+      grid-area: workshop-b;
+    }
+
+    .tech {
+      grid-area: tech;
+    }
+
+    .bio-a {
+      grid-area: bio-a;
+      margin-block-start: var(--space-7);
+    }
+
+    .bio-b {
+      grid-area: bio-b;
+      margin-block-start: var(--space-7);
+    }
+  }
+</style>

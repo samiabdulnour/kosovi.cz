@@ -13,6 +13,8 @@ html {
   text-size-adjust: 100%;
 }
 
+/* The design sets everything in bold capitals at one size. The source text
+   stays in sentence case, so screen readers and a later change of mind are fine. */
 body {
   min-height: 100vh;
   display: flex;
@@ -21,7 +23,10 @@ body {
   color: var(--color-ink);
   font-family: var(--font-body);
   font-size: var(--step-0);
+  font-weight: var(--weight);
   line-height: var(--leading-body);
+  letter-spacing: var(--tracking);
+  text-transform: uppercase;
 }
 
 main {
@@ -42,38 +47,32 @@ button,
 textarea,
 select {
   font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
 }
 
 h1,
 h2,
 h3 {
   font-family: var(--font-display);
+  font-size: var(--step-0);
+  font-weight: var(--weight);
   line-height: var(--leading-tight);
-  font-weight: 600;
-  text-wrap: balance;
-}
-
-h1 {
-  font-size: var(--step-4);
-}
-
-h2 {
-  font-size: var(--step-3);
-}
-
-h3 {
-  font-size: var(--step-1);
 }
 
 p,
 li {
   max-width: var(--measure);
-  text-wrap: pretty;
 }
 
 a {
   color: inherit;
-  text-underline-offset: 0.15em;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
 }
 
 :focus-visible {
@@ -109,12 +108,8 @@ a {
   padding-block: var(--space-7);
 }
 
-.section + .section {
-  border-top: 1px solid var(--color-line);
-}
-
 .section-head {
-  margin-block-end: var(--space-5);
+  margin-block-end: var(--space-4);
 }
 
 .section-head > * + * {
@@ -122,22 +117,34 @@ a {
 }
 
 .lead {
-  font-size: var(--step-1);
+  font-size: var(--step-0);
 }
 
 .muted {
   color: var(--color-muted);
 }
 
+/* The page title sits under the header, on the label line. */
+.page-label {
+  padding-block: var(--space-6) var(--space-5);
+}
+
+/* On wide screens text that belongs to the page title starts on its line. */
+@media (min-width: 48rem) {
+  .from-label {
+    margin-inline-start: var(--label-start);
+  }
+}
+
 .grid {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-6) var(--gap);
   grid-template-columns: repeat(auto-fill, minmax(min(100%, var(--grid-min, 14rem)), 1fr));
 }
 
 .split {
   display: grid;
-  gap: var(--space-6);
+  gap: var(--space-6) var(--gap);
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
   align-items: start;
 }
@@ -180,12 +187,16 @@ a {
 .button {
   display: inline-block;
   padding: var(--space-3) var(--space-5);
-  border: 1px solid var(--color-ink);
+  border: 2px solid var(--color-ink);
   border-radius: var(--radius);
   background: var(--color-ink);
   color: var(--color-paper);
   text-decoration: none;
   cursor: pointer;
+}
+
+.button:hover {
+  text-decoration: none;
 }
 
 .button[disabled] {
@@ -196,4 +207,23 @@ a {
 .button--quiet {
   background: transparent;
   color: var(--color-ink);
+}
+
+/* A colour field that holds a photograph or stands in for one. */
+.field {
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--field, var(--field-sky));
+}
+
+.field > img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Product photos keep their whole frame; the field shows around them. */
+.field--contain > img {
+  object-fit: contain;
 }

@@ -1,16 +1,16 @@
 ---
-import ProductGrid from '../components/ProductGrid.astro';
+// A maker's page after the design: two fields, "Volné" (their own art) and
+// "Užité" (pieces for use, which opens their part of the e-shop).
+import FieldBlock from '../components/FieldBlock.astro';
 import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { danielaCollections, danielaFacts, martinFacts } from '../config/facts';
+import { artistBlocks } from '../config/home';
 import { getLine } from '../config/lines';
 import { makers, type MakerKey } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath } from '../i18n/routes';
+import { alternatesOf, collectionPath, pathOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
-import { getLineProducts } from '../lib/products';
-import { typeset } from '../lib/typography';
+import { useTranslations, withBase } from '../i18n/utils';
+import { photoOf } from '../lib/photos';
 
 interface Props {
   maker: MakerKey;
@@ -18,102 +18,52 @@ interface Props {
 }
 
 const { maker, lang } = Astro.props;
+const t = useTranslations(lang);
 const person = makers[maker];
 const line = getLine(maker);
-const products = await getLineProducts(maker);
-const t = (text: string) => typeset(text, lang);
+const blocks = artistBlocks[maker];
 
-const facts = (maker === 'martin' ? martinFacts : danielaFacts)[lang];
-const collections = maker === 'daniela' ? danielaCollections[lang] : [];
-
-const copy = {
-  cs: {
-    description:
-      maker === 'martin'
-        ? 'Martin Kos točí porcelán na hrnčířském kruhu. Životopis, způsob práce a jeho kusy.'
-        : 'Daniela Kosová maluje porcelán kobaltem a tvoří vlastní výtvarná díla. Životopis, způsob práce a její práce.',
-    bio: 'Životopis',
-    how: 'Jak pracuje',
-    collections: 'Zastoupení ve sbírkách',
-    pieces: maker === 'martin' ? 'Jeho kusy' : 'Její práce',
-    all: `Všechny kusy v kolekci ${line.name.cs}`,
-  },
-  en: {
-    description:
-      maker === 'martin'
-        ? 'Martin Kos throws porcelain on the potter’s wheel. Biography, how he works and his pieces.'
-        : 'Daniela Kosová paints porcelain with cobalt and makes her own artwork. Biography, how she works and her pieces.',
-    bio: 'Biography',
-    how: maker === 'martin' ? 'How he works' : 'How she works',
-    collections: 'Collections',
-    pieces: maker === 'martin' ? 'His pieces' : 'Her work',
-    all: `All pieces in the ${line.name.en} collection`,
-  },
-}[lang];
-
-const photo = maker === 'martin' ? 'Martin u hrnčířského kruhu' : 'Daniela při malování';
+const description =
+  lang === 'cs'
+    ? `${person.name}: volná tvorba a užité předměty z porcelánu.`
+    : `${person.name}: fine art and porcelain for everyday use.`;
 ---
 
-<Base title={person.name} description={copy.description} alternates={alternatesOf(maker)}>
-  <section class="section wrap">
-    <div class="split">
-      <Placeholder label={photo} ratio="4 / 5" />
-      <div class="stack">
-        <h1>{person.name}</h1>
-        <p class="lead">{t(person.role[lang])}</p>
-      </div>
+<Base title={person.name} description={description} alternates={alternatesOf(maker)} label={person.name}>
+  <div class="wrap">
+    <div class="pair">
+      <FieldBlock
+        href={withBase(pathOf(maker === 'martin' ? 'martinFree' : 'danielaFree', lang))}
+        caption={t('artist.free')}
+        field={blocks.free.field}
+        photo={await photoOf(blocks.free)}
+        captionAt="bottom"
+        ratio="4 / 3"
+      />
+      <FieldBlock
+        href={withBase(collectionPath(line.slug[lang], lang))}
+        caption={t('artist.applied')}
+        field={blocks.applied.field}
+        photo={await photoOf(blocks.applied)}
+        captionAt="bottom"
+        ratio="4 / 3"
+      />
     </div>
-  </section>
-
-  <section class="section wrap">
-    <div class="split">
-      <div class="stack">
-        <h2>{copy.bio}</h2>
-        <ul class="facts">
-          {facts.map((fact) => <li>{t(fact)}</li>)}
-        </ul>
-        {
-          collections.length > 0 && (
-            <>
-              <h3>{copy.collections}</h3>
-              <ul class="facts">
-                {collections.map((c) => (
-                  <li>{c}</li>
-                ))}
-              </ul>
-            </>
-          )
-        }
-      </div>
-      <div class="stack">
-        <h2>{copy.how}</h2>
-        <Placeholder label={maker === 'martin' ? 'točení, krátké video' : 'malba kobaltem, krátké video'} kind="video" ratio="16 / 9" />
-        <Note>
-          <p>TODO(fakta): jak {maker === 'martin' ? 'Martin' : 'Daniela'} pracuje, vlastními slovy. Zatím jsou k dispozici jen fakta ze starého webu.</p>
-          {
-            maker === 'martin' && (
-              <p>Ke schválení: Galerie Svatoš uvádí, že Martin je hrnčíř ve třetí generaci a dělá tenkostěnný porcelán s drobnými otvory, které dávají průsvitným šálkům krajkový vzor. Použít až po potvrzení.</p>
-            )
-          }
-        </Note>
-      </div>
-    </div>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.pieces}</h2>
-    <ProductGrid products={products} lang={lang} placeholders={8} limit={8} />
-    <p class="after-grid">
-      <a href={withBase(collectionPath(line.slug[lang], lang))}>{t(copy.all)}</a>
-    </p>
     <Note>
-      <p>Galerijní prezentace samostatné tvorby. Kde cena není stanovená, zobrazí se „cena na dotaz“.</p>
+      <p>„Užité“ otevře {maker === 'martin' ? 'Martinovu' : 'Danielinu'} část e-shopu. „Volné“ vede na galerii volné tvorby, pro kterou zatím chybí fotografie.</p>
     </Note>
-  </section>
+  </div>
 </Base>
 
 <style>
-  .after-grid {
-    margin-block-start: var(--space-5);
+  .pair {
+    display: grid;
+    gap: var(--space-6) var(--gap);
+  }
+
+  @media (min-width: 48rem) {
+    .pair {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 </style>

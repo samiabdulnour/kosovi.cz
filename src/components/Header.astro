@@ -1,114 +1,144 @@
 ---
+// Header after eshop.pdf: brand on the left, the studio's name on the label
+// line, the menu with the cart on the right. In the e-shop it turns light blue.
+import { getLine } from '../config/lines';
 import { studio } from '../config/site';
-import { pathOf, type Alternates, type RouteKey } from '../i18n/routes';
+import { collectionPath, pathOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { cz } from '../lib/typography';
 
 interface Props {
   lang: Lang;
-  alternates: Alternates;
 }
 
-const { lang, alternates } = Astro.props;
+const { lang } = Astro.props;
 const t = useTranslations(lang);
-const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
-const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
-
-const items: { key: RouteKey; label: string }[] = [
-  { key: 'collections', label: t('nav.collections') },
-  { key: 'martin', label: t('nav.martin') },
-  { key: 'daniela', label: t('nav.daniela') },
-  { key: 'process', label: t('nav.process') },
-  { key: 'about', label: t('nav.about') },
-  ...(lang === 'cs' ? [{ key: 'courses' as const, label: t('nav.courses') }] : []),
-  { key: 'contact', label: t('nav.contact') },
-];
+const blueWhite = getLine('spolecna');
 
 const current = Astro.url.pathname;
-function isCurrent(path: string): 'page' | 'true' | undefined {
-  const href = withBase(path);
-  if (current === href) return 'page';
-  return current.startsWith(href) ? 'true' : undefined;
-}
+const inShop = [pathOf('collections', lang), '/produkt/', pathOf('cart', 'cs')].some((p) =>
+  current.startsWith(withBase(p)),
+);
+const cartPath = pathOf('cart', 'cs');
+
+const items = [
+  { href: collectionPath(blueWhite.slug[lang], lang), label: t('nav.shop'), current: inShop && !current.startsWith(withBase(cartPath)) },
+  { href: pathOf('about', lang), label: t('nav.about') },
+  ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses') }] : []),
+  { href: pathOf('contact', lang), label: t('nav.contact') },
+].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class="site-header">
+<header class:list={['site-header', { shop: inShop }]}>
   <div class="wrap bar">
-    <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.name)}</a>
+    <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
+    <p class="name">{cz(studio.name)}</p>
     <nav aria-label={t('nav.label')}>
-      <ul class="nav">
+      <ul>
         {
-          items.map(({ key, label }) => {
-            const path = pathOf(key, lang);
-            return (
-              <li>
-                <a href={withBase(path)} aria-current={isCurrent(path)}>
-                  {label}
-                </a>
-              </li>
-            );
-          })
+          items.map((item) => (
+            <li>
+              <a href={withBase(item.href)} aria-current={item.current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
         }
+        <li>
+          <a href={withBase(cartPath)} aria-current={current === withBase(cartPath) ? 'page' : undefined}>
+            {t('nav.cart')}
+            <span class="badge" data-cart-count hidden></span>
+          </a>
+        </li>
       </ul>
     </nav>
-    <ul class="tools">
-      {
-        lang === 'cs' && (
-          <li>
-            <a href={withBase(pathOf('cart', 'cs'))} aria-current={isCurrent(pathOf('cart', 'cs'))}>
-              {t('nav.cart')}
-            </a>
-          </li>
-        )
-      }
-      <li>
-        <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>{t('lang.switch')}</a>
-      </li>
-    </ul>
   </div>
 </header>
 
+<script>
+  // The cart lives in localStorage (phase 5); the badge shows how many pieces.
+  try {
+    const items: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+    const count = Array.isArray(items) ? items.length : 0;
+    for (const badge of document.querySelectorAll<HTMLElement>('[data-cart-count]')) {
+      badge.textContent = String(count);
+      badge.hidden = count === 0;
+    }
+  } catch {}
+</script>
+
 <style>
   .site-header {
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: 1px solid transparent;
+  }
+
+  .site-header.shop {
+    background: var(--color-shop-header);
+    border-bottom-color: var(--color-ink);
   }
 
   .bar {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      'brand nav'
+      'name name';
+    gap: var(--space-3) var(--gap);
     align-items: baseline;
-    gap: var(--space-3) var(--space-6);
-    padding-block: var(--space-4);
+    padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(1.5rem, 3.3vw, 3.1rem);
   }
 
   .brand {
-    font-weight: 600;
-    text-decoration: none;
+    grid-area: brand;
+  }
+
+  .name {
+    grid-area: name;
   }
 
   nav {
-    flex: 1 1 auto;
+    grid-area: nav;
   }
 
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1) var(--space-4);
+    justify-content: flex-end;
+    gap: var(--space-2) clamp(1rem, 4.3vw, 4.5rem);
     padding: 0;
     list-style: none;
   }
 
-  a {
-    text-decoration: none;
-  }
-
-  a:hover,
-  [aria-current] {
-    text-decoration: underline;
-  }
-
   [aria-current='page'] {
-    text-decoration-thickness: 2px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.45em;
+  }
+
+  .badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.1em;
+    height: 1.1em;
+    margin-inline-start: 0.3em;
+    padding-inline: 0.2em;
+    border-radius: 0.15em;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-size: 0.8em;
+    line-height: 1;
+  }
+
+  .badge[hidden] {
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .bar {
+      grid-template-columns: var(--label-start) 1fr auto;
+      grid-template-areas: 'brand name nav';
+      column-gap: 0;
+    }
   }
 </style>

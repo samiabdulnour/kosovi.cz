@@ -1,12 +1,13 @@
 ---
+// Product tile after eshop.pdf: the photo, then the type in capitals with the
+// price beside it and the decor in small letters, Inter Medium in grey.
 import { Image } from 'astro:assets';
-import MakerCredit from './MakerCredit.astro';
-import Price from './Price.astro';
-import Placeholder from './wire/Placeholder.astro';
 import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
+import { useTranslations, withBase } from '../i18n/utils';
+import { productName } from '../lib/names';
 import type { Product } from '../lib/products';
+import { formatCzk } from '../lib/typography';
 
 interface Props {
   product: Product;
@@ -14,42 +15,97 @@ interface Props {
 }
 
 const { product, lang } = Astro.props;
+const t = useTranslations(lang);
 const [cover] = product.images;
+const { type, decor } = productName(product.title);
+// The edited photos are portraits and fill the tile; older ones keep their whole frame.
+const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
 ---
 
 <article class="card">
   <a href={withBase(productPath(product.slug))}>
-    {
-      cover ? (
-        <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 60rem) 25vw, (min-width: 30rem) 50vw, 100vw" />
-      ) : (
-        <Placeholder label="chybí fotografie" ratio="1 / 1" />
-      )
-    }
-    <h3>{product.title}</h3>
+    <span class="tile" data-fit={fit}>
+      {cover && <Image src={cover.src} alt={cover.alt} widths={[280, 420, 560, 840]} sizes="(min-width: 48rem) 19vw, 50vw" />}
+    </span>
+    <span class="caption">
+      <h3>
+        <span class="type">{type}</span>
+        {decor && <span class="decor">{decor}</span>}
+      </h3>
+      <span class="price">{product.price === null ? t('product.priceOnRequest') : formatCzk(product.price)}</span>
+      {product.stock === 0 && <span class="note">{lang === 'cs' ? 'vyprodáno' : 'sold out'}</span>}
+    </span>
   </a>
-  <MakerCredit makers={product.makers} lang={lang} />
-  <Price price={product.price} lang={lang} />
 </article>
 
 <style>
   .card > a {
     display: block;
+  }
+
+  .card > a:hover {
     text-decoration: none;
   }
 
-  .card :global(img) {
+  .tile {
+    display: block;
+    aspect-ratio: 260 / 302;
+    overflow: hidden;
+    background: var(--color-tile);
+  }
+
+  .tile :global(img) {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 100%;
     object-fit: cover;
   }
 
-  h3 {
-    margin-block-start: var(--space-3);
-    font-size: var(--step-0);
+  .tile[data-fit='contain'] :global(img) {
+    object-fit: contain;
   }
 
-  .card :global(p) {
-    font-size: var(--step--1);
+  /* On phones the price goes under the name; from tablets up it sits beside it. */
+  .caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: var(--space-3);
+    overflow-wrap: anywhere;
+    padding: var(--space-2) var(--space-3) 0;
+    color: var(--color-caption);
+    font-weight: var(--weight-medium);
+  }
+
+  h3 {
+    font-weight: inherit;
+  }
+
+  .card > a:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .type,
+  .decor {
+    display: block;
+  }
+
+  .decor,
+  .note {
+    text-transform: lowercase;
+  }
+
+  .price {
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .note {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 48rem) {
+    .caption {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
   }
 </style>

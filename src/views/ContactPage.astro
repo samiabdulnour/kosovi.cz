@@ -32,9 +32,8 @@ const copy = {
 }[lang];
 ---
 
-<Base title={copy.title} description={copy.description} alternates={alternatesOf('contact')}>
+<Base title={copy.title} description={copy.description} alternates={alternatesOf('contact')} label={copy.title}>
   <div class="section wrap">
-    <h1 class="section-head">{copy.title}</h1>
     <div class="split">
       <div class="stack">
         <ContactBlock />
