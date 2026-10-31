@@ -11,7 +11,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Košík v hlavičce: v návrhu není, e-shop ho ale potřebuje (fáze 5). Kam ho dát?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Hrnek Štefan, Talíř jídelní, Talíř malý, Talíř polévkový, Odkládátka. Sporné mapování: „Hrnek malý“ = dřívější „Mini“? „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`)
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
-- [ ] Výběr čtyř kusů modrobílého porcelánu na úvod a fotografie do pásu (`src/config/home.ts`).
+- [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).
+- [x] Pás fotografií na úvodu podle `docs/design/pas.pdf` (`src/config/band.ts`).
 - [ ] Daniela, kategorie Design (věšáčky, úchytky): platí u nich „Malovala Daniela“? Výchozí autoři řady jsou v `src/config/lines.ts`, u jednotlivého produktu se dají přepsat polem `makers`.
 - [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“, stránka O nás „až 1380 °C“. Které číslo platí?
 - [ ] Režim objednávky: nezávazná (`request`), nebo závazná (`binding`)? `src/config/order.ts`, zatím zástupně `request`.

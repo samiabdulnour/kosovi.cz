@@ -3,9 +3,9 @@
 // a selection of the blue and white porcelain and the two makers.
 import { Image } from 'astro:assets';
 import FieldBlock from '../components/FieldBlock.astro';
-import PhotoBand, { type BandPhoto } from '../components/PhotoBand.astro';
+import PhotoBand from '../components/PhotoBand.astro';
 import Note from '../components/wire/Note.astro';
-import { artistBlocks, blueWhiteSelection, heroBand } from '../config/home';
+import { artistBlocks, blueWhiteSelection } from '../config/home';
 import { getLine } from '../config/lines';
 import { makers, studio } from '../config/site';
 import Base from '../layouts/Base.astro';
@@ -37,12 +37,6 @@ const copy = {
   },
 }[lang];
 
-const band: BandPhoto[] = [];
-for (const item of heroBand) {
-  const photo = await photoOf(item);
-  if (photo) band.push({ ...photo, field: item.field, inset: item.inset });
-}
-
 const featured = (await getFeaturedProducts()).filter((p) => p.line === 'spolecna');
 const selection = (featured.length >= 4 ? featured : await getProductsBySlug(blueWhiteSelection)).slice(0, 4);
 const tileFields = ['honey', 'sky', 'honey', 'sky'] as const;
@@ -59,7 +53,7 @@ const people = await Promise.all(
 ---
 
 <Base description={copy.description} alternates={alternatesOf('home')} label={studio.name}>
-  <PhotoBand photos={band} lang={lang} />
+  <PhotoBand lang={lang} />
 
   <div class="wrap">
     <p class="claim from-label">{typeset(copy.claim, lang)}</p>

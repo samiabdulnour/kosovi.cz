@@ -1,47 +1,54 @@
 ---
-// The looping strip of photographs on the homepage. It moves slowly, stops on
-// hover, focus or the button, and stays still for prefers-reduced-motion.
-import type { ImageMetadata } from 'astro';
+// The looping photo strip on the homepage (src/config/band.ts). It moves
+// slowly, stops on hover, focus or the button, and stays still for
+// prefers-reduced-motion.
 import { Image } from 'astro:assets';
-import type { Field } from '../config/home';
+import { bandFields, bandPhotos, bandSize, type Frame } from '../config/band';
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
 
-export interface BandPhoto {
-  src: ImageMetadata;
-  alt: string;
-  field: Field;
-  inset?: boolean;
-}
-
 interface Props {
-  photos: BandPhoto[];
   lang: Lang;
 }
 
-const { photos, lang } = Astro.props;
+const { lang } = Astro.props;
 const t = useTranslations(lang);
-// The strip is drawn twice so the loop has no seam; the copy is hidden from
-// assistive technology.
+
+const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`;
+const place = (f: Frame) =>
+  `left:${pct(f.x, bandSize.w)};top:${pct(f.y, bandSize.h)};width:${pct(f.w, bandSize.w)};height:${pct(f.h, bandSize.h)}`;
+
+// The strip is as tall as --band-h: 17rem on phones, 44vw, at most 38rem.
+const sizes = (f: Frame) => {
+  const share = f.w / bandSize.h;
+  return `(max-width: 38.6rem) ${Math.round(share * 272)}px, (max-width: 86.4rem) ${(share * 44).toFixed(1)}vw, ${Math.round(share * 608)}px`;
+};
+
+// Drawn twice so the loop has no seam; the copy is hidden from assistive technology.
 const copies = [false, true];
 ---
 
 <section class="band" aria-label={t('band.label')} data-band>
   <div class="track">
     {
-      copies.map((hidden) =>
-        photos.map((photo, i) => (
-          <div class:list={['panel', { inset: photo.inset }]} style={`--field: var(--field-${photo.field})`} aria-hidden={hidden ? 'true' : undefined}>
+      copies.map((hidden) => (
+        <div class="strip" aria-hidden={hidden ? 'true' : undefined}>
+          {bandFields.map((f) => (
+            <span class="field-block" style={`${place(f)};background:${f.color}`} />
+          ))}
+          {bandPhotos.map((photo, i) => (
             <Image
+              class="photo"
+              style={place(photo)}
               src={photo.src}
               alt={hidden ? '' : photo.alt}
-              widths={[360, 640, 960]}
-              sizes="(min-width: 60rem) 32vw, 70vw"
-              loading={!hidden && i < 3 ? 'eager' : 'lazy'}
+              widths={[240, 480, 720, 1080, 1440]}
+              sizes={sizes(photo)}
+              loading={!hidden && i < 4 ? 'eager' : 'lazy'}
             />
-          </div>
-        )),
-      )
+          ))}
+        </div>
+      ))
     }
   </div>
   <button type="button" class="toggle" data-band-toggle aria-pressed="false" data-pause={t('band.pause')} data-play={t('band.play')}>
@@ -62,6 +69,7 @@ const copies = [false, true];
 
 <style>
   .band {
+    --band-h: clamp(17rem, 44vw, 38rem);
     position: relative;
     overflow: hidden;
   }
@@ -69,7 +77,7 @@ const copies = [false, true];
   .track {
     display: flex;
     width: max-content;
-    animation: band 90s linear infinite;
+    animation: band 140s linear infinite;
   }
 
   .band:hover .track,
@@ -78,21 +86,21 @@ const copies = [false, true];
     animation-play-state: paused;
   }
 
-  .panel {
+  .strip {
+    position: relative;
     flex: none;
-    height: clamp(17rem, 44vw, 38rem);
-    background: var(--field);
+    height: var(--band-h);
+    aspect-ratio: 5760 / 630;
   }
 
-  .panel :global(img) {
-    height: 100%;
-    width: auto;
+  .field-block,
+  .strip :global(.photo) {
+    position: absolute;
+  }
+
+  .strip :global(.photo) {
     max-width: none;
     object-fit: cover;
-  }
-
-  .panel.inset {
-    padding: clamp(1.5rem, 5vw, 5rem) clamp(2.5rem, 7vw, 7rem);
   }
 
   .toggle {
