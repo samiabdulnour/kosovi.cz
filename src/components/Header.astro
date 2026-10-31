@@ -1,42 +1,39 @@
 ---
-// Brand on the left, the page title on the label line, navigation on the right.
+// Header after eshop.pdf: brand on the left, the studio's name on the label
+// line, the menu with the cart on the right. In the e-shop it turns light blue.
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
-import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
+import { collectionPath, pathOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { cz } from '../lib/typography';
 
 interface Props {
   lang: Lang;
-  alternates: Alternates;
-  /** Page title shown in the middle of the bar. */
-  label?: string;
-  /** False when the page has its own <h1> (product pages). */
-  labelIsHeading?: boolean;
 }
 
-const { lang, alternates, label, labelIsHeading = true } = Astro.props;
+const { lang } = Astro.props;
 const t = useTranslations(lang);
-const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
-const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 const blueWhite = getLine('spolecna');
 
 const current = Astro.url.pathname;
-const inShop = [pathOf('collections', lang), '/produkt/'].some((p) => current.startsWith(withBase(p)));
+const inShop = [pathOf('collections', lang), '/produkt/', pathOf('cart', 'cs')].some((p) =>
+  current.startsWith(withBase(p)),
+);
+const cartPath = pathOf('cart', 'cs');
 
-const items: { href: string; label: string; current: boolean }[] = [
-  { href: collectionPath(blueWhite.slug[lang], lang), label: t('nav.shop'), current: inShop },
-  { href: pathOf('about', lang), label: t('nav.about'), current: false },
-  ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses'), current: false }] : []),
-  { href: pathOf('contact', lang), label: t('nav.contact'), current: false },
+const items = [
+  { href: collectionPath(blueWhite.slug[lang], lang), label: t('nav.shop'), current: inShop && !current.startsWith(withBase(cartPath)) },
+  { href: pathOf('about', lang), label: t('nav.about') },
+  ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses') }] : []),
+  { href: pathOf('contact', lang), label: t('nav.contact') },
 ].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class="site-header">
+<header class:list={['site-header', { shop: inShop }]}>
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
-    {label && (labelIsHeading ? <h1 class="label">{cz(label)}</h1> : <p class="label">{cz(label)}</p>)}
+    <p class="name">{cz(studio.name)}</p>
     <nav aria-label={t('nav.label')}>
       <ul>
         {
@@ -49,9 +46,9 @@ const items: { href: string; label: string; current: boolean }[] = [
           ))
         }
         <li>
-          <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>
-            <span aria-hidden="true">{otherLang.toUpperCase()}</span>
-            <span class="visually-hidden">{t('lang.switch')}</span>
+          <a href={withBase(cartPath)} aria-current={current === withBase(cartPath) ? 'page' : undefined}>
+            {t('nav.cart')}
+            <span class="badge" data-cart-count hidden></span>
           </a>
         </li>
       </ul>
@@ -59,24 +56,45 @@ const items: { href: string; label: string; current: boolean }[] = [
   </div>
 </header>
 
+<script>
+  // The cart lives in localStorage (phase 5); the badge shows how many pieces.
+  try {
+    const items: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+    const count = Array.isArray(items) ? items.length : 0;
+    for (const badge of document.querySelectorAll<HTMLElement>('[data-cart-count]')) {
+      badge.textContent = String(count);
+      badge.hidden = count === 0;
+    }
+  } catch {}
+</script>
+
 <style>
+  .site-header {
+    border-bottom: 1px solid transparent;
+  }
+
+  .site-header.shop {
+    background: var(--color-shop-header);
+    border-bottom-color: var(--color-ink);
+  }
+
   .bar {
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
       'brand nav'
-      'label label';
-    gap: var(--space-4) var(--gap);
+      'name name';
+    gap: var(--space-3) var(--gap);
     align-items: baseline;
-    padding-block: var(--space-6) var(--space-7);
+    padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(1.5rem, 3.3vw, 3.1rem);
   }
 
   .brand {
     grid-area: brand;
   }
 
-  .label {
-    grid-area: label;
+  .name {
+    grid-area: name;
   }
 
   nav {
@@ -87,21 +105,39 @@ const items: { href: string; label: string; current: boolean }[] = [
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--space-2) clamp(1rem, 4vw, 4rem);
+    gap: var(--space-2) clamp(1rem, 4.3vw, 4.5rem);
     padding: 0;
     list-style: none;
   }
 
   [aria-current='page'] {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.45em;
+  }
+
+  .badge {
+    display: inline-grid;
+    place-items: center;
+    min-width: 1.1em;
+    height: 1.1em;
+    margin-inline-start: 0.3em;
+    padding-inline: 0.2em;
+    border-radius: 0.15em;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-size: 0.8em;
+    line-height: 1;
+  }
+
+  .badge[hidden] {
+    display: none;
   }
 
   @media (min-width: 48rem) {
     .bar {
       grid-template-columns: var(--label-start) 1fr auto;
-      grid-template-areas: 'brand label nav';
+      grid-template-areas: 'brand name nav';
       column-gap: 0;
     }
   }

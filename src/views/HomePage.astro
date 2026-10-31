@@ -52,7 +52,8 @@ const people = await Promise.all(
 );
 ---
 
-<Base description={copy.description} alternates={alternatesOf('home')} label={studio.name}>
+<Base description={copy.description} alternates={alternatesOf('home')}>
+  <h1 class="visually-hidden">{studio.name}</h1>
   <PhotoBand lang={lang} />
 
   <div class="wrap">

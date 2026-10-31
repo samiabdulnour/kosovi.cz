@@ -124,6 +124,11 @@ a:hover {
   color: var(--color-muted);
 }
 
+/* The page title sits under the header, on the label line. */
+.page-label {
+  padding-block: var(--space-6) var(--space-5);
+}
+
 /* On wide screens text that belongs to the page title starts on its line. */
 @media (min-width: 48rem) {
   .from-label {

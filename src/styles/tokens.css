@@ -9,6 +9,9 @@
   --color-ink: #111111;
   --color-muted: #555555;
   --color-line: #8a8a8a;
+  --color-shop-header: #d4effa;
+  --color-caption: #4c4c4c;
+  --color-tile: #d8d3cf;
 
   /* colour fields behind photographs */
   --field-sky: #c6e7f7;
@@ -37,6 +40,7 @@
   --font-display: var(--font-body);
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --weight: 800;
+  --weight-medium: 500;
   --tracking: 0.04em;
 
   --step--1: 0.75rem;
@@ -64,6 +68,6 @@
   --page-max: 100rem;
   --gutter: clamp(1rem, 5.6vw, 5.6rem);
   --gap: clamp(1rem, 2vw, 2rem);
-  --label-start: 38%;
+  --label-start: 30.2%;
   --radius: 0;
 }
