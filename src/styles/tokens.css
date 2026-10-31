@@ -43,8 +43,11 @@
   --weight-medium: 500;
   --tracking: 0.04em;
 
-  --step--1: 0.75rem;
-  --step-0: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);
+  /* 12.5 px on a 1512 px wide screen, as in eshop.pdf */
+  --step--1: 0.6875rem;
+  --step-0: clamp(0.71875rem, 0.66rem + 0.12vw, 0.78125rem);
+  /* product captions, a step smaller */
+  --step-caption: clamp(0.6875rem, 0.64rem + 0.1vw, 0.734375rem);
   --step-1: var(--step-0);
   --step-2: var(--step-0);
   --step-3: var(--step-0);

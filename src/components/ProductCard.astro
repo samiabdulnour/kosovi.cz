@@ -39,8 +39,12 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
 </article>
 
 <style>
+  /* Photo and caption sit on the grid's two rows (subgrid, see ProductGrid). */
+  .card,
   .card > a {
-    display: block;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
   }
 
   .card > a:hover {
@@ -68,10 +72,12 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
   .caption {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
+    align-content: start;
     column-gap: var(--space-3);
     overflow-wrap: anywhere;
-    padding: var(--space-2) var(--space-3) 0;
+    padding: var(--space-2) var(--space-1) var(--row-space, var(--space-6));
     color: var(--color-caption);
+    font-size: var(--step-caption);
     font-weight: var(--weight-medium);
   }
 
