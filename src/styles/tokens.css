@@ -1,6 +1,6 @@
 /*
  * Visual tokens from the design kosovi_navrh_01.pdf.
- * Typeface is not final: the design uses a bold grotesque, Sami picks it.
+ * Typeface: Inter ExtraBold, capitals with a little tracking (Sami, October 2026).
  * Change values here, keep the names.
  */
 :root {
@@ -32,12 +32,12 @@
   --color-note-line: #8193b8;
   --color-focus: #1d4ed8;
 
-  /* type: one size, bold, capitals, as in the design */
-  --font-body: "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+  /* type: Inter ExtraBold in one size, capitals, as in the design */
+  --font-body: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-display: var(--font-body);
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --weight: 700;
-  --tracking: 0.01em;
+  --weight: 800;
+  --tracking: 0.04em;
 
   --step--1: 0.75rem;
   --step-0: clamp(0.8125rem, 0.78rem + 0.12vw, 0.875rem);

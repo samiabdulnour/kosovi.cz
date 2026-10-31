@@ -7,7 +7,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Modrobílý porcelán: značka vznikla v roce 1995, několik let Martin točil a Daniela malovala, poslední léta vyrábí všechno Martin. Jaký podpis má mít produkt? Teď se u všech 294 kusů zobrazuje „Točil Martin, malovala Daniela“ (`src/config/lines.ts`), což u novějších kusů nesedí.
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
-- [ ] Písmo: návrh používá tučný grotesk, náhled zatím systémový Helvetica/Arial. Které písmo?
+- [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
 - [ ] Košík v hlavičce: v návrhu není, e-shop ho ale potřebuje (fáze 5). Kam ho dát?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Hrnek Štefan, Talíř jídelní, Talíř malý, Talíř polévkový, Odkládátka. Sporné mapování: „Hrnek malý“ = dřívější „Mini“? „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`)
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
@@ -24,7 +24,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?
 - [ ] Hosting: Cloudflare Pages (podle CLAUDE.md), nebo Cloudflare Workers se statickými soubory, které Cloudflare teď doporučuje pro nové projekty?
-- [ ] Písmo, barvy a typografická škála (fáze 3, návrh designu).
+- [x] Písmo, barvy a typografická škála: podle návrhu (docs/design), písmo Inter ExtraBold.
 
 ## Chybějící fakta
 

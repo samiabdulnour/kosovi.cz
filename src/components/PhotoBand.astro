@@ -1,7 +1,7 @@
 ---
-// The looping photo strip on the homepage (src/config/band.ts). It moves
-// slowly, stops on hover, focus or the button, and stays still for
-// prefers-reduced-motion.
+// The looping photo strip on the homepage (src/config/band.ts). It keeps
+// moving under the pointer (Sami's call); only its button stops it, and it
+// stays still for prefers-reduced-motion.
 import { Image } from 'astro:assets';
 import { bandFields, bandPhotos, bandSize, type Frame } from '../config/band';
 import type { Lang } from '../i18n/ui';
@@ -77,11 +77,9 @@ const copies = [false, true];
   .track {
     display: flex;
     width: max-content;
-    animation: band 140s linear infinite;
+    animation: band 95s linear infinite;
   }
 
-  .band:hover .track,
-  .band:focus-within .track,
   .band[data-paused] .track {
     animation-play-state: paused;
   }

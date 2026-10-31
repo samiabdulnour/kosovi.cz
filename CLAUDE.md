@@ -187,9 +187,9 @@ From the current O nás page. These are the only facts copy may use.
 
 - **The design is `docs/design/kosovi_navrh_01.pdf`** (Sami, October 2026; the comments in it say where each block links). It overrides the earlier "avoid" list where they disagree.
   - Brand "Porcelán Kosovi" on the left, the page title on the label line (38 % across, `--label-start`), the menu on the right: E-shop, O nás, Kurzy, Kontakt, EN.
-  - Everything in one size, bold, capitals (CSS `text-transform`, the source text stays in sentence case). Typeface not final: Sami picks it.
+  - Everything in one size, bold, capitals (CSS `text-transform`, the source text stays in sentence case). Typeface: Inter ExtraBold (800), capitals with 0.04em tracking, self-hosted via `@fontsource/inter`.
   - Photographs sit on flat colour fields (`--field-*` in `src/styles/tokens.css`). Product tiles show the whole photo (`object-fit: contain`).
-  - Homepage strip: `docs/design/pas.pdf`, rebuilt in HTML from the PDF's own positions (`src/config/band.ts`, photos in `src/assets/band/`). It loops slowly, pauses on hover, focus and its button, and stands still for `prefers-reduced-motion`.
+  - Homepage strip: `docs/design/pas.pdf`, rebuilt in HTML from the PDF's own positions (`src/config/band.ts`, photos in `src/assets/band/`). It loops at a steady pace and keeps moving under the pointer; only its button stops it (needed for accessibility), and it stands still for `prefers-reduced-motion`.
   - E-shop: four menu columns, a 4 × 3 grid, the yellow page bar.
 - Subject: hand-thrown porcelain, cobalt on white, two makers. Photography carries the site.
 - Avoid: cream background with terracotta accent, rounded SaaS cards with soft shadows, fade-up animation on every section.

@@ -15,6 +15,7 @@
     "import": "node scripts/import-wp.ts"
   },
   "dependencies": {
+    "@fontsource/inter": "5.3.0",
     "astro": "7.4.2"
   },
   "devDependencies": {
