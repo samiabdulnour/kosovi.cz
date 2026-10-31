@@ -186,11 +186,11 @@ From the current O nás page. These are the only facts copy may use.
 ## Design direction
 
 - **The design is `docs/design/kosovi_navrh_01.pdf`** (Sami, October 2026; the comments in it say where each block links). It overrides the earlier "avoid" list where they disagree.
-  - Brand "Porcelán Kosovi" on the left, the page title on the label line (38 % across, `--label-start`), the menu on the right: E-shop, O nás, Kurzy, Kontakt, EN.
+  - Header (`docs/design/eshop.pdf`, on every page): "Porcelán Kosovi" on the left, "Daniela a Martin Kosovi" on the label line (30.2 % across, `--label-start`), the menu on the right: E-shop, O nás, Kurzy, Kontakt, Košík with a count badge. Light blue (`--color-shop-header`) with a rule under it in the e-shop (listings, products, cart). The page title sits under the header on the label line; the language switch is in the footer.
   - Everything in one size, bold, capitals (CSS `text-transform`, the source text stays in sentence case). Typeface: Inter ExtraBold (800), capitals with 0.04em tracking, self-hosted via `@fontsource/inter`.
   - Photographs sit on flat colour fields (`--field-*` in `src/styles/tokens.css`). Product tiles show the whole photo (`object-fit: contain`).
   - Homepage strip: `docs/design/pas.pdf`, rebuilt in HTML from the PDF's own positions (`src/config/band.ts`, photos in `src/assets/band/`). It loops at a steady pace and keeps moving under the pointer; only its button stops it (needed for accessibility), and it stands still for `prefers-reduced-motion`.
-  - E-shop: four menu columns, a 4 × 3 grid, the yellow page bar.
+  - E-shop (`docs/design/eshop.pdf`): line name on the label line, the category menu, a rule across the page, then five products a row on 260 × 302 tiles, 26 a page with one large illustration (2 × 2, `src/config/shop.ts`), the yellow page bar. Captions in Inter Medium, grey `#4c4c4c`: the type in capitals with the price beside it, the decor in small letters, without "Porcelánový" (`src/lib/names.ts`, the data keeps the old titles).
 - Subject: hand-thrown porcelain, cobalt on white, two makers. Photography carries the site.
 - Avoid: cream background with terracotta accent, rounded SaaS cards with soft shadows, fade-up animation on every section.
 - Product images large, zoomable, with a simple lightbox. **Never disable pinch zoom.** The old site did, which is especially bad for detailed painting.

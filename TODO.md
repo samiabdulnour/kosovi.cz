@@ -8,7 +8,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
 - [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
-- [ ] Košík v hlavičce: v návrhu není, e-shop ho ale potřebuje (fáze 5). Kam ho dát?
+- [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
+- [ ] Ilustrace v e-shopu (bábovka) vede na kategorii Bábovky a ukazuje nejnižší cenu „od 3 000 Kč“. Má vést na konkrétní formu?
+- [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Hrnek Štefan, Talíř jídelní, Talíř malý, Talíř polévkový, Odkládátka. Sporné mapování: „Hrnek malý“ = dřívější „Mini“? „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`)
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).
