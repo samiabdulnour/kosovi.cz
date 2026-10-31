@@ -1,25 +1,50 @@
 ---
-// Four products a row (two on phones), as in the e-shop design.
+// Five products a row (two on phones), as in eshop.pdf. An optional large
+// photo takes two columns by two rows, after the eighth product.
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import ProductCard from './ProductCard.astro';
 import type { Lang } from '../i18n/ui';
-import { useTranslations } from '../i18n/utils';
+import { useTranslations, withBase } from '../i18n/utils';
 import type { Product } from '../lib/products';
 
 interface Props {
   products: Product[];
   lang: Lang;
+  illustration?: { src: ImageMetadata; alt: string; caption: string; href: string; price?: string };
 }
 
-const { products, lang } = Astro.props;
+const { products, lang, illustration } = Astro.props;
 const t = useTranslations(lang);
+const AFTER = 8;
+const before = illustration ? products.slice(0, AFTER) : products;
+const after = illustration ? products.slice(AFTER) : [];
 ---
 
 {
   products.length > 0 ? (
     <ul class="product-grid" role="list">
-      {products.map((product, i) => (
+      {before.map((product) => (
         <li>
-          <ProductCard product={product} lang={lang} index={i} />
+          <ProductCard product={product} lang={lang} />
+        </li>
+      ))}
+      {illustration && (
+        <li class="illustration">
+          <a href={withBase(illustration.href)}>
+            <span class="photo">
+              <Image src={illustration.src} alt={illustration.alt} widths={[560, 840, 1120, 1600]} sizes="(min-width: 48rem) 38vw, 100vw" />
+            </span>
+            <span class="caption">
+              <span>{illustration.caption}</span>
+              {illustration.price && <span class="price">{illustration.price}</span>}
+            </span>
+          </a>
+        </li>
+      )}
+      {after.map((product) => (
+        <li>
+          <ProductCard product={product} lang={lang} />
         </li>
       ))}
     </ul>
@@ -31,15 +56,67 @@ const t = useTranslations(lang);
 <style>
   .product-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-7) var(--gap);
+    /* minmax(0, …): a long word must not widen its column past the page. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6) 0.65rem;
     padding: 0;
     list-style: none;
   }
 
+  .illustration {
+    grid-column: 1 / -1;
+  }
+
+  .illustration > a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .illustration > a:hover {
+    text-decoration: none;
+  }
+
+  .photo {
+    flex: 1;
+    min-height: 0;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  .photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .caption {
+    display: flex;
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-3) 0;
+    color: var(--color-caption);
+    font-weight: var(--weight-medium);
+  }
+
+  .price {
+    text-transform: none;
+  }
+
   @media (min-width: 48rem) {
     .product-grid {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      row-gap: clamp(3rem, 5.5vw, 5.5rem);
+    }
+
+    /* Two columns by two rows on the right, as in the design. */
+    .illustration {
+      grid-column: 4 / span 2;
+      grid-row: 2 / span 2;
+    }
+
+    .photo {
+      aspect-ratio: auto;
     }
   }
 

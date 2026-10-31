@@ -1,16 +1,19 @@
 ---
-// E-shop listing after the design: the category menu in four columns, twelve
-// products a page and the page bar.
+// E-shop listing after eshop.pdf: the line's name on the label line, the
+// category menu, a rule across the page, then the products five a row with
+// a large illustration and the page bar.
 import type { Page } from 'astro';
 import Pagination from '../components/Pagination.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
 import type { Line, MenuItem } from '../config/lines';
+import { ILLUSTRATION_MIN_PRODUCTS, shopIllustrations } from '../config/shop';
 import Base from '../layouts/Base.astro';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
-import type { Product } from '../lib/products';
+import { getEntryProducts, type Product } from '../lib/products';
+import { formatCzk } from '../lib/typography';
 
 interface Props {
   line: Line;
@@ -38,6 +41,23 @@ const alternates = {
 
 const isCurrent = (item: MenuItem) => (item.slug === entry?.slug ? 'page' : undefined);
 const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.length === 0);
+
+// One illustration per page, taking turns when there are more of them.
+const pool = shopIllustrations[line.key] ?? [];
+const pick = pool[(page.currentPage - 1) % Math.max(pool.length, 1)];
+let illustration;
+if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
+  const target = line.menu.flatMap((g) => [g, ...g.items]).find((e) => e.slug === pick.entry);
+  const prices = target ? (await getEntryProducts(line.key, target)).map((p) => p.price).filter((p) => p !== null) : [];
+  const lowest = prices.length ? Math.min(...prices) : undefined;
+  illustration = {
+    src: pick.src,
+    alt: pick.alt,
+    caption: pick.caption,
+    href: collectionPath(line.slug[lang], lang, pick.entry),
+    price: lowest === undefined ? undefined : `${lang === 'cs' ? 'od' : 'from'} ${formatCzk(lowest)}`,
+  };
+}
 ---
 
 <Base title={title} description={description} alternates={alternates} label={lineName}>
@@ -66,8 +86,13 @@ const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.lengt
         ))
       }
     </nav>
+  </div>
 
-    <ProductGrid products={page.data} lang={lang} />
+  <hr class="rule" />
+
+  <div class="wrap">
+    <h2 class="list-head">{entry ? entry.name : lineName}</h2>
+    <ProductGrid products={page.data} lang={lang} illustration={illustration} />
     <Pagination current={page.currentPage} last={page.lastPage} pathFor={pathFor} lang={lang} />
 
     {
@@ -85,9 +110,10 @@ const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.lengt
 <style>
   .menu {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow-wrap: anywhere;
     gap: var(--space-6) var(--gap);
-    padding-block-end: var(--space-8);
+    padding-block: var(--space-4) var(--space-6);
   }
 
   .menu ul {
@@ -98,13 +124,28 @@ const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.lengt
 
   [aria-current='page'] {
     text-decoration: underline;
-    text-decoration-thickness: 2px;
-    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
   }
 
+  .rule {
+    border: 0;
+    border-top: 1px solid var(--color-ink);
+  }
+
+  .list-head {
+    padding-block: var(--space-7) var(--space-4);
+  }
+
+  /* Columns on the design's lines: 0, 30 %, 60 % and the last one at the right. */
   @media (min-width: 48rem) {
     .menu {
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: var(--label-start) var(--label-start) 1fr auto;
+      column-gap: 0;
+    }
+
+    .group {
+      padding-inline-end: var(--gap);
     }
   }
 </style>

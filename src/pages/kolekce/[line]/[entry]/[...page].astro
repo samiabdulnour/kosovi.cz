@@ -1,6 +1,7 @@
 ---
 import type { GetStaticPaths } from 'astro';
 import { lines, menuEntries } from '../../../../config/lines';
+import { pageSizeFor } from '../../../../config/shop';
 import { getEntryProducts } from '../../../../lib/products';
 import LinePage from '../../../../views/LinePage.astro';
 
@@ -11,7 +12,7 @@ export const getStaticPaths = (async ({ paginate }) => {
         paginate(await getEntryProducts(line.key, entry), {
           params: { line: line.slug.cs, entry: entry.slug },
           props: { line, entry },
-          pageSize: 12,
+          pageSize: pageSizeFor(line.key),
         }),
       ),
     ),

@@ -11,6 +11,7 @@ import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
 import { getRelatedProducts, makersOf, type Product } from '../lib/products';
+import { productLabel } from '../lib/names';
 import { cz, formatNumber } from '../lib/typography';
 
 // Product pages are Czech only for now (English comes later, see CLAUDE.md).
@@ -19,6 +20,8 @@ interface Props {
 }
 
 const { product } = Astro.props;
+// Shown without "Porcelánový" (design eshop.pdf); the data keeps the old title.
+const name = productLabel(product.title);
 const line = getLine(product.line);
 const { group, item } = placeOf(line, product);
 const crumbs = [group, item].filter((e) => e !== undefined);
@@ -57,7 +60,7 @@ const metaDescription = product.description
   : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
 ---
 
-<Base title={product.title} description={metaDescription} alternates={{ cs: productPath(product.slug) }} label={line.name.cs} labelIsHeading={false}>
+<Base title={name} description={metaDescription} alternates={{ cs: productPath(product.slug) }}>
   <div class="section wrap">
     <p class="crumbs">
       <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>
@@ -99,7 +102,7 @@ const metaDescription = product.description
       </div>
 
       <div class="info stack">
-        <h1>{product.title}</h1>
+        <h1>{name}</h1>
         <MakerCredit makers={makersOf(product)} lang="cs" />
         <Price price={product.price} lang="cs" />
         {soldOut && <p class="sold-out">Vyprodáno</p>}

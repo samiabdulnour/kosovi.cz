@@ -1,33 +1,41 @@
 ---
-// Product tile from the design: photo on a colour field, name, price.
+// Product tile after eshop.pdf: the photo, then the type in capitals with the
+// price beside it and the decor in small letters, Inter Medium in grey.
 import { Image } from 'astro:assets';
-import Price from './Price.astro';
 import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
+import { useTranslations, withBase } from '../i18n/utils';
+import { productName } from '../lib/names';
 import type { Product } from '../lib/products';
+import { formatCzk } from '../lib/typography';
 
 interface Props {
   product: Product;
   lang: Lang;
-  /** Alternates the two light blues of the design. */
-  index?: number;
 }
 
-const { product, lang, index = 0 } = Astro.props;
+const { product, lang } = Astro.props;
+const t = useTranslations(lang);
 const [cover] = product.images;
-const field = index % 2 === 0 ? 'blue' : 'mist';
+const { type, decor } = productName(product.title);
+// The edited photos are portraits and fill the tile; older ones keep their whole frame.
+const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
 ---
 
 <article class="card">
   <a href={withBase(productPath(product.slug))}>
-    <span class="field field--contain" style={`--field: var(--field-${field})`}>
-      {cover && <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 48rem) 22vw, 50vw" />}
+    <span class="tile" data-fit={fit}>
+      {cover && <Image src={cover.src} alt={cover.alt} widths={[280, 420, 560, 840]} sizes="(min-width: 48rem) 19vw, 50vw" />}
     </span>
-    <h3>{product.title}</h3>
+    <span class="caption">
+      <h3>
+        <span class="type">{type}</span>
+        {decor && <span class="decor">{decor}</span>}
+      </h3>
+      <span class="price">{product.price === null ? t('product.priceOnRequest') : formatCzk(product.price)}</span>
+      {product.stock === 0 && <span class="note">{lang === 'cs' ? 'vyprodáno' : 'sold out'}</span>}
+    </span>
   </a>
-  <Price price={product.price} lang={lang} />
-  {product.stock === 0 && <p>{lang === 'cs' ? 'Vyprodáno' : 'Sold out'}</p>}
 </article>
 
 <style>
@@ -35,11 +43,69 @@ const field = index % 2 === 0 ? 'blue' : 'mist';
     display: block;
   }
 
-  .field {
-    aspect-ratio: 4 / 3;
+  .card > a:hover {
+    text-decoration: none;
+  }
+
+  .tile {
+    display: block;
+    aspect-ratio: 260 / 302;
+    overflow: hidden;
+    background: var(--color-tile);
+  }
+
+  .tile :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tile[data-fit='contain'] :global(img) {
+    object-fit: contain;
+  }
+
+  /* On phones the price goes under the name; from tablets up it sits beside it. */
+  .caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: var(--space-3);
+    overflow-wrap: anywhere;
+    padding: var(--space-2) var(--space-3) 0;
+    color: var(--color-caption);
+    font-weight: var(--weight-medium);
   }
 
   h3 {
-    margin-block: var(--space-4) var(--space-3);
+    font-weight: inherit;
+  }
+
+  .card > a:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .type,
+  .decor {
+    display: block;
+  }
+
+  .decor,
+  .note {
+    text-transform: lowercase;
+  }
+
+  .price {
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .note {
+    grid-column: 1 / -1;
+  }
+
+  @media (min-width: 48rem) {
+    .caption {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
   }
 </style>
