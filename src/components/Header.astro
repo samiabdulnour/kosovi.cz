@@ -1,6 +1,7 @@
 ---
 // Header after eshop.pdf: brand on the left, the studio's name on the label
-// line, the menu with the cart on the right. In the e-shop it turns light blue.
+// line, the menu with the cart on the right. In the e-shop it turns light blue,
+// without a rule under it.
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import { collectionPath, pathOf } from '../i18n/routes';
@@ -69,13 +70,8 @@ const items = [
 </script>
 
 <style>
-  .site-header {
-    border-bottom: 1px solid transparent;
-  }
-
   .site-header.shop {
     background: var(--color-shop-header);
-    border-bottom-color: var(--color-ink);
   }
 
   .bar {
@@ -86,7 +82,7 @@ const items = [
       'name name';
     gap: var(--space-3) var(--gap);
     align-items: baseline;
-    padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(1.5rem, 3.3vw, 3.1rem);
+    padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(0.9rem, 1.9vw, 1.8rem);
   }
 
   .brand {

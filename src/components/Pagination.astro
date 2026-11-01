@@ -1,5 +1,5 @@
 ---
-// The yellow page bar from the design: ← 1 2 3 … →
+// Page numbers under the listing: ← 1 2 3 … →
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 
@@ -64,7 +64,6 @@ shown.forEach((n, i) => {
     gap: var(--space-1) var(--space-3);
     margin-block-start: var(--space-7);
     padding: var(--space-2) var(--space-4);
-    background: var(--field-yellow);
   }
 
   [aria-current='page'] {

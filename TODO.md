@@ -32,7 +32,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 
 - [ ] Společná fotografie manželů (O nás), fotografie z dílny.
 - [ ] Fotografie a popisky volné tvorby Martina i Daniely (stránky „Volné“).
-- [ ] Instagram: název účtu (patička).
+- [x] Instagram: `porcelan.kosovi`, odkaz v patičce.
 - [ ] CV Martina, výstavy obou.
 
 - [ ] Martin: „přes 25 let pracuje pouze s porcelánem“ je údaj z webu z roku 2020. Aktualizovat.

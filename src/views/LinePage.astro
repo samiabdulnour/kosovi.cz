@@ -1,7 +1,7 @@
 ---
 // E-shop listing after eshop.pdf: the line's name on the label line, the
-// category menu, a rule across the page, then the products five a row with
-// a large illustration and the page bar.
+// category menu, then the products five a row with a large illustration and
+// the page numbers.
 import type { Page } from 'astro';
 import Pagination from '../components/Pagination.astro';
 import ProductGrid from '../components/ProductGrid.astro';
@@ -86,11 +86,7 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
         ))
       }
     </nav>
-  </div>
 
-  <hr class="rule" />
-
-  <div class="wrap">
     <h2 class="list-head">{entry ? entry.name : lineName}</h2>
     <ProductGrid products={page.data} lang={lang} illustration={illustration} />
     <Pagination current={page.currentPage} last={page.lastPage} pathFor={pathFor} lang={lang} />
@@ -126,11 +122,6 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.3em;
-  }
-
-  .rule {
-    border: 0;
-    border-top: 1px solid var(--color-ink);
   }
 
   .list-head {
