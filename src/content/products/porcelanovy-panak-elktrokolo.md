@@ -1,5 +1,5 @@
 ---
-title: "Porcelánový panák elktrokolo"
+title: "Porcelánový panák elektrokolo"
 slug: "porcelanovy-panak-elktrokolo"
 line: "spolecna"
 category: "panaky"
@@ -12,7 +12,7 @@ dimensions:
   diameterCm: 6
 images:
   - src: "../../assets/products/porcelanovy-panak-elktrokolo/01.jpg"
-    alt: "Porcelánový panák elktrokolo"
+    alt: "Porcelánový panák elektrokolo"
 oldUrl: "https://kosovi.cz/produkt/porcelanovy-panak-elktrokolo/"
 description: |-
   Ručně vyráběný porcelán točený na hrnčířském kruhu. Vypalovaný minimálně 2x v peci při 1000°C a 2x při 1400°C.
