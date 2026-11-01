@@ -24,6 +24,8 @@ point of every piece, rattan handles included, sits M px below the top of
 the listing tile (which shows the photo cut to 260 × 302).
 --no-shape-cap drops the 10 % width limit of --by height, for groups where
 the width differs on purpose (single shot glasses next to sets of three).
+--axis box centres the whole outline instead of the foot (pieces without a
+handle, where the foot of a set of three is uneven).
 A piece is never scaled wider than the frame minus its side margins.
 
 Where the new frame reaches past the photo, the background is extended from
@@ -67,12 +69,13 @@ def side(b):
     return 'right' if rw > lw * 1.15 else 'left' if lw > rw * 1.15 else 'both'
 
 
-def plan_by_height(boxes, groups, shape_cap=True):
+def plan_by_height(boxes, groups, shape_cap=True, axis='body'):
     centres_y = [(b['top'] + b['bottom']) / 2 for b in boxes.values()]
     target_cy = st.median(centres_y)
     # Handle on the right (most): body left of centre, as photographed.
     # Handle on the left: the mirror of that. Cups on saucers: centred.
-    right_cx = round(st.median(b['bodyCx'] for b in boxes.values() if side(b) == 'right'))
+    rights = [b['bodyCx'] for b in boxes.values() if side(b) == 'right']
+    right_cx = round(st.median(rights)) if rights else W // 2
     target_cxs = {'right': right_cx, 'left': W - right_cx, 'both': W // 2}
     plan = {}
     for group, names in groups.items():
@@ -86,10 +89,11 @@ def plan_by_height(boxes, groups, shape_cap=True):
             plan[n] = {
                 'group': group,
                 'scale': min(scale[n], max_w / width[n], (W - 2 * MARGIN) / width[n]),
-                # the source point (sx, sy) lands on the target point (tx, ty)
-                'sx': b['bodyCx'],
+                # the source point (sx, sy) lands on the target point (tx, ty);
+                # --axis box centres the whole outline (pieces without a handle)
+                'sx': b['bodyCx'] if axis == 'body' else (b['left'] + b['right']) / 2,
                 'sy': (b['top'] + b['bottom']) / 2,
-                'tx': target_cxs[side(b)],
+                'tx': target_cxs[side(b)] if axis == 'body' else W / 2,
                 'ty': target_cy,
             }
     return plan
@@ -155,6 +159,7 @@ def main():
     ap.add_argument('--only', nargs='*', default=None)
     ap.add_argument('--fit-top', type=float, default=None)
     ap.add_argument('--no-shape-cap', action='store_true')
+    ap.add_argument('--axis', choices=['body', 'box'], default='body')
     ap.add_argument('--plan')
     a = ap.parse_args()
 
@@ -192,7 +197,7 @@ def main():
             del groups[g]
 
     if a.by == 'height':
-        plan = plan_by_height(boxes, groups, shape_cap=not a.no_shape_cap)
+        plan = plan_by_height(boxes, groups, shape_cap=not a.no_shape_cap, axis=a.axis)
     else:
         plan = plan_by_width(boxes, groups)
     fits = {}

@@ -11,8 +11,9 @@ a stály na stejné linii.
   (průměr, rozpětí od hubičky k uchu), spodní okraj na jedné linii. Výška
   tu spolehlivá není, víčko a ratanové ucho ji mění.
 
-- Panáky (`--by height --no-shape-cap`): všechny stejně vysoké, i když
-  jsou na fotce tři vedle sebe.
+- Panáky (`--by height --no-shape-cap --axis box`): všechny stejně vysoké,
+  i když jsou na fotce tři vedle sebe, a na středu podle celého obrysu
+  (zadní sklenička trojice stojí výš, spodek proto osu neurčí).
 - Konvice navíc `--fit-top 90`: celý typ se zmenší tak, aby ratanové ucho
   končilo aspoň 90 px pod horním okrajem dlaždice v e-shopu (dlaždice
   260 × 302 ořízne z fotky 3 : 4 kus nahoře i dole).
@@ -38,7 +39,7 @@ python3 -m venv .venv && .venv/bin/pip install numpy scipy pillow
   --by width --only konvice- --min-group 2 --fit-top 90
 # panáky
 .venv/bin/python normalize.py <fotky> boxes.json ../../src/content/products <výstup> \
-  --by height --only panaky/ --no-shape-cap
+  --by height --only panaky/ --no-shape-cap --axis box
 ```
 
 `kontrola.jpg` ukazuje nalezené obrysy (červeně), osu podle spodku (zeleně)
