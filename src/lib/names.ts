@@ -10,6 +10,10 @@ export interface ProductName {
 // Mug titles: the type is "hrnek" with its size or kind, the rest is the decor,
 // even without a preposition ("hrnek velký den a noc").
 const MUG = /^((?:mini )?hrnek(?: (?:pitný režim|na presso|velký|střední|malý|úzký|široký|bílý))?)\s+(.+)$/i;
+// Shot glasses: "panák", the rest is the motif ("panák smajlík", "panák na imunitu").
+const SHOT = /^(panák)\s+(.+)$/i;
+// Bábovka moulds: the colour goes to the second line ("bábovka velká modrá").
+const MOULD = /^(bábovka(?: malá| velká)?)\s+(bílá|modrá)$/i;
 // Anything else splits before the first "s", "se" or dash.
 const DECOR = /\s(?:s|se)\s|\s[–-]\s/;
 
@@ -20,8 +24,10 @@ export function productName(title: string): ProductName {
     .replace(/^porcelánov[ýáé]\s+/i, '')
     .replace(/\s*\(kopírovat\)\s*$/i, '') // a WordPress copy suffix
     .trim();
-  const mug = MUG.exec(clean);
-  if (mug?.[1] && mug[2]) return { type: capitalize(mug[1]), decor: mug[2] };
+  for (const pattern of [MUG, SHOT, MOULD]) {
+    const match = pattern.exec(clean);
+    if (match?.[1] && match[2]) return { type: capitalize(match[1]), decor: match[2] };
+  }
   const at = clean.search(DECOR);
   if (at > 0) return { type: capitalize(clean.slice(0, at)), decor: clean.slice(at + 1).replace(/^[–-]\s+/, '') };
   return { type: capitalize(clean), decor: '' };

@@ -15,14 +15,24 @@ Groups are the old shop's category and subcategory. Two ways to measure:
 Only the first photo of a product (__01, the one in the listing) is moved
 unless --all is given; other photos are copied as they are. Groups smaller
 than --min-group, groups listed in --skip and groups that already agree
-within --tolerance are copied as they are.
+within --tolerance are copied as they are. --only limits the run to some
+groups (nothing else is written). --skip and --only match the start of the
+group name, so "konvice-" covers both kinds of teapot.
+
+--fit-top M shrinks a whole group (around its anchor) until the highest
+point of every piece, rattan handles included, sits M px below the top of
+the listing tile (which shows the photo cut to 260 × 302).
+--no-shape-cap drops the 10 % width limit of --by height, for groups where
+the width differs on purpose (single shot glasses next to sets of three).
+A piece is never scaled wider than the frame minus its side margins.
 
 Where the new frame reaches past the photo, the background is extended from
 a blurred copy of its edge (smooth, no repeated detail).
 
 Usage: python -I normalize.py <photo dir> <boxes.json> <products dir> <out dir>
            [--by height|width] [--all] [--skip cat/sub ...] [--min-group N]
-           [--tolerance 0.03] [--plan plan.json]
+           [--tolerance 0.03] [--only cat/sub ...] [--fit-top M]
+           [--no-shape-cap] [--plan plan.json]
 """
 import argparse
 import glob
@@ -38,6 +48,7 @@ from PIL import Image, ImageFilter
 
 W, H = 1200, 1600
 MARGIN = 72  # px between the piece and the frame's side
+TILE_TOP = (H - W * 302 / 260) / 2  # the listing tile cuts this much off the top
 
 
 def groups_of(products_dir):
@@ -56,7 +67,7 @@ def side(b):
     return 'right' if rw > lw * 1.15 else 'left' if lw > rw * 1.15 else 'both'
 
 
-def plan_by_height(boxes, groups):
+def plan_by_height(boxes, groups, shape_cap=True):
     centres_y = [(b['top'] + b['bottom']) / 2 for b in boxes.values()]
     target_cy = st.median(centres_y)
     # Handle on the right (most): body left of centre, as photographed.
@@ -69,12 +80,12 @@ def plan_by_height(boxes, groups):
         scale = {n: target_h / (boxes[n]['bottom'] - boxes[n]['top']) for n in names}
         width = {n: boxes[n]['right'] - boxes[n]['left'] for n in names}
         # A mug of another shape (lower and wider) must not end up much wider than the rest.
-        max_w = 1.1 * st.median(width[n] * scale[n] for n in names)
+        max_w = 1.1 * st.median(width[n] * scale[n] for n in names) if shape_cap else W
         for n in names:
             b = boxes[n]
             plan[n] = {
                 'group': group,
-                'scale': min(scale[n], max_w / width[n]),
+                'scale': min(scale[n], max_w / width[n], (W - 2 * MARGIN) / width[n]),
                 # the source point (sx, sy) lands on the target point (tx, ty)
                 'sx': b['bodyCx'],
                 'sy': (b['top'] + b['bottom']) / 2,
@@ -95,7 +106,7 @@ def plan_by_width(boxes, groups):
             b = boxes[n]
             plan[n] = {
                 'group': group,
-                'scale': scale[n],
+                'scale': min(scale[n], (W - 2 * MARGIN) / (b['right'] - b['left'])),
                 'sx': b['bodyCx'],
                 'sy': b['bottom'],
                 'tx': target_cx,
@@ -141,16 +152,27 @@ def main():
     ap.add_argument('--skip', nargs='*', default=[])
     ap.add_argument('--min-group', type=int, default=3)
     ap.add_argument('--tolerance', type=float, default=0.0)
+    ap.add_argument('--only', nargs='*', default=None)
+    ap.add_argument('--fit-top', type=float, default=None)
+    ap.add_argument('--no-shape-cap', action='store_true')
     ap.add_argument('--plan')
     a = ap.parse_args()
 
     boxes = json.load(open(a.boxes))
     group_of = groups_of(a.products)
+    def starts(g, prefixes):
+        return any(g.startswith(p) for p in prefixes)
+
     groups = defaultdict(list)
+    wanted = set()
     for name in boxes:
         slug, num = name[:-4].split('__')
+        g = group_of[slug]
+        if a.only is not None and not starts(g, a.only):
+            continue
+        wanted.add(name)
         if a.all or num == '01':
-            groups[group_of[slug]].append(name)
+            groups[g].append(name)
 
     def measure(n):
         b = boxes[n]
@@ -160,7 +182,7 @@ def main():
     for g in list(groups):
         sizes = [measure(n) for n in groups[g]]
         spread = (max(sizes) - min(sizes)) / 2 / st.median(sizes)
-        if g in a.skip:
+        if starts(g, a.skip):
             keep[g] = 'skipped'
         elif len(sizes) < a.min_group:
             keep[g] = f'only {len(sizes)}'
@@ -169,11 +191,28 @@ def main():
         if g in keep:
             del groups[g]
 
-    plan = (plan_by_height if a.by == 'height' else plan_by_width)(boxes, groups)
+    if a.by == 'height':
+        plan = plan_by_height(boxes, groups, shape_cap=not a.no_shape_cap)
+    else:
+        plan = plan_by_width(boxes, groups)
+    fits = {}
+    if a.fit_top is not None:
+        limit = TILE_TOP + a.fit_top
+        for g, names in groups.items():
+            # top after the move: ty - (sy - fullTop) * scale; shrink around the anchor
+            f = min(
+                (plan[n]['ty'] - limit) / ((plan[n]['sy'] - boxes[n].get('fullTop', boxes[n]['top'])) * plan[n]['scale'])
+                for n in names
+            )
+            fits[g] = min(1.0, f)
+            for n in names:
+                plan[n]['scale'] *= fits[g]
     os.makedirs(a.out, exist_ok=True)
     warnings = []
     for f in sorted(glob.glob(os.path.join(a.src, '*.jpg'))):
         n = os.path.basename(f)
+        if n not in wanted:
+            continue
         if n in plan:
             if render(f, boxes[n], plan[n], os.path.join(a.out, n)):
                 warnings.append(f'{n}: the piece touches the frame edge')
@@ -183,7 +222,8 @@ def main():
         print(f'{g:40s} unchanged ({why})')
     for g, names in sorted(groups.items()):
         sc = [plan[n]['scale'] for n in names]
-        print(f'{g:40s} n={len(names):3d} scale {min(sc):.3f}–{max(sc):.3f}')
+        fit = f' (fit-top {fits[g]:.3f})' if g in fits else ''
+        print(f'{g:40s} n={len(names):3d} scale {min(sc):.3f}–{max(sc):.3f}{fit}')
     for w in warnings:
         print('WARN', w)
     if a.plan:

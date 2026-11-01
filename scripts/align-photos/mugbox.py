@@ -52,11 +52,23 @@ def box(path):
     # Body centre from the foot, below where the handle joins.
     band = m[bottom - int(h * 0.08): bottom - int(h * 0.03)]
     fcols = np.nonzero(band.sum(axis=0) >= 3)[0]
+    # The highest point of anything attached, including a rattan handle and
+    # its brass rings (warm colours the outline above leaves out).
+    warm = ndimage.binary_opening((r - b > 50) & (lum < 250), iterations=2)
+    lab, n = ndimage.label(warm)
+    left, right = int(cols.min()), int(cols.max())
+    full_top = top
+    for i, sl in enumerate(ndimage.find_objects(lab)):
+        ys, xs = sl
+        # above the piece (or reaching into it), over it, and not a speck
+        if xs.stop > left and xs.start < right and ys.stop >= top - 250 and (lab[sl] == i + 1).sum() >= 200:
+            full_top = min(full_top, ys.start)
     return {
         'top': top,
+        'fullTop': full_top,
         'bottom': bottom,
-        'left': int(cols.min()),
-        'right': int(cols.max()),
+        'left': left,
+        'right': right,
         'bodyCx': float((fcols.min() + fcols.max()) / 2),
         'bodyW': int(fcols.max() - fcols.min()),
     }
@@ -80,6 +92,8 @@ def main():
             if bx:
                 d.rectangle([bx['left'], bx['top'], bx['right'], bx['bottom']], outline=(255, 0, 0), width=6)
                 d.line([bx['bodyCx'], bx['top'], bx['bodyCx'], bx['bottom']], fill=(0, 200, 0), width=6)
+                if bx['fullTop'] < bx['top']:
+                    d.line([bx['left'], bx['fullTop'], bx['right'], bx['fullTop']], fill=(255, 140, 0), width=6)
             thumbs.append(im.resize((150, 200)))
         cols = 16
         rows = (len(thumbs) + cols - 1) // cols
