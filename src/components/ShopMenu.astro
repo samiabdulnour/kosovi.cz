@@ -290,6 +290,12 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     fill: var(--color-select);
   }
 
+  /* its inside (the opening of a cup, the espresso saucer) a pale green */
+  .items a[aria-current='page'] .drawing :global(.i),
+  .items a:hover .drawing :global(.i) {
+    fill: var(--color-select-inside);
+  }
+
   .drawing :global(svg) {
     display: block;
     width: 100%;

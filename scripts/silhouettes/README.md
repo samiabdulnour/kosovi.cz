@@ -4,8 +4,9 @@
 Velikost kresby (viewBox) je v centimetrech, spodní hrana je podlaha,
 `data-axis` je osa těla (kresba i popisek se na ni centrují).
 Výstup: `src/assets/silhouettes/<název>.svg`, název se uvádí u položky menu
-v `src/config/lines.ts` (`silhouette`). Vyplněné plochy mají třídu `f`,
-vybraný druh je vybarví modře (`--color-select`).
+v `src/config/lines.ts` (`silhouette`). Vyplněné plochy mají třídu `f`
+(vybraný druh je vybarví modře, `--color-select`), vnitřky a podšálek
+espressa třídu `i` (světle zelená `--color-select-inside`).
 
 - `pdf_mugs.py`: hrnky převzaté přímo z PDF, přepočtené podle pravítka
   v PDF (čáry 0, 10 a 20 cm). Otvor v uchu je průhledný, espresso je

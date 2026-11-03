@@ -48,8 +48,9 @@ def subpaths(d, ox, oy):
 
 
 def svg(w, h, parts, axis, flip=False):
-    """parts: (path data, evenodd, inside). An inside face (the cup's opening)
-    stays white when the kind is chosen (class i); the rest turns blue (f)."""
+    """parts: (path data, evenodd, inside). When the kind is chosen, an inside
+    face (the cup's opening, the espresso saucer; class i) turns pale green
+    and the rest blue (class f)."""
     k = 1 / PT_PER_CM
     group = f'scale({k:.6f})' + (f' translate({w:.2f} 0) scale(-1 1)' if flip else '')
     body = ''
@@ -86,7 +87,8 @@ def main():
     (foot, cup, rim, saucer, hole), pts = subpaths(d, x0, y0)
     rim_x = [p.x - x0 for p in pts[2]]
     axis = w - (min(rim_x) + max(rim_x)) / 2  # mirrored
-    parts = [(foot, False, False), (saucer, False, False), (cup + hole, True, False), (rim, False, True)]
+    # the saucer takes the inside colour like the cup's opening (Sami, November 2026)
+    parts = [(foot, False, True), (saucer, False, True), (cup + hole, True, False), (rim, False, True)]
     open(f'{out}/hrnek-espresso.svg', 'w').write(svg(w, h, parts, axis, flip=True))
 
 
