@@ -8,10 +8,13 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
 - [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
+- [ ] Písmo Clarendon Text Pro (text malými písmeny v e-shopu): soubory WOFF2 s webovou licencí. Do té doby ho zastupuje volné písmo Besley (`--font-serif` v `src/styles/tokens.css`).
 - [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
-- [ ] Ilustrace v e-shopu (bábovka) vede na kategorii Bábovky a ukazuje nejnižší cenu „od 3 000 Kč“. Má vést na konkrétní formu?
+- [ ] Ilustrace v e-shopu (bábovka) vede teď na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
-- [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Hrnek Štefan, Talíř jídelní, Talíř malý, Talíř polévkový, Odkládátka. Sporné mapování: „Hrnek malý“ = dřívější „Mini“? „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`)
+- [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
+- [ ] Menu se siluetami, rozměry: cukřenka velká má v datech 17,5 cm, fotka ukazuje spíš 7,5 cm (silueta je podle průměru 10 cm, výška zatím chybí). Panák má v datech jen „6 cm“ jako průměr, kresba počítá s výškou 6 cm. Podšálky mají jen průměr. U hrnků uvádí PDF 8, 6 a 6 cm (střední, široký, mini), data 7,5, 5 a 5,5 cm; stránka produktu ukazuje data.
+- [ ] Menu se siluetami pro Talíře, misky a mísy (Sami je ještě upravuje).
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).
 - [x] Pás fotografií na úvodu podle `docs/design/pas.pdf` (`src/config/band.ts`).

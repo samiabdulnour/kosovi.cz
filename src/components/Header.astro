@@ -24,7 +24,8 @@ const inShop = [pathOf('collections', lang), '/produkt/', pathOf('cart', 'cs')].
 const cartPath = pathOf('cart', 'cs');
 
 const items = [
-  { href: collectionPath(blueWhite.slug[lang], lang), label: t('nav.shop'), current: inShop && !current.startsWith(withBase(cartPath)) },
+  // E-shop opens the first tab of the blue-and-white line, as in kosovi_eshop_2.pdf.
+  { href: collectionPath(blueWhite.slug[lang], lang, blueWhite.menu[0]?.slug), label: t('nav.shop'), current: inShop && !current.startsWith(withBase(cartPath)) },
   { href: pathOf('about', lang), label: t('nav.about') },
   ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses') }] : []),
   { href: pathOf('contact', lang), label: t('nav.contact') },

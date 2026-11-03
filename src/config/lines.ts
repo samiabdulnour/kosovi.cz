@@ -8,19 +8,25 @@ export interface Makers {
 
 export type LineKey = 'spolecna' | 'martin' | 'daniela';
 
-/** Old shop category (and optionally subcategory) a menu entry shows. */
+/** Old shop category (and optionally subcategory or products) a menu entry shows. */
 export interface Match {
   category: string;
   subcategory?: string;
+  /** Product slugs, where the old shop has no subcategory to tell them apart. */
+  slugs?: string[];
 }
 
 export interface MenuItem {
   slug: string;
   name: string;
   match: Match[];
+  /** Line drawing in the size chart (src/assets/silhouettes/<name>.svg). */
+  silhouette?: string;
+  /** Size under the drawing, "16 cm" or "⌀ 10,5 cm". */
+  size?: string;
 }
 
-/** A column of the e-shop menu: a heading and the items under it. */
+/** A tab of the e-shop menu (a column in lines without a size chart) and its items. */
 export interface MenuGroup extends MenuItem {
   items: MenuItem[];
 }
@@ -50,22 +56,25 @@ export const lines: Line[] = [
     // by Daniela. Which credit should a product show?
     defaultMakers: { thrownBy: 'martin', paintedBy: 'daniela' },
     menu: [
+      // Tabs and size chart after kosovi_eshop_2.pdf (Sami, November 2026). Mug
+      // sizes come from the PDF, the others from the product data. Kinds go
+      // from the largest down, as the mugs do in the PDF.
       {
         slug: 'hrnky',
         name: 'Hrnky',
         match: all('hrnky'),
         items: [
-          { slug: 'pitny-rezim', name: 'Pitný režim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
-          { slug: 'hrnek-velky', name: 'Hrnek velký', match: [{ category: 'hrnky', subcategory: 'velky' }] },
-          { slug: 'hrnek-stredni', name: 'Hrnek střední', match: [{ category: 'hrnky', subcategory: 'stredni' }] },
-          // TODO(fakta): the old shop calls these "Mini". Same thing?
-          { slug: 'hrnek-maly', name: 'Hrnek malý', match: [{ category: 'hrnky', subcategory: 'mini' }] },
-          { slug: 'hrnek-uzky', name: 'Hrnek úzký', match: [{ category: 'hrnky', subcategory: 'uzky' }] },
-          { slug: 'hrnek-siroky', name: 'Hrnek široký', match: [{ category: 'hrnky', subcategory: 'siroky' }] },
-          { slug: 'hrnek-stefan', name: 'Hrnek Štefan', match: [] },
+          { slug: 'pitny-rezim', name: 'Pitný režim', size: '16 cm', silhouette: 'pitny-rezim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
+          { slug: 'hrnek-velky', name: 'Hrnek velký', size: '10 cm', silhouette: 'hrnek-velky', match: [{ category: 'hrnky', subcategory: 'velky' }] },
+          { slug: 'hrnek-stredni', name: 'Hrnek střední', size: '8 cm', silhouette: 'hrnek-stredni', match: [{ category: 'hrnky', subcategory: 'stredni' }] },
+          { slug: 'hrnek-uzky', name: 'Hrnek úzký', size: '8 cm', silhouette: 'hrnek-uzky', match: [{ category: 'hrnky', subcategory: 'uzky' }] },
+          { slug: 'hrnek-siroky', name: 'Hrnek široký', size: '6 cm', silhouette: 'hrnek-siroky', match: [{ category: 'hrnky', subcategory: 'siroky' }] },
+          { slug: 'hrnek-mini', name: 'Hrnek mini', size: '6 cm', silhouette: 'hrnek-mini', match: [{ category: 'hrnky', subcategory: 'mini' }] },
+          { slug: 'hrnek-espresso', name: 'Hrnek espresso', size: '6 cm', silhouette: 'hrnek-espresso', match: [{ category: 'hrnky', subcategory: 'hrhen-na-presso-s-podsalkem' }] },
         ],
       },
       {
+        // TODO(rozhodnutí): Sami is reworking this tab; it keeps the old text menu.
         slug: 'talire-misky-misy',
         name: 'Talíře, misky a mísy',
         match: all('talire', 'misky', 'misy'),
@@ -82,38 +91,28 @@ export const lines: Line[] = [
         ],
       },
       {
-        slug: 'konvice-cukrenky-mlicenky',
-        name: 'Konvice, cukřenky, mlíčenky',
-        match: all('konvice-rovne', 'konvice-kulate', 'cukrenky', 'mlicenky'),
+        slug: 'konvice',
+        name: 'Konvice',
+        match: all('konvice-rovne', 'konvice-kulate'),
         items: [
-          {
-            slug: 'konev-velka',
-            name: 'Konev velká',
-            match: [
-              { category: 'konvice-rovne', subcategory: 'velka' },
-              { category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' },
-            ],
-          },
-          {
-            slug: 'konev-stredni',
-            name: 'Konev střední',
-            match: [
-              { category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' },
-              { category: 'konvice-kulate', subcategory: 'stredi' },
-            ],
-          },
-          {
-            slug: 'konev-mala',
-            name: 'Konev malá',
-            match: [
-              { category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' },
-              { category: 'konvice-kulate', subcategory: 'mala-konvice-kulate' },
-            ],
-          },
-          { slug: 'cukrenka-velka', name: 'Cukřenka velká', match: [{ category: 'cukrenky', subcategory: 'velka-cukrenka' }] },
-          { slug: 'cukrenka-mala', name: 'Cukřenka malá', match: [{ category: 'cukrenky', subcategory: 'mala-cukrenka' }] },
-          { slug: 'mlicenka-velka', name: 'Mlíčenka velká', match: [{ category: 'mlicenky', subcategory: 'velka-mlicenka' }] },
-          { slug: 'mlicenka-mala', name: 'Mlíčenka malá', match: [{ category: 'mlicenky', subcategory: 'mala-mlicenka' }] },
+          { slug: 'konev-rovna-velka', name: 'Konev rovná velká', size: '23 cm', silhouette: 'konev-rovna-velka', match: [{ category: 'konvice-rovne', subcategory: 'velka' }] },
+          { slug: 'konev-rovna-stredni', name: 'Konev rovná střední', size: '17 cm', silhouette: 'konev-rovna-stredni', match: [{ category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' }] },
+          { slug: 'konev-rovna-mala', name: 'Konev rovná malá', size: '15 cm', silhouette: 'konev-rovna-mala', match: [{ category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' }] },
+          { slug: 'konev-kulata-velka', name: 'Konev kulatá velká', size: '23 cm', silhouette: 'konev-kulata-velka', match: [{ category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' }] },
+          { slug: 'konev-kulata-stredni', name: 'Konev kulatá střední', size: '19 cm', silhouette: 'konev-kulata-stredni', match: [{ category: 'konvice-kulate', subcategory: 'stredi' }] },
+          { slug: 'konev-kulata-mala', name: 'Konev kulatá malá', size: '15 cm', silhouette: 'konev-kulata-mala', match: [{ category: 'konvice-kulate', subcategory: 'mala-konvice-kulate' }] },
+        ],
+      },
+      {
+        slug: 'cukrenky-a-mlicenky',
+        name: 'Cukřenky a mlíčenky',
+        match: all('cukrenky', 'mlicenky'),
+        items: [
+          // TODO(fakta): the data says 17,5 cm, the photo suggests about 7,5 cm.
+          { slug: 'cukrenka-velka', name: 'Cukřenka velká', silhouette: 'cukrenka-velka', match: [{ category: 'cukrenky', subcategory: 'velka-cukrenka' }] },
+          { slug: 'cukrenka-mala', name: 'Cukřenka malá', size: '6 cm', silhouette: 'cukrenka-mala', match: [{ category: 'cukrenky', subcategory: 'mala-cukrenka' }] },
+          { slug: 'mlicenka-velka', name: 'Mlíčenka velká', size: '9,5 cm', silhouette: 'mlicenka-velka', match: [{ category: 'mlicenky', subcategory: 'velka-mlicenka' }] },
+          { slug: 'mlicenka-mala', name: 'Mlíčenka malá', size: '6,5 cm', silhouette: 'mlicenka-mala', match: [{ category: 'mlicenky', subcategory: 'mala-mlicenka' }] },
         ],
       },
       {
@@ -121,11 +120,12 @@ export const lines: Line[] = [
         name: 'Ostatní',
         match: all('podsalky', 'babovky', 'panaky'),
         items: [
-          { slug: 'podsalky', name: 'Podšálky', match: all('podsalky') },
-          // TODO(fakta): the old shop keeps these together with saucers.
-          { slug: 'odkladatka', name: 'Odkládátka', match: [] },
-          { slug: 'babovky', name: 'Bábovky', match: all('babovky') },
-          { slug: 'panaky', name: 'Panáky', match: all('panaky') },
+          { slug: 'babovka-velka', name: 'Bábovka velká', size: '11,5 cm', silhouette: 'babovka-velka', match: [{ category: 'babovky', slugs: ['babovka-velka-bila', 'babovka-velka-modra'] }] },
+          { slug: 'babovka-mala', name: 'Bábovka malá', size: '10 cm', silhouette: 'babovka-mala', match: [{ category: 'babovky', slugs: ['babovka-mala'] }] },
+          { slug: 'podsalek-velky', name: 'Podšálek velký', size: '⌀ 13,5 cm', silhouette: 'podsalek-velky', match: [{ category: 'podsalky', subcategory: 'velky-podsalky' }] },
+          { slug: 'podsalek-maly', name: 'Podšálek malý', size: '⌀ 10,5 cm', silhouette: 'podsalek-maly', match: [{ category: 'podsalky', subcategory: 'maly' }] },
+          // TODO(fakta): the data gives only "6 cm" as a diameter; the drawing assumes a height of 6 cm.
+          { slug: 'panaky', name: 'Panák', silhouette: 'panak', match: all('panaky') },
         ],
       },
     ],
@@ -202,14 +202,22 @@ export function menuEntries(line: Line): MenuItem[] {
   return line.menu.flatMap((group) => [group, ...group.items]);
 }
 
-export function matches(entry: MenuItem, product: { category?: string; subcategory?: string }): boolean {
+export function matches(entry: MenuItem, product: { category?: string; subcategory?: string; slug?: string }): boolean {
   return entry.match.some(
-    (m) => m.category === product.category && (!m.subcategory || m.subcategory === product.subcategory),
+    (m) =>
+      m.category === product.category &&
+      (!m.subcategory || m.subcategory === product.subcategory) &&
+      (!m.slugs || (product.slug !== undefined && m.slugs.includes(product.slug))),
   );
 }
 
+/** A line whose menu is tabs with a size chart (kosovi_eshop_2.pdf). */
+export function hasSizeChart(line: Line): boolean {
+  return line.menu.some((group) => group.items.some((item) => item.silhouette));
+}
+
 /** The menu column and item a product belongs to, for breadcrumbs. */
-export function placeOf(line: Line, product: { category?: string; subcategory?: string }) {
+export function placeOf(line: Line, product: { category?: string; subcategory?: string; slug?: string }) {
   const group = line.menu.find((g) => matches(g, product));
   const item = group?.items.find((i) => matches(i, product));
   return { group, item };

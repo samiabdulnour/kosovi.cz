@@ -1,12 +1,15 @@
 ---
-// E-shop listing after eshop.pdf: the line's name on the label line, the
-// category menu, then the products five a row with a large illustration and
-// the page numbers.
+// E-shop listing. The blue-and-white line follows kosovi_eshop_2.pdf: tabs
+// with a size chart under the header, then the products. The other lines
+// follow eshop.pdf: the line's name on the label line and the category menu
+// in columns. Then the products five a row with a large illustration and the
+// page numbers.
 import type { Page } from 'astro';
 import Pagination from '../components/Pagination.astro';
 import ProductGrid from '../components/ProductGrid.astro';
+import ShopMenu from '../components/ShopMenu.astro';
 import Note from '../components/wire/Note.astro';
-import type { Line, MenuItem } from '../config/lines';
+import { hasSizeChart, type Line, type MenuItem } from '../config/lines';
 import { ILLUSTRATION_MIN_PRODUCTS, shopIllustrations } from '../config/shop';
 import Base from '../layouts/Base.astro';
 import { collectionPath } from '../i18n/routes';
@@ -40,6 +43,7 @@ const alternates = {
 };
 
 const isCurrent = (item: MenuItem) => (item.slug === entry?.slug ? 'page' : undefined);
+const chart = hasSizeChart(line);
 const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.length === 0);
 
 // One illustration per page, taking turns when there are more of them.
@@ -60,34 +64,43 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
 }
 ---
 
-<Base title={title} description={description} alternates={alternates} label={lineName}>
+<Base title={title} description={description} alternates={alternates} label={chart ? undefined : lineName}>
   <div class="wrap">
-    <nav class="menu" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
-      {
-        line.menu.map((group) => (
-          <div class="group">
-            <h2>
-              <a href={withBase(collectionPath(line.slug[lang], lang, group.slug))} aria-current={isCurrent(group)}>
-                {group.name}
-              </a>
-            </h2>
-            {group.items.length > 0 && (
-              <ul role="list">
-                {group.items.map((item) => (
-                  <li>
-                    <a href={withBase(collectionPath(line.slug[lang], lang, item.slug))} aria-current={isCurrent(item)}>
-                      {item.name}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        ))
-      }
-    </nav>
+    {
+      chart ? (
+        <>
+          <h1 class="visually-hidden">{entry ? `${entry.name}, ${lineName}` : lineName}</h1>
+          <ShopMenu line={line} lang={lang} entry={entry} />
+        </>
+      ) : (
+        <nav class="menu" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
+          {
+            line.menu.map((group) => (
+              <div class="group">
+                <h2>
+                  <a href={withBase(collectionPath(line.slug[lang], lang, group.slug))} aria-current={isCurrent(group)}>
+                    {group.name}
+                  </a>
+                </h2>
+                {group.items.length > 0 && (
+                  <ul role="list">
+                    {group.items.map((item) => (
+                      <li>
+                        <a href={withBase(collectionPath(line.slug[lang], lang, item.slug))} aria-current={isCurrent(item)}>
+                          {item.name}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))
+          }
+        </nav>
+      )
+    }
 
-    <h2 class="list-head">{entry ? entry.name : lineName}</h2>
+    {chart ? <div class="after-chart" /> : <h2 class="list-head">{entry ? entry.name : lineName}</h2>}
     <ProductGrid products={page.data} lang={lang} illustration={illustration} />
     <Pagination current={page.currentPage} last={page.lastPage} pathFor={pathFor} lang={lang} />
 
@@ -95,7 +108,7 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
       emptyItems.length > 0 && (
         <Note title="Kategorie bez produktů">
           <p>
-            Z návrhu, ale ve starém e-shopu pro ně nejsou žádné kusy: {emptyItems.map((i) => i.name).join(', ')}. Ostatní kategorie jsou namapované na starý e-shop v src/config/lines.ts, sporné jsou „Hrnek malý“ (dřív „Mini“) a „Miska velká“ (dřív „Polévka/Snídaně“).
+            Z návrhu, ale ve starém e-shopu pro ně nejsou žádné kusy: {emptyItems.map((i) => i.name).join(', ')}. Ostatní kategorie jsou namapované na starý e-shop v src/config/lines.ts, sporná je „Miska velká“ (dřív „Polévka/Snídaně“).
           </p>
         </Note>
       )
@@ -126,6 +139,10 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
 
   .list-head {
     padding-block: var(--space-7) var(--space-4);
+  }
+
+  .after-chart {
+    height: clamp(2.5rem, 4vw, 3.8rem);
   }
 
   /* Columns on the design's lines: 0, 30 %, 60 % and the last one at the right. */

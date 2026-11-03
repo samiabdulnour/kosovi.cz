@@ -19,7 +19,8 @@ export const shopIllustrations: Partial<Record<LineKey, Illustration[]>> = {
       src: babovka,
       alt: 'Bílá forma na bábovku, upečená bábovka a talířek s kouskem bábovky na dřevěném stole',
       caption: 'Forma na bábovku',
-      entry: 'babovky',
+      // TODO(rozhodnutí): both sizes of bábovka are separate entries now.
+      entry: 'babovka-velka',
     },
   ],
 };
