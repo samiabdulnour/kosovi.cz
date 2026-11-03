@@ -38,6 +38,9 @@
   /* type: Inter ExtraBold in one size, capitals, as in the design */
   --font-body: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-display: var(--font-body);
+  /* Text in small letters in the e-shop (kosovi_eshop_2.pdf): Clarendon Text Pro
+     Regular. TODO(rozhodnutí): files with a web licence; Besley stands in. */
+  --font-serif: "Besley", Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   --weight: 800;
   --weight-medium: 500;
