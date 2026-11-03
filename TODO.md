@@ -13,7 +13,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Ilustrace v e-shopu (bábovka) vede teď na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
-- [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Sporné hodnoty v datech: cukřenka velká „výška 17,5 cm“ (fotka i průměr 10 cm ukazují asi 7,5 cm, kresba je podle průměru); panák má jen „průměr cca 6 cm“ (kresba počítá s výškou 6 cm); mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
+- [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
 - [ ] Menu se siluetami pro Talíře, misky a mísy (Sami je ještě upravuje).
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).

@@ -22,8 +22,8 @@ export interface MenuItem {
   match: Match[];
   /** Line drawing in the size chart (src/assets/silhouettes/<name>.svg). */
   silhouette?: string;
-  /** Size under the drawing where the product data has none ("6 cm"). The
-   *  chart otherwise takes the height (or diameter) from the data, rounded. */
+  /** Size under the drawing, set by hand ("4–6 cm"). Without it the chart
+   *  takes the height (or diameter) from the product data, rounded. */
   size?: string;
 }
 
@@ -59,7 +59,8 @@ export const lines: Line[] = [
     menu: [
       // Tabs and size chart after kosovi_eshop_2.pdf (Sami, November 2026).
       // Sizes come from the product data, rounded to whole centimetres (Sami,
-      // November 2026); the espresso cup has none and keeps the PDF's 6 cm.
+      // November 2026); the espresso cup has none and keeps the PDF's 6 cm, the
+      // shot glass is 4–6 cm.
       // Kinds go from the largest down, as the mugs do in the PDF.
       {
         slug: 'hrnky',
@@ -110,7 +111,6 @@ export const lines: Line[] = [
         name: 'Cukřenky a mlíčenky',
         match: all('cukrenky', 'mlicenky'),
         items: [
-          // TODO(fakta): the data says 17,5 cm high, the photo suggests about 7,5 cm.
           { slug: 'cukrenka-velka', name: 'Cukřenka velká', silhouette: 'cukrenka-velka', match: [{ category: 'cukrenky', subcategory: 'velka-cukrenka' }] },
           { slug: 'cukrenka-mala', name: 'Cukřenka malá', silhouette: 'cukrenka-mala', match: [{ category: 'cukrenky', subcategory: 'mala-cukrenka' }] },
           { slug: 'mlicenka-velka', name: 'Mlíčenka velká', silhouette: 'mlicenka-velka', match: [{ category: 'mlicenky', subcategory: 'velka-mlicenka' }] },
@@ -126,8 +126,8 @@ export const lines: Line[] = [
           { slug: 'babovka-mala', name: 'Bábovka malá', silhouette: 'babovka-mala', match: [{ category: 'babovky', slugs: ['babovka-mala'] }] },
           { slug: 'podsalek-velky', name: 'Podšálek velký', silhouette: 'podsalek-velky', match: [{ category: 'podsalky', subcategory: 'velky-podsalky' }] },
           { slug: 'podsalek-maly', name: 'Podšálek malý', silhouette: 'podsalek-maly', match: [{ category: 'podsalky', subcategory: 'maly' }] },
-          // TODO(fakta): the data gives only a diameter of 6 cm; the drawing assumes a height of 6 cm.
-          { slug: 'panaky', name: 'Panák', silhouette: 'panak', match: all('panaky') },
+          // 4–6 cm high, no diameter (Sami, November 2026)
+          { slug: 'panaky', name: 'Panák', size: '4–6 cm', silhouette: 'panak', match: all('panaky') },
         ],
       },
     ],

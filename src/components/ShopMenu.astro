@@ -1,8 +1,9 @@
 ---
 // E-shop menu after kosovi_eshop_2.pdf: the categories as tabs, and under the
 // open tab its kinds as line drawings to scale, standing on one floor next to
-// a ruler, each with its name and size. The size is the height in the product
-// data (the diameter where there is no height), rounded to whole centimetres.
+// a ruler, each with its name and size. The size is the menu's own where it
+// has one, else the height in the product data (the diameter where there is
+// no height), rounded to whole centimetres.
 // A tab without drawings lists its kinds as text.
 import '@fontsource/besley/400.css';
 import type { Line, MenuGroup, MenuItem } from '../config/lines';
@@ -37,14 +38,15 @@ function mostCommon(values: number[]): number | undefined {
   return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
 }
 
-/** "16 cm" from the data's height, "⌀ 11 cm" from its diameter, else the menu's own size. */
+/** The menu's own size, else "16 cm" from the data's height or "⌀ 11 cm" from its diameter. */
 async function sizeOf(item: MenuItem): Promise<string | undefined> {
+  if (item.size) return item.size;
   const products = await getEntryProducts(line.key, item);
   const height = mostCommon(products.flatMap((p) => (p.dimensions?.heightCm ? [p.dimensions.heightCm] : [])));
   if (height !== undefined) return `${Math.round(height)} cm`;
   const diameter = mostCommon(products.flatMap((p) => (p.dimensions?.diameterCm ? [p.dimensions.diameterCm] : [])));
   if (diameter !== undefined) return `⌀ ${Math.round(diameter)} cm`;
-  return item.size;
+  return undefined;
 }
 
 const drawn = await Promise.all(

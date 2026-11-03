@@ -415,7 +415,7 @@ SHAPES = {
     # by the height in the data; the photos are taller than the data's diameters suggest
     'mlicenka-mala': (lambda: mlicenka(MLICENKA['mala']), ('height', 6.5)),
     'mlicenka-velka': (lambda: mlicenka(MLICENKA['velka']), ('height', 9.5)),
-    'panak': (panak, ('height', 6)),
+    'panak': (panak, ('height', 5)),  # 4–6 cm (Sami, November 2026)
     'podsalek-maly': (lambda: podsalek(10.5 / 2), ('cm', None)),
     'podsalek-velky': (lambda: podsalek(13.5 / 2), ('cm', None)),
     # the data: malá 11,5 cm high and 24 cm across, velká 10 cm and 27,5 cm
