@@ -25,8 +25,10 @@ class Fig:
     def __init__(self):
         self.parts = []  # (commands, fill, evenodd)
 
-    def add(self, cmds, fill=True, evenodd=False):
-        self.parts.append((cmds, fill, evenodd))
+    def add(self, cmds, fill=True, evenodd=False, inside=False):
+        """fill: a white face (class f, blue when the kind is chosen); inside:
+        a face seen inside the piece, which stays white (class i)."""
+        self.parts.append((cmds, 'i' if inside else fill, evenodd))
 
     def svg(self, cm_per_unit, ceramic_top=None):
         pts = [p for cmds, _, _ in self.parts for c in cmds for p in c[1:]]
@@ -44,7 +46,7 @@ class Fig:
                     d += 'Z'
                 else:
                     d += c[0] + ' '.join(f'{X(p[0]):.3f} {Y(p[1]):.3f}' for p in c[1:])
-            attrs = ' class="f"' if fill else ' fill="none"'
+            attrs = ' class="i"' if fill == 'i' else ' class="f"' if fill else ' fill="none"'
             if evenodd:
                 attrs += ' fill-rule="evenodd"'
             out.append(f'<path{attrs} d="{d}" vector-effect="non-scaling-stroke"/>')
@@ -321,7 +323,7 @@ def mlicenka(p):
     f.add([('M', (rr * 0.55, yr + E * rr * 0.83)), ('C', (rr * 0.9, yr + E * rr * 0.75), (lip - 0.02, yr + 0.02), (lip, yr + 0.005)),
            ('C', (lip - 0.02, yr - 0.03), (rr + 0.01, yr - 0.05), (rr, yr - 0.09)), ('L', (rr * 0.6, yr - 0.09)), ('Z',)])
     f.add(body(prof))
-    f.add(ellipse(0, yr, rr, E * rr))
+    f.add(ellipse(0, yr, rr, E * rr), inside=True)
     f.add(ellipse(0, yr - 0.004, rr * 0.86, E * rr * 0.86), fill=False)
     return f, yr + E * rr
 
@@ -332,7 +334,7 @@ def panak():
     prof = [(E * 0.25, 0.25), (0.11, 0.251), (0.15, 0.236), (0.30, 0.24), (0.50, 0.252), (0.70, 0.265), (0.89, 0.275)]
     f.add(body(prof))
     f.add([('M', (-0.25, 0.12))] + lower_half(0, 0.12, 0.25, E * 0.25), fill=False)
-    f.add(ellipse(0, 0.89, 0.275, E * 0.275))
+    f.add(ellipse(0, 0.89, 0.275, E * 0.275), inside=True)
     f.add(ellipse(0, 0.885, 0.245, E * 0.245), fill=False)
     return f, 0.89 + E * 0.275
 
@@ -348,7 +350,7 @@ def podsalek(r):
           [('L', (rf, foot)), ('C', (rf * 1.15, foot + 0.15 * h), (r * 0.97, h - 0.35 * h), (r, h))]
           + upper_half(0, h, r, E * r) + [('Z',)])
     f.add([('M', (-rf, foot))] + lower_half(0, foot, rf, E * rf), fill=False)
-    f.add(ellipse(0, h, r, E * r))
+    f.add(ellipse(0, h, r, E * r), inside=True)
     f.add(ellipse(0, h - 0.04 * h, r * 0.56, E * r * 0.56), fill=False)
     return f, 1.0  # already in cm
 
@@ -387,12 +389,12 @@ def babovka(h, R):
         xb, yb_ = -rb * math.cos(a), yb - E * rb * math.sin(a)
         xt, yt = -R * 0.98 * math.cos(a), y_rim - E * R * math.sin(a) * 0.98 - 0.04 * h
         f.add([('M', (xt, yt)), ('Q', ((xt + xb) / 2 * 1.06, (yt + yb_) / 2), (xb, yb_ + 0.02 * h))], fill=False)
-    f.add(ellipse(0, y_rim, R, E * R))
+    f.add(ellipse(0, y_rim, R, E * R), inside=True)
     f.add(ellipse(0, y_rim - 0.01 * h, R * 0.88, E * R * 0.88), fill=False)
     rt = 0.085 * R
     f.add([('M', (-rt * 1.5, y_rim - E * R * 0.5)), ('L', (-rt, y_rim))] + lower_half(0, y_rim, rt, E * rt)
           + [('L', (rt * 1.5, y_rim - E * R * 0.5))], fill=False)
-    f.add(ellipse(0, y_rim, rt, E * rt))
+    f.add(ellipse(0, y_rim, rt, E * rt), inside=True)
     return f, 1.0
 
 
@@ -416,8 +418,9 @@ SHAPES = {
     'panak': (panak, ('height', 6)),
     'podsalek-maly': (lambda: podsalek(10.5 / 2), ('cm', None)),
     'podsalek-velky': (lambda: podsalek(13.5 / 2), ('cm', None)),
-    'babovka-mala': (lambda: babovka(10, 24 / 2), ('cm', None)),
-    'babovka-velka': (lambda: babovka(11.5, 27.5 / 2), ('cm', None)),
+    # the data: malá 11,5 cm high and 24 cm across, velká 10 cm and 27,5 cm
+    'babovka-mala': (lambda: babovka(11.5, 24 / 2), ('cm', None)),
+    'babovka-velka': (lambda: babovka(10, 27.5 / 2), ('cm', None)),
 }
 
 if __name__ == '__main__':

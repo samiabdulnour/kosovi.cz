@@ -48,12 +48,15 @@ def subpaths(d, ox, oy):
 
 
 def svg(w, h, parts, axis, flip=False):
+    """parts: (path data, evenodd, inside). An inside face (the cup's opening)
+    stays white when the kind is chosen (class i); the rest turns blue (f)."""
     k = 1 / PT_PER_CM
     group = f'scale({k:.6f})' + (f' translate({w:.2f} 0) scale(-1 1)' if flip else '')
-    body = ''.join(
-        f'<path class="f" d="{d}"{" fill-rule=\"evenodd\"" if evenodd else ""} vector-effect="non-scaling-stroke"/>'
-        for d, evenodd in parts
-    )
+    body = ''
+    for d, evenodd, inside in parts:
+        rule = ' fill-rule="evenodd"' if evenodd else ''
+        cls = 'i' if inside else 'f'
+        body += f'<path class="{cls}" d="{d}"{rule} vector-effect="non-scaling-stroke"/>'
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {w * k:.3f} {h * k:.3f}" '
             f'data-axis="{axis * k:.3f}" fill="#fff" stroke="currentColor" stroke-width="1" '
             f'stroke-linejoin="round"><g transform="{group}">{body}</g></svg>')
@@ -76,14 +79,14 @@ def main():
         (rim, hole, body), pts = subpaths(d, x0, y0)
         rim_x = [p.x - x0 for p in pts[0]]
         axis = (min(rim_x) + max(rim_x)) / 2
-        parts = [(body + hole, True), (rim, False)]
+        parts = [(body + hole, True, False), (rim, False, True)]
         open(f'{out}/{name}.svg', 'w').write(svg(w, h, parts, axis))
     d = drawings[ESPRESSO]
     x0, y0, w, h = frame([d])
     (foot, cup, rim, saucer, hole), pts = subpaths(d, x0, y0)
     rim_x = [p.x - x0 for p in pts[2]]
     axis = w - (min(rim_x) + max(rim_x)) / 2  # mirrored
-    parts = [(foot, False), (saucer, False), (cup + hole, True), (rim, False)]
+    parts = [(foot, False, False), (saucer, False, False), (cup + hole, True, False), (rim, False, True)]
     open(f'{out}/hrnek-espresso.svg', 'w').write(svg(w, h, parts, axis, flip=True))
 
 

@@ -8,12 +8,12 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
 - [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
-- [ ] Písmo Clarendon Text Pro (text malými písmeny v e-shopu): soubory WOFF2 s webovou licencí. Do té doby ho zastupuje volné písmo Besley (`--font-serif` v `src/styles/tokens.css`).
+- [ ] Písmo Clarendon Text Pro (text malými písmeny v e-shopu): Sami pošle soubor TTF (převedu na WOFF2). Do té doby ho zastupuje volné písmo Besley (`--font-serif` v `src/styles/tokens.css`).
 - [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
 - [ ] Ilustrace v e-shopu (bábovka) vede teď na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
-- [ ] Menu se siluetami, rozměry: cukřenka velká má v datech 17,5 cm, fotka ukazuje spíš 7,5 cm (silueta je podle průměru 10 cm, výška zatím chybí). Panák má v datech jen „6 cm“ jako průměr, kresba počítá s výškou 6 cm. Podšálky mají jen průměr. U hrnků uvádí PDF 8, 6 a 6 cm (střední, široký, mini), data 7,5, 5 a 5,5 cm; stránka produktu ukazuje data. Mlíčenky: data uvádějí průměr 5,5 a 8,5 cm, na fotkách jsou ale výrazně užší (asi 4,2 a 6,2 cm při výšce 6,5 a 9,5 cm); siluety jsou podle fotek. Cukřenka velká nakreslená podle průměru 10 cm vychází na výšku těla asi 7,3 cm, což podporuje 7,5 cm místo 17,5 cm.
+- [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Sporné hodnoty v datech: cukřenka velká „výška 17,5 cm“ (fotka i průměr 10 cm ukazují asi 7,5 cm, kresba je podle průměru); panák má jen „průměr cca 6 cm“ (kresba počítá s výškou 6 cm); mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
 - [ ] Menu se siluetami pro Talíře, misky a mísy (Sami je ještě upravuje).
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).

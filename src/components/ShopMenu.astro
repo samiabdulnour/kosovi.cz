@@ -1,13 +1,15 @@
 ---
 // E-shop menu after kosovi_eshop_2.pdf: the categories as tabs, and under the
 // open tab its kinds as line drawings to scale, standing on one floor next to
-// a ruler, each with its name and size. A tab without drawings lists its kinds
-// as text.
+// a ruler, each with its name and size. The size is the height in the product
+// data (the diameter where there is no height), rounded to whole centimetres.
+// A tab without drawings lists its kinds as text.
 import '@fontsource/besley/400.css';
 import type { Line, MenuGroup, MenuItem } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
+import { getEntryProducts } from '../lib/products';
 import { silhouette } from '../lib/silhouettes';
 import { cz } from '../lib/typography';
 
@@ -27,14 +29,34 @@ const group: MenuGroup | undefined = line.menu.find(
 // Chart geometry in centimetres (the PDF draws 1 cm as 8.9 px on a 1512 px screen).
 const COLUMN = 19.43; // one mug column in the PDF
 const GUTTER = 11.6; // room for the ruler's labels
-const drawn = (group?.items ?? [])
-  .filter((item) => item.silhouette)
-  .map((item) => {
-    const shape = silhouette(item.silhouette!);
-    // centred on the body's axis, so the column holds the wider side twice
-    const reach = Math.max(shape.axis, shape.w - shape.axis);
-    return { item, shape, column: Math.max(COLUMN, 2 * reach + 2) };
-  });
+
+/** The most common value, or undefined. */
+function mostCommon(values: number[]): number | undefined {
+  const counts = new Map<number, number>();
+  for (const v of values) counts.set(v, (counts.get(v) ?? 0) + 1);
+  return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
+}
+
+/** "16 cm" from the data's height, "⌀ 11 cm" from its diameter, else the menu's own size. */
+async function sizeOf(item: MenuItem): Promise<string | undefined> {
+  const products = await getEntryProducts(line.key, item);
+  const height = mostCommon(products.flatMap((p) => (p.dimensions?.heightCm ? [p.dimensions.heightCm] : [])));
+  if (height !== undefined) return `${Math.round(height)} cm`;
+  const diameter = mostCommon(products.flatMap((p) => (p.dimensions?.diameterCm ? [p.dimensions.diameterCm] : [])));
+  if (diameter !== undefined) return `⌀ ${Math.round(diameter)} cm`;
+  return item.size;
+}
+
+const drawn = await Promise.all(
+  (group?.items ?? [])
+    .filter((item) => item.silhouette)
+    .map(async (item) => {
+      const shape = silhouette(item.silhouette!);
+      // centred on the body's axis, so the column holds the wider side twice
+      const reach = Math.max(shape.axis, shape.w - shape.axis);
+      return { item, shape, size: await sizeOf(item), column: Math.max(COLUMN, 2 * reach + 2) };
+    }),
+);
 const total = GUTTER + drawn.reduce((sum, d) => sum + d.column, 0);
 const tallest = Math.max(0, ...drawn.map((d) => d.shape.h));
 const top = Math.max(20, Math.ceil((tallest + 2) / 10) * 10);
@@ -83,7 +105,7 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
                 </span>
               ))}
             <ul class="items" role="list">
-              {drawn.map(({ item, shape, column }) => (
+              {drawn.map(({ item, shape, size, column }) => (
                 <li style={`--col: ${column.toFixed(2)}`}>
                   <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
                     <span
@@ -93,7 +115,7 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
                     />
                     <span class="label">
                       <span class="name">{item.name}</span>
-                      {item.size && <span class="size">{cz(item.size)}</span>}
+                      {size && <span class="size">{cz(size)}</span>}
                     </span>
                   </a>
                 </li>

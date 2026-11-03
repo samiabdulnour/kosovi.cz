@@ -22,7 +22,8 @@ export interface MenuItem {
   match: Match[];
   /** Line drawing in the size chart (src/assets/silhouettes/<name>.svg). */
   silhouette?: string;
-  /** Size under the drawing, "16 cm" or "⌀ 10,5 cm". */
+  /** Size under the drawing where the product data has none ("6 cm"). The
+   *  chart otherwise takes the height (or diameter) from the data, rounded. */
   size?: string;
 }
 
@@ -56,20 +57,21 @@ export const lines: Line[] = [
     // by Daniela. Which credit should a product show?
     defaultMakers: { thrownBy: 'martin', paintedBy: 'daniela' },
     menu: [
-      // Tabs and size chart after kosovi_eshop_2.pdf (Sami, November 2026). Mug
-      // sizes come from the PDF, the others from the product data. Kinds go
-      // from the largest down, as the mugs do in the PDF.
+      // Tabs and size chart after kosovi_eshop_2.pdf (Sami, November 2026).
+      // Sizes come from the product data, rounded to whole centimetres (Sami,
+      // November 2026); the espresso cup has none and keeps the PDF's 6 cm.
+      // Kinds go from the largest down, as the mugs do in the PDF.
       {
         slug: 'hrnky',
         name: 'Hrnky',
         match: all('hrnky'),
         items: [
-          { slug: 'pitny-rezim', name: 'Pitný režim', size: '16 cm', silhouette: 'pitny-rezim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
-          { slug: 'hrnek-velky', name: 'Hrnek velký', size: '10 cm', silhouette: 'hrnek-velky', match: [{ category: 'hrnky', subcategory: 'velky' }] },
-          { slug: 'hrnek-stredni', name: 'Hrnek střední', size: '8 cm', silhouette: 'hrnek-stredni', match: [{ category: 'hrnky', subcategory: 'stredni' }] },
-          { slug: 'hrnek-uzky', name: 'Hrnek úzký', size: '8 cm', silhouette: 'hrnek-uzky', match: [{ category: 'hrnky', subcategory: 'uzky' }] },
-          { slug: 'hrnek-siroky', name: 'Hrnek široký', size: '6 cm', silhouette: 'hrnek-siroky', match: [{ category: 'hrnky', subcategory: 'siroky' }] },
-          { slug: 'hrnek-mini', name: 'Hrnek mini', size: '6 cm', silhouette: 'hrnek-mini', match: [{ category: 'hrnky', subcategory: 'mini' }] },
+          { slug: 'pitny-rezim', name: 'Pitný režim', silhouette: 'pitny-rezim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
+          { slug: 'hrnek-velky', name: 'Hrnek velký', silhouette: 'hrnek-velky', match: [{ category: 'hrnky', subcategory: 'velky' }] },
+          { slug: 'hrnek-stredni', name: 'Hrnek střední', silhouette: 'hrnek-stredni', match: [{ category: 'hrnky', subcategory: 'stredni' }] },
+          { slug: 'hrnek-uzky', name: 'Hrnek úzký', silhouette: 'hrnek-uzky', match: [{ category: 'hrnky', subcategory: 'uzky' }] },
+          { slug: 'hrnek-siroky', name: 'Hrnek široký', silhouette: 'hrnek-siroky', match: [{ category: 'hrnky', subcategory: 'siroky' }] },
+          { slug: 'hrnek-mini', name: 'Hrnek mini', silhouette: 'hrnek-mini', match: [{ category: 'hrnky', subcategory: 'mini' }] },
           { slug: 'hrnek-espresso', name: 'Hrnek espresso', size: '6 cm', silhouette: 'hrnek-espresso', match: [{ category: 'hrnky', subcategory: 'hrhen-na-presso-s-podsalkem' }] },
         ],
       },
@@ -95,12 +97,12 @@ export const lines: Line[] = [
         name: 'Konvice',
         match: all('konvice-rovne', 'konvice-kulate'),
         items: [
-          { slug: 'konev-rovna-velka', name: 'Konev rovná velká', size: '23 cm', silhouette: 'konev-rovna-velka', match: [{ category: 'konvice-rovne', subcategory: 'velka' }] },
-          { slug: 'konev-rovna-stredni', name: 'Konev rovná střední', size: '17 cm', silhouette: 'konev-rovna-stredni', match: [{ category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' }] },
-          { slug: 'konev-rovna-mala', name: 'Konev rovná malá', size: '15 cm', silhouette: 'konev-rovna-mala', match: [{ category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' }] },
-          { slug: 'konev-kulata-velka', name: 'Konev kulatá velká', size: '23 cm', silhouette: 'konev-kulata-velka', match: [{ category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' }] },
-          { slug: 'konev-kulata-stredni', name: 'Konev kulatá střední', size: '19 cm', silhouette: 'konev-kulata-stredni', match: [{ category: 'konvice-kulate', subcategory: 'stredi' }] },
-          { slug: 'konev-kulata-mala', name: 'Konev kulatá malá', size: '15 cm', silhouette: 'konev-kulata-mala', match: [{ category: 'konvice-kulate', subcategory: 'mala-konvice-kulate' }] },
+          { slug: 'konev-rovna-velka', name: 'Konev rovná velká', silhouette: 'konev-rovna-velka', match: [{ category: 'konvice-rovne', subcategory: 'velka' }] },
+          { slug: 'konev-rovna-stredni', name: 'Konev rovná střední', silhouette: 'konev-rovna-stredni', match: [{ category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' }] },
+          { slug: 'konev-rovna-mala', name: 'Konev rovná malá', silhouette: 'konev-rovna-mala', match: [{ category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' }] },
+          { slug: 'konev-kulata-velka', name: 'Konev kulatá velká', silhouette: 'konev-kulata-velka', match: [{ category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' }] },
+          { slug: 'konev-kulata-stredni', name: 'Konev kulatá střední', silhouette: 'konev-kulata-stredni', match: [{ category: 'konvice-kulate', subcategory: 'stredi' }] },
+          { slug: 'konev-kulata-mala', name: 'Konev kulatá malá', silhouette: 'konev-kulata-mala', match: [{ category: 'konvice-kulate', subcategory: 'mala-konvice-kulate' }] },
         ],
       },
       {
@@ -108,11 +110,11 @@ export const lines: Line[] = [
         name: 'Cukřenky a mlíčenky',
         match: all('cukrenky', 'mlicenky'),
         items: [
-          // TODO(fakta): the data says 17,5 cm, the photo suggests about 7,5 cm.
+          // TODO(fakta): the data says 17,5 cm high, the photo suggests about 7,5 cm.
           { slug: 'cukrenka-velka', name: 'Cukřenka velká', silhouette: 'cukrenka-velka', match: [{ category: 'cukrenky', subcategory: 'velka-cukrenka' }] },
-          { slug: 'cukrenka-mala', name: 'Cukřenka malá', size: '6 cm', silhouette: 'cukrenka-mala', match: [{ category: 'cukrenky', subcategory: 'mala-cukrenka' }] },
-          { slug: 'mlicenka-velka', name: 'Mlíčenka velká', size: '9,5 cm', silhouette: 'mlicenka-velka', match: [{ category: 'mlicenky', subcategory: 'velka-mlicenka' }] },
-          { slug: 'mlicenka-mala', name: 'Mlíčenka malá', size: '6,5 cm', silhouette: 'mlicenka-mala', match: [{ category: 'mlicenky', subcategory: 'mala-mlicenka' }] },
+          { slug: 'cukrenka-mala', name: 'Cukřenka malá', silhouette: 'cukrenka-mala', match: [{ category: 'cukrenky', subcategory: 'mala-cukrenka' }] },
+          { slug: 'mlicenka-velka', name: 'Mlíčenka velká', silhouette: 'mlicenka-velka', match: [{ category: 'mlicenky', subcategory: 'velka-mlicenka' }] },
+          { slug: 'mlicenka-mala', name: 'Mlíčenka malá', silhouette: 'mlicenka-mala', match: [{ category: 'mlicenky', subcategory: 'mala-mlicenka' }] },
         ],
       },
       {
@@ -120,11 +122,11 @@ export const lines: Line[] = [
         name: 'Ostatní',
         match: all('podsalky', 'babovky', 'panaky'),
         items: [
-          { slug: 'babovka-velka', name: 'Bábovka velká', size: '11,5 cm', silhouette: 'babovka-velka', match: [{ category: 'babovky', slugs: ['babovka-velka-bila', 'babovka-velka-modra'] }] },
-          { slug: 'babovka-mala', name: 'Bábovka malá', size: '10 cm', silhouette: 'babovka-mala', match: [{ category: 'babovky', slugs: ['babovka-mala'] }] },
-          { slug: 'podsalek-velky', name: 'Podšálek velký', size: '⌀ 13,5 cm', silhouette: 'podsalek-velky', match: [{ category: 'podsalky', subcategory: 'velky-podsalky' }] },
-          { slug: 'podsalek-maly', name: 'Podšálek malý', size: '⌀ 10,5 cm', silhouette: 'podsalek-maly', match: [{ category: 'podsalky', subcategory: 'maly' }] },
-          // TODO(fakta): the data gives only "6 cm" as a diameter; the drawing assumes a height of 6 cm.
+          { slug: 'babovka-velka', name: 'Bábovka velká', silhouette: 'babovka-velka', match: [{ category: 'babovky', slugs: ['babovka-velka-bila', 'babovka-velka-modra'] }] },
+          { slug: 'babovka-mala', name: 'Bábovka malá', silhouette: 'babovka-mala', match: [{ category: 'babovky', slugs: ['babovka-mala'] }] },
+          { slug: 'podsalek-velky', name: 'Podšálek velký', silhouette: 'podsalek-velky', match: [{ category: 'podsalky', subcategory: 'velky-podsalky' }] },
+          { slug: 'podsalek-maly', name: 'Podšálek malý', silhouette: 'podsalek-maly', match: [{ category: 'podsalky', subcategory: 'maly' }] },
+          // TODO(fakta): the data gives only a diameter of 6 cm; the drawing assumes a height of 6 cm.
           { slug: 'panaky', name: 'Panák', silhouette: 'panak', match: all('panaky') },
         ],
       },
