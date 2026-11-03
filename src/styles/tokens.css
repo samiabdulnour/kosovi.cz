@@ -12,6 +12,8 @@
   --color-shop-header: #d4effa;
   --color-caption: #4c4c4c;
   --color-tile: #d8d3cf;
+  /* the chosen kind in the e-shop's size chart (Sami, November 2026) */
+  --color-select: #3026b9;
 
   /* colour fields behind photographs */
   --field-sky: #c6e7f7;

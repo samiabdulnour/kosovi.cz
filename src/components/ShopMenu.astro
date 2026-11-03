@@ -31,7 +31,9 @@ const drawn = (group?.items ?? [])
   .filter((item) => item.silhouette)
   .map((item) => {
     const shape = silhouette(item.silhouette!);
-    return { item, shape, column: Math.max(COLUMN, shape.w + 2) };
+    // centred on the body's axis, so the column holds the wider side twice
+    const reach = Math.max(shape.axis, shape.w - shape.axis);
+    return { item, shape, column: Math.max(COLUMN, 2 * reach + 2) };
   });
 const total = GUTTER + drawn.reduce((sum, d) => sum + d.column, 0);
 const tallest = Math.max(0, ...drawn.map((d) => d.shape.h));
@@ -84,7 +86,11 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
               {drawn.map(({ item, shape, column }) => (
                 <li style={`--col: ${column.toFixed(2)}`}>
                   <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
-                    <span class="drawing" style={`--w: ${shape.w}; --h: ${shape.h}`} set:html={shape.svg} />
+                    <span
+                      class="drawing"
+                      style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.w / 2 - shape.axis).toFixed(3)}`}
+                      set:html={shape.svg}
+                    />
                     <span class="label">
                       <span class="name">{item.name}</span>
                       {item.size && <span class="size">{cz(item.size)}</span>}
@@ -246,11 +252,20 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     text-decoration: none;
   }
 
+  /* The body's axis on the column's centre, over the label. */
   .drawing {
     display: block;
     width: calc(var(--w) * var(--cm));
     height: calc(var(--h) * var(--cm));
     color: var(--color-ink);
+    transform: translateX(calc(var(--shift) * var(--cm)));
+  }
+
+  /* The chosen kind is filled blue instead of underlined; pointing at a kind
+     shows the same. */
+  .items a[aria-current='page'] .drawing :global(.f),
+  .items a:hover .drawing :global(.f) {
+    fill: var(--color-select);
   }
 
   .drawing :global(svg) {
@@ -270,10 +285,4 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     text-align: center;
   }
 
-  .items a[aria-current='page'] .name,
-  .items a:hover .name {
-    text-decoration: underline;
-    text-decoration-thickness: 1px;
-    text-underline-offset: 0.3em;
-  }
 </style>
