@@ -4,7 +4,27 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 
 ## Rozhodnutí
 
-- [ ] Je modrobílý porcelán společná práce (Martinovy tvary, Danielina malba)? Přepínač v `src/config/lines.ts`.
+- [x] Modrobílý porcelán, podpis autorů: stránka produktu autory neuvádí (Sami, listopad 2026). Výchozí autoři řad zůstávají v datech (`src/config/lines.ts`).
+- [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
+- [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
+- [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
+- [ ] Písmo Clarendon Text Pro (text malými písmeny v e-shopu): Sami pošle soubor TTF (převedu na WOFF2). Do té doby ho zastupuje volné písmo Besley (`--font-serif` v `src/styles/tokens.css`).
+- [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
+- [ ] Ilustrace v e-shopu (bábovka) vede teď na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
+- [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
+- [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
+- [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
+- [ ] Menu se siluetami pro Talíře, misky a mísy (Sami je ještě upravuje).
+- [ ] Stránka produktu: krátké texty u jiných druhů než hrnků jsou návrh podle hrnku a ověřených faktů (`src/config/descriptions.ts`), potřebují Samiho schválení. Chybí péče o konvice s ratanovým uchem a jestli formy na bábovku smějí do trouby.
+- [x] Stránka produktu: podpis autorů odstraněn (Sami, listopad 2026).
+- [ ] Stránka produktu, fotky: okraje čtverce 531 × 501 jsou zatím doplněné barvou okrajů fotky (`src/lib/edges.ts`). Sami doplní pozadí fotek.
+- [ ] Stránka produktu, související kusy: 12 modrobílých kusů s dekorem, který jinde není (např. hrnek velký s kočárkem, se sovou, závěsné talíře 1–4), související kusy nemá. Doplnit je kusy ze stejné záložky jako u Ostatní?
+- [ ] Košík: tlačítko zatím ukládá kusy do prohlížeče, stránka košíku a objednávka přijdou ve fázi 5.
+- [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
+- [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).
+- [x] Pás fotografií na úvodu podle `docs/design/pas.pdf` (`src/config/band.ts`).
+- [ ] Daniela, kategorie Design (věšáčky, úchytky): platí u nich „Malovala Daniela“? Výchozí autoři řady jsou v `src/config/lines.ts`, u jednotlivého produktu se dají přepsat polem `makers`.
+- [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“, stránka O nás „až 1380 °C“. Které číslo platí?
 - [ ] Režim objednávky: nezávazná (`request`), nebo závazná (`binding`)? `src/config/order.ts`, zatím zástupně `request`.
 - [ ] Doprava: způsoby, ceny, místo osobního odběru. Používají Zásilkovnu? `src/config/shipping.ts`.
 - [ ] Kterých 12–20 kusů jsou vybrané kusy (`featured: true`)?
@@ -14,9 +34,14 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?
 - [ ] Hosting: Cloudflare Pages (podle CLAUDE.md), nebo Cloudflare Workers se statickými soubory, které Cloudflare teď doporučuje pro nové projekty?
-- [ ] Písmo, barvy a typografická škála (fáze 3, návrh designu).
+- [x] Písmo, barvy a typografická škála: podle návrhu (docs/design), písmo Inter ExtraBold.
 
 ## Chybějící fakta
+
+- [ ] Společná fotografie manželů (O nás), fotografie z dílny.
+- [ ] Fotografie a popisky volné tvorby Martina i Daniely (stránky „Volné“).
+- [x] Instagram: `porcelan.kosovi`, odkaz v patičce.
+- [ ] CV Martina, výstavy obou.
 
 - [ ] Martin: „přes 25 let pracuje pouze s porcelánem“ je údaj z webu z roku 2020. Aktualizovat.
 - [ ] Martin: Galerie Svatoš uvádí třetí generaci hrnčířů a tenkostěnný porcelán s drobnými otvory (krajkový vzor). Použít?
@@ -24,12 +49,15 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Jak vzniká: potvrdit kroky a pořadí (přežah, glazování?), sušení, počet výpalů.
 - [ ] O nás: krátce o ateliéru, výstavy obou autorů, sbírky s Martinovými pracemi.
 - [ ] Popis každé kolekce (kdo, technika, materiál).
-- [ ] Rozměry, objemy, technika a péče u produktů (doplní import, zbytek ruční práce).
+- [ ] Rozměry: import převzal výšku (299), průměr (141) a objem (167) z popisů. Technika a péče u produktů chybí úplně.
 - [ ] Sady: data neříkají, které kusy patří k sobě. Stránka produktu zatím ukazuje kusy ze stejné kategorie.
+- [ ] Zástupný text WordPressu v popisu: `hrnek-s-rybkami`, `hrnek-se-spiralou`. Tyto dva produkty nemají ani kategorii.
+- [ ] Bez popisu 15 produktů, bez fotografie `porcelanovy-panak-s-dvema-srdci`, jen jedna fotografie 357 produktů. Podrobnosti v `scripts/data/import-report.md`.
+- [ ] Varianty (barva očí) u 35 produktů Daniely: jak je nabízet v košíku (fáze 5).
 - [ ] Texty obchodních podmínek, ochrany osobních údajů a reklamačního řádu.
 - [ ] Nové fotografie (focení se plánuje). Pro produkt 4–6 záběrů včetně měřítka a detailu malby.
 
 ## Před spuštěním
 
-- [ ] Odstranit poznámky k náhledu (`src/components/wire/`), stránku `/struktura/` a vzor `/produkt/vzor/`.
+- [ ] Odstranit poznámky k náhledu (`src/components/wire/`) a stránku `/struktura/`.
 - [ ] Odstranit lištu náhledu a `noindex` (řídí je proměnná `PUBLIC_PREVIEW_LABEL`, v produkci se nenastavuje).

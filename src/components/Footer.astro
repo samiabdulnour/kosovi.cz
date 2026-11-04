@@ -1,17 +1,23 @@
 ---
-import ContactBlock from './ContactBlock.astro';
-import { pathOf } from '../i18n/routes';
+// Four columns on the e-shop menu's lines: address, contacts, legal links,
+// rights with the language switch. A size smaller than the rest of the site.
+import { pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
+import { studio } from '../config/site';
+import { cz, telHref } from '../lib/typography';
 
 interface Props {
   lang: Lang;
+  alternates: Alternates;
 }
 
-const { lang } = Astro.props;
+const { lang, alternates } = Astro.props;
 const t = useTranslations(lang);
+const year = new Date().getFullYear();
+const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
+const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 
-// Legal pages exist only in Czech.
 const legal = [
   { label: t('footer.terms'), path: pathOf('terms', 'cs') },
   { label: t('footer.privacy'), path: pathOf('privacy', 'cs') },
@@ -21,12 +27,33 @@ const legal = [
 
 <footer class="site-footer">
   <div class="wrap cols">
-    <div>
-      <p class="tagline">{t('site.tagline')}</p>
-      <ContactBlock />
-    </div>
+    <address>
+      {cz(studio.name)}<br />
+      {studio.address.street}<br />
+      {cz(`${studio.address.postalCode} ${studio.address.city}`)}
+    </address>
+    <p>
+      {
+        studio.phones.map((phone) => (
+          <>
+            <a href={telHref(phone)}>{cz(phone)}</a>
+            <br />
+          </>
+        ))
+      }
+      <a href={`mailto:${studio.email}`}>{studio.email}</a><br />
+      {
+        studio.instagram ? (
+          <a href={`https://www.instagram.com/${studio.instagram}/`}>
+            IG<span class="visually-hidden">, Instagram</span>
+          </a>
+        ) : (
+          <span title="TODO(fakta): účet na Instagramu">IG</span>
+        )
+      }
+    </p>
     <nav aria-label={t('footer.legal')}>
-      <ul>
+      <ul role="list">
         {
           legal.map(({ label, path }) => (
             <li>
@@ -38,26 +65,30 @@ const legal = [
         }
       </ul>
     </nav>
+    <div>
+      <p>{t('footer.rights')} {year}</p>
+      <p class="lang">
+        <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>{t('lang.switch')}</a>
+      </p>
+    </div>
   </div>
 </footer>
 
 <style>
   .site-footer {
     margin-block-start: var(--space-8);
-    padding-block: var(--space-7);
+    padding-block: var(--space-4) var(--space-7);
     border-top: 1px solid var(--color-line);
-    font-size: var(--step--1);
+    font-size: var(--step-footer);
   }
 
   .cols {
     display: grid;
-    gap: var(--space-6);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-5) var(--gap);
   }
 
-  .tagline {
-    margin-block-end: var(--space-3);
-    font-weight: 600;
+  address {
+    font-style: normal;
   }
 
   ul {
@@ -65,7 +96,29 @@ const legal = [
     list-style: none;
   }
 
-  li + li {
-    margin-block-start: var(--space-2);
+  .lang {
+    margin-block-start: var(--space-4);
+  }
+
+  /* Two columns on tablets, four on wide screens. */
+  @media (min-width: 48rem) {
+    .cols {
+      grid-template-columns: var(--label-start) 1fr;
+      column-gap: 0;
+    }
+
+    .cols > * {
+      padding-inline-end: var(--gap);
+    }
+  }
+
+  @media (min-width: 70rem) {
+    .cols {
+      grid-template-columns: var(--label-start) var(--label-start) 1fr auto;
+    }
+
+    .cols > :last-child {
+      padding-inline-end: 0;
+    }
   }
 </style>

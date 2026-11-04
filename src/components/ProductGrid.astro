@@ -1,55 +1,149 @@
 ---
-// Product grid. Until the import (phase 2) there are no products, so it shows
-// grey stand-in cards to give the layout its real density.
+// Five products a row (two on phones), as in eshop.pdf. An optional large
+// photo takes two columns by two rows, after the eighth product.
+//
+// Every card is two grid rows, photo and caption, shared through subgrid, so
+// photos in a row end on one line and captions start on one line, also next
+// to the large photo (which is cropped to fit).
+import type { ImageMetadata } from 'astro';
+import { Image } from 'astro:assets';
 import ProductCard from './ProductCard.astro';
-import Placeholder from './wire/Placeholder.astro';
 import type { Lang } from '../i18n/ui';
+import { useTranslations, withBase } from '../i18n/utils';
 import type { Product } from '../lib/products';
 
 interface Props {
   products: Product[];
   lang: Lang;
-  placeholders?: number;
-  limit?: number;
+  illustration?: { src: ImageMetadata; alt: string; caption: string; href: string; price?: string };
 }
 
-const { products, lang, placeholders = 8, limit } = Astro.props;
-const shown = limit ? products.slice(0, limit) : products;
+const { products, lang, illustration } = Astro.props;
+const t = useTranslations(lang);
+const AFTER = 8;
+const before = illustration ? products.slice(0, AFTER) : products;
+const after = illustration ? products.slice(AFTER) : [];
 ---
 
-<ul class="grid product-grid" role="list">
-  {
-    shown.length > 0
-      ? shown.map((product) => (
-          <li>
-            <ProductCard product={product} lang={lang} />
-          </li>
-        ))
-      : Array.from({ length: placeholders }, (_, i) => (
-          <li class="stand-in" aria-hidden="true">
-            <Placeholder label={`produkt ${i + 1}`} ratio="1 / 1" />
-            <p class="line" />
-            <p class="line line--short" />
-          </li>
-        ))
-  }
-</ul>
+{
+  products.length > 0 ? (
+    <ul class="product-grid" role="list">
+      {before.map((product) => (
+        <li class="cell">
+          <ProductCard product={product} lang={lang} />
+        </li>
+      ))}
+      {illustration && (
+        <li class="illustration">
+          <a href={withBase(illustration.href)}>
+            <span class="photo">
+              <Image src={illustration.src} alt={illustration.alt} widths={[560, 840, 1120, 1600]} sizes="(min-width: 48rem) 38vw, 100vw" />
+            </span>
+            <span class="caption">
+              <span>{illustration.caption}</span>
+              {illustration.price && <span class="price">{illustration.price}</span>}
+            </span>
+          </a>
+        </li>
+      )}
+      {after.map((product) => (
+        <li class="cell">
+          <ProductCard product={product} lang={lang} />
+        </li>
+      ))}
+    </ul>
+  ) : (
+    <p class="empty">{t('collection.empty')}</p>
+  )
+}
 
 <style>
   .product-grid {
-    --grid-min: 9rem;
+    --row-space: var(--space-6);
+    display: grid;
+    /* minmax(0, …): a long word must not widen its column past the page. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.65rem;
     padding: 0;
     list-style: none;
   }
 
-  .line {
-    height: 0.7em;
-    margin-block-start: var(--space-3);
-    background: var(--color-wire);
+  /* Two rows per card (photo, caption), handed down to the card. */
+  .cell,
+  .illustration,
+  .illustration > a {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
   }
 
-  .line--short {
-    width: 50%;
-    margin-block-start: var(--space-2);
+  .illustration {
+    grid-column: 1 / -1;
+  }
+
+  .illustration > a:hover {
+    text-decoration: none;
+  }
+
+  .photo {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+  }
+
+  /* Out of the flow, so the photo takes the rows' height instead of setting it. */
+  .photo :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .caption {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: var(--space-3);
+    padding: var(--space-2) var(--space-1) var(--row-space);
+    color: var(--color-caption);
+    font-size: var(--step-caption);
+    font-weight: var(--weight-medium);
+  }
+
+  .price {
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  @media (min-width: 48rem) {
+    .product-grid {
+      --row-space: clamp(3rem, 5.5vw, 5.5rem);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    /* Columns 4–5, from the second row of cards to the third: photo over
+       three grid rows (photo, caption, photo), its caption on the fourth. */
+    .illustration {
+      grid-column: 4 / span 2;
+      grid-row: 3 / span 4;
+    }
+
+    .illustration > a {
+      grid-row: 1 / -1;
+    }
+
+    .photo {
+      grid-row: 1 / span 3;
+      aspect-ratio: auto;
+    }
+
+    .illustration .caption {
+      grid-row: 4;
+    }
+  }
+
+  .empty {
+    padding-block: var(--space-7);
   }
 </style>

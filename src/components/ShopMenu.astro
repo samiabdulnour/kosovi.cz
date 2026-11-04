@@ -1,0 +1,285 @@
+---
+// E-shop menu after kosovi_eshop_2.pdf: the categories as tabs, and under the
+// open tab its kinds as line drawings to scale, standing on one floor next to
+// a ruler, each with its name and size. The size is the menu's own where it
+// has one, else the height in the product data (the diameter where there is
+// no height), rounded to whole centimetres.
+// A tab without drawings lists its kinds as text.
+import '@fontsource/besley/400.css';
+import type { Line, MenuGroup, MenuItem } from '../config/lines';
+import { collectionPath } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+import { kindSize } from '../lib/sizes';
+import { silhouette } from '../lib/silhouettes';
+import ShopTabs from './ShopTabs.astro';
+import { cz } from '../lib/typography';
+
+interface Props {
+  line: Line;
+  lang: Lang;
+  /** The open menu entry: a tab or a kind under it. */
+  entry?: MenuItem;
+}
+
+const { line, lang, entry } = Astro.props;
+const href = (item: MenuItem) => withBase(collectionPath(line.slug[lang], lang, item.slug));
+const group: MenuGroup | undefined = line.menu.find(
+  (g) => g.slug === entry?.slug || g.items.some((i) => i.slug === entry?.slug),
+);
+
+// Chart geometry in centimetres (the PDF draws 1 cm as 8.9 px on a 1512 px screen).
+const COLUMN = 19.43; // one mug column in the PDF
+const GUTTER = 11.6; // room for the ruler's labels
+
+const drawn = await Promise.all(
+  (group?.items ?? [])
+    .filter((item) => item.silhouette)
+    .map(async (item) => {
+      const shape = silhouette(item.silhouette!);
+      // centred on the body's axis, so the column holds the wider side twice
+      const reach = Math.max(shape.axis, shape.w - shape.axis);
+      return { item, shape, size: await kindSize(line.key, item), column: Math.max(COLUMN, 2 * reach + 2) };
+    }),
+);
+const total = GUTTER + drawn.reduce((sum, d) => sum + d.column, 0);
+const tallest = Math.max(0, ...drawn.map((d) => d.shape.h));
+const top = Math.max(20, Math.ceil((tallest + 2) / 10) * 10);
+const marks = Array.from({ length: top / 10 + 1 }, (_, i) => i * 10);
+const note = 'Míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
+---
+
+<div class="shop-menu">
+  <ShopTabs line={line} lang={lang} group={group} isPage={group?.slug === entry?.slug} />
+
+  {
+    group && drawn.length > 0 && (
+      <div class="chart" style={`--total: ${total.toFixed(2)}; --top: ${top}; --gutter: ${GUTTER}`}>
+        <p class="note">{cz(note)}</p>
+        <div
+          class="scroll"
+          role="region"
+          tabindex="0"
+          aria-label={lang === 'cs' ? `Velikosti: ${group.name}` : `Sizes: ${group.name}`}
+        >
+          <div class="body">
+            <span class="floor" aria-hidden="true" />
+            {marks.map((cm) => (
+              <span class:list={['line', { dotted: cm > 0 && cm < top }]} style={`--at: ${cm}`} aria-hidden="true" />
+            ))}
+            {marks
+              .filter((cm) => cm > 0)
+              .map((cm) => (
+                <span class="mark" style={`--at: ${cm}`} aria-hidden="true">
+                  {cz(`${cm} cm`)}
+                </span>
+              ))}
+            <ul class="items" role="list">
+              {drawn.map(({ item, shape, size, column }) => (
+                <li style={`--col: ${column.toFixed(2)}`}>
+                  <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
+                    <span
+                      class="drawing"
+                      style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.w / 2 - shape.axis).toFixed(3)}`}
+                      set:html={shape.svg}
+                    />
+                    <span class="label">
+                      <span class="name">{item.name}</span>
+                      {size && <span class="size">{cz(size)}</span>}
+                    </span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  {
+    group && drawn.length === 0 && group.items.length > 0 && (
+      <ul class="list" role="list">
+        {group.items.map((item) => (
+          <li>
+            <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
+              {item.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</div>
+
+<style>
+  .shop-menu {
+    padding-block: clamp(1.25rem, 2.2vw, 2.1rem) 0;
+  }
+
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) clamp(1.5rem, 7.3vw, 7rem);
+    padding: 0;
+    list-style: none;
+  }
+
+  [aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.6em;
+  }
+
+  .list {
+    gap: var(--space-2) clamp(1rem, 3vw, 2.5rem);
+    margin-block-start: clamp(1.25rem, 2.2vw, 2.1rem);
+  }
+
+  /* --- size chart ------------------------------------------------------- */
+
+  .chart {
+    /* 1 cm on screen: as in the PDF where the row fits, smaller where it would
+       not (the ruler then still reads true), never too small to read. */
+    container-type: inline-size;
+    --label-h: 2.6rem;
+    margin-block-start: clamp(1.25rem, 2.2vw, 2.1rem);
+    color: #333;
+  }
+
+  .scroll {
+    --cm: max(4.4px, min(9.4px, 100cqw / var(--total)));
+    overflow-x: auto;
+  }
+
+  .body {
+    position: relative;
+    width: calc(var(--total) * var(--cm));
+    min-width: 100%;
+    height: calc(var(--top) * var(--cm) + var(--label-h));
+  }
+
+  /* 1px under the mark, so the top line stays inside the scroll box */
+  .line {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(var(--label-h) + var(--at) * var(--cm) - 1px);
+    border-top: 1px solid #9b9b9b;
+  }
+
+  .line.dotted {
+    border-top-style: dotted;
+  }
+
+  .mark {
+    position: absolute;
+    top: calc(100% - var(--label-h) - var(--at) * var(--cm) + 0.6rem);
+    left: 0.45rem;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: 0.5625rem;
+    white-space: nowrap;
+  }
+
+  .floor {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: var(--label-h);
+    height: calc(1.66 * var(--cm));
+    background: #dcd5cf;
+  }
+
+  /* Under the top line at the right; above the drawings on phones, where the
+     chart scrolls sideways. */
+  .note {
+    margin-block-end: var(--space-3);
+    font-family: var(--font-serif);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  @media (min-width: 48rem) {
+    .chart {
+      position: relative;
+    }
+
+    .note {
+      position: absolute;
+      z-index: 1;
+      top: 0.45rem;
+      right: 0;
+      width: max-content;
+      max-width: 60%;
+      margin: 0;
+      text-align: right;
+    }
+  }
+
+  .items {
+    position: relative;
+    display: flex;
+    height: 100%;
+    margin: 0;
+    padding: 0 0 0 calc(var(--gutter) * var(--cm));
+    list-style: none;
+  }
+
+  .items li {
+    flex: none;
+    display: flex;
+    width: calc(var(--col) * var(--cm));
+  }
+
+  .items a {
+    flex: 1;
+    display: grid;
+    grid-template-rows: 1fr var(--label-h);
+    justify-items: center;
+    align-items: end;
+    text-decoration: none;
+  }
+
+  /* The body's axis on the column's centre, over the label. */
+  .drawing {
+    display: block;
+    width: calc(var(--w) * var(--cm));
+    height: calc(var(--h) * var(--cm));
+    color: var(--color-ink);
+    transform: translateX(calc(var(--shift) * var(--cm)));
+  }
+
+  /* The chosen kind is filled blue instead of underlined; pointing at a kind
+     shows the same. */
+  .items a[aria-current='page'] .drawing :global(.f),
+  .items a:hover .drawing :global(.f) {
+    fill: var(--color-select);
+  }
+
+  /* its inside (the opening of a cup, the espresso saucer) a pale green */
+  .items a[aria-current='page'] .drawing :global(.i),
+  .items a:hover .drawing :global(.i) {
+    fill: var(--color-select-inside);
+  }
+
+  .drawing :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .label {
+    align-self: start;
+    display: grid;
+    row-gap: 0.2em;
+    padding-block-start: 0.55rem;
+    font-size: 0.5625rem;
+    line-height: 1.3;
+    text-align: center;
+  }
+
+</style>

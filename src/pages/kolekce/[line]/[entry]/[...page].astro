@@ -1,0 +1,26 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { lines, menuEntries } from '../../../../config/lines';
+import { pageSizeFor } from '../../../../config/shop';
+import { getEntryProducts } from '../../../../lib/products';
+import LinePage from '../../../../views/LinePage.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const pages = await Promise.all(
+    lines.flatMap((line) =>
+      menuEntries(line).map(async (entry) =>
+        paginate(await getEntryProducts(line.key, entry), {
+          params: { line: line.slug.cs, entry: entry.slug },
+          props: { line, entry },
+          pageSize: pageSizeFor(line.key),
+        }),
+      ),
+    ),
+  );
+  return pages.flat();
+}) satisfies GetStaticPaths;
+
+const { line, entry, page } = Astro.props;
+---
+
+<LinePage line={line} entry={entry} page={page} lang="cs" />
