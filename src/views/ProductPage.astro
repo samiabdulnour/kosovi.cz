@@ -1,18 +1,23 @@
 ---
+// Product page after kosovi_eshop_produkt.pdf (Sami, November 2026): the
+// e-shop's tabs, then three columns: the kinds of the open tab, the photo, and
+// the name with the price, a short text, the quantity and the button for the
+// cart, the kind's drawing to scale on its floor, its sizes and the catalogue
+// number. Under them pieces of the same kind and pieces with the same decor.
 import { getImage, Image } from 'astro:assets';
 import MakerCredit from '../components/MakerCredit.astro';
-import Price from '../components/Price.astro';
-import ProductGrid from '../components/ProductGrid.astro';
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
+import ProductCard from '../components/ProductCard.astro';
+import ShopTabs from '../components/ShopTabs.astro';
+import { kindTexts } from '../config/descriptions';
 import { getLine, placeOf } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
-import { getRelatedProducts, makersOf, type Product } from '../lib/products';
+import { getSameDecor, getSameSet, makersOf, type Product } from '../lib/products';
 import { productLabel } from '../lib/names';
-import { cz, formatNumber } from '../lib/typography';
+import { silhouette } from '../lib/silhouettes';
+import { cz, formatCzk, formatNumber } from '../lib/typography';
 
 // Product pages are Czech only for now (English comes later, see CLAUDE.md).
 interface Props {
@@ -24,11 +29,7 @@ const { product } = Astro.props;
 const name = productLabel(product.title);
 const line = getLine(product.line);
 const { group, item } = placeOf(line, product);
-const crumbs = [group, item].filter((e) => e !== undefined);
-
-// TODO: "related pieces from the same set" needs a set field in the data.
-// Until then, show pieces from the same category, same size or shape first.
-const related = await getRelatedProducts(product);
+const kindsHref = (slug: string) => withBase(collectionPath(line.slug.cs, 'cs', slug));
 
 // Large version for the zoom link. Never link to the raw original.
 const zoomed = await Promise.all(
@@ -37,248 +38,519 @@ const zoomed = await Promise.all(
 
 const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
 const soldOut = product.stock === 0;
+const onRequest = product.price === null;
+const maxQty = product.stock && product.stock > 0 ? Math.min(product.stock, 10) : 10;
 
-const { dimensions, care } = product;
-const params: [string, string | undefined][] = [
-  ['Výška', dimensions?.heightCm !== undefined ? cz(`${formatNumber(dimensions.heightCm)} cm`) : undefined],
-  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${formatNumber(dimensions.diameterCm)} cm`) : undefined],
+// The kind's short text (src/config/descriptions.ts), else the old description.
+const texts = kindTexts[product.line] ?? {};
+const kindText = (item && texts[item.slug]) ?? (group && texts[group.slug]);
+const paragraphs = kindText
+  ? [[cz(kindText)]]
+  : (product.description ?? '')
+      .split(/\n{2,}/)
+      .map((p) => p.split('\n').map((l) => cz(l.trim())))
+      .filter((lines) => lines.some(Boolean));
+
+// The kind's drawing, as in the e-shop's size chart, turned like the photo.
+const shape = item?.silhouette ? silhouette(item.silhouette) : undefined;
+
+// Sizes rounded to whole centimetres, as in the size chart (Sami, November 2026).
+const { dimensions } = product;
+const height = item?.size ?? (dimensions?.heightCm !== undefined ? `${Math.round(dimensions.heightCm)} cm` : undefined);
+const facts: [string, string | undefined][] = [
+  ['Výška', height && cz(height)],
+  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${Math.round(dimensions.diameterCm)} cm`) : undefined],
   ['Objem', dimensions?.volumeMl !== undefined ? cz(`${formatNumber(dimensions.volumeMl)} ml`) : undefined],
-  ['Technika', product.technique],
-  ['Myčka', care?.dishwasher === undefined ? undefined : care.dishwasher ? 'ano' : 'ne'],
-  ['Mikrovlnná trouba', care?.microwave === undefined ? undefined : care.microwave ? 'ano' : 'ne'],
-  ['Katalogové číslo', product.catalogNo],
 ];
+const shown = facts.filter((f): f is [string, string] => f[1] !== undefined);
 
-// Old descriptions keep their line breaks: blank line = paragraph, newline = <br>.
-const paragraphs = (product.description ?? '')
-  .split(/\n{2,}/)
-  .map((p) => p.split('\n').map((line) => cz(line.trim())))
-  .filter((lines) => lines.some(Boolean));
+// Five tiles: pieces with the same decor take up to two, the same kind the rest.
+const decor = await getSameDecor(product, 2);
+const set = await getSameSet(product, 5 - decor.length);
 
-const metaDescription = product.description
-  ? product.description.replace(/\s+/g, ' ').slice(0, 155)
-  : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
+const metaDescription = kindText
+  ? `${name}. ${kindText}`
+  : product.description
+    ? product.description.replace(/\s+/g, ' ').slice(0, 155)
+    : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
 ---
 
 <Base title={name} description={metaDescription} alternates={{ cs: productPath(product.slug) }}>
-  <div class="section wrap">
-    <p class="crumbs">
-      <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>
-      {
-        crumbs.map((entry) => (
-          <>
-            {' / '}
-            <a href={withBase(collectionPath(line.slug.cs, 'cs', entry.slug))}>{entry.name}</a>
-          </>
-        ))
-      }
-    </p>
+  <div class="wrap">
+    <div class="tabs-row">
+      <ShopTabs line={line} lang="cs" group={group} />
+    </div>
 
     <div class="product">
-      <div class="gallery">
+      {
+        group && group.items.length > 0 && (
+          <nav class="kinds" aria-label={group.name}>
+            <ul role="list">
+              {group.items.map((i) => (
+                <li>
+                  <a href={kindsHref(i.slug)} aria-current={i === item ? 'true' : undefined}>
+                    {i.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        )
+      }
+
+      <div class="photos">
         {
           product.images.map((img, i) => (
-            <a href={zoomed[i]?.src}>
+            <a class="photo" href={zoomed[i]?.src}>
               <Image
                 src={img.src}
                 alt={img.alt}
                 widths={[480, 800, 1200, 1600]}
-                sizes="(min-width: 60rem) 55vw, 100vw"
+                sizes="(min-width: 60rem) 40vw, 100vw"
                 loading={i === 0 ? 'eager' : 'lazy'}
               />
             </a>
           ))
         }
-        {product.images.length === 0 && <Placeholder label="chybí fotografie" ratio="4 / 5" />}
-        {
-          product.images.length < 4 && (
-            <Note>
-              <p>
-                Fotografie: {product.images.length} z 4–6. Chybí hlavně záběr v ruce pro měřítko a detail malby (nové focení).
-              </p>
-            </Note>
-          )
-        }
       </div>
 
-      <div class="info stack">
-        <h1>{name}</h1>
-        <MakerCredit makers={makersOf(product)} lang="cs" />
-        <Price price={product.price} lang="cs" />
-        {soldOut && <p class="sold-out">Vyprodáno</p>}
-        {
-          product.options?.map((option, i) => (
-            <label class="option">
-              {option.name}
-              <select name={`option-${i}`} disabled>
-                {option.values.map((value) => (
-                  <option>{value}</option>
-                ))}
-              </select>
-            </label>
-          ))
-        }
-        {
-          product.price === null ? (
-            <p>
-              <a class="button button--quiet" href={ask('Dotaz na cenu')}>
-                Zeptat se na cenu
-              </a>
-            </p>
-          ) : soldOut ? (
-            <p>
-              <a class="button button--quiet" href={ask('Dotaz na dostupnost')}>
-                Zeptat se na dostupnost
-              </a>
-            </p>
-          ) : (
-            <p>
-              <button class="button" type="button" disabled>
-                Vložit do košíku
-              </button>
-            </p>
-          )
-        }
+      <div class="info">
+        <div class="title">
+          <h1>{name}</h1>
+          <p class="price">{onRequest ? 'Cena na dotaz' : formatCzk(product.price!)}</p>
+        </div>
 
-        <dl class="params">
+        <div class="text">
           {
-            params.map(([label, value]) => (
-              <div class={value === undefined ? 'missing' : undefined}>
-                <dt>{label}</dt>
-                <dd>{value ?? 'TODO(fakta)'}</dd>
-              </div>
+            paragraphs.map((lines) => (
+              <p>
+                {lines.map((l, i) => (
+                  <>
+                    {i > 0 && <br />}
+                    {l}
+                  </>
+                ))}
+              </p>
             ))
           }
-        </dl>
+          <MakerCredit makers={makersOf(product)} lang="cs" />
+          {soldOut && <p>{cz('Tento kus je vyprodaný.')}</p>}
+        </div>
 
-        <p class="handmade">{cz('Každý kus je ručně vyrobený, a proto se od ostatních mírně liší.')}</p>
+        <form class="buy" data-cart-form data-slug={product.slug}>
+          {
+            product.options?.map((option, i) => (
+              <label class="box option">
+                <span class="visually-hidden">{option.name}</span>
+                <select name={`option-${i}`} data-option={option.name}>
+                  {option.values.map((value) => (
+                    <option>{value}</option>
+                  ))}
+                </select>
+              </label>
+            ))
+          }
+          {
+            onRequest || soldOut ? (
+              <a class="box wide" href={ask(onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
+                {onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
+              </a>
+            ) : (
+              <>
+                <label class="box qty">
+                  <span class="visually-hidden">Počet kusů</span>
+                  <select name="qty">
+                    {Array.from({ length: maxQty }, (_, i) => (
+                      <option value={i + 1}>{i + 1} ks</option>
+                    ))}
+                  </select>
+                </label>
+                <button class="box add" type="submit">
+                  Vložit do košíku
+                </button>
+              </>
+            )
+          }
+          <p class="added" role="status" aria-live="polite" data-added hidden>
+            {cz('Přidáno do košíku.')} <a href={withBase('/kosik/')}>Otevřít košík</a>
+          </p>
+        </form>
 
         {
-          paragraphs.length > 0 && (
-            <div class="description">
-              {paragraphs.map((lines) => (
-                <p>
-                  {lines.map((line, i) => (
-                    <>
-                      {i > 0 && <br />}
-                      {line}
-                    </>
-                  ))}
-                </p>
+          shape && (
+            <div
+              class="size"
+              style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.axis - shape.w / 2).toFixed(3)}`}
+              aria-hidden="true"
+            >
+              {Array.from({ length: Math.floor(shape.h / 10) }, (_, i) => (
+                <span class="line" style={`--at: ${(i + 1) * 10}`} />
               ))}
+              <span class="floor" />
+              <span class="drawing" set:html={shape.svg} />
             </div>
           )
         }
+        {
+          (shape || shown.length > 0) && (
+            <p class="note">{cz('Míry jsou orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.')}</p>
+          )
+        }
 
-        <Note title="Stránka produktu">
-          <ul>
-            <li>Kdo kus vyrobil, cena nebo „cena na dotaz“, rozměry a objem, technika, péče, poznámka o ruční výrobě.</li>
-            <li>4–6 velkých fotografií včetně záběru pro měřítko a detailu malby. Proklik na plnou velikost, lightbox ve fázi 4. Pinch zoom zůstává povolený.</li>
-            <li>Košík, volba varianty a dotaz na cenu přijdou ve fázi 5.</li>
-            <li>Popis je převzatý ze starého webu beze změny. Rozměry v tabulce jsou z něj vytažené tam, kde řádek uvádí jednu hodnotu.</li>
-          </ul>
-        </Note>
+        {
+          shown.length > 0 && (
+            <dl class="facts">
+              {shown.map(([label, value]) => (
+                <div>
+                  <dt>{label}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+        {
+          product.catalogNo && (
+            <dl class="facts catalogue">
+              <div>
+                <dt>Katalogové číslo</dt>
+                <dd>{product.catalogNo}</dd>
+              </div>
+            </dl>
+          )
+        }
       </div>
     </div>
-  </div>
 
-  {
-    related.length > 0 && (
-      <section class="section wrap">
-        <h2 class="section-head">Ze stejné sady</h2>
-        <ProductGrid products={related} lang="cs" />
-        <Note>
-          <p>Data zatím neříkají, které kusy patří do jedné sady. Do té doby se zobrazují kusy ze stejné kategorie, nejdřív stejné velikosti.</p>
-        </Note>
-      </section>
-    )
-  }
+    {
+      set.length + decor.length > 0 && (
+        <section class="related" style={`--n: ${Math.max(set.length, 1)}; --decor-start: ${set.length + 1}`} aria-label="Další kusy">
+          {set.length > 0 && <h2 class="head-set">Ze stejné sady</h2>}
+          {decor.length > 0 && <h2 class="head-decor">Se stejným dekorem</h2>}
+          <ul role="list">
+            {[...set, ...decor].map((p, i) => (
+              <li class:list={[i < set.length ? 'in-set' : 'in-decor']}>
+                <ProductCard product={p} lang="cs" />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+  </div>
 </Base>
 
+<script>
+  // The cart lives in localStorage until the order flow (phase 5):
+  // [{ slug, qty, options }], the header's badge shows the sum of pieces.
+  type Line = { slug: string; qty: number; options?: Record<string, string> };
+  for (const form of document.querySelectorAll<HTMLFormElement>('[data-cart-form]')) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const slug = form.dataset.slug!;
+      const qty = Number((form.elements.namedItem('qty') as HTMLSelectElement | null)?.value ?? 1);
+      const options: Record<string, string> = {};
+      form.querySelectorAll<HTMLSelectElement>('select[data-option]').forEach((s) => {
+        options[s.dataset.option!] = s.value;
+      });
+      let cart: Line[] = [];
+      try {
+        const stored: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+        if (Array.isArray(stored)) cart = stored as Line[];
+      } catch {}
+      const same = cart.find((l) => l.slug === slug && JSON.stringify(l.options ?? {}) === JSON.stringify(options));
+      if (same) same.qty = (same.qty ?? 1) + qty;
+      else cart.push({ slug, qty, options });
+      try {
+        localStorage.setItem('kosovi-cart', JSON.stringify(cart));
+      } catch {}
+      document.dispatchEvent(new CustomEvent('kosovi-cart'));
+      const added = form.querySelector<HTMLElement>('[data-added]');
+      if (added) added.hidden = false;
+    });
+  }
+</script>
+
 <style>
-  .crumbs {
-    margin-block-end: var(--space-5);
+  .tabs-row {
+    padding-block: clamp(1.25rem, 2.2vw, 2.1rem) clamp(2.5rem, 7.5vw, 7.5rem);
   }
 
   .product {
     display: grid;
-    gap: var(--space-6);
+    gap: var(--space-5);
   }
 
-  @media (min-width: 60rem) {
-    .product {
-      grid-template-columns: 3fr 2fr;
-      align-items: start;
-    }
-
-    .info {
-      position: sticky;
-      top: var(--space-5);
-    }
+  .kinds ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    padding: 0;
+    list-style: none;
   }
 
-  .gallery {
+  .kinds [aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.55em;
+  }
+
+  .photos {
     display: grid;
+    gap: var(--space-3);
+  }
+
+  /* The whole photo on the tile's colour, as in the PDF (531 × 501). */
+  .photo {
+    display: block;
+    aspect-ratio: 531 / 501;
+    background: var(--color-tile);
+  }
+
+  .photo :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .title {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
     gap: var(--space-4);
   }
 
-  .gallery :global(img) {
-    width: 100%;
+  h1 {
+    font-size: inherit;
   }
 
-  .params {
+  .price {
+    white-space: nowrap;
+  }
+
+  /* Text in small letters: Clarendon (Besley for now), as in the PDF. */
+  .text,
+  .note,
+  .added {
+    font-family: var(--font-serif);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.3;
+    text-transform: none;
+    color: #333;
+  }
+
+  .text {
+    margin-block-start: var(--space-4);
+  }
+
+  .text :global(.credit) {
+    margin-block-start: var(--space-2);
+  }
+
+  .buy {
     display: grid;
-    gap: var(--space-2);
-    padding-block: var(--space-4);
-    border-block: 1px solid var(--color-line);
+    grid-template-columns: 31.6% 1fr;
+    gap: var(--space-2) 2.5%;
+    margin-block-start: clamp(2rem, 4.5vw, 4.25rem);
   }
 
-  .params > div {
+  .box {
+    display: grid;
+    place-items: center;
+    min-height: 1.75rem;
+    padding-inline: var(--space-2);
+    border: 0;
+    border-radius: 0;
+    background: var(--color-shop-header);
+    color: var(--color-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .box select {
+    width: 100%;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    text-align: center;
+    text-align-last: center;
+    cursor: pointer;
+  }
+
+  .option,
+  .wide,
+  .added {
+    grid-column: 1 / -1;
+  }
+
+  .add:hover,
+  .wide:hover,
+  .box:has(select:hover) {
+    background: color-mix(in srgb, var(--color-shop-header) 70%, var(--color-select));
+    color: #fff;
+  }
+
+  .box:has(select:hover) select {
+    color: #fff;
+  }
+
+  /* The kind to scale on its floor, turned like the photo (handle right). */
+  .size {
+    container-type: inline-size;
+    position: relative;
+    margin-block-start: clamp(2.5rem, 6vw, 5.5rem);
+  }
+
+  .size > .drawing {
+    --cm: min(14px, 100cqw / (var(--w) + 2), 300px / (var(--h) + 1.5));
+    position: relative;
+    display: block;
+    width: calc(var(--w) * var(--cm));
+    height: calc(var(--h) * var(--cm));
+    margin-inline: auto;
+    transform: translateX(calc(var(--shift) * var(--cm)));
+    color: var(--color-ink);
+  }
+
+  .size > .drawing :global(svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+    transform: scaleX(-1);
+  }
+
+  .line,
+  .floor {
+    --cm: min(14px, 100cqw / (var(--w) + 2), 300px / (var(--h) + 1.5));
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+
+  .line {
+    bottom: calc(var(--at) * var(--cm));
+    border-top: 1px dotted #777;
+  }
+
+  .floor {
+    bottom: 0;
+    height: calc(1.69 * var(--cm));
+    background: #dcd5cf;
+  }
+
+  .note {
+    margin-block-start: var(--space-3);
+  }
+
+  .facts {
+    margin-inline: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.15rem;
+    margin-block-start: var(--space-5);
+  }
+
+  .facts > div {
     display: flex;
     justify-content: space-between;
     gap: var(--space-4);
   }
 
-  dt {
-    color: var(--color-muted);
+  dt,
+  dd {
+    margin: 0;
   }
 
   dd {
-    margin: 0;
     text-align: end;
   }
 
-  .missing dd {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--color-muted);
+  .catalogue {
+    margin-block-start: var(--space-4);
+    padding-block-start: var(--space-2);
+    border-top: 1px solid var(--color-ink);
   }
 
-  /* Unknown values show only in the preview, the live page hides them. */
-  :global(html:not([data-notes='on'])) .missing {
-    display: none;
-  }
-
-  .sold-out {
-    font-weight: var(--weight);
-  }
-
-  .option {
+  /* Five tiles as in the listing: the same kind, then the same decor. On
+     phones two a row, each group under its own heading. */
+  .related {
     display: grid;
-    gap: var(--space-1);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 0.65rem;
+    margin-block-start: clamp(3.5rem, 11vw, 10.5rem);
   }
 
-  .option select {
-    padding: var(--space-2);
-    border: 1px solid var(--color-muted);
-    border-radius: var(--radius);
+  .related ul {
+    display: contents;
   }
 
-  .description > * + * {
-    margin-block-start: var(--space-3);
+  .related li {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
   }
 
-  .handmade {
-    font-size: var(--step--1);
+  .related h2 {
+    grid-column: 1 / -1;
+    padding-block-end: var(--space-4);
+  }
+
+  .head-decor,
+  .in-decor {
+    order: 1;
+  }
+
+  @media (min-width: 48rem) {
+    .related {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+
+    .related .head-set {
+      grid-row: 1;
+      grid-column: 1 / span var(--n);
+    }
+
+    .related .head-decor {
+      grid-row: 1;
+      grid-column: var(--decor-start) / -1;
+    }
+
+    .related li {
+      grid-row: 2 / span 2;
+    }
+  }
+
+  /* Three columns from the PDF: kinds, photo (two listing columns), the rest. */
+  @media (min-width: 60rem) {
+    .product {
+      grid-template-columns: 20.1% 39.6% 10.8% 29.5%;
+      gap: 0;
+      align-items: start;
+    }
+
+    .kinds {
+      grid-column: 1;
+    }
+
+    .kinds ul {
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    .photos {
+      grid-column: 2;
+    }
+
+    .info {
+      grid-column: 4;
+    }
   }
 </style>

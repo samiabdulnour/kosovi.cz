@@ -10,8 +10,9 @@ import type { Line, MenuGroup, MenuItem } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
-import { getEntryProducts } from '../lib/products';
+import { kindSize } from '../lib/sizes';
 import { silhouette } from '../lib/silhouettes';
+import ShopTabs from './ShopTabs.astro';
 import { cz } from '../lib/typography';
 
 interface Props {
@@ -31,24 +32,6 @@ const group: MenuGroup | undefined = line.menu.find(
 const COLUMN = 19.43; // one mug column in the PDF
 const GUTTER = 11.6; // room for the ruler's labels
 
-/** The most common value, or undefined. */
-function mostCommon(values: number[]): number | undefined {
-  const counts = new Map<number, number>();
-  for (const v of values) counts.set(v, (counts.get(v) ?? 0) + 1);
-  return [...counts].sort((a, b) => b[1] - a[1])[0]?.[0];
-}
-
-/** The menu's own size, else "16 cm" from the data's height or "⌀ 11 cm" from its diameter. */
-async function sizeOf(item: MenuItem): Promise<string | undefined> {
-  if (item.size) return item.size;
-  const products = await getEntryProducts(line.key, item);
-  const height = mostCommon(products.flatMap((p) => (p.dimensions?.heightCm ? [p.dimensions.heightCm] : [])));
-  if (height !== undefined) return `${Math.round(height)} cm`;
-  const diameter = mostCommon(products.flatMap((p) => (p.dimensions?.diameterCm ? [p.dimensions.diameterCm] : [])));
-  if (diameter !== undefined) return `⌀ ${Math.round(diameter)} cm`;
-  return undefined;
-}
-
 const drawn = await Promise.all(
   (group?.items ?? [])
     .filter((item) => item.silhouette)
@@ -56,7 +39,7 @@ const drawn = await Promise.all(
       const shape = silhouette(item.silhouette!);
       // centred on the body's axis, so the column holds the wider side twice
       const reach = Math.max(shape.axis, shape.w - shape.axis);
-      return { item, shape, size: await sizeOf(item), column: Math.max(COLUMN, 2 * reach + 2) };
+      return { item, shape, size: await kindSize(line.key, item), column: Math.max(COLUMN, 2 * reach + 2) };
     }),
 );
 const total = GUTTER + drawn.reduce((sum, d) => sum + d.column, 0);
@@ -67,22 +50,7 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
 ---
 
 <div class="shop-menu">
-  <nav class="tabs" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
-    <ul role="list">
-      {
-        line.menu.map((g) => (
-          <li>
-            <a
-              href={href(g)}
-              aria-current={g.slug === entry?.slug ? 'page' : g === group ? 'true' : undefined}
-            >
-              {g.name}
-            </a>
-          </li>
-        ))
-      }
-    </ul>
-  </nav>
+  <ShopTabs line={line} lang={lang} group={group} isPage={group?.slug === entry?.slug} />
 
   {
     group && drawn.length > 0 && (
@@ -149,7 +117,6 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     padding-block: clamp(1.25rem, 2.2vw, 2.1rem) 0;
   }
 
-  .tabs ul,
   .list {
     display: flex;
     flex-wrap: wrap;

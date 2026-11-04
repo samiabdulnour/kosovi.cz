@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { getLine, matches, type LineKey, type Makers, type MenuItem } from '../config/lines';
+import { getLine, matches, placeOf, type LineKey, type Makers, type MenuItem } from '../config/lines';
+import { motifKey } from './names';
 
 export type Product = CollectionEntry<'products'>['data'];
 
@@ -57,4 +58,31 @@ export async function getRelatedProducts(product: Product, limit = 4): Promise<P
   const same = candidates.filter((p) => product.subcategory && p.subcategory === product.subcategory);
   const rest = candidates.filter((p) => !same.includes(p));
   return [...same, ...rest].slice(0, limit);
+}
+
+/** The kind (menu item, else tab) a product sits under. */
+export function kindOf(product: Product): MenuItem | undefined {
+  const { group, item } = placeOf(getLine(product.line), product);
+  return item ?? group;
+}
+
+/** Other pieces of the same kind ("ze stejné sady"), starting after this one. */
+export async function getSameSet(product: Product, limit: number): Promise<Product[]> {
+  const kind = kindOf(product);
+  if (!kind) return [];
+  const all = await getEntryProducts(product.line, kind);
+  const at = all.findIndex((p) => p.slug === product.slug);
+  const rotated = [...all.slice(at + 1), ...all.slice(0, Math.max(at, 0))];
+  return rotated.filter((p) => p.slug !== product.slug).slice(0, limit);
+}
+
+/** Pieces of other kinds with the same motif ("se stejným dekorem"). */
+export async function getSameDecor(product: Product, limit: number): Promise<Product[]> {
+  const key = motifKey(product.title);
+  if (!key) return [];
+  const kind = kindOf(product);
+  const all = await getLineProducts(product.line);
+  return all
+    .filter((p) => p.slug !== product.slug && motifKey(p.title) === key && !(kind && matches(kind, p)))
+    .slice(0, limit);
 }

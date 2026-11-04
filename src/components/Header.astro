@@ -59,15 +59,23 @@ const items = [
 </header>
 
 <script>
-  // The cart lives in localStorage (phase 5); the badge shows how many pieces.
-  try {
-    const items: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
-    const count = Array.isArray(items) ? items.length : 0;
+  // The cart lives in localStorage ([{ slug, qty }], phase 5); the badge shows
+  // how many pieces, and updates when a product page adds some.
+  function showCount() {
+    let count = 0;
+    try {
+      const items: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+      if (Array.isArray(items)) {
+        count = items.reduce((sum: number, l: { qty?: unknown }) => sum + (typeof l?.qty === 'number' ? l.qty : 1), 0);
+      }
+    } catch {}
     for (const badge of document.querySelectorAll<HTMLElement>('[data-cart-count]')) {
       badge.textContent = String(count);
       badge.hidden = count === 0;
     }
-  } catch {}
+  }
+  showCount();
+  document.addEventListener('kosovi-cart', showCount);
 </script>
 
 <style>

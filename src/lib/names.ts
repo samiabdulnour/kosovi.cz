@@ -38,3 +38,19 @@ export function productLabel(title: string): string {
   const { type, decor } = productName(title);
   return decor ? `${type} ${decor}` : type;
 }
+
+/**
+ * The motif of a piece for finding others with the same decor: the first word
+ * of its decor without diacritics, cut to three letters, so "s kotvou" and
+ * "s kotvami", "se srdcem" and "se srdci" match. Undefined without a decor.
+ */
+export function motifKey(title: string): string | undefined {
+  const { decor } = productName(title);
+  const word = decor
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '')
+    .split(/[^a-z]+/)
+    .find((w) => w.length >= 3 && !['pro', 'nad', 'pod'].includes(w));
+  return word?.slice(0, 3);
+}
