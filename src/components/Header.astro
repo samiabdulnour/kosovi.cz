@@ -121,18 +121,25 @@ const items = [
     text-underline-offset: 0.45em;
   }
 
+  /* As tall as the capitals beside it, from their top to the baseline: an
+     inline-block that hides its overflow sits with its bottom edge on the
+     baseline in every browser. Inter's capitals are 0.727 em tall; the number
+     inside is 0.6 em, so the box is 0.727 / 0.6 of its own em. */
   .badge {
-    display: inline-grid;
-    place-items: center;
-    min-width: 1.1em;
-    height: 1.1em;
-    margin-inline-start: 0.3em;
-    padding-inline: 0.2em;
-    border-radius: 0.15em;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: baseline;
+    min-width: calc(0.727em / 0.6);
+    height: calc(0.727em / 0.6);
+    margin-inline-start: 0.45em;
+    padding-inline: 0.25em;
+    border-radius: 0.2em;
     background: var(--color-ink);
     color: var(--color-paper);
-    font-size: 0.8em;
-    line-height: 1;
+    font-size: 0.6em;
+    line-height: calc(0.727em / 0.6);
+    letter-spacing: 0;
+    text-align: center;
   }
 
   .badge[hidden] {

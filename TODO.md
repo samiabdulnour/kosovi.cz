@@ -4,7 +4,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 
 ## Rozhodnutí
 
-- [ ] Modrobílý porcelán: značka vznikla v roce 1995, několik let Martin točil a Daniela malovala, poslední léta vyrábí všechno Martin. Jaký podpis má mít produkt? Teď se u všech 294 kusů zobrazuje „Točil Martin, malovala Daniela“ (`src/config/lines.ts`), což u novějších kusů nesedí.
+- [x] Modrobílý porcelán, podpis autorů: stránka produktu autory neuvádí (Sami, listopad 2026). Výchozí autoři řad zůstávají v datech (`src/config/lines.ts`).
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
 - [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
@@ -16,7 +16,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
 - [ ] Menu se siluetami pro Talíře, misky a mísy (Sami je ještě upravuje).
 - [ ] Stránka produktu: krátké texty u jiných druhů než hrnků jsou návrh podle hrnku a ověřených faktů (`src/config/descriptions.ts`), potřebují Samiho schválení. Chybí péče o konvice s ratanovým uchem a jestli formy na bábovku smějí do trouby.
-- [ ] Stránka produktu: podpis autorů („Točil Martin, malovala Daniela“) v PDF není, na stránce zůstal pod textem. Nechat?
+- [x] Stránka produktu: podpis autorů odstraněn (Sami, listopad 2026).
+- [ ] Stránka produktu, fotky: okraje čtverce 531 × 501 jsou zatím doplněné barvou okrajů fotky (`src/lib/edges.ts`). Sami doplní pozadí fotek.
+- [ ] Stránka produktu, související kusy: 12 modrobílých kusů s dekorem, který jinde není (např. hrnek velký s kočárkem, se sovou, závěsné talíře 1–4), související kusy nemá. Doplnit je kusy ze stejné záložky jako u Ostatní?
 - [ ] Košík: tlačítko zatím ukládá kusy do prohlížeče, stránka košíku a objednávka přijdou ve fázi 5.
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).

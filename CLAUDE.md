@@ -13,7 +13,7 @@ Two trained artists, one studio. Martin Kos is the craftsman of the two (potter,
 - The site presents mainly the blue-and-white porcelain, then the art of both of them.
 - The homepage leads with the two of them and the blue-and-white porcelain, not with a product grid.
 - Daniela's art (decors, design, paintings, tiles, sculpture) is poorly presented on the old site; give it a proper gallery-level presentation. Martin's own work (tea sets, teapots, vases, mugs with relief decoration) the same way, with "cena na dotaz" where a price is not set.
-- Every product says who made it.
+- Every product says who made it: the line, the artist pages and the data (`makers`). The product page itself shows no maker credit (Sami, November 2026).
 - Lead with 12 to 20 signature pieces. The full catalogue (about 416 items) sits behind them.
 
 ## Stack
@@ -136,9 +136,9 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 
 English at `/en/...` for home, e-shop listings, artist pages, about, contact. Product pages in English can come later.
 
-**Product page must show:** who made it ("Točil Martin, malovala Daniela"), price or "cena na dotaz", size and volume, technique, care (dishwasher, microwave), a note that every piece is handmade and varies slightly, 4 to 6 large zoomable images including a scale shot and a detail of the painting, related pieces from the same set.
+**Product page must show:** price or "cena na dotaz", size and volume, technique, care (dishwasher, microwave), a note that every piece is handmade and varies slightly, 4 to 6 large zoomable images including a scale shot and a detail of the painting, related pieces from the same set.
 
-**Product page layout:** `docs/design/kosovi_eshop_produkt.pdf` (Sami, November 2026), `src/views/ProductPage.astro`. Under the header the e-shop's tabs (`ShopTabs.astro`), then three columns: the kinds of the open tab (the product's kind underlined), the photos (531 × 501 on the tile colour, whole photo, each links to a large version), and from 70.5 % across: name and price on one line, a short text in Clarendon (`src/config/descriptions.ts` per kind; Sami's mug text, the others drafts from the source facts; Martin's and Daniela's pieces keep their old descriptions), the maker credit, quantity and "Vložit do košíku" on light blue (`--color-shop-header`; asking by email where the price is on request or the piece is sold out), the kind's drawing turned like the photo on its floor with dotted 10 cm lines, the note on sizes, height (rounded like the chart, or the menu's own size), diameter and volume, a rule, the catalogue number. Under them five tiles: "Ze stejné sady" (the same kind) and "Se stejným dekorem" (the same motif in other kinds, `motifKey` in `src/lib/names.ts`). Until the order flow, the button stores `[{ slug, qty, options }]` in `localStorage` (`kosovi-cart`) and the header's badge shows the sum of pieces.
+**Product page layout:** `docs/design/kosovi_eshop_produkt.pdf` (Sami, November 2026), `src/views/ProductPage.astro`. Under the header the e-shop's tabs (`ShopTabs.astro`), then three columns: the kinds of the open tab (the product's kind underlined), the photos (531 × 501, whole photo, each links to a large version; where the photo's format leaves the box's sides empty, they carry the photo's own edge colours sampled at build time and the photo's edges fade into them, `src/lib/edges.ts`, until Sami extends the backdrops), and from 70.5 % across: name and price on one line, a short text in Clarendon, broken after its first sentence (`src/config/descriptions.ts` per kind; Sami's mug text, the others drafts from the source facts; Martin's and Daniela's pieces keep their old descriptions), no maker credit (Sami, November 2026), quantity and "Vložit do košíku" on light blue (`--color-shop-header`; asking by email where the price is on request or the piece is sold out), the kind's drawing turned like the photo on its floor with dotted 10 cm lines, the note on sizes, height (rounded like the chart, or the menu's own size), diameter and volume, a rule, the catalogue number. Under them five tiles (Sami, November 2026): "Ze stejné sady" is the same kind with a similar decor, a motif in common ("s andělem na kole" goes with "s bicykly", "s jízdním kolem" and "s andělem"); "Se stejným dekorem" is the same decor on other kinds, at least two tiles when there are, and no heading when the decor is on one piece only. Ostatní (bábovky, podšálky, panáky) and Martin's and Daniela's lines fill the rest with the tab's other pieces ("Ze sekce …"). Motifs: `decorMotifs` in `src/lib/names.ts` (synonyms such as kolo, bicykl, jízdní kolo). Until the order flow, the button stores `[{ slug, qty, options }]` in `localStorage` (`kosovi-cart`) and the header's badge shows the sum of pieces.
 
 ## Order flow (no online payment)
 
@@ -188,7 +188,7 @@ From the current O nás page. These are the only facts copy may use.
 ## Design direction
 
 - **The design is `docs/design/kosovi_navrh_01.pdf`** (Sami, October 2026; the comments in it say where each block links). It overrides the earlier "avoid" list where they disagree.
-  - Header (`docs/design/eshop.pdf`, on every page): "Porcelán Kosovi" on the left, "Daniela a Martin Kosovi" on the label line (30.2 % across, `--label-start`), the menu on the right: E-shop, O nás, Kurzy, Kontakt, Košík with a count badge. Light blue (`--color-shop-header`) in the e-shop (listings, products, cart), no rule under it. The page title sits under the header on the label line.
+  - Header (`docs/design/eshop.pdf`, on every page): "Porcelán Kosovi" on the left, "Daniela a Martin Kosovi" on the label line (30.2 % across, `--label-start`), the menu on the right: E-shop, O nás, Kurzy, Kontakt, Košík with a count badge (as tall as the capitals, standing on the baseline). Light blue (`--color-shop-header`) in the e-shop (listings, products, cart), no rule under it. The page title sits under the header on the label line.
   - Everything in one size, bold, capitals (CSS `text-transform`, the source text stays in sentence case). Typeface: Inter ExtraBold (800), capitals with 0.04em tracking, self-hosted via `@fontsource/inter`. About 12.5 px on a 1512 px wide screen (`--step-0`).
   - Text in small letters in the e-shop (the decor under a photo, "vyprodáno", the note on sizes) is Clarendon Text Pro Regular (`kosovi_eshop_2.pdf`, `--font-serif`). Capitals stay Inter. Until Sami sends the font file (TTF, he will), Besley (`@fontsource/besley`, OFL, a Clarendon revival) stands in.
   - Photographs sit on flat colour fields (`--field-*` in `src/styles/tokens.css`). Product tiles fill with the edited portrait photos and show older ones whole (`object-fit: contain`).
@@ -220,7 +220,6 @@ From the current O nás page. These are the only facts copy may use.
 
 ## Open questions (mirror in TODO.md)
 
-- Blue-and-white product credit: Martin makes it all now, older pieces were painted by Daniela. Which credit should a product page show (src/config/lines.ts, default "Točil Martin, malovala Daniela")?
 - Order mode: request or binding?
 - Shipping methods, prices, pickup location. Do they use Zásilkovna?
 - Which 12 to 20 pieces are the signature pieces?

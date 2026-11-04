@@ -3,9 +3,10 @@
 // e-shop's tabs, then three columns: the kinds of the open tab, the photo, and
 // the name with the price, a short text, the quantity and the button for the
 // cart, the kind's drawing to scale on its floor, its sizes and the catalogue
-// number. Under them pieces of the same kind and pieces with the same decor.
+// number. Under them related pieces: the same kind with a similar decor, the
+// same decor on other kinds, and in Ostatní the tab's other pieces. No maker
+// credit on this page (Sami, November 2026).
 import { getImage, Image } from 'astro:assets';
-import MakerCredit from '../components/MakerCredit.astro';
 import ProductCard from '../components/ProductCard.astro';
 import ShopTabs from '../components/ShopTabs.astro';
 import { kindTexts } from '../config/descriptions';
@@ -14,7 +15,8 @@ import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
-import { getSameDecor, getSameSet, makersOf, type Product } from '../lib/products';
+import { photoFit } from '../lib/edges';
+import { getSameDecor, getSameSet, getSameTab, type Product } from '../lib/products';
 import { productLabel } from '../lib/names';
 import { silhouette } from '../lib/silhouettes';
 import { cz, formatCzk, formatNumber } from '../lib/typography';
@@ -35,6 +37,9 @@ const kindsHref = (slug: string) => withBase(collectionPath(line.slug.cs, 'cs', 
 const zoomed = await Promise.all(
   product.images.map((img) => getImage({ src: img.src, width: Math.min(2400, img.src.width) })),
 );
+// Photos that do not fit the PDF's box (531 × 501) get its empty sides painted
+// in their own edge colours (src/lib/edges.ts).
+const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 531 / 501)));
 
 const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
 const soldOut = product.stock === 0;
@@ -44,8 +49,10 @@ const maxQty = product.stock && product.stock > 0 ? Math.min(product.stock, 10) 
 // The kind's short text (src/config/descriptions.ts), else the old description.
 const texts = kindTexts[product.line] ?? {};
 const kindText = (item && texts[item.slug]) ?? (group && texts[group.slug]);
+// The kind's text breaks after its first sentence (Sami, November 2026).
+const firstStop = kindText ? kindText.indexOf('. ') : -1;
 const paragraphs = kindText
-  ? [[cz(kindText)]]
+  ? [firstStop > 0 ? [cz(kindText.slice(0, firstStop + 1)), cz(kindText.slice(firstStop + 2))] : [cz(kindText)]]
   : (product.description ?? '')
       .split(/\n{2,}/)
       .map((p) => p.split('\n').map((l) => cz(l.trim())))
@@ -64,9 +71,28 @@ const facts: [string, string | undefined][] = [
 ];
 const shown = facts.filter((f): f is [string, string] => f[1] !== undefined);
 
-// Five tiles: pieces with the same decor take up to two, the same kind the rest.
-const decor = await getSameDecor(product, 2);
-const set = await getSameSet(product, 5 - decor.length);
+// Five tiles (Sami, November 2026): "Ze stejné sady" is the same kind with a
+// similar decor (a motif in common: "s andělem na kole" goes with bicycles and
+// angels); "Se stejným dekorem" the same decor on other kinds, shown only when
+// there is one; Ostatní fills up with the tab's other pieces, and so do
+// Martin's and Daniela's lines, whose pieces have no decor to match.
+const TILES = 5;
+const sameSet = await getSameSet(product);
+const sameDecor = await getSameDecor(product);
+const decor = sameDecor.slice(0, Math.max(2, TILES - sameSet.length));
+const set = sameSet.slice(0, TILES - decor.length);
+const shownSlugs = new Set([...set, ...decor].map((p) => p.slug));
+const tab =
+  group?.slug === 'ostatni' || product.line !== 'spolecna'
+    ? (await getSameTab(product)).filter((p) => !shownSlugs.has(p.slug)).slice(0, TILES - set.length - decor.length)
+    : [];
+const related = [
+  { title: 'Ze stejné sady', products: set },
+  { title: `Ze sekce ${group?.name ?? ''}`, products: tab },
+  { title: 'Se stejným dekorem', products: decor },
+]
+  .filter((g) => g.products.length > 0)
+  .map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, h) => n + h.products.length, 0) }));
 
 const metaDescription = kindText
   ? `${name}. ${kindText}`
@@ -101,7 +127,7 @@ const metaDescription = kindText
       <div class="photos">
         {
           product.images.map((img, i) => (
-            <a class="photo" href={zoomed[i]?.src}>
+            <a class="photo" href={zoomed[i]?.src} data-sides={fits[i]?.sides} style={fits[i]?.style || undefined}>
               <Image
                 src={img.src}
                 alt={img.alt}
@@ -133,7 +159,6 @@ const metaDescription = kindText
               </p>
             ))
           }
-          <MakerCredit makers={makersOf(product)} lang="cs" />
           {soldOut && <p>{cz('Tento kus je vyprodaný.')}</p>}
         </div>
 
@@ -223,17 +248,18 @@ const metaDescription = kindText
     </div>
 
     {
-      set.length + decor.length > 0 && (
-        <section class="related" style={`--n: ${Math.max(set.length, 1)}; --decor-start: ${set.length + 1}`} aria-label="Další kusy">
-          {set.length > 0 && <h2 class="head-set">Ze stejné sady</h2>}
-          {decor.length > 0 && <h2 class="head-decor">Se stejným dekorem</h2>}
-          <ul role="list">
-            {[...set, ...decor].map((p, i) => (
-              <li class:list={[i < set.length ? 'in-set' : 'in-decor']}>
-                <ProductCard product={p} lang="cs" />
-              </li>
-            ))}
-          </ul>
+      related.length > 0 && (
+        <section class="related" aria-label="Další kusy">
+          {related.map((g) => (
+            <>
+              <h2 style={`--start: ${g.start}; --span: ${g.products.length}`}>{g.title}</h2>
+              {g.products.map((p) => (
+                <div class="tile">
+                  <ProductCard product={p} lang="cs" />
+                </div>
+              ))}
+            </>
+          ))}
         </section>
       )
     }
@@ -300,17 +326,34 @@ const metaDescription = kindText
     gap: var(--space-3);
   }
 
-  /* The whole photo on the tile's colour, as in the PDF (531 × 501). */
+  /* The whole photo in the PDF's box (531 × 501). Where it leaves the box's
+     sides empty, they carry the photo's own edge colours (set inline, see
+     src/lib/edges.ts) and the photo's edges fade into them. */
   .photo {
+    position: relative;
     display: block;
     aspect-ratio: 531 / 501;
+    overflow: hidden;
     background: var(--color-tile);
   }
 
   .photo :global(img) {
-    width: 100%;
-    height: 100%;
+    position: absolute;
+    inset: 0;
+    width: var(--pw, 100%);
+    height: var(--ph, 100%);
+    margin: auto;
     object-fit: contain;
+  }
+
+  .photo[data-sides='x'] :global(img) {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .photo[data-sides='y'] :global(img) {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
   }
 
   .title {
@@ -343,10 +386,6 @@ const metaDescription = kindText
 
   .text {
     margin-block-start: var(--space-4);
-  }
-
-  .text :global(.credit) {
-    margin-block-start: var(--space-2);
   }
 
   .buy {
@@ -479,8 +518,8 @@ const metaDescription = kindText
     border-top: 1px solid var(--color-ink);
   }
 
-  /* Five tiles as in the listing: the same kind, then the same decor. On
-     phones two a row, each group under its own heading. */
+  /* Five tiles as in the listing, each group under its heading; on phones
+     two a row. */
   .related {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -488,11 +527,7 @@ const metaDescription = kindText
     margin-block-start: clamp(3.5rem, 11vw, 10.5rem);
   }
 
-  .related ul {
-    display: contents;
-  }
-
-  .related li {
+  .related .tile {
     display: grid;
     grid-template-rows: subgrid;
     grid-row: span 2;
@@ -503,27 +538,17 @@ const metaDescription = kindText
     padding-block-end: var(--space-4);
   }
 
-  .head-decor,
-  .in-decor {
-    order: 1;
-  }
-
   @media (min-width: 48rem) {
     .related {
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }
 
-    .related .head-set {
+    .related h2 {
       grid-row: 1;
-      grid-column: 1 / span var(--n);
+      grid-column: var(--start) / span var(--span);
     }
 
-    .related .head-decor {
-      grid-row: 1;
-      grid-column: var(--decor-start) / -1;
-    }
-
-    .related li {
+    .related .tile {
       grid-row: 2 / span 2;
     }
   }

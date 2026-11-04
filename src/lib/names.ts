@@ -39,18 +39,49 @@ export function productLabel(title: string): string {
   return decor ? `${type} ${decor}` : type;
 }
 
+// Motifs in the decors, so related pieces can be found: word stems (without
+// diacritics) that name the same thing, e.g. a bicycle or a fish.
+const MOTIFS: [RegExp, string][] = [
+  [/^andel/, 'andel'],
+  [/^(kol[oaeu]?|kolem|bicykl\w*|jizdni\w*|elektrokol\w*|cyklist\w*|bike)$/, 'kolo'],
+  [/^kolobez/, 'kolobezka'],
+  [/^(srdc|srdic)/, 'srdce'],
+  [/^(ryb[aeiokuy]|rybk|rybar|sardin)/, 'ryba'],
+  [/^velryb/, 'velryba'],
+  [/^delfin/, 'delfin'],
+  [/^kotv/, 'kotva'],
+  [/^(lod|plachet)/, 'lod'],
+  [/^cap/, 'cap'],
+  [/^kocar/, 'kocarek'],
+  [/^koc/, 'kocka'],
+  [/^(kon[eiěs]|koni|konsk)/, 'kun'],
+  [/^slun/, 'slunce'],
+  [/^spiral/, 'spirala'],
+  [/^hvezd/, 'hvezda'],
+  [/^aut(o|y|em|a)?$/, 'auto'],
+  [/^letad/, 'letadlo'],
+  [/^zelv/, 'zelva'],
+  [/^pegas/, 'pegas'],
+  [/^(pruh|prouz)/, 'pruh'],
+  [/^precl/, 'precl'],
+  [/^tulipan/, 'tulipan'],
+  [/^noc/, 'noc'],
+  [/^(lyzar|ski|apreski)/, 'lyze'],
+];
+const SKIP = new Set(['s', 'se', 'na', 'a', 'v', 've', 'z', 'ze', 'do', 'pro', 'ramecku', 'malym', 'malymi', 'velkym', 'dvema', 'hlavou']);
+
 /**
- * The motif of a piece for finding others with the same decor: the first word
- * of its decor without diacritics, cut to three letters, so "s kotvou" and
- * "s kotvami", "se srdcem" and "se srdci" match. Undefined without a decor.
+ * The motifs of a piece's decor, e.g. ['andel', 'kolo'] for "s andělem na
+ * kole" and ['kolo'] for "s bicykly". Empty without a decor.
  */
-export function motifKey(title: string): string | undefined {
+export function decorMotifs(title: string): string[] {
   const { decor } = productName(title);
-  const word = decor
+  const words = decor
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .split(/[^a-z]+/)
-    .find((w) => w.length >= 3 && !['pro', 'nad', 'pod'].includes(w));
-  return word?.slice(0, 3);
+    .filter((w) => w && !SKIP.has(w));
+  const motifs = words.map((w) => MOTIFS.find(([re]) => re.test(w))?.[1] ?? w.slice(0, 4));
+  return [...new Set(motifs)].sort();
 }
