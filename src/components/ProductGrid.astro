@@ -1,6 +1,7 @@
 ---
 // Five products a row (two on phones), as in eshop.pdf. An optional large
-// photo takes two columns by two rows, after the eighth product.
+// tile takes two columns by two rows after the eighth product: an
+// illustration, or the ninth product itself shown large.
 //
 // Every card is two grid rows, photo and caption, shared through subgrid, so
 // photos in a row end on one line and captions start on one line, also next
@@ -16,13 +17,16 @@ interface Props {
   products: Product[];
   lang: Lang;
   illustration?: { src: ImageMetadata; alt: string; caption: string; href: string; price?: string };
+  /** Show the ninth product in the large tile (when there is no illustration). */
+  largeProduct?: boolean;
 }
 
-const { products, lang, illustration } = Astro.props;
+const { products, lang, illustration, largeProduct = false } = Astro.props;
 const t = useTranslations(lang);
 const AFTER = 8;
-const before = illustration ? products.slice(0, AFTER) : products;
-const after = illustration ? products.slice(AFTER) : [];
+const large = !illustration && largeProduct ? products[AFTER] : undefined;
+const before = illustration || large ? products.slice(0, AFTER) : products;
+const after = illustration ? products.slice(AFTER) : large ? products.slice(AFTER + 1) : [];
 ---
 
 {
@@ -44,6 +48,11 @@ const after = illustration ? products.slice(AFTER) : [];
               {illustration.price && <span class="price">{illustration.price}</span>}
             </span>
           </a>
+        </li>
+      )}
+      {large && (
+        <li class="illustration">
+          <ProductCard product={large} lang={lang} large />
         </li>
       )}
       {after.map((product) => (

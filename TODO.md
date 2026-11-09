@@ -10,7 +10,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
 - [ ] Písmo Clarendon Text Pro (text malými písmeny v e-shopu): Sami pošle soubor TTF (převedu na WOFF2). Do té doby ho zastupuje volné písmo Besley (`--font-serif` v `src/styles/tokens.css`).
 - [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
-- [ ] Ilustrace v e-shopu (bábovka) vede teď na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
+- [ ] Ilustrace v e-shopu (bábovka) je jen na prvním výpisu modrobílého porcelánu a v sekci Ostatní, jinde je velký devátý kus výpisu (Sami, listopad 2026). Vede na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
 - [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).

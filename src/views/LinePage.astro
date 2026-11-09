@@ -2,15 +2,16 @@
 // E-shop listing. The blue-and-white line follows kosovi_eshop_2.pdf: tabs
 // with a size chart under the header, then the products. The other lines
 // follow eshop.pdf: the line's name on the label line and the category menu
-// in columns. Then the products five a row with a large illustration and the
-// page numbers.
+// in columns. Then the products five a row with a large tile (an illustration
+// on the line's own listing and in Ostatní, elsewhere one of the listing's
+// pieces shown large) and the page numbers.
 import type { Page } from 'astro';
 import Pagination from '../components/Pagination.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import ShopMenu from '../components/ShopMenu.astro';
 import Note from '../components/wire/Note.astro';
 import { hasSizeChart, type Line, type MenuItem } from '../config/lines';
-import { ILLUSTRATION_MIN_PRODUCTS, shopIllustrations } from '../config/shop';
+import { ILLUSTRATION_MIN_PRODUCTS, illustrationsFor, largeTileFor } from '../config/shop';
 import Base from '../layouts/Base.astro';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -46,9 +47,12 @@ const isCurrent = (item: MenuItem) => (item.slug === entry?.slug ? 'page' : unde
 const chart = hasSizeChart(line);
 const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.length === 0);
 
-// One illustration per page, taking turns when there are more of them.
-const pool = shopIllustrations[line.key] ?? [];
+// The large tile: one illustration per page, taking turns when there are more
+// of them, or a piece of the listing itself (src/config/shop.ts).
+const largeTile = largeTileFor(line.key, entry?.slug);
+const pool = largeTile === 'illustration' ? illustrationsFor(line.key, entry?.slug) : [];
 const pick = pool[(page.currentPage - 1) % Math.max(pool.length, 1)];
+const largeProduct = largeTile === 'product' && page.data.length > ILLUSTRATION_MIN_PRODUCTS;
 let illustration;
 if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
   const target = line.menu.flatMap((g) => [g, ...g.items]).find((e) => e.slug === pick.entry);
@@ -101,7 +105,7 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
     }
 
     {chart ? <div class="after-chart" /> : <h2 class="list-head">{entry ? entry.name : lineName}</h2>}
-    <ProductGrid products={page.data} lang={lang} illustration={illustration} />
+    <ProductGrid products={page.data} lang={lang} illustration={illustration} largeProduct={largeProduct} />
     <Pagination current={page.currentPage} last={page.lastPage} pathFor={pathFor} lang={lang} />
 
     {

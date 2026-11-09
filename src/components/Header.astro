@@ -142,6 +142,17 @@ const items = [
     text-align: center;
   }
 
+  /* Where the browser can trim the line to the figure's own height (from the
+     top of the capitals to the baseline), centre the figure by padding alone,
+     so it does not depend on how a browser rounds the font's line metrics. */
+  @supports (text-box: trim-both cap alphabetic) {
+    .badge {
+      padding-block: calc((0.727em / 0.6 - 0.727em) / 2);
+      line-height: 1;
+      text-box: trim-both cap alphabetic;
+    }
+  }
+
   .badge[hidden] {
     display: none;
   }

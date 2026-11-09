@@ -14,9 +14,11 @@ import { formatCzk } from '../lib/typography';
 interface Props {
   product: Product;
   lang: Lang;
+  /** In the listing's large tile (two columns by two rows, ProductGrid). */
+  large?: boolean;
 }
 
-const { product, lang } = Astro.props;
+const { product, lang, large = false } = Astro.props;
 const t = useTranslations(lang);
 const [cover] = product.images;
 const { type, decor } = productName(product.title);
@@ -24,10 +26,17 @@ const { type, decor } = productName(product.title);
 const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
 ---
 
-<article class="card">
+<article class="card" data-large={large || undefined}>
   <a href={withBase(productPath(product.slug))}>
     <span class="tile" data-fit={fit}>
-      {cover && <Image src={cover.src} alt={cover.alt} widths={[280, 420, 560, 840]} sizes="(min-width: 48rem) 19vw, 50vw" />}
+      {
+        cover &&
+          (large ? (
+            <Image src={cover.src} alt={cover.alt} widths={[560, 840, 1120, 1600]} sizes="(min-width: 48rem) 38vw, 100vw" />
+          ) : (
+            <Image src={cover.src} alt={cover.alt} widths={[280, 420, 560, 840]} sizes="(min-width: 48rem) 19vw, 50vw" />
+          ))
+      }
     </span>
     <span class="caption">
       <h3>
@@ -117,6 +126,28 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
   @media (min-width: 48rem) {
     .caption {
       grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    /* In the large tile: the photo over three grid rows (photo, caption,
+       photo) and cropped to fit, the caption on the fourth. */
+    .card[data-large],
+    .card[data-large] > a {
+      grid-row: 1 / -1;
+    }
+
+    .card[data-large] .tile {
+      position: relative;
+      grid-row: 1 / span 3;
+      aspect-ratio: auto;
+    }
+
+    .card[data-large] .tile :global(img) {
+      position: absolute;
+      inset: 0;
+    }
+
+    .card[data-large] .caption {
+      grid-row: 4;
     }
   }
 </style>
