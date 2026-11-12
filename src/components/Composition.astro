@@ -1,0 +1,54 @@
+---
+// Colour fields and photographs across the whole width, placed as in the PDF
+// (src/config/artists.ts): positions in points on a frame 1512 wide, turned
+// into percentages, so the composition keeps its proportions at any width.
+import { Image } from 'astro:assets';
+import { compositionWidth, type Composition } from '../config/artists';
+import type { Frame } from '../config/band';
+
+interface Props {
+  composition: Composition;
+}
+
+const { composition: c } = Astro.props;
+const W = compositionWidth;
+const pct = (v: number, of: number) => `${((v / of) * 100).toFixed(3)}%`;
+const place = (f: Frame) => `left: ${pct(f.x, W)}; top: ${pct(f.y, c.h)}; width: ${pct(f.w, W)}; height: ${pct(f.h, c.h)}`;
+---
+
+<div class="composition" style={`--w: ${W}; --h: ${c.h}; --above: ${c.above}`}>
+  {c.fields.map((f) => <span class="area" style={`${place(f)}; background: ${f.color}`} aria-hidden="true" />)}
+  {
+    c.photos.map((p) => (
+      <Image
+        class="photo"
+        src={p.src}
+        alt={p.alt}
+        style={place(p)}
+        widths={[400, 600, 900, 1200, 1600].filter((w) => w <= p.src.width)}
+        sizes={`${Math.ceil((p.w / W) * 100)}vw`}
+        loading="eager"
+      />
+    ))
+  }
+</div>
+
+<style>
+  .composition {
+    position: relative;
+    aspect-ratio: var(--w) / var(--h);
+    /* The PDF puts the fields 31 points under the top of the label, a little
+       closer than the page label's own spacing leaves them. */
+    margin-block-start: calc(var(--above) / var(--w) * 100% - 0.7rem);
+    overflow: hidden;
+  }
+
+  .area,
+  .composition :global(.photo) {
+    position: absolute;
+  }
+
+  .composition :global(.photo) {
+    object-fit: cover;
+  }
+</style>

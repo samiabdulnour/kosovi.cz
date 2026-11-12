@@ -3,6 +3,7 @@
 // in capitals (Inter Medium) with the price beside it and the decor in small
 // letters (Clarendon, for now Besley), in grey.
 import '@fontsource/besley/400.css';
+import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
 import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -16,22 +17,27 @@ interface Props {
   lang: Lang;
   /** In the listing's large tile (two columns by two rows, ProductGrid). */
   large?: boolean;
+  /** A photo of its own instead of the product's first (the makers' pages). */
+  photo?: { src: ImageMetadata; alt: string };
+  /** Two columns wide, one row high (WorkGrid). */
+  wide?: boolean;
 }
 
-const { product, lang, large = false } = Astro.props;
+const { product, lang, large = false, photo, wide = false } = Astro.props;
 const t = useTranslations(lang);
-const [cover] = product.images;
+const cover = photo ?? product.images[0];
 const { type, decor } = productName(product.title);
 // The edited photos are portraits and fill the tile; older ones keep their whole frame.
-const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
+// A wide photo is cut to its tile's format and fills it too.
+const fit = wide || (cover && cover.src.height > cover.src.width) ? 'cover' : 'contain';
 ---
 
-<article class="card" data-large={large || undefined}>
+<article class="card" data-large={large || undefined} data-wide={wide || undefined}>
   <a href={withBase(productPath(product.slug))}>
     <span class="tile" data-fit={fit}>
       {
         cover &&
-          (large ? (
+          (large || wide ? (
             <Image src={cover.src} alt={cover.alt} widths={[560, 840, 1120, 1600]} sizes="(min-width: 48rem) 38vw, 100vw" />
           ) : (
             <Image src={cover.src} alt={cover.alt} widths={[280, 420, 560, 840]} sizes="(min-width: 48rem) 19vw, 50vw" />
@@ -123,6 +129,11 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
     grid-column: 1 / -1;
   }
 
+  /* On phones a wide photo spans the row at the PDF's proportions. */
+  .card[data-wide] .tile {
+    aspect-ratio: 529 / 304;
+  }
+
   @media (min-width: 48rem) {
     .caption {
       grid-template-columns: minmax(0, 1fr) auto;
@@ -148,6 +159,22 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
 
     .card[data-large] .caption {
       grid-row: 4;
+    }
+
+    /* Two columns of one row: the photo takes the row's height (cropped to
+       fit) and the caption keeps one column's width, as in the PDF. */
+    .card[data-wide] .tile {
+      position: relative;
+      aspect-ratio: auto;
+    }
+
+    .card[data-wide] .tile :global(img) {
+      position: absolute;
+      inset: 0;
+    }
+
+    .card[data-wide] .caption {
+      width: calc((100% - 0.65rem) / 2);
     }
   }
 </style>

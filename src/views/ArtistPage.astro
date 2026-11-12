@@ -1,16 +1,18 @@
 ---
-// A maker's page after the design: two fields, "Volné" (their own art) and
-// "Užité" (pieces for use, which opens their part of the e-shop).
-import FieldBlock from '../components/FieldBlock.astro';
+// A maker's page after docs/design/kosovi_daniela_martin.pdf (Sami, November
+// 2026): the name on the label line, a composition of colour fields and two
+// photographs across the whole width, then their pieces five a row on the
+// e-shop's tiles, each opening its product page. Layout and photos in
+// src/config/artists.ts.
+import Composition from '../components/Composition.astro';
+import WorkGrid from '../components/WorkGrid.astro';
 import Note from '../components/wire/Note.astro';
-import { artistBlocks } from '../config/home';
-import { getLine } from '../config/lines';
+import { artistPages } from '../config/artists';
 import { makers, type MakerKey } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath, pathOf } from '../i18n/routes';
+import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { useTranslations, withBase } from '../i18n/utils';
-import { photoOf } from '../lib/photos';
+import { getProductsBySlug } from '../lib/products';
 
 interface Props {
   maker: MakerKey;
@@ -18,52 +20,42 @@ interface Props {
 }
 
 const { maker, lang } = Astro.props;
-const t = useTranslations(lang);
 const person = makers[maker];
-const line = getLine(maker);
-const blocks = artistBlocks[maker];
+const design = artistPages[maker];
+
+// Every piece must exist in the catalogue; a wrong slug stops the build.
+const items = await getProductsBySlug(design.works.map((w) => w.product));
+const works = design.works.map((w) => {
+  const item = items.find((p) => p.slug === w.product);
+  if (!item) throw new Error(`src/config/artists.ts: no product "${w.product}" for ${maker}`);
+  return { ...w, item };
+});
 
 const description =
   lang === 'cs'
-    ? `${person.name}: volná tvorba a užité předměty z porcelánu.`
-    : `${person.name}: fine art and porcelain for everyday use.`;
+    ? `${person.name}: porcelán z ateliéru Daniely a Martina Kosových v Praze.`
+    : `${person.name}: porcelain from the Kos studio in Prague.`;
 ---
 
 <Base title={person.name} description={description} alternates={alternatesOf(maker)} label={person.name}>
+  <Composition composition={design.composition} />
+
   <div class="wrap">
-    <div class="pair">
-      <FieldBlock
-        href={withBase(pathOf(maker === 'martin' ? 'martinFree' : 'danielaFree', lang))}
-        caption={t('artist.free')}
-        field={blocks.free.field}
-        photo={await photoOf(blocks.free)}
-        captionAt="bottom"
-        ratio="4 / 3"
-      />
-      <FieldBlock
-        href={withBase(collectionPath(line.slug[lang], lang))}
-        caption={t('artist.applied')}
-        field={blocks.applied.field}
-        photo={await photoOf(blocks.applied)}
-        captionAt="bottom"
-        ratio="4 / 3"
-      />
-    </div>
+    <section class="works" aria-label={lang === 'cs' ? 'Výběr prací' : 'Selected work'}>
+      <WorkGrid works={works} lang={lang} />
+    </section>
     <Note>
-      <p>„Užité“ otevře {maker === 'martin' ? 'Martinovu' : 'Danielinu'} část e-shopu. „Volné“ vede na galerii volné tvorby, pro kterou zatím chybí fotografie.</p>
+      <p>
+        Podle kosovi_daniela_martin.pdf. Fotky jsou z PDF (nové úpravy starých fotek z e-shopu), dlaždice vedou na
+        stránky výrobků. Stránka volné tvorby ({maker === 'martin' ? '/martin-kos/volna-tvorba/' : '/daniela-kosova/volna-tvorba/'})
+        sem zatím nevede.
+      </p>
     </Note>
   </div>
 </Base>
 
 <style>
-  .pair {
-    display: grid;
-    gap: var(--space-6) var(--gap);
-  }
-
-  @media (min-width: 48rem) {
-    .pair {
-      grid-template-columns: 1fr 1fr;
-    }
+  .works {
+    padding-block-start: clamp(3rem, 8.5vw, 8rem);
   }
 </style>
