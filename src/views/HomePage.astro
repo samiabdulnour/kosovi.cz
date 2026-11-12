@@ -1,15 +1,15 @@
 ---
 // Homepage after the design kosovi_navrh_01.pdf: the photo strip, the claim,
 // a selection of the blue and white porcelain and the two makers.
-import { Image } from 'astro:assets';
 import FieldBlock from '../components/FieldBlock.astro';
 import PhotoBand from '../components/PhotoBand.astro';
+import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
 import { artistBlocks, blueWhiteSelection } from '../config/home';
 import { getLine } from '../config/lines';
 import { makers, studio } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath, pathOf, productPath } from '../i18n/routes';
+import { alternatesOf, collectionPath, pathOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
 import { photoOf } from '../lib/photos';
@@ -37,9 +37,10 @@ const copy = {
   },
 }[lang];
 
+// Five pieces, one row of the e-shop's grid with its captions (Sami, November 2026).
+const PIECES = 5;
 const featured = (await getFeaturedProducts()).filter((p) => p.line === 'spolecna');
-const selection = (featured.length >= 4 ? featured : await getProductsBySlug(blueWhiteSelection)).slice(0, 4);
-const tileFields = ['honey', 'sky', 'honey', 'sky'] as const;
+const selection = (featured.length >= PIECES ? featured : await getProductsBySlug(blueWhiteSelection)).slice(0, PIECES);
 
 const people = await Promise.all(
   (['daniela', 'martin'] as const).map(async (key) => ({
@@ -61,24 +62,9 @@ const people = await Promise.all(
 
     <section class="section">
       <h2 class="section-head"><a href={withBase(shopPath)}>{blueWhite.name[lang]}</a></h2>
-      <ul class="tiles" role="list">
-        {
-          selection.map((product, i) => {
-            const cover = product.images[0];
-            // As in the e-shop's tiles: the edited portrait photos fill the tile, older ones show whole.
-            const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
-            return (
-              <li>
-                <a class="field" data-fit={fit} href={withBase(productPath(product.slug))} style={`--field: var(--field-${tileFields[i]})`}>
-                  {cover && <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 48rem) 22vw, 50vw" />}
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
+      <ProductGrid products={selection} lang={lang} />
       <Note>
-        <p>Výběr čtyř kusů, každý se otevře v e-shopu. TODO(rozhodnutí): vybere Sami (`featured: true` u produktu nebo seznam v src/config/home.ts).</p>
+        <p>Výběr pěti kusů, každý se otevře v e-shopu. TODO(rozhodnutí): vybere Sami (`featured: true` u produktu nebo seznam v src/config/home.ts).</p>
       </Note>
     </section>
 
@@ -100,33 +86,6 @@ const people = await Promise.all(
     padding-block: var(--space-4) var(--space-3);
   }
 
-  .tiles {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--gap);
-    padding: 0;
-    list-style: none;
-  }
-
-  /* The e-shop's tile (260 × 302, Sami, November 2026); the photo out of the
-     flow, so it takes the tile's size instead of its own. */
-  .tiles .field {
-    position: relative;
-    aspect-ratio: 260 / 302;
-  }
-
-  .tiles .field > :global(img) {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .tiles .field[data-fit='contain'] > :global(img) {
-    object-fit: contain;
-  }
-
   .people {
     display: grid;
     gap: var(--space-6) var(--gap);
@@ -134,10 +93,6 @@ const people = await Promise.all(
   }
 
   @media (min-width: 48rem) {
-    .tiles {
-      grid-template-columns: repeat(4, 1fr);
-    }
-
     .people {
       grid-template-columns: 1fr 1fr;
     }

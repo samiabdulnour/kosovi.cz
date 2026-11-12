@@ -23,13 +23,16 @@ export interface Block {
   field: Field;
 }
 
-// "Modrobílý porcelán" on the homepage: four pieces, each opens in the e-shop.
+// "Modrobílý porcelán" on the homepage: five pieces in a row of the e-shop's
+// grid, each opens in the e-shop.
 // TODO(rozhodnutí): Sami picks them. Products marked `featured: true` win over this list.
 export const blueWhiteSelection = [
   'porcelanovy-hrnek-pitny-rezim-s-capy',
   'hrnek-na-presso-s-kotvou',
   'porcelanovy-hrnek-siroky-s-rybkami',
   'talir-praktik-s-tulipany',
+  // the fifth (Sami, November 2026: a row like the e-shop's); swap freely
+  'porcelanova-konev-kulata-stredni-se-srdci',
 ];
 
 // The two makers' blocks on the homepage. A block without a photo shows just

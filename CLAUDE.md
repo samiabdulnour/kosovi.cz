@@ -123,7 +123,7 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 
 | Route | Content |
 |---|---|
-| `/` | Looping photo strip, the claim (one line wherever it fits, a laptop screen included), four blue-and-white pieces on the e-shop's 260 × 302 tiles, whole like there (open in the e-shop), Daniela and Martin (open their pages) |
+| `/` | Looping photo strip, the claim (one line wherever it fits, a laptop screen included), five blue-and-white pieces as one row of the e-shop's grid with its captions, name and price (Sami, November 2026; `src/config/home.ts`, open in the e-shop), Daniela and Martin (open their pages) |
 | `/kolekce/`, `/kolekce/<line>/`, `/kolekce/<line>/<entry>/`, `…/<n>/` | E-shop. "E-shop" in the menu opens the first tab (Hrnky) of the blue-and-white line. Its menu is tabs with a size chart (`docs/design/kosovi_eshop_2.pdf`); Martin's and Daniela's lines keep the category menu in four columns. Menus are mapped onto the old shop data in `src/config/lines.ts`; 26 products a page. Line slugs: `modrobily-porcelan`, `martin-kos`, `daniela-kosova` |
 | `/produkt/<slug>/` | Product page (same URL as the old site) |
 | `/martin-kos/`, `/daniela-kosova/` | Artist pages after `docs/design/kosovi_daniela_martin.pdf` (Sami, November 2026): the name on the label line, a composition of colour fields and two photographs across the whole width, then their pieces five a row on the e-shop's tiles with the product's caption, each opening its product page (`src/views/ArtistPage.astro`, layout and photos in `src/config/artists.ts`). Old URLs. The older "Volné" pages (`…/volna-tvorba/`) stay but nothing links to them |
