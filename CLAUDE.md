@@ -129,7 +129,7 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 | `/martin-kos/`, `/daniela-kosova/` | Artist pages after `docs/design/kosovi_daniela_martin.pdf` (Sami, November 2026): the name on the label line, a composition of colour fields and two photographs across the whole width, then their pieces five a row on the e-shop's tiles with the product's caption, each opening its product page (`src/views/ArtistPage.astro`, layout and photos in `src/config/artists.ts`). Old URLs. The older "Volné" pages (`…/volna-tvorba/`) stay but nothing links to them |
 | `/o-nas/` | The couple, the blue-and-white porcelain, the porcelain's technical qualities, both biographies with a CV. (Replaces the former `/jak-vznika/` page.) |
 | `/kurzy/` | Courses on request, gift voucher |
-| `/kontakt/` | Contact, workshop visits if Sami confirms they are possible |
+| `/kontakt/` | Contact without the street address; workshop visits only by arrangement on the phone (Sami, November 2026). The footer still shows the address |
 | `/kosik/` | Cart and order form (old URL). Until phase 5 it shows how many pieces the browser holds and a button to empty the cart |
 | `/objednavka-odeslana/` | Confirmation |
 | `/obchodni-podminky/`, `/ochrana-osobnich-udaju/`, `/reklamace-a-odstoupeni/` | Legal. Sami supplies or approves the text |
@@ -181,7 +181,7 @@ From the current O nás page. These are the only facts copy may use.
 
 **Brand:** founded in 1995 with the blue-and-white porcelain. For several years Martin threw and Daniela painted; in recent years Martin makes it all. Both have worked in the visual arts for decades.
 
-**Studio:** Na Vlčovce 6, 160 00 Praha 6. +420 607 635 393, +420 728 717 232, danielakosova@gmail.com. Courses in ceramics and porcelain on request.
+**Studio:** Na Vlčovce 6, 160 00 Praha 6. +420 607 635 393, +420 728 717 232, danielakosova@gmail.com. Courses in ceramics and porcelain on request. Workshop visits only after arranging them on the phone, and the contact page leaves out the address (Sami, November 2026).
 
 **Third-party, confirm before use:** Galerie Svatoš describes Martin as a third-generation potter and mentions his thin-walled porcelain perforated with small holes, giving the translucent cups a lace pattern.
 
@@ -225,7 +225,6 @@ From the current O nás page. These are the only facts copy may use.
 - Shipping methods, prices, pickup location. Do they use Zásilkovna?
 - Which 12 to 20 pieces are the signature pieces?
 - Will Daniela and Martin add products themselves? If yes, add a git-based CMS (Decap or Pages CMS) after launch.
-- Can customers visit the workshop?
 - Courses: format, length, price, gift voucher.
 - Newsletter provider.
 - Who holds access to the Wedos hosting, the domain and the WordPress admin?

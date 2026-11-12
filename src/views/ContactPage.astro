@@ -1,7 +1,5 @@
 ---
 import ContactBlock from '../components/ContactBlock.astro';
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
 import Base from '../layouts/Base.astro';
 import { alternatesOf, pathOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -17,15 +15,16 @@ const { lang } = Astro.props;
 const copy = {
   cs: {
     title: 'Kontakt',
-    description: 'Kontakt na porcelánový ateliér Daniely a Martina Kosových, Na Vlčovce 6, Praha 6.',
-    visit: 'Návštěva dílny',
+    description: 'Kontakt na porcelánový ateliér Daniely a Martina Kosových v Praze.',
+    // Sami, November 2026
+    visitText: 'Návštěva dílny je možná pouze po telefonickém dohovoru.',
     courses: 'Kurzy keramiky a porcelánu na požádání.',
     coursesLink: 'Kurzy',
   },
   en: {
     title: 'Contact',
-    description: 'Contact the porcelain studio of Daniela and Martin Kos, Na Vlčovce 6, Prague 6.',
-    visit: 'Visiting the workshop',
+    description: 'Contact the porcelain studio of Daniela and Martin Kos in Prague.',
+    visitText: 'Visits to the workshop by arrangement on the phone only.',
     courses: 'Ceramics and porcelain courses on request.',
     coursesLink: '',
   },
@@ -34,21 +33,14 @@ const copy = {
 
 <Base title={copy.title} description={copy.description} alternates={alternatesOf('contact')} label={copy.title}>
   <div class="section wrap">
-    <div class="split">
-      <div class="stack">
-        <ContactBlock />
-        <p>
-          {typeset(copy.courses, lang)}
-          {lang === 'cs' && <a href={withBase(pathOf('courses', 'cs'))}>{copy.coursesLink}</a>}
-        </p>
-      </div>
-      <Placeholder label="mapa nebo fotografie vchodu" ratio="4 / 3" />
+    <div class="stack">
+      <ContactBlock />
+      <p>
+        {typeset(copy.courses, lang)}{' '}
+        {lang === 'cs' && <a href={withBase(pathOf('courses', 'cs'))}>{copy.coursesLink}</a>}
+      </p>
     </div>
-    <h2 class="visit">{copy.visit}</h2>
-    <Note>
-      <p>TODO(rozhodnutí): mohou zákazníci navštívit dílnu? Sekce zůstane jen pokud to Sami potvrdí.</p>
-      <p>Mapa: odkaz na Mapy.cz místo vloženého widgetu, aby web neměl cizí sledovací kód.</p>
-    </Note>
+    <p class="visit">{typeset(copy.visitText, lang)}</p>
   </div>
 </Base>
 

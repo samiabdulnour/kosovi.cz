@@ -1,14 +1,12 @@
 ---
+// Name, phones and e-mail. No street address (Sami, November 2026): the
+// workshop is visited only by arrangement on the phone.
 import { studio } from '../config/site';
 import { cz, telHref } from '../lib/typography';
 ---
 
 <address class="contact">
-  <p>
-    {cz(studio.name)}<br />
-    {studio.address.street}<br />
-    {cz(`${studio.address.postalCode} ${studio.address.city}`)}
-  </p>
+  <p>{cz(studio.name)}</p>
   <p>
     {
       studio.phones.map((phone, i) => (
