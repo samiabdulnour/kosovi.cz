@@ -74,8 +74,8 @@ const shown = facts.filter((f): f is [string, string] => f[1] !== undefined);
 // Five tiles (Sami, November 2026): "Ze stejné sady" is the same kind with a
 // similar decor (a motif in common: "s andělem na kole" goes with bicycles and
 // angels); "Se stejným dekorem" the same decor on other kinds, shown only when
-// there is one; Ostatní fills up with the tab's other pieces, and so do
-// Martin's and Daniela's lines, whose pieces have no decor to match.
+// there is one; Ostatní fills up with the tab's other pieces under "Další".
+// Martin's and Daniela's pieces show all of them under "Další" alone.
 const TILES = 5;
 const sameSet = await getSameSet(product);
 const sameDecor = await getSameDecor(product);
@@ -86,11 +86,15 @@ const tab =
   group?.slug === 'ostatni' || product.line !== 'spolecna'
     ? (await getSameTab(product)).filter((p) => !shownSlugs.has(p.slug)).slice(0, TILES - set.length - decor.length)
     : [];
-const related = [
-  { title: 'Ze stejné sady', products: set },
-  { title: `Ze sekce ${group?.name ?? ''}`, products: tab },
-  { title: 'Se stejným dekorem', products: decor },
-]
+const groups =
+  product.line === 'spolecna'
+    ? [
+        { title: 'Ze stejné sady', products: set },
+        { title: 'Další', products: tab },
+        { title: 'Se stejným dekorem', products: decor },
+      ]
+    : [{ title: 'Další', products: [...set, ...tab, ...decor] }];
+const related = groups
   .filter((g) => g.products.length > 0)
   .map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, h) => n + h.products.length, 0) }));
 
