@@ -82,7 +82,7 @@ const people = await Promise.all(
       </Note>
     </section>
 
-    <section class="people">
+    <section class="people" id="daniela-a-martin" aria-label={studio.name}>
       {
         people.map((person) => (
           <FieldBlock href={withBase(person.href)} caption={person.name} field={person.field} photo={person.photo} />

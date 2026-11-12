@@ -1,7 +1,8 @@
 ---
 // Header after eshop.pdf: brand on the left, the studio's name on the label
 // line, the menu with the cart on the right. In the e-shop it turns light blue,
-// without a rule under it.
+// without a rule under it. The studio's name opens the homepage's blocks of
+// Daniela and Martin (Sami, November 2026).
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import { collectionPath, pathOf } from '../i18n/routes';
@@ -35,7 +36,7 @@ const items = [
 <header class:list={['site-header', { shop: inShop }]}>
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
-    <p class="name">{cz(studio.name)}</p>
+    <a class="name" href={`${withBase(pathOf('home', lang))}#daniela-a-martin`}>{cz(studio.name)}</a>
     <nav aria-label={t('nav.label')}>
       <ul>
         {
