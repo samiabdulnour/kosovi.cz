@@ -1,16 +1,18 @@
 ---
-import ProductGrid from '../components/ProductGrid.astro';
+// A maker's page after docs/design/kosovi_daniela_martin.pdf (Sami, November
+// 2026): the name on the label line, a composition of colour fields and two
+// photographs across the whole width, then their pieces five a row on the
+// e-shop's tiles, each opening its product page. Layout and photos in
+// src/config/artists.ts.
+import Composition from '../components/Composition.astro';
+import WorkGrid from '../components/WorkGrid.astro';
 import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { danielaCollections, danielaFacts, martinFacts } from '../config/facts';
-import { getLine } from '../config/lines';
+import { artistPages } from '../config/artists';
 import { makers, type MakerKey } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath } from '../i18n/routes';
+import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
-import { getLineProducts } from '../lib/products';
-import { typeset } from '../lib/typography';
+import { getProductsBySlug } from '../lib/products';
 
 interface Props {
   maker: MakerKey;
@@ -19,101 +21,43 @@ interface Props {
 
 const { maker, lang } = Astro.props;
 const person = makers[maker];
-const line = getLine(maker);
-const products = await getLineProducts(maker);
-const t = (text: string) => typeset(text, lang);
+const design = artistPages[maker];
 
-const facts = (maker === 'martin' ? martinFacts : danielaFacts)[lang];
-const collections = maker === 'daniela' ? danielaCollections[lang] : [];
+// Every piece must exist in the catalogue; a wrong slug stops the build.
+const items = await getProductsBySlug(design.works.map((w) => w.product));
+const works = design.works.map((w) => {
+  const item = items.find((p) => p.slug === w.product);
+  if (!item) throw new Error(`src/config/artists.ts: no product "${w.product}" for ${maker}`);
+  const src = w.src ?? item.images[w.image ?? 0]?.src;
+  if (!src) throw new Error(`src/config/artists.ts: "${w.product}" has no photo ${w.image ?? 0}`);
+  return { ...w, src, item };
+});
 
-const copy = {
-  cs: {
-    description:
-      maker === 'martin'
-        ? 'Martin Kos točí porcelán na hrnčířském kruhu. Životopis, způsob práce a jeho kusy.'
-        : 'Daniela Kosová maluje porcelán kobaltem a tvoří vlastní výtvarná díla. Životopis, způsob práce a její práce.',
-    bio: 'Životopis',
-    how: 'Jak pracuje',
-    collections: 'Zastoupení ve sbírkách',
-    pieces: maker === 'martin' ? 'Jeho kusy' : 'Její práce',
-    all: `Všechny kusy v kolekci ${line.name.cs}`,
-  },
-  en: {
-    description:
-      maker === 'martin'
-        ? 'Martin Kos throws porcelain on the potter’s wheel. Biography, how he works and his pieces.'
-        : 'Daniela Kosová paints porcelain with cobalt and makes her own artwork. Biography, how she works and her pieces.',
-    bio: 'Biography',
-    how: maker === 'martin' ? 'How he works' : 'How she works',
-    collections: 'Collections',
-    pieces: maker === 'martin' ? 'His pieces' : 'Her work',
-    all: `All pieces in the ${line.name.en} collection`,
-  },
-}[lang];
-
-const photo = maker === 'martin' ? 'Martin u hrnčířského kruhu' : 'Daniela při malování';
+const description =
+  lang === 'cs'
+    ? `${person.name}: porcelán z ateliéru Daniely a Martina Kosových v Praze.`
+    : `${person.name}: porcelain from the Kos studio in Prague.`;
 ---
 
-<Base title={person.name} description={copy.description} alternates={alternatesOf(maker)}>
-  <section class="section wrap">
-    <div class="split">
-      <Placeholder label={photo} ratio="4 / 5" />
-      <div class="stack">
-        <h1>{person.name}</h1>
-        <p class="lead">{t(person.role[lang])}</p>
-      </div>
-    </div>
-  </section>
+<Base title={person.name} description={description} alternates={alternatesOf(maker)} label={person.name}>
+  <Composition composition={design.composition} />
 
-  <section class="section wrap">
-    <div class="split">
-      <div class="stack">
-        <h2>{copy.bio}</h2>
-        <ul class="facts">
-          {facts.map((fact) => <li>{t(fact)}</li>)}
-        </ul>
-        {
-          collections.length > 0 && (
-            <>
-              <h3>{copy.collections}</h3>
-              <ul class="facts">
-                {collections.map((c) => (
-                  <li>{c}</li>
-                ))}
-              </ul>
-            </>
-          )
-        }
-      </div>
-      <div class="stack">
-        <h2>{copy.how}</h2>
-        <Placeholder label={maker === 'martin' ? 'točení, krátké video' : 'malba kobaltem, krátké video'} kind="video" ratio="16 / 9" />
-        <Note>
-          <p>TODO(fakta): jak {maker === 'martin' ? 'Martin' : 'Daniela'} pracuje, vlastními slovy. Zatím jsou k dispozici jen fakta ze starého webu.</p>
-          {
-            maker === 'martin' && (
-              <p>Ke schválení: Galerie Svatoš uvádí, že Martin je hrnčíř ve třetí generaci a dělá tenkostěnný porcelán s drobnými otvory, které dávají průsvitným šálkům krajkový vzor. Použít až po potvrzení.</p>
-            )
-          }
-        </Note>
-      </div>
-    </div>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.pieces}</h2>
-    <ProductGrid products={products} lang={lang} placeholders={8} limit={8} />
-    <p class="after-grid">
-      <a href={withBase(collectionPath(line.slug[lang], lang))}>{t(copy.all)}</a>
-    </p>
+  <div class="wrap">
+    <section class="works" aria-label={lang === 'cs' ? 'Výběr prací' : 'Selected work'}>
+      <WorkGrid works={works} lang={lang} />
+    </section>
     <Note>
-      <p>Galerijní prezentace samostatné tvorby. Kde cena není stanovená, zobrazí se „cena na dotaz“.</p>
+      <p>
+        Podle kosovi_daniela_martin.pdf. Martinovy dlaždice ukazují fotky výrobků z e-shopu (nové fotky, listopad 2026),
+        Danieliny zatím fotky z PDF. Dlaždice vedou na stránky výrobků. Stránka volné tvorby ({maker === 'martin' ? '/martin-kos/volna-tvorba/' : '/daniela-kosova/volna-tvorba/'})
+        sem zatím nevede.
+      </p>
     </Note>
-  </section>
+  </div>
 </Base>
 
 <style>
-  .after-grid {
-    margin-block-start: var(--space-5);
+  .works {
+    padding-block-start: clamp(3rem, 8.5vw, 8rem);
   }
 </style>

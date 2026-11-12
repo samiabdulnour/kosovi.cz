@@ -1,55 +1,180 @@
 ---
+// Product tile after eshop.pdf and kosovi_eshop_2.pdf: the photo, then the type
+// in capitals (Inter Medium) with the price beside it and the decor in small
+// letters (Clarendon, for now Besley), in grey.
+import '@fontsource/besley/400.css';
+import type { ImageMetadata } from 'astro';
 import { Image } from 'astro:assets';
-import MakerCredit from './MakerCredit.astro';
-import Price from './Price.astro';
-import Placeholder from './wire/Placeholder.astro';
 import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
+import { useTranslations, withBase } from '../i18n/utils';
+import { productName } from '../lib/names';
 import type { Product } from '../lib/products';
+import { formatCzk } from '../lib/typography';
 
 interface Props {
   product: Product;
   lang: Lang;
+  /** In the listing's large tile (two columns by two rows, ProductGrid). */
+  large?: boolean;
+  /** A photo of its own instead of the product's first (the makers' pages). */
+  photo?: { src: ImageMetadata; alt: string };
+  /** Two columns wide, one row high (WorkGrid). */
+  wide?: boolean;
 }
 
-const { product, lang } = Astro.props;
-const [cover] = product.images;
+const { product, lang, large = false, photo, wide = false } = Astro.props;
+const t = useTranslations(lang);
+const cover = photo ?? product.images[0];
+const { type, decor } = productName(product.title);
+// The edited photos are portraits and fill the tile; older ones keep their whole frame.
+// A wide photo is cut to its tile's format and fills it too.
+const fit = wide || (cover && cover.src.height > cover.src.width) ? 'cover' : 'contain';
 ---
 
-<article class="card">
+<article class="card" data-large={large || undefined} data-wide={wide || undefined}>
   <a href={withBase(productPath(product.slug))}>
-    {
-      cover ? (
-        <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 60rem) 25vw, (min-width: 30rem) 50vw, 100vw" />
-      ) : (
-        <Placeholder label="chybí fotografie" ratio="1 / 1" />
-      )
-    }
-    <h3>{product.title}</h3>
+    <span class="tile" data-fit={fit}>
+      {
+        cover &&
+          (large || wide ? (
+            <Image src={cover.src} alt={cover.alt} widths={[560, 840, 1120, 1600]} sizes="(min-width: 48rem) 38vw, 100vw" />
+          ) : (
+            <Image src={cover.src} alt={cover.alt} widths={[280, 420, 560, 840]} sizes="(min-width: 48rem) 19vw, 50vw" />
+          ))
+      }
+    </span>
+    <span class="caption">
+      <h3>
+        <span class="type">{type}</span>
+        {decor && <span class="decor">{decor}</span>}
+      </h3>
+      <span class="price">{product.price === null ? t('product.priceOnRequest') : formatCzk(product.price)}</span>
+      {product.stock === 0 && <span class="note">{lang === 'cs' ? 'vyprodáno' : 'sold out'}</span>}
+    </span>
   </a>
-  <MakerCredit makers={product.makers} lang={lang} />
-  <Price price={product.price} lang={lang} />
 </article>
 
 <style>
+  /* Photo and caption sit on the grid's two rows (subgrid, see ProductGrid). */
+  .card,
   .card > a {
-    display: block;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+  }
+
+  .card > a:hover {
     text-decoration: none;
   }
 
-  .card :global(img) {
+  .tile {
+    display: block;
+    aspect-ratio: 260 / 302;
+    overflow: hidden;
+    background: var(--color-tile);
+  }
+
+  .tile :global(img) {
     width: 100%;
-    aspect-ratio: 1 / 1;
+    height: 100%;
     object-fit: cover;
   }
 
-  h3 {
-    margin-block-start: var(--space-3);
-    font-size: var(--step-0);
+  .tile[data-fit='contain'] :global(img) {
+    object-fit: contain;
   }
 
-  .card :global(p) {
-    font-size: var(--step--1);
+  /* On phones the price goes under the name; from tablets up it sits beside it. */
+  .caption {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    column-gap: var(--space-3);
+    overflow-wrap: anywhere;
+    padding: var(--space-2) var(--space-1) var(--row-space, var(--space-6));
+    color: var(--color-caption);
+    font-size: var(--step-caption);
+    font-weight: var(--weight-medium);
+  }
+
+  h3 {
+    font-weight: inherit;
+  }
+
+  .card > a:hover h3 {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  .type,
+  .decor {
+    display: block;
+  }
+
+  .decor,
+  .note {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: lowercase;
+  }
+
+  .price {
+    text-transform: none;
+    white-space: nowrap;
+  }
+
+  .note {
+    grid-column: 1 / -1;
+  }
+
+  /* On phones a wide photo spans the row at the PDF's proportions. */
+  .card[data-wide] .tile {
+    aspect-ratio: 529 / 304;
+  }
+
+  @media (min-width: 48rem) {
+    .caption {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    /* In the large tile: the photo over three grid rows (photo, caption,
+       photo) and cropped to fit, the caption on the fourth. */
+    .card[data-large],
+    .card[data-large] > a {
+      grid-row: 1 / -1;
+    }
+
+    .card[data-large] .tile {
+      position: relative;
+      grid-row: 1 / span 3;
+      aspect-ratio: auto;
+    }
+
+    .card[data-large] .tile :global(img) {
+      position: absolute;
+      inset: 0;
+    }
+
+    .card[data-large] .caption {
+      grid-row: 4;
+    }
+
+    /* Two columns of one row: the photo takes the row's height (cropped to
+       fit) and the caption keeps one column's width, as in the PDF. */
+    .card[data-wide] .tile {
+      position: relative;
+      aspect-ratio: auto;
+    }
+
+    .card[data-wide] .tile :global(img) {
+      position: absolute;
+      inset: 0;
+    }
+
+    .card[data-wide] .caption {
+      width: calc((100% - 0.65rem) / 2);
+    }
   }
 </style>

@@ -1,0 +1,52 @@
+---
+// The e-shop's categories as tabs (kosovi_eshop_2.pdf), on listings and on
+// product pages. The open tab is underlined.
+import type { Line, MenuGroup } from '../config/lines';
+import { collectionPath } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+
+interface Props {
+  line: Line;
+  lang: Lang;
+  /** The open tab. */
+  group?: MenuGroup;
+  /** True when this page is the tab's own listing. */
+  isPage?: boolean;
+}
+
+const { line, lang, group, isPage = false } = Astro.props;
+---
+
+<nav class="tabs" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
+  <ul role="list">
+    {
+      line.menu.map((g) => (
+        <li>
+          <a
+            href={withBase(collectionPath(line.slug[lang], lang, g.slug))}
+            aria-current={g === group ? (isPage ? 'page' : 'true') : undefined}
+          >
+            {g.name}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) clamp(1.5rem, 7.3vw, 7rem);
+    padding: 0;
+    list-style: none;
+  }
+
+  [aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.6em;
+  }
+</style>

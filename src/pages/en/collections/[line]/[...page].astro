@@ -1,0 +1,20 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { lines } from '../../../../config/lines';
+import { pageSizeFor } from '../../../../config/shop';
+import { getLineProducts } from '../../../../lib/products';
+import LinePage from '../../../../views/LinePage.astro';
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const pages = await Promise.all(
+    lines.map(async (line) =>
+      paginate(await getLineProducts(line.key), { params: { line: line.slug.en }, props: { line }, pageSize: pageSizeFor(line.key) }),
+    ),
+  );
+  return pages.flat();
+}) satisfies GetStaticPaths;
+
+const { line, page } = Astro.props;
+---
+
+<LinePage line={line} page={page} lang="en" />

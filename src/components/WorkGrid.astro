@@ -1,0 +1,61 @@
+---
+// A maker's pieces on their page (kosovi_daniela_martin.pdf): five a row on
+// the e-shop's tiles, each with its own photograph and the product's caption,
+// opening the product page. A wide photo takes two columns of one row.
+// Every card is two grid rows (photo, caption) shared through subgrid, as in
+// the e-shop's grid.
+import type { ImageMetadata } from 'astro';
+import type { Work } from '../config/artists';
+import type { Lang } from '../i18n/ui';
+import type { Product } from '../lib/products';
+import ProductCard from './ProductCard.astro';
+
+interface Props {
+  works: (Work & { src: ImageMetadata; item: Product })[];
+  lang: Lang;
+}
+
+const { works, lang } = Astro.props;
+---
+
+<ul class="work-grid" role="list">
+  {
+    works.map((w) => (
+      <li class:list={['cell', { wide: w.wide }]}>
+        <ProductCard product={w.item} lang={lang} photo={{ src: w.src, alt: w.alt }} wide={w.wide} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .work-grid {
+    --row-space: var(--space-6);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    /* on phones a single tile may move up next to the previous one, so a
+       wide photo leaves no hole beside it */
+    grid-auto-flow: row dense;
+    column-gap: 0.65rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .cell {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
+  }
+
+  .wide {
+    grid-column: span 2;
+  }
+
+  @media (min-width: 48rem) {
+    .work-grid {
+      --row-space: clamp(3rem, 5.5vw, 5.5rem);
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-auto-flow: row;
+    }
+  }
+</style>

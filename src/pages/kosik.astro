@@ -1,5 +1,4 @@
 ---
-import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
 import { ORDER_MODE } from '../config/order';
 import { shippingMethods } from '../config/shipping';
@@ -12,11 +11,17 @@ import { formatCzk } from '../lib/typography';
 const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku' : 'Odeslat objednávku zavazující k platbě';
 ---
 
-<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')}>
+<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')} label="Košík">
   <div class="section wrap">
-    <h1 class="section-head">Košík</h1>
 
-    <ProductGrid products={[]} lang="cs" placeholders={2} />
+    {/* Until the cart (phase 5): how many pieces the browser holds, and a way
+        to empty it, so the header's count can be cleared after testing. */}
+    <div class="held" data-cart-held>
+      <p class="muted" data-cart-summary>Košík je prázdný.</p>
+      <p data-cart-actions hidden>
+        <button class="button button--quiet" type="button" data-cart-clear>Vyprázdnit košík</button>
+      </p>
+    </div>
     <Note title="Košík">
       <p>Obsah košíku drží prohlížeč (localStorage), malý ostrůvek ve vanilla TS ve fázi 5. Ceny se na serveru vždy přepočítají z dat produktů.</p>
     </Note>
@@ -69,7 +74,37 @@ const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku'
   </div>
 </Base>
 
+<script>
+  function summarise() {
+    let pieces = 0;
+    try {
+      const items: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+      if (Array.isArray(items)) {
+        pieces = items.reduce((sum: number, l: { qty?: unknown }) => sum + (typeof l?.qty === 'number' ? l.qty : 1), 0);
+      }
+    } catch {}
+    const summary = document.querySelector<HTMLElement>('[data-cart-summary]');
+    const actions = document.querySelector<HTMLElement>('[data-cart-actions]');
+    if (summary) summary.textContent = pieces > 0 ? `V košíku máte ${pieces}\u00a0ks.` : 'Košík je prázdný.';
+    if (actions) actions.hidden = pieces === 0;
+  }
+  summarise();
+  document.addEventListener('kosovi-cart', summarise);
+  document.querySelector('[data-cart-clear]')?.addEventListener('click', () => {
+    try {
+      localStorage.removeItem('kosovi-cart');
+    } catch {}
+    document.dispatchEvent(new Event('kosovi-cart'));
+  });
+</script>
+
 <style>
+  .held {
+    display: grid;
+    gap: var(--space-3);
+    justify-items: start;
+  }
+
   .order {
     max-width: 36rem;
     margin-block-start: var(--space-7);
@@ -82,7 +117,7 @@ const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku'
 
   legend {
     padding-inline: var(--space-2);
-    font-weight: 600;
+    font-weight: var(--weight);
   }
 
   label {
