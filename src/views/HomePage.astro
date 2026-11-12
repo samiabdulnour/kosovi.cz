@@ -65,9 +65,11 @@ const people = await Promise.all(
         {
           selection.map((product, i) => {
             const cover = product.images[0];
+            // As in the e-shop's tiles: the edited portrait photos fill the tile, older ones show whole.
+            const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
             return (
               <li>
-                <a class="field field--contain" href={withBase(productPath(product.slug))} style={`--field: var(--field-${tileFields[i]})`}>
+                <a class="field" data-fit={fit} href={withBase(productPath(product.slug))} style={`--field: var(--field-${tileFields[i]})`}>
                   {cover && <Image src={cover.src} alt={cover.alt} widths={[320, 480, 720]} sizes="(min-width: 48rem) 22vw, 50vw" />}
                 </a>
               </li>
@@ -91,7 +93,10 @@ const people = await Promise.all(
 </Base>
 
 <style>
+  /* One line wherever it fits, on a laptop screen too (Sami, November 2026):
+     no reading measure, it wraps only where the line runs out. */
   .claim {
+    max-width: none;
     padding-block: var(--space-4) var(--space-3);
   }
 
@@ -103,8 +108,23 @@ const people = await Promise.all(
     list-style: none;
   }
 
+  /* The e-shop's tile (260 × 302, Sami, November 2026); the photo out of the
+     flow, so it takes the tile's size instead of its own. */
   .tiles .field {
-    aspect-ratio: 4 / 3;
+    position: relative;
+    aspect-ratio: 260 / 302;
+  }
+
+  .tiles .field > :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tiles .field[data-fit='contain'] > :global(img) {
+    object-fit: contain;
   }
 
   .people {

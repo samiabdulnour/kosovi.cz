@@ -123,14 +123,14 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 
 | Route | Content |
 |---|---|
-| `/` | Looping photo strip, the claim, four blue-and-white pieces (open in the e-shop), Daniela and Martin (open their pages) |
+| `/` | Looping photo strip, the claim (one line wherever it fits, a laptop screen included), four blue-and-white pieces on the e-shop's 260 × 302 tiles, whole like there (open in the e-shop), Daniela and Martin (open their pages) |
 | `/kolekce/`, `/kolekce/<line>/`, `/kolekce/<line>/<entry>/`, `…/<n>/` | E-shop. "E-shop" in the menu opens the first tab (Hrnky) of the blue-and-white line. Its menu is tabs with a size chart (`docs/design/kosovi_eshop_2.pdf`); Martin's and Daniela's lines keep the category menu in four columns. Menus are mapped onto the old shop data in `src/config/lines.ts`; 26 products a page. Line slugs: `modrobily-porcelan`, `martin-kos`, `daniela-kosova` |
 | `/produkt/<slug>/` | Product page (same URL as the old site) |
 | `/martin-kos/`, `/daniela-kosova/` | Artist pages: two fields, "Volné" (`…/volna-tvorba/`, their own art) and "Užité" (their part of the e-shop). Old URLs |
 | `/o-nas/` | The couple, the blue-and-white porcelain, the porcelain's technical qualities, both biographies with a CV. (Replaces the former `/jak-vznika/` page.) |
 | `/kurzy/` | Courses on request, gift voucher |
 | `/kontakt/` | Contact, workshop visits if Sami confirms they are possible |
-| `/kosik/` | Cart and order form (old URL) |
+| `/kosik/` | Cart and order form (old URL). Until phase 5 it shows how many pieces the browser holds and a button to empty the cart |
 | `/objednavka-odeslana/` | Confirmation |
 | `/obchodni-podminky/`, `/ochrana-osobnich-udaju/`, `/reklamace-a-odstoupeni/` | Legal. Sami supplies or approves the text |
 
