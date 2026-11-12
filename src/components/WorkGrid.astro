@@ -4,13 +4,14 @@
 // opening the product page. A wide photo takes two columns of one row.
 // Every card is two grid rows (photo, caption) shared through subgrid, as in
 // the e-shop's grid.
+import type { ImageMetadata } from 'astro';
 import type { Work } from '../config/artists';
 import type { Lang } from '../i18n/ui';
 import type { Product } from '../lib/products';
 import ProductCard from './ProductCard.astro';
 
 interface Props {
-  works: (Work & { item: Product })[];
+  works: (Work & { src: ImageMetadata; item: Product })[];
   lang: Lang;
 }
 

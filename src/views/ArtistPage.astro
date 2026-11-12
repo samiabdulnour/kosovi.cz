@@ -28,7 +28,9 @@ const items = await getProductsBySlug(design.works.map((w) => w.product));
 const works = design.works.map((w) => {
   const item = items.find((p) => p.slug === w.product);
   if (!item) throw new Error(`src/config/artists.ts: no product "${w.product}" for ${maker}`);
-  return { ...w, item };
+  const src = w.src ?? item.images[w.image ?? 0]?.src;
+  if (!src) throw new Error(`src/config/artists.ts: "${w.product}" has no photo ${w.image ?? 0}`);
+  return { ...w, src, item };
 });
 
 const description =
@@ -46,8 +48,8 @@ const description =
     </section>
     <Note>
       <p>
-        Podle kosovi_daniela_martin.pdf. Fotky jsou z PDF (nové úpravy starých fotek z e-shopu), dlaždice vedou na
-        stránky výrobků. Stránka volné tvorby ({maker === 'martin' ? '/martin-kos/volna-tvorba/' : '/daniela-kosova/volna-tvorba/'})
+        Podle kosovi_daniela_martin.pdf. Martinovy dlaždice ukazují fotky výrobků z e-shopu (nové fotky, listopad 2026),
+        Danieliny zatím fotky z PDF. Dlaždice vedou na stránky výrobků. Stránka volné tvorby ({maker === 'martin' ? '/martin-kos/volna-tvorba/' : '/daniela-kosova/volna-tvorba/'})
         sem zatím nevede.
       </p>
     </Note>

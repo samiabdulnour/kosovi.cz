@@ -5,23 +5,16 @@
 //
 // Positions are the PDF's own, in points on a frame 1512 wide whose top is the
 // top of the fields, so the composition keeps its proportions at any width.
-// The photos are the PDF's, new edits of the old shop photos; to swap one,
-// replace the file in src/assets/artists/ or point the entry at another.
+// A piece shows one of its product's photos (Martin's, Sami's new edits from
+// November 2026), so swapping a product photo changes this page too; Daniela's
+// tiles still use the PDF's own photos, as do the compositions
+// (src/assets/artists/).
 import type { ImageMetadata } from 'astro';
 import type { MakerKey } from './site';
 import type { Frame } from './band';
 
 import mHeroKonvice from '../assets/artists/martin/hero-konvice.jpg';
 import mHeroVazy from '../assets/artists/martin/hero-vazy.jpg';
-import m01 from '../assets/artists/martin/01-cajova-souprava-4.jpg';
-import m02 from '../assets/artists/martin/02-konvice-modra.jpg';
-import m03 from '../assets/artists/martin/03-cajova-souprava-3.jpg';
-import m04 from '../assets/artists/martin/04-konvice-s-dekorem.jpg';
-import m05 from '../assets/artists/martin/05-konvice-bila.jpg';
-import m06 from '../assets/artists/martin/06-konvicka-pozlacena.jpg';
-import m07 from '../assets/artists/martin/07-konvice-zelena-s-plastickym-dekorem.jpg';
-import m08 from '../assets/artists/martin/08-konvice-modra-s-plastickym-dekorem.jpg';
-import m09 from '../assets/artists/martin/09-cajova-souprava-5.jpg';
 
 import dHeroMisa from '../assets/artists/daniela/hero-misa.jpg';
 import dHeroMiska from '../assets/artists/daniela/hero-miska.jpg';
@@ -49,7 +42,10 @@ export interface Composition {
 export interface Work {
   /** The product it opens, by slug; its name and price make the caption. */
   product: string;
-  src: ImageMetadata;
+  /** Which of the product's photos to show (0 = the first), unless `src` is given. */
+  image?: number;
+  /** A photo of its own instead of the product's. */
+  src?: ImageMetadata;
   alt: string;
   /** Two columns wide, one row high. */
   wide?: boolean;
@@ -93,15 +89,15 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
       ],
     },
     works: [
-      { product: 'cajova-souprava-4', src: m01, alt: 'Čajová souprava 4: konvice s rýhovaným tělem a dvě misky' },
-      { product: 'konvice-modra', src: m02, alt: 'Modrá konvice s promáčklým bokem' },
-      { product: 'cajova-souprava-3', src: m03, alt: 'Čajová souprava 3: nízká konvice a tři misky s modrou malbou' },
-      { product: 'konvice-s-dekorem', src: m04, alt: 'Konvice s dekorem, vedle sítko a víčko' },
-      { product: 'konvice-bila', src: m05, alt: 'Bílá konvice s ratanovým uchem' },
-      { product: 'konvicka-pozlacena', src: m06, alt: 'Dva šálky zlacené uvnitř na zeleném pozadí', wide: true },
-      { product: 'konvice-zelena-s-plastickym-dekorem', src: m07, alt: 'Zelená konvice s plastickým dekorem a ratanovým uchem' },
-      { product: 'konvice-modra-s-plastickym-dekorem', src: m08, alt: 'Detail modré konvice s plastickým dekorem, sítko a ratanové ucho' },
-      { product: 'cajova-souprava-5', src: m09, alt: 'Čajová souprava 5: konvice s ratanovým uchem a tři misky s modrou malbou' },
+      { product: 'cajova-souprava-4', alt: 'Čajová souprava 4: konvice s rýhovaným tělem a dvě misky' },
+      { product: 'konvice-modra', alt: 'Modrá konvice s promáčklým bokem' },
+      { product: 'cajova-souprava-3', alt: 'Čajová souprava 3: nízká konvice a tři misky s modrou malbou' },
+      { product: 'konvice-s-dekorem', image: 1, alt: 'Konvice s dekorem, vedle sítko a víčko' },
+      { product: 'konvice-bila', alt: 'Bílá konvice s ratanovým uchem' },
+      { product: 'konvicka-pozlacena', alt: 'Dva šálky zlacené uvnitř na zeleném pozadí', wide: true },
+      { product: 'konvice-zelena-s-plastickym-dekorem', alt: 'Zelená konvice s plastickým dekorem a ratanovým uchem' },
+      { product: 'konvice-modra-s-plastickym-dekorem', image: 1, alt: 'Detail modré konvice s plastickým dekorem, sítko a ratanové ucho' },
+      { product: 'cajova-souprava-5', alt: 'Čajová souprava 5: konvice s ratanovým uchem a tři misky s modrou malbou' },
     ],
   },
   daniela: {
