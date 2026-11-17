@@ -53,13 +53,14 @@
   /* measured from Sami's sample "Daniela a Martin Kosovi" (November 2026) */
   --tracking: 0.085em;
 
-  /* 12.5 px on a 1512 px wide screen, as in eshop.pdf */
+  /* 14.4 px on a 1512 px wide screen: eshop.pdf's 12.5 px plus 2 px for
+     Moment (Sami, November 2026) */
   --step--1: 0.6875rem;
-  --step-0: clamp(0.71875rem, 0.66rem + 0.12vw, 0.78125rem);
-  /* product captions, a step smaller */
+  --step-0: clamp(0.84375rem, 0.785rem + 0.12vw, 0.90625rem);
+  /* product captions, kept at their size (Sami, November 2026) */
   --step-caption: clamp(0.6875rem, 0.64rem + 0.1vw, 0.734375rem);
-  /* footer, 2 px under the body (10.4 px at 1512 px) */
-  --step-footer: clamp(0.625rem, 0.535rem + 0.12vw, 0.65625rem);
+  /* footer, 2 px under the body (12.4 px at 1512 px) */
+  --step-footer: clamp(0.75rem, 0.66rem + 0.12vw, 0.78125rem);
   --step-1: var(--step-0);
   --step-2: var(--step-0);
   --step-3: var(--step-0);
