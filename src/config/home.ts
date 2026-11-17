@@ -2,6 +2,7 @@
 // read them at build time. The photo strip has its own file, src/config/band.ts.
 import type { ImageMetadata } from 'astro';
 import bowlWithApple from '../assets/band/07.jpg';
+import platesWithCockerel from '../assets/home/daniela-talire-s-kohoutem.jpg';
 
 /** Colour fields from tokens.css, used behind the photographs. */
 export type Field =
@@ -44,11 +45,15 @@ export const blueWhiteSelection = [
 // The two makers' blocks on the homepage. A block without a photo shows just
 // its colour field. Their own pages are laid out in src/config/artists.ts.
 // On the homepage each shows a piece of their work in the middle of its field
-// (Sami, November 2026). TODO(fakta): Daniela's photo, the stacked plates with
-// a cockerel on dark blue; Sami to send the file. Until then her portrait.
+// (Sami, November 2026). Daniela's photo came as a screenshot with the pointer
+// over the cockerel; it was retouched out, the original file would be better.
 export const artistBlocks: Record<'martin' | 'daniela', { home: Block }> = {
   daniela: {
-    home: { portrait: 'daniela', inset: true, field: 'peach' },
+    home: {
+      photo: { src: platesWithCockerel, alt: 'Dva talíře s modře malovaným kohoutem na tmavě modrém pozadí' },
+      inset: true,
+      field: 'peach',
+    },
   },
   martin: {
     home: {

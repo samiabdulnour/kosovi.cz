@@ -1,8 +1,8 @@
 ---
 // Header after eshop.pdf: brand on the left, the studio's name on the label
-// line, the menu with the cart on the right. In the e-shop it turns light blue,
-// without a rule under it. The studio's name opens the homepage's blocks of
-// Daniela and Martin (Sami, November 2026).
+// line, the menu with the cart on the right. White on every page, the e-shop
+// included, without a rule under it (Sami, November 2026). The studio's name
+// opens the homepage's blocks of Daniela and Martin (Sami, November 2026).
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import { collectionPath, pathOf } from '../i18n/routes';
@@ -22,9 +22,6 @@ const current = Astro.url.pathname;
 const inShop = [pathOf('collections', lang), '/produkt/', pathOf('cart', 'cs')].some((p) =>
   current.startsWith(withBase(p)),
 );
-// The blue-and-white line's listings open with their own ochre band, under a
-// white header (Sami, November 2026); the rest of the e-shop keeps it light blue.
-const onBand = current.startsWith(withBase(collectionPath(blueWhite.slug[lang], lang)));
 const cartPath = pathOf('cart', 'cs');
 
 const items = [
@@ -36,7 +33,7 @@ const items = [
 ].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class:list={['site-header', { shop: inShop && !onBand }]}>
+<header class="site-header">
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
     <a class="name" href={`${withBase(pathOf('home', lang))}#daniela-a-martin`}>{cz(studio.name)}</a>
@@ -83,10 +80,6 @@ const items = [
 </script>
 
 <style>
-  .site-header.shop {
-    background: var(--color-shop-header);
-  }
-
   .bar {
     display: grid;
     grid-template-columns: 1fr auto;
