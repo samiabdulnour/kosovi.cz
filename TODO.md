@@ -7,8 +7,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Modrobílý porcelán, podpis autorů: stránka produktu autory neuvádí (Sami, listopad 2026). Výchozí autoři řad zůstávají v datech (`src/config/lines.ts`).
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
-- [x] Písmo: Inter ExtraBold, verzálky s mírným prostrkáním (zatím jen tento řez).
-- [ ] Písmo Clarendon Text Pro (text malými písmeny v e-shopu): Sami pošle soubor TTF (převedu na WOFF2). Do té doby ho zastupuje volné písmo Besley (`--font-serif` v `src/styles/tokens.css`).
+- [x] Písmo verzálek: Moment Bold s mírným prostrkáním (dříve Inter ExtraBold).
+- [x] Písma: Moment (verzálky) a Claristik clarendon (text malými písmeny), Samiho vlastní, jako WOFF2 v `src/assets/fonts/` (listopad 2026).
 - [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
 - [ ] Ilustrace v e-shopu (bábovka) je jen na prvním výpisu modrobílého porcelánu a v sekci Ostatní, jinde je velký devátý kus výpisu (Sami, listopad 2026). Vede na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
@@ -38,7 +38,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?
 - [ ] Hosting: Cloudflare Pages (podle CLAUDE.md), nebo Cloudflare Workers se statickými soubory, které Cloudflare teď doporučuje pro nové projekty?
-- [x] Písmo, barvy a typografická škála: podle návrhu (docs/design), písmo Inter ExtraBold.
+- [x] Písmo, barvy a typografická škála: podle návrhu (docs/design), písmo Moment (dříve Inter ExtraBold).
 
 ## Chybějící fakta
 

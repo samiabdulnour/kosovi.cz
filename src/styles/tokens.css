@@ -1,6 +1,7 @@
 /*
  * Visual tokens from the design kosovi_navrh_01.pdf.
- * Typeface: Inter ExtraBold, capitals with a little tracking (Sami, October 2026).
+ * Typefaces: Sami's own Moment (Bold, capitals with a little tracking) and
+ * Claristik clarendon for the small letters (November 2026, src/styles/fonts.css).
  * Change values here, keep the names.
  */
 :root {
@@ -38,15 +39,17 @@
   --color-note-line: #8193b8;
   --color-focus: #1d4ed8;
 
-  /* type: Inter ExtraBold in one size, capitals, as in the design */
-  --font-body: "Inter", "Helvetica Neue", Arial, system-ui, sans-serif;
+  /* type: Moment Bold in one size, capitals, as in the design */
+  --font-body: "Moment", "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-display: var(--font-body);
-  /* Text in small letters in the e-shop (kosovi_eshop_2.pdf): Clarendon Text Pro
-     Regular. TODO(rozhodnutí): files with a web licence; Besley stands in. */
-  --font-serif: "Besley", Georgia, "Times New Roman", serif;
+  /* Text in small letters in the e-shop (kosovi_eshop_2.pdf): Claristik
+     clarendon, Sami's Clarendon (November 2026). */
+  --font-serif: "Claristik", Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  --weight: 800;
-  --weight-medium: 500;
+  /* Moment's weight axis runs 100 (Regular) to 200 (Bold); the captions'
+     medium stands to the bold as Inter Medium did to Inter ExtraBold */
+  --weight: 200;
+  --weight-medium: 125;
   --tracking: 0.04em;
 
   /* 12.5 px on a 1512 px wide screen, as in eshop.pdf */

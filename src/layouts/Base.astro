@@ -1,10 +1,7 @@
 ---
-// Inter, self-hosted (no request to Google). 800.css keeps the unicode ranges,
-// so a Czech page downloads only the latin and latin-ext files.
-import '@fontsource/inter/800.css';
-import '@fontsource/inter/500.css';
-import interLatin from '@fontsource/inter/files/inter-latin-800-normal.woff2?url';
-import interLatinExt from '@fontsource/inter/files/inter-latin-ext-800-normal.woff2?url';
+// Sami's typefaces, Moment and Claristik, self-hosted (src/styles/fonts.css).
+import momentFont from '../assets/fonts/moment-vf.woff2?url';
+import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
 import Footer from '../components/Footer.astro';
@@ -45,8 +42,7 @@ const hreflangs = Object.entries(alternates) as [Lang, string][];
     <link rel="canonical" href={canonical} />
     {hreflangs.map(([hreflang, path]) => <link rel="alternate" hreflang={hreflang} href={new URL(withBase(path), Astro.site)} />)}
     {previewLabel && <meta name="robots" content="noindex, nofollow" />}
-    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={interLatinExt} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={momentFont} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
     <meta name="generator" content={Astro.generator} />
   </head>
