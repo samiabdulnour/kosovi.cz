@@ -1,6 +1,7 @@
 ---
-// E-shop listing. The blue-and-white line follows kosovi_eshop_2.pdf: tabs
-// with a size chart under the header, then the products. The other lines
+// E-shop listing. The blue-and-white line opens with an ochre band across the
+// whole width (Sami's screen, November 2026): its name, the tabs and the size
+// chart (ShopMenu), then the products. The other lines
 // follow eshop.pdf: the line's name on the label line and the category menu
 // in columns. Then the products five a row with a large tile (an illustration
 // on the line's own listing and in Ostatní, elsewhere one of the listing's
@@ -69,14 +70,10 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
 ---
 
 <Base title={title} description={description} alternates={alternates} label={chart ? undefined : lineName}>
+  {chart && <ShopMenu line={line} lang={lang} entry={entry} />}
   <div class="wrap">
     {
-      chart ? (
-        <>
-          <h1 class="visually-hidden">{entry ? `${entry.name}, ${lineName}` : lineName}</h1>
-          <ShopMenu line={line} lang={lang} entry={entry} />
-        </>
-      ) : (
+      chart ? null : (
         <nav class="menu" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
           {
             line.menu.map((group) => (
@@ -146,7 +143,7 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
   }
 
   .after-chart {
-    height: clamp(2.5rem, 4vw, 3.8rem);
+    height: clamp(2rem, 3.2vw, 3rem);
   }
 
   /* Columns on the design's lines: 0, 30 %, 60 % and the last one at the right. */

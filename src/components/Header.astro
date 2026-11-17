@@ -22,6 +22,9 @@ const current = Astro.url.pathname;
 const inShop = [pathOf('collections', lang), '/produkt/', pathOf('cart', 'cs')].some((p) =>
   current.startsWith(withBase(p)),
 );
+// The blue-and-white line's listings open with their own ochre band, under a
+// white header (Sami, November 2026); the rest of the e-shop keeps it light blue.
+const onBand = current.startsWith(withBase(collectionPath(blueWhite.slug[lang], lang)));
 const cartPath = pathOf('cart', 'cs');
 
 const items = [
@@ -33,7 +36,7 @@ const items = [
 ].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class:list={['site-header', { shop: inShop }]}>
+<header class:list={['site-header', { shop: inShop && !onBand }]}>
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
     <a class="name" href={`${withBase(pathOf('home', lang))}#daniela-a-martin`}>{cz(studio.name)}</a>

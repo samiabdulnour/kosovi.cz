@@ -32,7 +32,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Kterých 12–20 kusů jsou vybrané kusy (`featured: true`)?
 - [ ] Budou Daniela a Martin přidávat produkty sami? Pokud ano, po spuštění git CMS (Decap nebo Pages CMS).
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
-- [ ] Adresa (Na Vlčovce 6) je dál v patičce na každé stránce. Odstranit i tam?
+- [x] Adresa v patičce zůstává (Sami, listopad 2026).
 - [ ] Kurzy: formát, délka, cena, dárkový poukaz.
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?

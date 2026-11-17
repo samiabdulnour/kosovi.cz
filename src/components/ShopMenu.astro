@@ -1,9 +1,12 @@
 ---
-// E-shop menu after kosovi_eshop_2.pdf: the categories as tabs, and under the
-// open tab its kinds as line drawings to scale, standing on one floor next to
-// a ruler, each with its name and size. The size is the menu's own where it
-// has one, else the height in the product data (the diameter where there is
-// no height), rounded to whole centimetres.
+// E-shop menu of the blue-and-white line, on an ochre band across the whole
+// width (Sami's screen, November 2026, after kosovi_eshop_2.pdf): the line's
+// name, its tabs as a list on the label line and the note on sizes at the
+// right; under them the open tab's kinds as white line drawings to scale on a
+// floor line, with a ruler every 10 cm and the name and size under each. The
+// chosen kind is filled dark blue. The size is the menu's own where it has
+// one, else the height in the product data (the diameter where there is no
+// height), rounded to whole centimetres.
 // A tab without drawings lists its kinds as text.
 import '@fontsource/besley/400.css';
 import type { Line, MenuGroup, MenuItem } from '../config/lines';
@@ -12,7 +15,6 @@ import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
 import { kindSize } from '../lib/sizes';
 import { silhouette } from '../lib/silhouettes';
-import ShopTabs from './ShopTabs.astro';
 import { cz } from '../lib/typography';
 
 interface Props {
@@ -46,96 +48,171 @@ const total = GUTTER + drawn.reduce((sum, d) => sum + d.column, 0);
 const tallest = Math.max(0, ...drawn.map((d) => d.shape.h));
 const top = Math.max(20, Math.ceil((tallest + 2) / 10) * 10);
 const marks = Array.from({ length: top / 10 + 1 }, (_, i) => i * 10);
-const note = 'Míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
+const note = 'Všechny míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
+const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang, g.slug));
 ---
 
-<div class="shop-menu">
-  <ShopTabs line={line} lang={lang} group={group} isPage={group?.slug === entry?.slug} />
+<div class="shop-band">
+  <div class="wrap band">
+    <div class="head">
+      <h1 class="line-name">
+        {line.name[lang]}
+        {entry && <span class="visually-hidden">, {entry.name}</span>}
+      </h1>
+      <nav class="tabs" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
+        <ul role="list">
+          {
+            line.menu.map((g) => (
+              <li>
+                <a href={tabHref(g)} aria-current={g === group ? (g.slug === entry?.slug ? 'page' : 'true') : undefined}>
+                  {g.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      {group && drawn.length > 0 && <p class="note">{cz(note)}</p>}
+    </div>
 
-  {
-    group && drawn.length > 0 && (
-      <div class="chart" style={`--total: ${total.toFixed(2)}; --top: ${top}; --gutter: ${GUTTER}`}>
-        <p class="note">{cz(note)}</p>
-        <div
-          class="scroll"
-          role="region"
-          tabindex="0"
-          aria-label={lang === 'cs' ? `Velikosti: ${group.name}` : `Sizes: ${group.name}`}
-        >
-          <div class="body">
-            <span class="floor" aria-hidden="true" />
-            {marks.map((cm) => (
-              <span class:list={['line', { dotted: cm > 0 && cm < top }]} style={`--at: ${cm}`} aria-hidden="true" />
-            ))}
-            {marks
-              .filter((cm) => cm > 0)
-              .map((cm) => (
-                <span class="mark" style={`--at: ${cm}`} aria-hidden="true">
-                  {cz(`${cm} cm`)}
-                </span>
+    {
+      group && drawn.length > 0 && (
+        <div class="chart" style={`--total: ${total.toFixed(2)}; --top: ${top}; --gutter: ${GUTTER}`}>
+          <div
+            class="scroll"
+            role="region"
+            tabindex="0"
+            aria-label={lang === 'cs' ? `Velikosti: ${group.name}` : `Sizes: ${group.name}`}
+          >
+            <div class="body">
+              {marks.map((cm) => (
+                <span class:list={['line', { dashed: cm > 0 && cm < top }]} style={`--at: ${cm}`} aria-hidden="true" />
               ))}
-            <ul class="items" role="list">
-              {drawn.map(({ item, shape, size, column }) => (
-                <li style={`--col: ${column.toFixed(2)}`}>
-                  <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
-                    <span
-                      class="drawing"
-                      style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.w / 2 - shape.axis).toFixed(3)}`}
-                      set:html={shape.svg}
-                    />
-                    <span class="label">
-                      <span class="name">{item.name}</span>
-                      {size && <span class="size">{cz(size)}</span>}
-                    </span>
-                  </a>
-                </li>
-              ))}
-            </ul>
+              {marks
+                .filter((cm) => cm > 0)
+                .map((cm) => (
+                  <span class="mark" style={`--at: ${cm}`} aria-hidden="true">
+                    {cz(`${cm} cm`)}
+                  </span>
+                ))}
+              <ul class="items" role="list">
+                {drawn.map(({ item, shape, size, column }) => (
+                  <li style={`--col: ${column.toFixed(2)}`}>
+                    <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
+                      <span
+                        class="drawing"
+                        style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.w / 2 - shape.axis).toFixed(3)}`}
+                        set:html={shape.svg}
+                      />
+                      <span class="label">
+                        <span class="name">{item.name}</span>
+                        {size && <span class="size">{cz(size)}</span>}
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-      </div>
-    )
-  }
+      )
+    }
 
-  {
-    group && drawn.length === 0 && group.items.length > 0 && (
-      <ul class="list" role="list">
-        {group.items.map((item) => (
-          <li>
-            <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
-              {item.name}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )
-  }
+    {
+      group && drawn.length === 0 && group.items.length > 0 && (
+        <ul class="list" role="list">
+          {group.items.map((item) => (
+            <li>
+              <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
 </div>
 
 <style>
-  /* The tabs a little further from the header (Sami, November 2026); the
-     product page keeps the same distance. */
-  .shop-menu {
-    padding-block: clamp(2rem, 3.6vw, 3.4rem) 0;
+  /* Across the whole width, in the ochre of the photos' backdrops. */
+  .shop-band {
+    --band: #cba647;
+    background: var(--band);
+    color: #fff;
   }
 
+  .band {
+    padding-block: clamp(1.5rem, 2.4vw, 2.25rem) clamp(3rem, 8vw, 7.5rem);
+  }
+
+  .shop-band a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .shop-band a:hover {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+  }
+
+  /* The line's name at the left, the tabs on the label line, the note at the
+     right; stacked on phones. */
+  .head {
+    display: grid;
+    gap: var(--space-4) 0;
+    align-items: start;
+  }
+
+  .line-name {
+    font-size: inherit;
+  }
+
+  .tabs ul,
   .list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-3) clamp(1.5rem, 7.3vw, 7rem);
+    display: grid;
+    row-gap: 0.4rem;
+    margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  [aria-current] {
+  /* The open tab is not marked (Sami's screen: the drawings show it); the
+     chosen kind in a tab without drawings is underlined. */
+  .list [aria-current='page'] {
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.6em;
+    text-underline-offset: 0.3em;
+  }
+
+  .note {
+    font-family: var(--font-serif);
+    font-size: 0.625rem;
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  @media (min-width: 48rem) {
+    .head {
+      grid-template-columns: var(--label-start) auto 1fr;
+    }
+
+    .note {
+      justify-self: end;
+      max-width: 34rem;
+      text-align: right;
+    }
+
+    /* a tab without drawings lists its kinds under the tabs, on the label line */
+    .list {
+      margin-inline-start: var(--label-start);
+    }
   }
 
   .list {
-    gap: var(--space-2) clamp(1rem, 3vw, 2.5rem);
-    margin-block-start: clamp(1.25rem, 2.2vw, 2.1rem);
+    margin-block-start: clamp(2rem, 4vw, 3.5rem);
   }
 
   /* --- size chart ------------------------------------------------------- */
@@ -145,8 +222,7 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
        not (the ruler then still reads true), never too small to read. */
     container-type: inline-size;
     --label-h: 2.6rem;
-    margin-block-start: clamp(1.25rem, 2.2vw, 2.1rem);
-    color: #333;
+    margin-block-start: clamp(2.5rem, 6vw, 5.75rem);
   }
 
   .scroll {
@@ -161,64 +237,30 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     height: calc(var(--top) * var(--cm) + var(--label-h));
   }
 
-  /* 1px under the mark, so the top line stays inside the scroll box */
+  /* White lines: the floor and the top solid, the 10 cm steps dashed; 1px under
+     the mark, so the top line stays inside the scroll box. */
   .line {
     position: absolute;
     left: 0;
     right: 0;
     bottom: calc(var(--label-h) + var(--at) * var(--cm) - 1px);
-    border-top: 1px solid #9b9b9b;
+    height: 1px;
+    background: #fff;
   }
 
-  .line.dotted {
-    border-top-style: dotted;
+  .line.dashed {
+    background: repeating-linear-gradient(to right, #fff 0 4px, transparent 4px 8px);
   }
 
+  /* the ruler's figures, each in the middle of its 10 cm */
   .mark {
     position: absolute;
-    top: calc(100% - var(--label-h) - var(--at) * var(--cm) + 0.6rem);
-    left: 0.45rem;
+    top: calc(100% - var(--label-h) - (var(--at) - 5) * var(--cm));
+    left: 0.6rem;
     writing-mode: vertical-rl;
-    transform: rotate(180deg);
+    transform: translateY(-50%) rotate(180deg);
     font-size: 0.5625rem;
     white-space: nowrap;
-  }
-
-  .floor {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: var(--label-h);
-    height: calc(1.66 * var(--cm));
-    background: #dcd5cf;
-  }
-
-  /* Under the top line at the right; above the drawings on phones, where the
-     chart scrolls sideways. */
-  .note {
-    margin-block-end: var(--space-3);
-    font-family: var(--font-serif);
-    font-size: 0.625rem;
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-  }
-
-  @media (min-width: 48rem) {
-    .chart {
-      position: relative;
-    }
-
-    .note {
-      position: absolute;
-      z-index: 1;
-      top: 0.45rem;
-      right: 0;
-      width: max-content;
-      max-width: 60%;
-      margin: 0;
-      text-align: right;
-    }
   }
 
   .items {
@@ -242,29 +284,33 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     grid-template-rows: 1fr var(--label-h);
     justify-items: center;
     align-items: end;
+  }
+
+  .items a:hover {
     text-decoration: none;
   }
 
-  /* The body's axis on the column's centre, over the label. */
+  /* The body's axis on the column's centre, over the label. White outlines on
+     the band's colour, so the lines behind a piece do not show through it. */
   .drawing {
     display: block;
     width: calc(var(--w) * var(--cm));
     height: calc(var(--h) * var(--cm));
-    color: var(--color-ink);
+    color: #fff;
     transform: translateX(calc(var(--shift) * var(--cm)));
   }
 
-  /* The chosen kind is filled blue instead of underlined; pointing at a kind
-     shows the same. */
+  .drawing :global(.f),
+  .drawing :global(.i) {
+    fill: var(--band);
+  }
+
+  /* The chosen kind is filled dark blue; pointing at a kind shows the same.
+     Its inside (the opening of a cup, the espresso saucer) keeps the band's
+     colour (Sami, November 2026). */
   .items a[aria-current='page'] .drawing :global(.f),
   .items a:hover .drawing :global(.f) {
     fill: var(--color-select);
-  }
-
-  /* its inside (the opening of a cup, the espresso saucer) stays white */
-  .items a[aria-current='page'] .drawing :global(.i),
-  .items a:hover .drawing :global(.i) {
-    fill: var(--color-select-inside);
   }
 
   .drawing :global(svg) {
@@ -278,10 +324,9 @@ const note = 'Míry jsou pouze orientační, každý kus je originální, a prot
     align-self: start;
     display: grid;
     row-gap: 0.2em;
-    padding-block-start: 0.55rem;
+    padding-block-start: 0.85rem;
     font-size: 0.5625rem;
     line-height: 1.3;
     text-align: center;
   }
-
 </style>
