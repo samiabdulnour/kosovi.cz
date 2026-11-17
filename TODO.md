@@ -7,7 +7,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Modrobílý porcelán, podpis autorů: stránka produktu autory neuvádí (Sami, listopad 2026). Výchozí autoři řad zůstávají v datech (`src/config/lines.ts`).
 - [x] Claim na úvod webu vybrán a je na úvodní stránce. Anglický překlad je pracovní (fáze 6).
 - [x] Design: `docs/design/kosovi_navrh_01.pdf`, aplikovaný do náhledu.
-- [x] Písmo verzálek: Moment Bold s mírným prostrkáním (dříve Inter ExtraBold).
+- [x] Písmo verzálek: Moment v tloušťce 125 (jako popisky v e-shopu), prostrkání 0,085 em (Sami, listopad 2026; dříve Inter ExtraBold).
 - [x] Písma: Moment (verzálky) a Claristik clarendon (text malými písmeny), Samiho vlastní, jako WOFF2 v `src/assets/fonts/` (listopad 2026).
 - [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
 - [ ] Ilustrace v e-shopu (bábovka) je jen na prvním výpisu modrobílého porcelánu a v sekci Ostatní, jinde je velký devátý kus výpisu (Sami, listopad 2026). Vede na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?

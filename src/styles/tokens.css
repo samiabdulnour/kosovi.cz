@@ -1,6 +1,6 @@
 /*
  * Visual tokens from the design kosovi_navrh_01.pdf.
- * Typefaces: Sami's own Moment (Bold, capitals with a little tracking) and
+ * Typefaces: Sami's own Moment (weight 125, capitals, tracked 0.085em) and
  * Claristik clarendon for the small letters (November 2026, src/styles/fonts.css).
  * Change values here, keep the names.
  */
@@ -46,11 +46,12 @@
      clarendon, Sami's Clarendon (November 2026). */
   --font-serif: "Claristik", Georgia, "Times New Roman", serif;
   --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  /* Moment's weight axis runs 100 (Regular) to 200 (Bold); the captions'
-     medium stands to the bold as Inter Medium did to Inter ExtraBold */
-  --weight: 200;
+  /* Moment's weight axis runs 100 (Regular) to 200 (Bold). All text in
+     capitals uses the e-shop captions' weight, 125 (Sami, November 2026). */
+  --weight: 125;
   --weight-medium: 125;
-  --tracking: 0.04em;
+  /* measured from Sami's sample "Daniela a Martin Kosovi" (November 2026) */
+  --tracking: 0.085em;
 
   /* 12.5 px on a 1512 px wide screen, as in eshop.pdf */
   --step--1: 0.6875rem;
