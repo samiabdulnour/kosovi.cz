@@ -1,5 +1,7 @@
 // Homepage picks (design kosovi_navrh_01.pdf). Swap slugs freely, the pages
 // read them at build time. The photo strip has its own file, src/config/band.ts.
+import type { ImageMetadata } from 'astro';
+import bowlWithApple from '../assets/band/07.jpg';
 
 /** Colour fields from tokens.css, used behind the photographs. */
 export type Field =
@@ -16,10 +18,14 @@ export type Field =
   | 'sand'
   | 'honey';
 
-/** A photograph on a colour field: a product's first photo or a portrait. */
+/** A photograph on a colour field: its own, a product's first photo or a portrait. */
 export interface Block {
   product?: string;
   portrait?: 'martin' | 'daniela';
+  /** A photograph of its own. */
+  photo?: { src: ImageMetadata; alt: string };
+  /** The photo smaller, in the middle of the field, which shows around it. */
+  inset?: boolean;
   field: Field;
 }
 
@@ -37,11 +43,18 @@ export const blueWhiteSelection = [
 
 // The two makers' blocks on the homepage. A block without a photo shows just
 // its colour field. Their own pages are laid out in src/config/artists.ts.
+// On the homepage each shows a piece of their work in the middle of its field
+// (Sami, November 2026). TODO(fakta): Daniela's photo, the stacked plates with
+// a cockerel on dark blue; Sami to send the file. Until then her portrait.
 export const artistBlocks: Record<'martin' | 'daniela', { home: Block }> = {
   daniela: {
-    home: { portrait: 'daniela', field: 'peach' },
+    home: { portrait: 'daniela', inset: true, field: 'peach' },
   },
   martin: {
-    home: { portrait: 'martin', field: 'olive' },
+    home: {
+      photo: { src: bowlWithApple, alt: 'Bílá mísa s prořezávaným okrajem a jablkem na fialovém pozadí' },
+      inset: true,
+      field: 'olive',
+    },
   },
 };

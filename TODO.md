@@ -33,6 +33,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Budou Daniela a Martin přidávat produkty sami? Pokud ano, po spuštění git CMS (Decap nebo Pages CMS).
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
 - [x] Adresa v patičce zůstává (Sami, listopad 2026).
+- [ ] Úvodní stránka, blok Daniely: Sami pošle fotku talířů s kohoutem na tmavě modrém pozadí jako soubor (snímek obrazovky měl uprostřed kurzor). Do té doby je tam Danielin portrét.
 - [ ] Kurzy: formát, délka, cena, dárkový poukaz.
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?

@@ -10,6 +10,7 @@ export interface Photo {
 
 /** The photograph a block points at, or undefined when it has none. */
 export async function photoOf(block: Block): Promise<Photo | undefined> {
+  if (block.photo) return block.photo;
   if (block.portrait) return makers[block.portrait].portrait;
   if (!block.product) return undefined;
   const [product] = await getProductsBySlug([block.product]);

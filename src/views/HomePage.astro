@@ -48,6 +48,7 @@ const people = await Promise.all(
     name: makers[key].name,
     href: pathOf(key, lang),
     field: artistBlocks[key].home.field,
+    inset: artistBlocks[key].home.inset,
     photo: await photoOf(artistBlocks[key].home),
   })),
 );
@@ -71,7 +72,7 @@ const people = await Promise.all(
     <section class="people" id="daniela-a-martin" aria-label={studio.name}>
       {
         people.map((person) => (
-          <FieldBlock href={withBase(person.href)} caption={person.name} field={person.field} photo={person.photo} />
+          <FieldBlock href={withBase(person.href)} caption={person.name} field={person.field} photo={person.photo} inset={person.inset} />
         ))
       }
     </section>
