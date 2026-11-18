@@ -14,7 +14,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
 - [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
 - [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
-- [ ] Menu se siluetami pro Talíře, misky a mísy (Sami je ještě upravuje).
+- [x] Talíře a Misky a mísy jsou dvě záložky (Sami, listopad 2026).
+- [ ] Menu se siluetami pro Talíře a pro Misky a mísy (Sami je ještě upravuje).
 - [ ] Stránka produktu: krátké texty u jiných druhů než hrnků jsou návrh podle hrnku a ověřených faktů (`src/config/descriptions.ts`), potřebují Samiho schválení. Chybí péče o konvice s ratanovým uchem a jestli formy na bábovku smějí do trouby.
 - [x] Stránka produktu: podpis autorů odstraněn (Sami, listopad 2026).
 - [x] Stránka produktu podle `kosovi_detail_produktu.pdf` (Sami, listopad 2026): větší fotka, tlačítka okrovou, druhy záložky na skrytém okrovém panelu, který vyjede po najetí kurzorem, související kusy na zeleném pásu. Kresba velikosti zmizela.

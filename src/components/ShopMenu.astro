@@ -53,14 +53,11 @@ const top = Math.max(20, Math.ceil((tallest + 2) / 10) * 10);
 const marks = Array.from({ length: top / 10 + 1 }, (_, i) => i * 10);
 const note = 'Všechny míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
 const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang, g.slug));
-// The long tab names on two lines, as on Sami's screen: "Talíře / misky a mísy"
-// (the comma left to screen readers), "Cukřenky / a mlíčenky".
+// A long tab name on two lines, as on Sami's screen: "Cukřenky / a mlíčenky"
+// ("Misky a mísy" is short enough for one).
 const tabLines = (name: string) => {
-  const comma = name.indexOf(', ');
-  if (comma > 0) return [name.slice(0, comma), name.slice(comma + 2)];
   const and = name.indexOf(' a ');
-  if (and > 0) return [name.slice(0, and), name.slice(and + 1)];
-  return [name];
+  return name.length > 14 && and > 0 ? [name.slice(0, and), name.slice(and + 1)] : [name];
 };
 ---
 
@@ -83,12 +80,7 @@ const tabLines = (name: string) => {
                 <a href={tabHref(g)} aria-current={g === group ? (g.slug === entry?.slug ? 'page' : 'true') : undefined}>
                   {tabLines(g.name).map((l, i) => (
                     <>
-                      {i > 0 && (
-                        <>
-                          {g.name.includes(', ') && <span class="visually-hidden">,</span>}
-                          <br />
-                        </>
-                      )}
+                      {i > 0 && <br />}
                       {cz(l)}
                     </>
                   ))}

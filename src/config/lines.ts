@@ -76,17 +76,25 @@ export const lines: Line[] = [
           { slug: 'hrnek-espresso', name: 'Hrnek espresso', size: '6 cm', silhouette: 'hrnek-espresso', match: [{ category: 'hrnky', subcategory: 'hrhen-na-presso-s-podsalkem' }] },
         ],
       },
+      // Plates, and bowls with dishes, are two tabs (Sami, November 2026).
+      // TODO(rozhodnutí): Sami is reworking both; they keep the text menu.
       {
-        // TODO(rozhodnutí): Sami is reworking this tab; it keeps the old text menu.
-        slug: 'talire-misky-misy',
-        name: 'Talíře, misky a mísy',
-        match: all('talire', 'misky', 'misy'),
+        slug: 'talire',
+        name: 'Talíře',
+        match: all('talire'),
         items: [
           { slug: 'talir-jidelni', name: 'Talíř jídelní', match: [] },
           { slug: 'talir-maly', name: 'Talíř malý', match: [] },
           { slug: 'talir-polevkovy', name: 'Talíř polévkový', match: [] },
           { slug: 'talir-zavesny', name: 'Talíř závěsný', match: [{ category: 'talire', subcategory: 'talire-zavesne-talire' }] },
           { slug: 'talir-praktik', name: 'Talíř Praktik', match: [{ category: 'talire', subcategory: 'talir-praktik' }] },
+        ],
+      },
+      {
+        slug: 'misky-a-misy',
+        name: 'Misky a mísy',
+        match: all('misky', 'misy'),
+        items: [
           { slug: 'miska-mala', name: 'Miska malá', match: [{ category: 'misky', subcategory: 'mala' }] },
           // TODO(fakta): the old shop has "Polévka/Snídaně" bowls. Are these the large ones?
           { slug: 'miska-velka', name: 'Miska velká', match: [{ category: 'misky', subcategory: 'polevkova-snidanova' }] },

@@ -17,7 +17,8 @@ export const kindTexts: Partial<Record<LineKey, Record<string, string>>> = {
     'miska-mala': 'Porcelánová miska ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
     'miska-velka': 'Porcelánová miska ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
     'misa-salatova': 'Porcelánová salátová mísa ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
-    'talire-misky-misy': 'Porcelán ručně točený i malovaný. Můžete ho vkládat do myčky i mikrovlnné trouby.',
+    talire: 'Porcelán ručně točený i malovaný. Můžete ho vkládat do myčky i mikrovlnné trouby.',
+    'misky-a-misy': 'Porcelán ručně točený i malovaný. Můžete ho vkládat do myčky i mikrovlnné trouby.',
     // TODO(fakta): can the teapots with their rattan handle go in the dishwasher or microwave?
     konvice: 'Porcelánová konvice ručně točená i malovaná, s ratanovým uchem.',
     'cukrenka-velka': 'Porcelánová cukřenka s víčkem, ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
