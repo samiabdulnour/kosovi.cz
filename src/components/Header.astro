@@ -1,20 +1,26 @@
 ---
-// Header after eshop.pdf: brand on the left, the studio's name on the label
-// line, the menu with the cart on the right. White on every page, the e-shop
-// included, without a rule under it (Sami, November 2026). The studio's name
-// opens the homepage's blocks of Daniela and Martin (Sami, November 2026).
+// Header after kosovi_homepage.pdf (Sami, November 2026): the brand on the
+// left, the studio's name a little larger at 600 points of 1512, the menu on
+// the right ending with the language switch ("EN", on English pages "CZ").
+// The cart joins the menu only while something is in it. White on every page,
+// without a rule under it. The studio's name opens the homepage's row of
+// Daniela and Martin.
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
-import { collectionPath, pathOf } from '../i18n/routes';
+import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { cz } from '../lib/typography';
 
 interface Props {
   lang: Lang;
+  /** Paths of this page in each language, for the language switch. */
+  alternates?: Alternates;
 }
 
-const { lang } = Astro.props;
+const { lang, alternates = {} } = Astro.props;
+const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
+const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 const t = useTranslations(lang);
 const blueWhite = getLine('spolecna');
 
@@ -48,10 +54,15 @@ const items = [
             </li>
           ))
         }
-        <li>
+        <li data-cart-item hidden>
           <a href={withBase(cartPath)} aria-current={current === withBase(cartPath) ? 'page' : undefined}>
             {t('nav.cart')}
             <span class="badge" data-cart-count hidden></span>
+          </a>
+        </li>
+        <li>
+          <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang} aria-label={t('lang.switch')}>
+            {otherLang === 'en' ? 'EN' : 'CZ'}
           </a>
         </li>
       </ul>
@@ -74,6 +85,10 @@ const items = [
       badge.textContent = String(count);
       badge.hidden = count === 0;
     }
+    // the cart shows in the menu only while something is in it
+    for (const item of document.querySelectorAll<HTMLElement>('[data-cart-item]')) {
+      item.hidden = count === 0;
+    }
   }
   showCount();
   document.addEventListener('kosovi-cart', showCount);
@@ -95,8 +110,10 @@ const items = [
     grid-area: brand;
   }
 
+  /* 16 px at 1512 as in the PDF, a little larger than the rest */
   .name {
     grid-area: name;
+    font-size: calc(var(--step-0) * 16 / 14.4);
   }
 
   nav {
@@ -107,7 +124,8 @@ const items = [
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    gap: var(--space-2) clamp(1rem, 4.3vw, 4.5rem);
+    /* about 59 points between the items at 1512, as in the PDF */
+    gap: var(--space-2) clamp(1rem, 3.9vw, 3.7rem);
     padding: 0;
     list-style: none;
   }
@@ -150,7 +168,8 @@ const items = [
     }
   }
 
-  .badge[hidden] {
+  .badge[hidden],
+  li[hidden] {
     display: none;
   }
 
@@ -159,6 +178,15 @@ const items = [
       grid-template-columns: var(--label-start) 1fr auto;
       grid-template-areas: 'brand name nav';
       column-gap: 0;
+    }
+  }
+
+  /* where the row has room, the name sits where the PDF puts it: 600 of 1512
+     points, 38.4 % of the page's width inside its margins; on narrower
+     screens it stays on the label line */
+  @media (min-width: 82rem) {
+    .bar {
+      grid-template-columns: 38.4% 1fr auto;
     }
   }
 </style>

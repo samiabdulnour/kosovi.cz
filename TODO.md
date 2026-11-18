@@ -34,7 +34,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
 - [x] Adresa v patičce zůstává (Sami, listopad 2026).
 - [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
-- [ ] Úvodní stránka podle `kosovi_homepage.pdf`: hlavička v PDF má místo „Košík“ položku „EN“ a „Daniela a Martin Kosovi“ větší; patička má tři sloupce bez právních odkazů. Na webu zatím zůstává dosavadní hlavička i patička. Změnit?
+- [x] Hlavička podle `kosovi_homepage.pdf` (Sami, listopad 2026): „EN“ místo „Košík“, „Daniela a Martin Kosovi“ větší a na pozici z PDF. Košík se v menu objeví, jen když v něm něco je.
+- [ ] Patička v `kosovi_homepage.pdf` má tři sloupce bez právních odkazů (obchodní podmínky atd.). Na webu zatím zůstává dosavadní patička se čtyřmi sloupci. Změnit?
 - [ ] Úvodní stránka: fotka se snídaní nemá v PDF jméno autora, takže nikam nevede. Má vést někam?
 - [x] Úvodní stránka, blok Daniely: talíře s kohoutem (vyříznuté ze Samiho snímku obrazovky, kurzor uprostřed odretušovaný). Původní soubor fotky by byl lepší, má-li ho Sami.
 - [ ] Kurzy: formát, délka, cena, dárkový poukaz.
