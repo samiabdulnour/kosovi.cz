@@ -10,7 +10,8 @@
   --color-ink: #111111;
   --color-muted: #555555;
   --color-line: #8a8a8a;
-  --color-shop-header: #d4effa;
+  /* the ochre of the e-shop's band and the product page (the photos' backdrop) */
+  --color-ochre: #cba647;
   --color-caption: #4c4c4c;
   --color-tile: #d8d3cf;
   /* the chosen kind in the e-shop's size chart, and its inside (Sami, November 2026) */

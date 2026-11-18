@@ -1,11 +1,13 @@
 ---
-// Product page after kosovi_eshop_produkt.pdf (Sami, November 2026): the
-// e-shop's tabs, then three columns: the kinds of the open tab, the photo, and
-// the name with the price, a short text, the quantity and the button for the
-// cart, the kind's drawing to scale on its floor, its sizes and the catalogue
-// number. Under them related pieces: the same kind with a similar decor, the
-// same decor on other kinds, and in Ostatní the tab's other pieces. No maker
-// credit on this page (Sami, November 2026).
+// Product page after kosovi_detail_produktu.pdf (Sami, November 2026): the
+// e-shop's tabs, then the photo and beside it the name, the price, the
+// quantity and the button for the cart, and at the photo's foot a short text,
+// the sizes with the catalogue number, the material, a rule and the note on
+// sizes. The kinds of the open tab sit on an ochre panel at the left that
+// stays hidden and slides out when the pointer comes over its place (Sami,
+// November 2026). Under them, on a green band across the whole width, related
+// pieces: the same kind with a similar decor, the same decor on other kinds,
+// and in Ostatní the tab's other pieces. No maker credit on this page.
 import { getImage, Image } from 'astro:assets';
 import ProductCard from '../components/ProductCard.astro';
 import ShopTabs from '../components/ShopTabs.astro';
@@ -18,7 +20,6 @@ import { withBase } from '../i18n/utils';
 import { photoFit } from '../lib/edges';
 import { getSameDecor, getSameSet, getSameTab, type Product } from '../lib/products';
 import { productLabel } from '../lib/names';
-import { silhouette } from '../lib/silhouettes';
 import { cz, formatCzk, formatNumber } from '../lib/typography';
 
 // Product pages are Czech only for now (English comes later, see CLAUDE.md).
@@ -37,9 +38,9 @@ const kindsHref = (slug: string) => withBase(collectionPath(line.slug.cs, 'cs', 
 const zoomed = await Promise.all(
   product.images.map((img) => getImage({ src: img.src, width: Math.min(2400, img.src.width) })),
 );
-// Photos that do not fit the PDF's box (531 × 501) get its empty sides painted
+// Photos that do not fit the PDF's box (666 × 501) get its empty sides painted
 // in their own edge colours (src/lib/edges.ts).
-const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 531 / 501)));
+const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 666 / 501)));
 
 const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
 const soldOut = product.stock === 0;
@@ -58,18 +59,21 @@ const paragraphs = kindText
       .map((p) => p.split('\n').map((l) => cz(l.trim())))
       .filter((lines) => lines.some(Boolean));
 
-// The kind's drawing, as in the e-shop's size chart, turned like the photo.
-const shape = item?.silhouette ? silhouette(item.silhouette) : undefined;
-
-// Sizes rounded to whole centimetres, as in the size chart (Sami, November 2026).
+// Sizes rounded to whole centimetres, as in the size chart (Sami, November
+// 2026); the PDF calls the diameter "Šířka".
 const { dimensions } = product;
 const height = item?.size ?? (dimensions?.heightCm !== undefined ? `${Math.round(dimensions.heightCm)} cm` : undefined);
-const facts: [string, string | undefined][] = [
+const sizes: [string, string | undefined][] = [
   ['Výška', height && cz(height)],
-  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${Math.round(dimensions.diameterCm)} cm`) : undefined],
+  ['Šířka', dimensions?.diameterCm !== undefined ? cz(`${Math.round(dimensions.diameterCm)} cm`) : undefined],
   ['Objem', dimensions?.volumeMl !== undefined ? cz(`${formatNumber(dimensions.volumeMl)} ml`) : undefined],
 ];
-const shown = facts.filter((f): f is [string, string] => f[1] !== undefined);
+const shownSizes = sizes.filter((f): f is [string, string] => f[1] !== undefined);
+const facts: [string, string][] = [...shownSizes, ...(product.catalogNo ? [['Katalogové číslo', product.catalogNo] as [string, string]] : [])];
+// "100% porcelán" (the PDF): the blue-and-white pieces, except the teapots with
+// their rattan handles. TODO(fakta): Martin's and Daniela's pieces.
+const allPorcelain = product.line === 'spolecna' && group?.slug !== 'konvice';
+const [firstPhoto, ...morePhotos] = product.images.map((img, i) => ({ img, i }));
 
 // Five tiles (Sami, November 2026): "Ze stejné sady" is the same kind with a
 // similar decor (a motif in common: "s andělem na kole" goes with bicycles and
@@ -114,160 +118,161 @@ const metaDescription = kindText
     <div class="product">
       {
         group && group.items.length > 0 && (
-          <nav class="kinds" aria-label={group.name}>
-            <ul role="list">
-              {group.items.map((i) => (
-                <li>
-                  <a href={kindsHref(i.slug)} aria-current={i === item ? 'true' : undefined}>
-                    {i.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
+          <nav class="drawer" aria-label={group.name}>
+            <div class="panel">
+              <ul role="list">
+                {group.items.map((i) => (
+                  <li>
+                    <a href={kindsHref(i.slug)} aria-current={i === item ? 'true' : undefined}>
+                      {i.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </nav>
         )
       }
 
-      <div class="photos">
-        {
-          product.images.map((img, i) => (
-            <a class="photo" href={zoomed[i]?.src} data-sides={fits[i]?.sides} style={fits[i]?.style || undefined}>
-              <Image
-                src={img.src}
-                alt={img.alt}
-                widths={[480, 800, 1200, 1600]}
-                sizes="(min-width: 60rem) 40vw, 100vw"
-                loading={i === 0 ? 'eager' : 'lazy'}
-              />
-            </a>
-          ))
-        }
-      </div>
+      {
+        firstPhoto && (
+          <a
+            class="photo first"
+            href={zoomed[firstPhoto.i]?.src}
+            data-sides={fits[firstPhoto.i]?.sides}
+            style={fits[firstPhoto.i]?.style || undefined}
+          >
+            <Image
+              src={firstPhoto.img.src}
+              alt={firstPhoto.img.alt}
+              widths={[480, 800, 1200, 1600]}
+              sizes="(min-width: 60rem) 45vw, 100vw"
+              loading="eager"
+            />
+          </a>
+        )
+      }
 
       <div class="info">
-        <div class="title">
+        <div class="top">
           <h1>{name}</h1>
           <p class="price">{onRequest ? 'Cena na dotaz' : formatCzk(product.price!)}</p>
-        </div>
 
-        <div class="text">
-          {
-            paragraphs.map((lines) => (
-              <p>
-                {lines.map((l, i) => (
-                  <>
-                    {i > 0 && <br />}
-                    {l}
-                  </>
-                ))}
-              </p>
-            ))
-          }
-          {soldOut && <p>{cz('Tento kus je vyprodaný.')}</p>}
-        </div>
-
-        <form class="buy" data-cart-form data-slug={product.slug}>
-          {
-            product.options?.map((option, i) => (
-              <label class="box option">
-                <span class="visually-hidden">{option.name}</span>
-                <select name={`option-${i}`} data-option={option.name}>
-                  {option.values.map((value) => (
-                    <option>{value}</option>
-                  ))}
-                </select>
-              </label>
-            ))
-          }
-          {
-            onRequest || soldOut ? (
-              <a class="box wide" href={ask(onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
-                {onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
-              </a>
-            ) : (
-              <>
-                <label class="box qty">
-                  <span class="visually-hidden">Počet kusů</span>
-                  <select name="qty">
-                    {Array.from({ length: maxQty }, (_, i) => (
-                      <option value={i + 1}>{i + 1} ks</option>
+          <form class="buy" data-cart-form data-slug={product.slug}>
+            {
+              product.options?.map((option, i) => (
+                <label class="box option">
+                  <span class="visually-hidden">{option.name}</span>
+                  <select name={`option-${i}`} data-option={option.name}>
+                    {option.values.map((value) => (
+                      <option>{value}</option>
                     ))}
                   </select>
                 </label>
-                <button class="box add" type="submit">
-                  Vložit do košíku
-                </button>
+              ))
+            }
+            {
+              onRequest || soldOut ? (
+                <a class="box wide" href={ask(onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
+                  {onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
+                </a>
+              ) : (
+                <>
+                  <label class="box qty">
+                    <span class="visually-hidden">Počet kusů</span>
+                    <select name="qty">
+                      {Array.from({ length: maxQty }, (_, i) => (
+                        <option value={i + 1}>{i + 1} ks</option>
+                      ))}
+                    </select>
+                  </label>
+                  <button class="box add" type="submit">
+                    Vložit do košíku
+                  </button>
+                </>
+              )
+            }
+            <p class="added" role="status" aria-live="polite" data-added hidden>
+              {cz('Přidáno do košíku.')} <a href={withBase('/kosik/')}>Otevřít košík</a>
+            </p>
+          </form>
+        </div>
+
+        <div class="bottom">
+          <div class="text">
+            {
+              paragraphs.map((lines) => (
+                <p>
+                  {lines.map((l, i) => (
+                    <>
+                      {i > 0 && <br />}
+                      {l}
+                    </>
+                  ))}
+                </p>
+              ))
+            }
+            {soldOut && <p>{cz('Tento kus je vyprodaný.')}</p>}
+          </div>
+
+          {
+            facts.length > 0 && (
+              <dl class="facts">
+                {facts.map(([label, value]) => (
+                  <div>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )
+          }
+          {allPorcelain && <p class="material">100% porcelán</p>}
+          {
+            shownSizes.length > 0 && (
+              <>
+                <hr />
+                <p class="note">{cz('Míry jsou orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.')}</p>
               </>
             )
           }
-          <p class="added" role="status" aria-live="polite" data-added hidden>
-            {cz('Přidáno do košíku.')} <a href={withBase('/kosik/')}>Otevřít košík</a>
-          </p>
-        </form>
-
-        {
-          shape && (
-            <div
-              class="size"
-              style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.axis - shape.w / 2).toFixed(3)}`}
-              aria-hidden="true"
-            >
-              {Array.from({ length: Math.floor(shape.h / 10) }, (_, i) => (
-                <span class="line" style={`--at: ${(i + 1) * 10}`} />
-              ))}
-              <span class="floor" />
-              <span class="drawing" set:html={shape.svg} />
-            </div>
-          )
-        }
-        {
-          (shape || shown.length > 0) && (
-            <p class="note">{cz('Míry jsou orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.')}</p>
-          )
-        }
-
-        {
-          shown.length > 0 && (
-            <dl class="facts">
-              {shown.map(([label, value]) => (
-                <div>
-                  <dt>{label}</dt>
-                  <dd>{value}</dd>
-                </div>
-              ))}
-            </dl>
-          )
-        }
-        {
-          product.catalogNo && (
-            <dl class="facts catalogue">
-              <div>
-                <dt>Katalogové číslo</dt>
-                <dd>{product.catalogNo}</dd>
-              </div>
-            </dl>
-          )
-        }
+        </div>
       </div>
-    </div>
 
-    {
-      related.length > 0 && (
-        <section class="related" aria-label="Další kusy">
-          {related.map((g) => (
-            <>
-              <h2 style={`--start: ${g.start}; --span: ${g.products.length}`}>{g.title}</h2>
-              {g.products.map((p) => (
-                <div class="tile">
-                  <ProductCard product={p} lang="cs" />
-                </div>
-              ))}
-            </>
-          ))}
-        </section>
-      )
-    }
+      {
+        morePhotos.length > 0 && (
+          <div class="photos">
+            {morePhotos.map(({ img, i }) => (
+              <a class="photo" href={zoomed[i]?.src} data-sides={fits[i]?.sides} style={fits[i]?.style || undefined}>
+                <Image src={img.src} alt={img.alt} widths={[480, 800, 1200, 1600]} sizes="(min-width: 60rem) 45vw, 100vw" />
+              </a>
+            ))}
+          </div>
+        )
+      }
+    </div>
   </div>
+
+  {
+    related.length > 0 && (
+      <div class="related-band">
+        <div class="wrap">
+          <section class="related" aria-label="Další kusy">
+            {related.map((g) => (
+              <>
+                <h2 style={`--start: ${g.start}; --span: ${g.products.length}`}>{g.title}</h2>
+                {g.products.map((p) => (
+                  <div class="tile">
+                    <ProductCard product={p} lang="cs" />
+                  </div>
+                ))}
+              </>
+            ))}
+          </section>
+        </div>
+      </div>
+    )
+  }
 </Base>
 
 <script>
@@ -311,18 +316,41 @@ const metaDescription = kindText
     gap: var(--space-5);
   }
 
-  .kinds ul {
+  /* The kinds of the open tab on an ochre panel, white, the product's kind
+     underlined. */
+  .panel {
+    background: var(--color-ochre);
+    color: #fff;
+  }
+
+  .panel ul {
     display: flex;
     flex-wrap: wrap;
     gap: var(--space-2) var(--space-5);
+    margin: 0;
     padding: 0;
     list-style: none;
   }
 
-  .kinds [aria-current] {
+  .panel a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .panel a:hover,
+  .panel [aria-current] {
     text-decoration: underline;
     text-decoration-thickness: 1px;
-    text-underline-offset: 0.55em;
+    text-underline-offset: 0.3em;
+  }
+
+  /* On phones a band across the whole width over the photo. */
+  .drawer {
+    margin-inline: calc(-1 * var(--gutter));
+  }
+
+  .panel {
+    padding: var(--space-4) var(--gutter);
   }
 
   .photos {
@@ -330,13 +358,13 @@ const metaDescription = kindText
     gap: var(--space-3);
   }
 
-  /* The whole photo in the PDF's box (531 × 501). Where it leaves the box's
+  /* The whole photo in the PDF's box (666 × 501). Where it leaves the box's
      sides empty, they carry the photo's own edge colours (set inline, see
      src/lib/edges.ts) and the photo's edges fade into them. */
   .photo {
     position: relative;
     display: block;
-    aspect-ratio: 531 / 501;
+    aspect-ratio: 666 / 501;
     overflow: hidden;
     background: var(--color-tile);
   }
@@ -360,11 +388,13 @@ const metaDescription = kindText
     mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
   }
 
-  .title {
+  /* Name, price and the cart at the top; text, sizes, material and the note at
+     the photo's foot. */
+  .info {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: baseline;
-    gap: var(--space-4);
+    gap: var(--space-6);
   }
 
   h1 {
@@ -372,31 +402,28 @@ const metaDescription = kindText
   }
 
   .price {
+    margin-block-start: 1.0625rem;
     white-space: nowrap;
   }
 
-  /* Text in small letters: Claristik clarendon, as in the PDF. */
+  /* Text in small letters: Claristik clarendon, 14 px at 1512 as in the PDF. */
   .text,
   .note,
   .added {
     font-family: var(--font-serif);
-    font-size: 0.625rem;
+    font-size: clamp(0.8125rem, 0.6rem + 0.29vw, 0.875rem);
     font-weight: 400;
     letter-spacing: 0;
-    line-height: 1.3;
+    line-height: 1.36;
     text-transform: none;
     color: #333;
-  }
-
-  .text {
-    margin-block-start: var(--space-4);
   }
 
   .buy {
     display: grid;
     grid-template-columns: 31.6% 1fr;
     gap: var(--space-2) 2.5%;
-    margin-block-start: clamp(2rem, 4.5vw, 4.25rem);
+    margin-block-start: 1.6rem;
   }
 
   .box {
@@ -406,7 +433,7 @@ const metaDescription = kindText
     padding-inline: var(--space-2);
     border: 0;
     border-radius: 0;
-    background: var(--color-shop-header);
+    background: var(--color-ochre);
     color: var(--color-ink);
     font: inherit;
     letter-spacing: inherit;
@@ -415,10 +442,13 @@ const metaDescription = kindText
     cursor: pointer;
   }
 
+  /* "1 ks" centred in its box without the browser's arrow, as in the PDF */
   .box select {
     width: 100%;
+    appearance: none;
     border: 0;
     background: transparent;
+    color: inherit;
     font: inherit;
     letter-spacing: inherit;
     text-transform: inherit;
@@ -436,69 +466,19 @@ const metaDescription = kindText
   .add:hover,
   .wide:hover,
   .box:has(select:hover) {
-    background: color-mix(in srgb, var(--color-shop-header) 70%, var(--color-select));
+    background: color-mix(in srgb, var(--color-ochre) 55%, var(--color-select));
     color: #fff;
-  }
-
-  .box:has(select:hover) select {
-    color: #fff;
-  }
-
-  /* The kind to scale on its floor, turned like the photo (handle right). */
-  .size {
-    container-type: inline-size;
-    position: relative;
-    margin-block-start: clamp(2.5rem, 6vw, 5.5rem);
-  }
-
-  .size > .drawing {
-    --cm: min(14px, 100cqw / (var(--w) + 2), 300px / (var(--h) + 1.5));
-    position: relative;
-    display: block;
-    width: calc(var(--w) * var(--cm));
-    height: calc(var(--h) * var(--cm));
-    margin-inline: auto;
-    transform: translateX(calc(var(--shift) * var(--cm)));
-    color: var(--color-ink);
-  }
-
-  .size > .drawing :global(svg) {
-    display: block;
-    width: 100%;
-    height: 100%;
-    overflow: visible;
-    transform: scaleX(-1);
-  }
-
-  .line,
-  .floor {
-    --cm: min(14px, 100cqw / (var(--w) + 2), 300px / (var(--h) + 1.5));
-    position: absolute;
-    left: 0;
-    right: 0;
-  }
-
-  .line {
-    bottom: calc(var(--at) * var(--cm));
-    border-top: 1px dotted #777;
-  }
-
-  .floor {
-    bottom: 0;
-    height: calc(1.69 * var(--cm));
-    background: #dcd5cf;
-  }
-
-  .note {
-    margin-block-start: var(--space-3);
   }
 
   .facts {
-    margin-inline: 0;
-    padding: 0;
     display: grid;
-    gap: 0.15rem;
-    margin-block-start: var(--space-5);
+    margin: 3rem 0 0;
+    padding: 0;
+    line-height: 1.18;
+  }
+
+  .text:empty + .facts {
+    margin-block-start: 0;
   }
 
   .facts > div {
@@ -516,19 +496,28 @@ const metaDescription = kindText
     text-align: end;
   }
 
-  .catalogue {
-    margin-block-start: var(--space-4);
-    padding-block-start: var(--space-2);
+  .material {
+    margin-block-start: 1.0625rem;
+  }
+
+  hr {
+    margin-block: 2.1rem 2rem;
+    border: 0;
     border-top: 1px solid var(--color-ink);
   }
 
-  /* Five tiles as in the listing, each group under its heading; on phones
-     two a row. */
+  /* Related pieces on a green band across the whole width: five tiles as in
+     the listing, each group under its heading; on phones two a row. */
+  .related-band {
+    margin-block-start: clamp(3.5rem, 9.2vw, 8.7rem);
+    padding-block-start: 1.75rem;
+    background: #96c19d;
+  }
+
   .related {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 0.65rem;
-    margin-block-start: clamp(3.5rem, 11vw, 10.5rem);
   }
 
   .related .tile {
@@ -539,7 +528,7 @@ const metaDescription = kindText
 
   .related h2 {
     grid-column: 1 / -1;
-    padding-block-end: var(--space-4);
+    padding-block-end: 0.75rem;
   }
 
   @media (min-width: 48rem) {
@@ -557,29 +546,81 @@ const metaDescription = kindText
     }
   }
 
-  /* Three columns from the PDF: kinds, photo (two listing columns), the rest. */
+  /* From the PDF at 1512: the panel from the screen's edge to 10 points short
+     of the photo, the photo two and a half listing columns wide, the rest from
+     70.5 % across. */
   @media (min-width: 60rem) {
     .product {
-      grid-template-columns: 20.1% 39.6% 10.8% 29.5%;
-      gap: 0;
+      --bleed: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
+      container-type: inline-size;
+      grid-template-columns: 20.15% 49.6% 0.75% 1fr;
+      gap: var(--space-3) 0;
       align-items: start;
     }
 
-    .kinds {
-      grid-column: 1;
-    }
-
-    .kinds ul {
-      flex-direction: column;
-      gap: 0.85rem;
+    .photo.first {
+      grid-column: 2;
+      grid-row: 1;
     }
 
     .photos {
       grid-column: 2;
+      grid-row: 2;
     }
 
     .info {
       grid-column: 4;
+      grid-row: 1;
+      align-self: stretch;
+      padding-inline-start: 0.66vw;
+    }
+
+    hr {
+      margin-inline-start: -0.66vw;
+    }
+
+    /* Hidden until the pointer comes over its place (or a link in it takes
+       the focus), then it slides out from the side (Sami, November 2026). */
+    /* as tall as the photo beside it, whatever the text column needs */
+    .drawer {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+      height: calc(49.6cqi * 501 / 666);
+      position: relative;
+      overflow: hidden;
+      margin-inline: calc(-1 * var(--bleed)) 0.66vw;
+    }
+
+    .panel {
+      position: absolute;
+      inset: 0;
+      padding: 4.75vw 0 0 calc(var(--bleed) - var(--gutter) + 2.8vw);
+      transform: translateX(-100%);
+      transition: transform 0.35s ease;
+    }
+
+    .drawer:hover .panel,
+    .drawer:focus-within .panel {
+      transform: none;
+    }
+
+    .panel ul {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
+
+  /* Without a pointer that can hover, the panel stays out. */
+  @media (min-width: 60rem) and (hover: none) {
+    .panel {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel {
+      transition: none;
     }
   }
 </style>
