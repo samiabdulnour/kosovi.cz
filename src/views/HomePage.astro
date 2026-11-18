@@ -1,20 +1,21 @@
 ---
-// Homepage after the design kosovi_navrh_01.pdf: the photo strip, the claim,
-// a selection of the blue and white porcelain and the two makers.
-import FieldBlock from '../components/FieldBlock.astro';
+// Homepage after docs/design/kosovi_homepage.pdf (Sami, November 2026): the
+// photo strip, the blue-and-white porcelain on a green band (five pieces with
+// their name and price, each opening in the e-shop), then rows of photographs
+// across the whole width, each opening its author's part of the site, with the
+// author's name on hover (src/components/Mosaic.astro, src/config/home.ts).
+import Mosaic from '../components/Mosaic.astro';
 import PhotoBand from '../components/PhotoBand.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
-import { artistBlocks, blueWhiteSelection } from '../config/home';
+import { blueWhiteSelection } from '../config/home';
 import { getLine } from '../config/lines';
-import { makers, studio } from '../config/site';
+import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath, pathOf } from '../i18n/routes';
+import { alternatesOf, collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
-import { photoOf } from '../lib/photos';
 import { getFeaturedProducts, getProductsBySlug } from '../lib/products';
-import { typeset } from '../lib/typography';
 
 interface Props {
   lang: Lang;
@@ -24,78 +25,58 @@ const { lang } = Astro.props;
 const blueWhite = getLine('spolecna');
 const shopPath = collectionPath(blueWhite.slug[lang], lang);
 
-const copy = {
-  cs: {
-    description: 'Porcelánový ateliér Daniely a Martina Kosových v Praze. Modrobílé nádobí pro každý den a autorská díla obou výtvarníků.',
-    // Homepage claim from the design.
-    claim: 'Od modrobílého porcelánu pro každý den po autorská díla Daniely a Martina Kosových.',
-  },
-  en: {
-    description: 'Porcelain studio of Daniela and Martin Kos in Prague. Blue and white tableware for every day and the artworks of both artists.',
-    // TODO(text): working translation, final English copy in phase 6.
-    claim: 'From blue and white porcelain for every day to the artworks of Daniela and Martin Kos.',
-  },
+const description = {
+  cs: 'Porcelánový ateliér Daniely a Martina Kosových v Praze. Modrobílé nádobí pro každý den a autorská díla obou výtvarníků.',
+  en: 'Porcelain studio of Daniela and Martin Kos in Prague. Blue and white tableware for every day and the artworks of both artists.',
 }[lang];
 
 // Five pieces, one row of the e-shop's grid with its captions (Sami, November 2026).
 const PIECES = 5;
 const featured = (await getFeaturedProducts()).filter((p) => p.line === 'spolecna');
 const selection = (featured.length >= PIECES ? featured : await getProductsBySlug(blueWhiteSelection)).slice(0, PIECES);
-
-const people = await Promise.all(
-  (['daniela', 'martin'] as const).map(async (key) => ({
-    key,
-    name: makers[key].name,
-    href: pathOf(key, lang),
-    field: artistBlocks[key].home.field,
-    inset: artistBlocks[key].home.inset,
-    photo: await photoOf(artistBlocks[key].home),
-  })),
-);
 ---
 
-<Base description={copy.description} alternates={alternatesOf('home')}>
+<Base description={description} alternates={alternatesOf('home')}>
   <h1 class="visually-hidden">{studio.name}</h1>
   <PhotoBand lang={lang} />
 
-  <div class="wrap">
-    <p class="claim from-label">{typeset(copy.claim, lang)}</p>
-
-    <section class="section">
-      <h2 class="section-head"><a href={withBase(shopPath)}>{blueWhite.name[lang]}</a></h2>
+  <section class="blue-white" aria-labelledby="modrobily">
+    <div class="wrap">
+      <h2 class="section-head" id="modrobily"><a href={withBase(shopPath)}>{blueWhite.name[lang]}</a></h2>
       <ProductGrid products={selection} lang={lang} />
-      <Note>
-        <p>Výběr pěti kusů, každý se otevře v e-shopu. TODO(rozhodnutí): vybere Sami (`featured: true` u produktu nebo seznam v src/config/home.ts).</p>
-      </Note>
-    </section>
+    </div>
+  </section>
 
-    <section class="people" id="daniela-a-martin" aria-label={studio.name}>
-      {
-        people.map((person) => (
-          <FieldBlock href={withBase(person.href)} caption={person.name} field={person.field} photo={person.photo} inset={person.inset} />
-        ))
-      }
-    </section>
+  <Mosaic lang={lang} />
+
+  <div class="wrap">
+    <Note>
+      <p>
+        Podle kosovi_homepage.pdf. Jméno autora se ukáže po najetí myší (na dotykových displejích je vidět stále), fotka vede
+        na Danielinu nebo Martinovu stránku, nebo do e-shopu modrobílého porcelánu. Snídaně jméno nemá, nikam nevede.
+      </p>
+    </Note>
   </div>
 </Base>
 
 <style>
-  /* One line wherever it fits, on a laptop screen too (Sami, November 2026):
-     no reading measure, it wraps only where the line runs out. */
-  .claim {
-    max-width: none;
-    padding-block: var(--space-4) var(--space-3);
+  /* The green band of kosovi_homepage.pdf across the whole width, its pieces
+     on 3:4 tiles as in the PDF (260 × 347 at 1512). */
+  .blue-white {
+    margin-block: clamp(0.75rem, 1.75vw, 1.65rem) clamp(0.75rem, 1.45vw, 1.4rem);
+    padding-block: clamp(1.25rem, 1.8vw, 1.7rem) clamp(0.5rem, 1vw, 1rem);
+    background: #84c6a1;
   }
 
-  .people {
-    display: grid;
-    gap: var(--space-6) var(--gap);
-    padding-block: var(--space-6);
+  .blue-white .section-head {
+    padding-block: 0 clamp(0.6rem, 0.9vw, 0.85rem);
   }
 
-  @media (min-width: 48rem) {
-    .people {
-      grid-template-columns: 1fr 1fr;
-    }
+  .blue-white :global(.product-grid) {
+    --row-space: clamp(1rem, 1.6vw, 1.5rem);
+  }
+
+  .blue-white :global(.card .tile) {
+    aspect-ratio: 3 / 4;
   }
 </style>

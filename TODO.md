@@ -33,6 +33,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Budou Daniela a Martin přidávat produkty sami? Pokud ano, po spuštění git CMS (Decap nebo Pages CMS).
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
 - [x] Adresa v patičce zůstává (Sami, listopad 2026).
+- [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
+- [ ] Úvodní stránka podle `kosovi_homepage.pdf`: hlavička v PDF má místo „Košík“ položku „EN“ a „Daniela a Martin Kosovi“ větší; patička má tři sloupce bez právních odkazů. Na webu zatím zůstává dosavadní hlavička i patička. Změnit?
+- [ ] Úvodní stránka: fotka se snídaní nemá v PDF jméno autora, takže nikam nevede. Má vést někam?
 - [x] Úvodní stránka, blok Daniely: talíře s kohoutem (vyříznuté ze Samiho snímku obrazovky, kurzor uprostřed odretušovaný). Původní soubor fotky by byl lepší, má-li ho Sami.
 - [ ] Kurzy: formát, délka, cena, dárkový poukaz.
 - [ ] Newsletter: poskytovatel, nebo vůbec?

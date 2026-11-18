@@ -1,6 +1,6 @@
 ---
 // A large colour field with an optional photograph and a caption, as used for
-// the makers on the homepage and "Volné / Užité" on their pages.
+// the lines on the collections page.
 import { Image } from 'astro:assets';
 import type { Field } from '../config/home';
 import type { Photo } from '../lib/photos';
@@ -14,17 +14,15 @@ interface Props {
   captionAt?: 'top' | 'bottom';
   ratio?: string;
   headingLevel?: 'h2' | 'h3';
-  /** The photo smaller, in the middle of the field (Sami, November 2026). */
-  inset?: boolean;
 }
 
-const { href, caption, field, photo, captionAt = 'top', ratio = '7 / 4', headingLevel = 'h2', inset = false } = Astro.props;
+const { href, caption, field, photo, captionAt = 'top', ratio = '7 / 4', headingLevel = 'h2' } = Astro.props;
 const Heading = headingLevel;
 ---
 
 <a class:list={['block', `caption-${captionAt}`]} href={href}>
   <Heading class="caption">{caption}</Heading>
-  <span class:list={['field', { inset }]} style={`--field: var(--field-${field}); aspect-ratio: ${ratio}`}>
+  <span class="field" style={`--field: var(--field-${field}); aspect-ratio: ${ratio}`}>
     {photo && <Image src={photo.src} alt={photo.alt} widths={[480, 800, 1200]} sizes="(min-width: 48rem) 45vw, 100vw" />}
   </span>
 </a>
@@ -47,20 +45,5 @@ const Heading = headingLevel;
 
   .caption-bottom .caption {
     order: 2;
-  }
-
-  /* The photo in the middle of its field, the field showing around it, as in
-     Sami's homepage pictures (about 72 % of the width and 81 % of the height). */
-  .field.inset {
-    position: relative;
-  }
-
-  .field.inset > :global(img) {
-    position: absolute;
-    top: 9.6%;
-    left: 14.1%;
-    width: 71.8%;
-    height: 80.8%;
-    object-fit: cover;
   }
 </style>
