@@ -26,13 +26,14 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).
 - [x] Pás fotografií na úvodu zrušen (Sami, listopad 2026); nahoře je místo něj řada dvou fotek z `kosovi_homepage.pdf`. Původní pás je v historii gitu (`src/config/band.ts`, `docs/design/pas.pdf`).
 - [ ] Daniela, kategorie Design (věšáčky, úchytky): platí u nich „Malovala Daniela“? Výchozí autoři řady jsou v `src/config/lines.ts`, u jednotlivého produktu se dají přepsat polem `makers`.
-- [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“, stránka O nás „až 1380 °C“. Které číslo platí?
+- [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“ (některé „minimálně 2x v peci při 1000°C a 2x při 1400°C“), stránka O nás dva výpaly, druhý na 1 380 °C. Které číslo platí?
 - [ ] Režim objednávky: nezávazná (`request`), nebo závazná (`binding`)? `src/config/order.ts`, zatím zástupně `request`.
 - [ ] Doprava: způsoby, ceny, místo osobního odběru. Používají Zásilkovnu? `src/config/shipping.ts`.
 - [ ] Kterých 12–20 kusů jsou vybrané kusy (`featured: true`)?
 - [ ] Budou Daniela a Martin přidávat produkty sami? Pokud ano, po spuštění git CMS (Decap nebo Pages CMS).
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
 - [x] Adresa v patičce zůstává (Sami, listopad 2026).
+- [ ] O nás podle `kosovi_o_nas.pdf` (Sami, listopad 2026): text z PDF, opravené jen překlepy a interpunkce. Několik obratů jde proti pravidlům textů v CLAUDE.md (u modrobílého porcelánu „krásnou modrou barvu“, „dokonale slitý střep“, „elegantním vzhledem“; v životopisech „nejdokonaleji“, „nejúžasnějších“). Ponechat? Anglický překlad je pracovní (fáze 6).
 - [x] Mini hrnky „bike forever“ a „ski forever“ odstraněny z webu (Sami, listopad 2026). Fotky a data jsou v historii gitu, ve `scripts/data/` zůstávají. Ve fázi 7 přesměrovat jejich staré adresy (`/produkt/porcelanovy-mini-hrnek-bike-forever/`, `…-ski-forever/`) na výpis mini hrnků.
 - [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
 - [x] Hlavička podle `kosovi_homepage.pdf` (Sami, listopad 2026): „EN“ místo „Košík“, „Daniela a Martin Kosovi“ větší a na pozici z PDF. Košík se v menu objeví, jen když v něm něco je.
@@ -47,7 +48,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 
 ## Chybějící fakta
 
-- [ ] Společná fotografie manželů (O nás), fotografie z dílny.
+- [x] Společná fotografie manželů: z `kosovi_o_nas.pdf` (Sami, listopad 2026), 2 118 × 1 427 px.
+- [ ] Fotografie z dílny.
 - [ ] Fotografie a popisky volné tvorby Martina i Daniely (stránky „Volné“).
 - [x] Instagram: `porcelan.kosovi`, odkaz v patičce.
 - [ ] CV Martina, výstavy obou.
@@ -55,8 +57,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Martin: „přes 25 let pracuje pouze s porcelánem“ je údaj z webu z roku 2020. Aktualizovat.
 - [ ] Martin: Galerie Svatoš uvádí třetí generaci hrnčířů a tenkostěnný porcelán s drobnými otvory (krajkový vzor). Použít?
 - [ ] Jak pracuje Martin a jak Daniela, vlastními slovy (stránky autorů).
-- [ ] Jak vzniká: potvrdit kroky a pořadí (přežah, glazování?), sušení, počet výpalů.
-- [ ] O nás: krátce o ateliéru, výstavy obou autorů, sbírky s Martinovými pracemi.
+- [x] Jak vzniká modrobílý porcelán: Samiho text na stránce O nás (technický porcelán, dva výpaly, malba voskem, ponoření do kobaltu a do průhledné glazury, druhý výpal na 1 380 °C v plynové peci).
+- [ ] O nás: výstavy obou autorů, sbírky s Martinovými pracemi (v `kosovi_o_nas.pdf` nejsou).
 - [ ] Popis každé kolekce (kdo, technika, materiál).
 - [ ] Rozměry: import převzal výšku (299), průměr (141) a objem (167) z popisů. Technika a péče u produktů chybí úplně.
 - [ ] Sady: data neříkají, které kusy patří k sobě. Stránka produktu zatím ukazuje kusy ze stejné kategorie.

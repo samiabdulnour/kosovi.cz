@@ -127,7 +127,7 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 | `/kolekce/`, `/kolekce/<line>/`, `/kolekce/<line>/<entry>/`, `…/<n>/` | E-shop. "E-shop" in the menu opens the first tab (Hrnky) of the blue-and-white line. Its menu is tabs with a size chart (`docs/design/kosovi_eshop_2.pdf`); Martin's and Daniela's lines keep the category menu in four columns. Menus are mapped onto the old shop data in `src/config/lines.ts`; 26 products a page. Line slugs: `modrobily-porcelan`, `martin-kos`, `daniela-kosova` |
 | `/produkt/<slug>/` | Product page (same URL as the old site) |
 | `/martin-kos/`, `/daniela-kosova/` | Artist pages after `docs/design/kosovi_daniela_martin.pdf` (Sami, November 2026): the name on the label line, a composition of colour fields and two photographs across the whole width, then their pieces five a row on the e-shop's tiles with the product's caption, each opening its product page (`src/views/ArtistPage.astro`, layout and photos in `src/config/artists.ts`). Old URLs. The older "Volné" pages (`…/volna-tvorba/`) stay but nothing links to them |
-| `/o-nas/` | The couple, the blue-and-white porcelain, the porcelain's technical qualities, both biographies with a CV. (Replaces the former `/jak-vznika/` page.) |
+| `/o-nas/` | After `docs/design/kosovi_o_nas.pdf` (Sami, November 2026; the header in it is the old one): "Manželé Kosovi" on an olive field (#d6cf93) with the couple's photograph in the second column, "Modrobílý porcelán" on white, then both biographies side by side on a blue (#a6d3ff) and an orange (#ff8a00) field meeting in the middle, each across the whole width; section names in capitals at 17 px, the text in Claristik at 24 px on 28, tracked 2 % (`src/views/AboutPage.astro`). The text is Sami's from the PDF, the biographies Daniela's and Martin's own, with only typing errors and punctuation corrected. (Replaces the former `/jak-vznika/` page.) |
 | `/kurzy/` | Courses on request, gift voucher |
 | `/kontakt/` | Contact without the street address; workshop visits only by arrangement on the phone (Sami, November 2026). The footer keeps the address (Sami, November 2026) |
 | `/kosik/` | Cart and order form (old URL). Until phase 5 it shows how many pieces the browser holds and a button to empty the cart |
@@ -174,6 +174,8 @@ If `.claude/skills/propagace/` exists, follow it for every piece of public copy.
 From the current O nás page. These are the only facts copy may use.
 
 **Porcelain:** thrown on the potter's wheel, which is unusual for porcelain. Fired up to 1380 °C. Blue-and-white pieces decorated with cobalt, under the glaze or in the glaze, fired together with the porcelain, so the decoration does not wear off. Dishwasher and microwave safe.
+
+**Porcelain, from Sami's O nás text (November 2026):** technical porcelain, the material once used for electrical insulators. Two firings: the first in an electric kiln; then the piece is painted by hand with wax, dipped in cobalt and then in a clear glaze; the second firing, at 1380 °C in a gas kiln, fuses the layers. Can be used as an oven dish, in the dishwasher and in the microwave.
 
 **Martin Kos:** born 1959 in Hradec Králové. Both parents were ceramicists. Apprenticed as a potter in Týniště nad Orlicí. Graduated from the ceramics school in Bechyně, as did his parents and his grandfather. Worked at ÚVD Keramo Praha, independent since 1987. Learned to throw porcelain and has worked only in porcelain for over 25 years.
 
