@@ -48,6 +48,18 @@ def box(path):
     rows = np.nonzero(m.sum(axis=1) >= 6)[0]
     cols = np.nonzero(m.sum(axis=0) >= 6)[0]
     top, bottom = int(rows.min()), int(rows.max())
+    left, right = int(cols.min()), int(cols.max())
+    # A white rim above a painted band can lose touch with the outline (the
+    # spiral mugs): climb on while the rows over the piece stay brighter than
+    # the background, allowing a few rows' gap.
+    over = (lum - bg.mean(axis=2))[:, left:right + 1] > 14
+    y, gap = top - 1, 0
+    while y > 0 and gap <= 3:
+        if over[y].sum() >= 6:
+            top, gap = y, 0
+        else:
+            gap += 1
+        y -= 1
     h = bottom - top
     # Body centre from the foot, below where the handle joins.
     band = m[bottom - int(h * 0.08): bottom - int(h * 0.03)]
@@ -56,7 +68,6 @@ def box(path):
     # its brass rings (warm colours the outline above leaves out).
     warm = ndimage.binary_opening((r - b > 50) & (lum < 250), iterations=2)
     lab, n = ndimage.label(warm)
-    left, right = int(cols.min()), int(cols.max())
     full_top = top
     for i, sl in enumerate(ndimage.find_objects(lab)):
         ys, xs = sl

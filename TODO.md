@@ -33,6 +33,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Budou Daniela a Martin přidávat produkty sami? Pokud ano, po spuštění git CMS (Decap nebo Pages CMS).
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
 - [x] Adresa v patičce zůstává (Sami, listopad 2026).
+- [x] Mini hrnky „bike forever“ a „ski forever“ odstraněny z webu (Sami, listopad 2026). Fotky a data jsou v historii gitu, ve `scripts/data/` zůstávají. Ve fázi 7 přesměrovat jejich staré adresy (`/produkt/porcelanovy-mini-hrnek-bike-forever/`, `…-ski-forever/`) na výpis mini hrnků.
 - [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
 - [x] Hlavička podle `kosovi_homepage.pdf` (Sami, listopad 2026): „EN“ místo „Košík“, „Daniela a Martin Kosovi“ větší a na pozici z PDF. Košík se v menu objeví, jen když v něm něco je.
 - [ ] Patička v `kosovi_homepage.pdf` má tři sloupce bez právních odkazů (obchodní podmínky atd.). Na webu zatím zůstává dosavadní patička se čtyřmi sloupci. Změnit?

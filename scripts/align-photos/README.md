@@ -45,3 +45,5 @@ python3 -m venv .venv && .venv/bin/pip install numpy scipy pillow
 `kontrola.jpg` ukazuje nalezené obrysy (červeně), osu podle spodku (zeleně)
 a nejvyšší bod včetně ratanového ucha (oranžově).
 Bílé předměty (bábovky, bílé podšálky) skript na světlém pozadí nenajde.
+Bílý okraj nad malovaným pruhem (hrnky se spirálami, některé mini hrnky)
+se od obrysu odtrhne, `mugbox.py` ho proto dohledá řádek po řádku nad ním.

@@ -89,7 +89,7 @@ The old site is read-only for us. Never log in, never write to it.
 
 Old shop counts for sanity checks: 294 modrobílý porcelán, 37 Martin, 85 Daniela.
 
-**Done (phase 2).** The Store API works; the import matched all counts. Report in `scripts/data/import-report.md`. Images are the largest size WordPress serves; 48 of them WordPress had scaled to 2560 px on upload, the camera originals (about 150 MB) were not downloaded. Each product owns `src/assets/products/<slug>/01.jpg…`, even where the old shop reused a photo, so swapping a photo touches one product only. Re-running the import overwrites `src/content/products/`, so after hand edits start (featured, makers, fixes) stop re-running it or teach it to keep them.
+**Done (phase 2).** The Store API works; the import matched all counts. Report in `scripts/data/import-report.md`. Images are the largest size WordPress serves; 48 of them WordPress had scaled to 2560 px on upload, the camera originals (about 150 MB) were not downloaded. Each product owns `src/assets/products/<slug>/01.jpg…`, even where the old shop reused a photo, so swapping a photo touches one product only. Re-running the import overwrites `src/content/products/`, so after hand edits start (featured, makers, fixes) stop re-running it or teach it to keep them. Removed on Sami's request (November 2026): the mini mugs bike forever and ski forever; their old URLs need redirects in phase 7.
 
 ## Product schema
 
