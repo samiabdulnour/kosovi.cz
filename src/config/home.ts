@@ -1,8 +1,10 @@
-// Homepage after docs/design/kosovi_homepage.pdf (Sami, November 2026): the
-// photo strip (src/config/band.ts), the blue-and-white porcelain on a green
+// Homepage after docs/design/kosovi_homepage.pdf (Sami, November 2026): a row
+// of two photographs on colour fields, the blue-and-white porcelain on a green
 // band, then rows of photographs across the whole width. Swap slugs and photos
 // freely, the page reads them at build time.
 import type { ImageMetadata } from 'astro';
+import blackTeapots from '../assets/home/konvice-cerne.jpg';
+import paintingPlates from '../assets/home/malovani-talire.jpg';
 import babovka from '../assets/home/modrobily-babovka.jpg';
 import fishPlates from '../assets/home/modrobily-talire-s-rybami.jpg';
 import platesWithCockerel from '../assets/home/daniela-talire-s-kohoutem.jpg';
@@ -73,6 +75,19 @@ export interface MosaicRow {
 }
 
 export const mosaicWidth = 1512;
+
+// The top row, under the header, in place of the former moving photo strip
+// (Sami, November 2026). No names in the PDF, so the photos open nothing.
+export const topRow: MosaicRow = {
+  h: 631,
+  items: [
+    { x: 0, w: 165, color: '#c6e9f9' },
+    { x: 530, w: 689, color: '#d6cf93' },
+    { x: 1218, w: 294, color: '#c6e9f9' },
+    { x: 164, w: 383, photo: { src: paintingPlates, alt: 'Ruka maluje obličej na bílý talíř, vedle talíř s ženskou tváří, na růžovém pozadí' } },
+    { x: 634, w: 878, photo: { src: blackTeapots, alt: 'Dvě černé kulaté konvice s bílými uchy a výlevkami na oranžovém pozadí' } },
+  ],
+};
 
 // Positions are the PDF's own (kosovi_homepage.pdf), rounded to the point.
 export const mosaic: MosaicRow[] = [

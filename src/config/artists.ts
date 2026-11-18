@@ -11,7 +11,6 @@
 // (src/assets/artists/).
 import type { ImageMetadata } from 'astro';
 import type { MakerKey } from './site';
-import type { Frame } from './band';
 
 import mHeroKonvice from '../assets/artists/martin/hero-konvice.jpg';
 import mHeroVazy from '../assets/artists/martin/hero-vazy.jpg';
@@ -28,6 +27,14 @@ import d07 from '../assets/artists/daniela/07-salek-a-podsalek-3-podsalek.jpg';
 import d08 from '../assets/artists/daniela/08-salek-a-podsalek-1-salek.jpg';
 import d09 from '../assets/artists/daniela/09-salek-a-podsalek-5.jpg';
 import d10 from '../assets/artists/daniela/10-salek-a-podsalek-1-salek-2.jpg';
+
+/** A rectangle in points on the PDF's frame. */
+export interface Frame {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+}
 
 export interface Composition {
   /** Frame height in points (the width is 1512). */

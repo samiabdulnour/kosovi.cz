@@ -1,14 +1,14 @@
 ---
-// Homepage after docs/design/kosovi_homepage.pdf (Sami, November 2026): the
-// photo strip, the blue-and-white porcelain on a green band (five pieces with
+// Homepage after docs/design/kosovi_homepage.pdf (Sami, November 2026): a row
+// of two photographs on colour fields (the PDF's, in place of the former
+// moving strip), the blue-and-white porcelain on a green band (five pieces with
 // their name and price, each opening in the e-shop), then rows of photographs
 // across the whole width, each opening its author's part of the site, with the
 // author's name on hover (src/components/Mosaic.astro, src/config/home.ts).
 import Mosaic from '../components/Mosaic.astro';
-import PhotoBand from '../components/PhotoBand.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
-import { blueWhiteSelection } from '../config/home';
+import { blueWhiteSelection, mosaic, topRow } from '../config/home';
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
@@ -38,7 +38,7 @@ const selection = (featured.length >= PIECES ? featured : await getProductsBySlu
 
 <Base description={description} alternates={alternatesOf('home')}>
   <h1 class="visually-hidden">{studio.name}</h1>
-  <PhotoBand lang={lang} />
+  <Mosaic rows={[topRow]} lang={lang} />
 
   <section class="blue-white" aria-labelledby="modrobily">
     <div class="wrap">
@@ -47,7 +47,7 @@ const selection = (featured.length >= PIECES ? featured : await getProductsBySlu
     </div>
   </section>
 
-  <Mosaic lang={lang} />
+  <Mosaic rows={mosaic} lang={lang} />
 
   <div class="wrap">
     <Note>
