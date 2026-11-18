@@ -57,8 +57,9 @@
      Moment (Sami, November 2026) */
   --step--1: 0.6875rem;
   --step-0: clamp(0.84375rem, 0.785rem + 0.12vw, 0.90625rem);
-  /* product captions, kept at their size (Sami, November 2026) */
-  --step-caption: clamp(0.6875rem, 0.64rem + 0.1vw, 0.734375rem);
+  /* product captions: the price and the large photo's caption as large as
+     the product's name, which is the body size (Sami, November 2026) */
+  --step-caption: var(--step-0);
   /* footer, 2 px under the body (12.4 px at 1512 px) */
   --step-footer: clamp(0.75rem, 0.66rem + 0.12vw, 0.78125rem);
   --step-1: var(--step-0);
