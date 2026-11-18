@@ -23,22 +23,22 @@ export const shopIllustrations: Partial<Record<LineKey, Illustration[]>> = {
       caption: 'Forma na bábovku',
       // TODO(rozhodnutí): both sizes of bábovka are separate entries now.
       entry: 'babovka-velka',
-      // Sami, November 2026: the bábovka stays on the line's first view and
-      // in Ostatní; the other tabs show a piece of their own large.
+      // Sami, November 2026: the bábovka stays on the line's first view and in
+      // Ostatní; the other tabs keep one plain grid until their pieces are
+      // photographed, then they get large photos of their own here.
       on: ['ostatni'],
     },
   ],
 };
 
 /**
- * What fills the large tile of a listing: an illustration on the line's own
- * listing and on the entries it names, else the listing's ninth piece shown
- * large (Sami, November 2026). Lines without illustrations have no large tile.
+ * Whether a listing has the large tile: an illustration on the line's own
+ * listing and on the entries it names; every other listing is one plain grid
+ * (Sami, November 2026).
  */
-export function largeTileFor(line: LineKey, entry?: string): 'illustration' | 'product' | undefined {
+export function hasIllustration(line: LineKey, entry?: string): boolean {
   const pool = shopIllustrations[line] ?? [];
-  if (pool.length === 0) return undefined;
-  return !entry || pool.some((i) => i.on.includes(entry)) ? 'illustration' : 'product';
+  return pool.length > 0 && (!entry || pool.some((i) => i.on.includes(entry)));
 }
 
 /** The illustrations a listing takes turns with. */
@@ -46,13 +46,9 @@ export function illustrationsFor(line: LineKey, entry?: string): Illustration[] 
   return (shopIllustrations[line] ?? []).filter((i) => !entry || i.on.includes(entry));
 }
 
-/**
- * Products per page, six rows of five: 25 small tiles, plus 26 around an
- * illustration, or 27 when one of them is the large tile.
- */
+/** Products per page: five rows of five, or 26 around an illustration (six rows). */
 export function pageSizeFor(line: LineKey, entry?: string): number {
-  const large = largeTileFor(line, entry);
-  return large === 'illustration' ? 26 : large === 'product' ? 27 : 25;
+  return hasIllustration(line, entry) ? 26 : 25;
 }
 
 /** The illustration shows only on pages with enough pieces around it. */
