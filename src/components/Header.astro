@@ -1,6 +1,7 @@
 ---
 // Header after kosovi_homepage.pdf (Sami, November 2026): the brand on the
-// left, the studio's name a little larger at 600 points of 1512, the menu on
+// left, the studio's name a little larger on the label line (lined up with the
+// e-shop's tabs, Sami, November 2026), the menu on
 // the right ending with the language switch ("EN", on English pages "CZ").
 // The cart joins the menu only while something is in it. White on every page,
 // without a rule under it. The studio's name opens the homepage's row of
@@ -181,12 +182,4 @@ const items = [
     }
   }
 
-  /* where the row has room, the name sits where the PDF puts it: 600 of 1512
-     points, 38.4 % of the page's width inside its margins; on narrower
-     screens it stays on the label line */
-  @media (min-width: 82rem) {
-    .bar {
-      grid-template-columns: 38.4% 1fr auto;
-    }
-  }
 </style>

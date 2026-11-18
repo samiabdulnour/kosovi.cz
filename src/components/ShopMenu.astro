@@ -71,12 +71,12 @@ const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang,
           }
         </ul>
       </nav>
-      {group && drawn.length > 0 && <p class="note">{cz(note)}</p>}
     </div>
 
     {
       group && drawn.length > 0 && (
         <div class="chart" style={`--total: ${total.toFixed(2)}; --top: ${top}; --gutter: ${GUTTER}`}>
+          <p class="note">{cz(note)}</p>
           <div
             class="scroll"
             role="region"
@@ -156,8 +156,8 @@ const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang,
     text-underline-offset: 0.3em;
   }
 
-  /* The line's name at the left, the tabs on the label line, the note at the
-     right; stacked on phones. */
+  /* The line's name at the left, the tabs on the label line; stacked on
+     phones. */
   .head {
     display: grid;
     gap: var(--space-4) 0;
@@ -185,7 +185,10 @@ const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang,
     text-underline-offset: 0.3em;
   }
 
+  /* The note on sizes just above the chart's top line, at the right (Sami,
+     November 2026); on phones over the chart, which scrolls sideways. */
   .note {
+    margin-block-end: var(--space-3);
     font-family: var(--font-serif);
     font-size: 0.625rem;
     font-weight: 400;
@@ -198,9 +201,16 @@ const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang,
       grid-template-columns: var(--label-start) auto 1fr;
     }
 
+    .chart {
+      position: relative;
+    }
+
     .note {
-      justify-self: end;
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 0.55rem);
       max-width: 34rem;
+      margin: 0;
       text-align: right;
     }
 
