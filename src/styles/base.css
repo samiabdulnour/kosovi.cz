@@ -164,6 +164,34 @@ a:hover {
   margin-block-start: var(--space-2);
 }
 
+/* Long text as on O nás (kosovi_o_nas.pdf, Sami, November 2026), also on
+   Kontakt: section names in capitals at 17 px at 1512, the text in Claristik
+   at 24 px on 28, tracked 2 % (the PDF's text runs that much wider than the
+   font's own spacing). */
+.essay {
+  --text: clamp(1.0625rem, 1.5875vw, 1.5rem);
+  --line: 1.1667;
+}
+
+.essay h2 {
+  margin-block-end: calc(var(--text) * var(--line));
+  font-size: calc(var(--step-0) * 17 / 14.4);
+}
+
+.essay p {
+  max-width: none;
+  font-family: var(--font-serif);
+  font-size: var(--text);
+  font-weight: 400;
+  line-height: var(--line);
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+.essay p + p {
+  margin-block-start: calc(var(--text) * var(--line));
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;

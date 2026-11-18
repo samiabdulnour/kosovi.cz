@@ -90,7 +90,7 @@ const copy = {
   <!-- no title on the label line (Sami, November 2026); the page keeps its h1 for readers -->
   <h1 class="visually-hidden">{copy.title}</h1>
   <section class="couple" aria-labelledby="manzele-kosovi">
-    <div class="text">
+    <div class="text essay">
       <h2 id="manzele-kosovi">{copy.couple}</h2>
       {copy.coupleText.map((p) => <p>{t(p)}</p>)}
     </div>
@@ -108,7 +108,7 @@ const copy = {
 
   <section class="blue-white" aria-labelledby="modrobily-porcelan">
     <div class="wrap columns">
-      <div class="text">
+      <div class="text essay">
         <h2 id="modrobily-porcelan">{copy.blueWhite}</h2>
         {copy.blueWhiteText.map((p) => <p>{t(p)}</p>)}
       </div>
@@ -117,11 +117,11 @@ const copy = {
 
   <div class="bios">
     <div class="wrap columns">
-      <section class="text bio daniela" aria-labelledby="daniela-kosova">
+      <section class="text essay bio daniela" aria-labelledby="daniela-kosova">
         <h2 id="daniela-kosova">Daniela Kosová</h2>
         {copy.daniela.map((p) => <p>{t(p)}</p>)}
       </section>
-      <section class="text bio martin" aria-labelledby="martin-kos">
+      <section class="text essay bio martin" aria-labelledby="martin-kos">
         <h2 id="martin-kos">Martin Kos</h2>
         {copy.martin.map((p) => <p>{t(p)}</p>)}
       </section>
@@ -130,38 +130,11 @@ const copy = {
 </Base>
 
 <style>
-  /* The PDF's sizes at 1512: section names 17 px, text 24 px on 28 tracked
-     2 %, two columns 658 wide and 25 apart inside the page's margins. */
-  .couple,
-  .blue-white,
-  .bios {
-    --text: clamp(1.0625rem, 1.5875vw, 1.5rem);
-    --line: 1.1667;
-  }
-
+  /* The text's sizes are the shared .essay (src/styles/base.css); two
+     columns 658 wide and 25 apart inside the page's margins. */
   .columns {
     display: grid;
     gap: var(--space-6) clamp(1rem, 1.65vw, 1.6rem);
-  }
-
-  .text h2 {
-    margin-block-end: calc(var(--text) * var(--line));
-    font-size: calc(var(--step-0) * 17 / 14.4);
-  }
-
-  .text p {
-    max-width: none;
-    font-family: var(--font-serif);
-    font-size: var(--text);
-    font-weight: 400;
-    line-height: var(--line);
-    /* the PDF's text runs 2 % wider than the font's own spacing */
-    letter-spacing: 0.02em;
-    text-transform: none;
-  }
-
-  .text p + p {
-    margin-block-start: calc(var(--text) * var(--line));
   }
 
   /* The couple: the text on an olive field over the left half, the
