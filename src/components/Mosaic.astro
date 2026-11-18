@@ -6,13 +6,15 @@
 // corner when the pointer is over it (Sami, November 2026); on touch screens,
 // which have no pointer to hover, the name always shows. On phones the
 // photographs stand one under another and the colour fields drop out.
-import { Image } from 'astro:assets';
+// A video plays silent in a loop, unless the visitor asked for less motion;
+// a button over it stops and restarts it (moving pictures need one).
+import { getImage, Image } from 'astro:assets';
 import { mosaicWidth, type Author, type MosaicItem, type MosaicRow } from '../config/home';
 import { getLine } from '../config/lines';
 import { makers } from '../config/site';
 import { collectionPath, pathOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
+import { useTranslations, withBase } from '../i18n/utils';
 
 interface Props {
   rows: MosaicRow[];
@@ -20,6 +22,7 @@ interface Props {
 }
 
 const { rows, lang } = Astro.props;
+const t = useTranslations(lang);
 const blueWhite = getLine('spolecna');
 const authors: Record<Author, { name: string; href: string }> = {
   daniela: { name: makers.daniela.name, href: pathOf('daniela', lang) },
@@ -37,6 +40,16 @@ const place = (i: MosaicItem) => {
   const { x, w } = clampItem(i);
   return `--x: ${pct(x)}; --w: ${pct(w)}`;
 };
+
+// Posters for the videos, made at build time like any other image.
+const posters = new Map(
+  await Promise.all(
+    rows
+      .flatMap((row) => row.items)
+      .filter((item) => item.video)
+      .map(async (item) => [item, await getImage({ src: item.video!.poster, width: 576, format: 'webp' })] as const),
+  ),
+);
 ---
 
 <div class="mosaic">
@@ -45,6 +58,18 @@ const place = (i: MosaicItem) => {
       <div class="row" id={row.id} style={`--h: ${row.h}`}>
         {row.items.map((item) => {
           const { w } = clampItem(item);
+          if (item.video)
+            return (
+              <span class="photo" style={`${place(item)}; --ratio: ${w} / ${row.h}`} data-video>
+                <video muted loop playsinline preload="auto" poster={posters.get(item)?.src} aria-label={item.video.label}>
+                  <source src={item.video.src} type="video/mp4" />
+                  {item.video.webm && <source src={item.video.webm} type="video/webm" />}
+                </video>
+                <button class="video-toggle" type="button" data-pause={t('video.pause')} data-play={t('video.play')}>
+                  {t('video.pause')}
+                </button>
+              </span>
+            );
           if (!item.photo) return <span class="area" style={`${place(item)}; background: ${item.color}`} aria-hidden="true" />;
           const image = (
             <Image
@@ -98,12 +123,34 @@ const place = (i: MosaicItem) => {
     overflow: hidden;
   }
 
-  .photo :global(img) {
+  .photo :global(img),
+  .photo video {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  /* Stop and restart: in the corner, shown with the pointer over the video or
+     when focused, always on touch screens. */
+  .video-toggle {
+    position: absolute;
+    right: clamp(0.5rem, 1vw, 0.9rem);
+    bottom: clamp(0.5rem, 1vw, 0.9rem);
+    padding: var(--space-1) var(--space-2);
+    border: 0;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-size: calc(var(--step--1) + 2px);
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  [data-video]:hover .video-toggle,
+  .video-toggle:focus-visible {
+    opacity: 1;
   }
 
   /* The author's name in the top corner, on the page's margin where the
@@ -131,13 +178,15 @@ const place = (i: MosaicItem) => {
   }
 
   @media (hover: none) {
-    .name {
+    .name,
+    .video-toggle {
       opacity: 1;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .name {
+    .name,
+    .video-toggle {
       transition: none;
     }
   }
@@ -172,3 +221,25 @@ const place = (i: MosaicItem) => {
     }
   }
 </style>
+
+<script>
+  // Videos play silent in a loop, except for visitors who asked for less
+  // motion; the button stops and restarts them.
+  const lessMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (const cell of document.querySelectorAll<HTMLElement>('[data-video]')) {
+    const video = cell.querySelector('video');
+    const button = cell.querySelector<HTMLButtonElement>('.video-toggle');
+    if (!video || !button) continue;
+    const show = () => {
+      button.textContent = (video.paused ? button.dataset.play : button.dataset.pause) ?? '';
+    };
+    video.addEventListener('play', show);
+    video.addEventListener('pause', show);
+    button.addEventListener('click', () => {
+      if (video.paused) void video.play();
+      else video.pause();
+    });
+    if (!lessMotion) video.play().catch(show);
+    show();
+  }
+</script>

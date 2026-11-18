@@ -4,7 +4,9 @@
 // freely, the page reads them at build time.
 import type { ImageMetadata } from 'astro';
 import blackTeapots from '../assets/home/konvice-cerne.jpg';
-import paintingPlates from '../assets/home/malovani-talire.jpg';
+import paintingPoster from '../assets/home/malovani-talire-nahled.jpg';
+import paintingVideo from '../assets/home/malovani-talire.mp4?url';
+import paintingVideoWebm from '../assets/home/malovani-talire.webm?url';
 import babovka from '../assets/home/modrobily-babovka.jpg';
 import fishPlates from '../assets/home/modrobily-talire-s-rybami.jpg';
 import platesWithCockerel from '../assets/home/daniela-talire-s-kohoutem.jpg';
@@ -57,9 +59,11 @@ export interface MosaicItem {
   /** Left edge and width in points on the PDF's frame, 1512 wide. */
   x: number;
   w: number;
-  /** A flat colour field, or a photograph. */
+  /** A flat colour field, a photograph, or a silent looping video. */
   color?: string;
   photo?: { src: ImageMetadata; alt: string };
+  /** MP4 (H.264) for every browser, WebM (VP9) for those without H.264. */
+  video?: { src: string; webm?: string; poster: ImageMetadata; label: string };
   by?: Author;
   /** The name in white, on a dark photograph. */
   light?: boolean;
@@ -77,14 +81,26 @@ export interface MosaicRow {
 export const mosaicWidth = 1512;
 
 // The top row, under the header, in place of the former moving photo strip
-// (Sami, November 2026). No names in the PDF, so the photos open nothing.
+// (Sami, November 2026). No names in the PDF, so the pictures open nothing.
+// The hand painting plates is Sami's video (IMG_1295.MOV, November 2026),
+// encoded silent at 576 × 960 as H.264 MP4 and VP9 WebM; its first frame is
+// the poster.
 export const topRow: MosaicRow = {
   h: 631,
   items: [
     { x: 0, w: 165, color: '#c6e9f9' },
     { x: 530, w: 689, color: '#d6cf93' },
     { x: 1218, w: 294, color: '#c6e9f9' },
-    { x: 164, w: 383, photo: { src: paintingPlates, alt: 'Ruka maluje obličej na bílý talíř, vedle talíř s ženskou tváří, na růžovém pozadí' } },
+    {
+      x: 164,
+      w: 383,
+      video: {
+        src: paintingVideo,
+        webm: paintingVideoWebm,
+        poster: paintingPoster,
+        label: 'Ruka maluje štětcem obličej na bílý talíř, vedle talíř s ženskou tváří, na růžovém pozadí',
+      },
+    },
     { x: 634, w: 878, photo: { src: blackTeapots, alt: 'Dvě černé kulaté konvice s bílými uchy a výlevkami na oranžovém pozadí' } },
   ],
 };
