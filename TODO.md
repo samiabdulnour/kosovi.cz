@@ -18,8 +18,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Stránka produktu: krátké texty u jiných druhů než hrnků jsou návrh podle hrnku a ověřených faktů (`src/config/descriptions.ts`), potřebují Samiho schválení. Chybí péče o konvice s ratanovým uchem a jestli formy na bábovku smějí do trouby.
 - [x] Stránka produktu: podpis autorů odstraněn (Sami, listopad 2026).
 - [x] Stránka produktu podle `kosovi_detail_produktu.pdf` (Sami, listopad 2026): větší fotka, tlačítka okrovou, druhy záložky na skrytém okrovém panelu, který vyjede po najetí kurzorem, související kusy na zeleném pásu. Kresba velikosti zmizela.
-- [ ] Stránka produktu: „Šířka“ ukazuje průměr z dat (popisy starého e-shopu uvádějí průměr). „100% porcelán“ je zatím jen u modrobílého porcelánu bez konvic s ratanovým uchem. Platí i pro Martinovy a Danieliny kusy?
-- [ ] Text u hrnků podle nového PDF: „…do myčky i mikrovlnné trouby.“ Předchozí PDF mělo navíc „i ledničky“. Platí kratší verze?
+- [x] Stránka produktu: místo „Šířka“ z PDF „Průměr“ (Sami, listopad 2026).
+- [x] „100% porcelán“ u všech kusů kromě konvic a čajových souprav s ratanovým uchem (Sami, listopad 2026).
+- [x] Text u hrnků: „…do myčky, mikrovlnné trouby i ledničky.“ (Sami, listopad 2026).
 - [ ] Stránky Martina a Daniely (`kosovi_daniela_martin.pdf`): fotky z PDF jsou nové úpravy starých fotek z e-shopu (nové pozadí). Nahradit jimi i fotky těch výrobků v e-shopu? Má Sami ty úpravy ve větším rozlišení (v PDF mají kolem 900 × 1 055 px)?
 - [ ] Stránky Martina a Daniely: druhá strana PDF má nadpis „Martin Kos“, ale jsou na ní Danieliny šálky, použita pro Danielu. Velké fotky nahoře nikam nevedou (mísa s víkem a miska s ovocem v e-shopu nejsou). Stránky „Volná tvorba“ zůstaly, ale nic na ně nevede: zrušit?
 - [ ] Stránka produktu, fotky: okraje čtverce 531 × 501 jsou zatím doplněné barvou okrajů fotky (`src/lib/edges.ts`). Sami doplní pozadí fotek.
