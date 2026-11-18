@@ -6,8 +6,10 @@
 // each across the whole width. Section names in capitals, the text in
 // Claristik at 24 px on 28 at 1512 (the PDF's sizes).
 // The Czech text is Sami's (the PDF); the biographies are Daniela's and
-// Martin's own from the old site. Only typing errors and punctuation are
-// corrected. The English is a working translation (phase 6).
+// Martin's own from the old site. Typing errors and punctuation are
+// corrected, and the praise toned down on Sami's request (November 2026):
+// no superlatives, description in place of verdicts, no new facts. The
+// English is a working translation (phase 6).
 import { Image } from 'astro:assets';
 import couplePhoto from '../assets/pages/o-nas/manzele-kosovi.jpg';
 import Base from '../layouts/Base.astro';
@@ -28,28 +30,28 @@ const copy = {
     description: 'Daniela a Martin Kosovi, výtvarníci a porcelánový ateliér v Praze 6. Modrobílý porcelán od roku 1995 a autorská tvorba obou.',
     couple: 'Manželé Kosovi',
     coupleText: [
-      'Daniela a Martin Kosovi tvoří ve svém pražském ateliéru už desítky let. Jejich práce se pohybují v rozmezí jídelního porcelánu až po výtvarné objekty, které zkrášlují jak vnitřní, tak venkovní prostory. Lidé znají především jejich modrobílý porcelán, který zdobí nemálo domácností v Česku i ve světě. Je technicky precizní, a přesto každý kus originál.',
+      'Daniela a Martin Kosovi tvoří ve svém pražském ateliéru už desítky let. Jejich práce sahají od jídelního porcelánu po výtvarné objekty pro vnitřní i venkovní prostory. Lidé znají především jejich modrobílý porcelán, který se používá v řadě domácností v Česku i v zahraničí. Každý kus je ručně točený i malovaný, a proto se jeden od druhého trochu liší.',
       'Martin je vyučený hrnčíř. Hrnčířskému kruhu je věrný od dětství a pracuje převážně s porcelánem. Daniela často čerpá ze své pohádkové představivosti. Její díla jsou doprovázena kresbou nebo barvou. Ve své tvorbě využívá mnoho odlišných technik.',
     ],
     photoAlt: 'Martin a Daniela Kosovi se dívají dalekohledy, za nimi zděná stavba s velkými okny',
     blueWhite: 'Modrobílý porcelán',
     blueWhiteText: [
-      'Výrobky z modrobílého porcelánu vynikají jak svým elegantním vzhledem, tak i vysokou technologickou hodnotou. Všechny produkty jsou točeny z technického porcelánu, který se původně používal na elektrické izolátory, jež jsou celoročně vystavované těžkým venkovním podmínkám.',
-      'Tento materiál není nějak zdravotně závadný, ale práce s ním je náročnější než s klasickým porcelánem či keramikou. Samotná výroba má několik etap, které zaručují kvalitu konečného výrobku.',
-      'Každý produkt je točen na hrnčířském kruhu a prochází dvěma výpaly. Po prvním výpalu v elektrické peci je výrobek ručně malován voskem a poté ponořen do kobaltu, který zaručuje jeho krásnou modrou barvu. Následně je střep ponořen do průhledné glazury, která zajistí nestíratelnost dekoru. Díky druhému, vysokému výpalu na 1 380 °C v plynové peci se všechny vrstvy slijí.',
-      'Takto vznikne dokonale slitý střep vysoké odolnosti, který můžete použít například i jako zapékací mísu, vkládat ho do myčky nebo mikrovlnné trouby.',
+      'Všechny výrobky z modrobílého porcelánu jsou točené z technického porcelánu. Ten se původně používal na elektrické izolátory, které jsou celý rok vystavené těžkým venkovním podmínkám.',
+      'Materiál je zdravotně nezávadný, práce s ním je ale náročnější než s klasickým porcelánem či keramikou.',
+      'Každý produkt je točen na hrnčířském kruhu a prochází dvěma výpaly. Po prvním výpalu v elektrické peci je výrobek ručně malován voskem a poté ponořen do kobaltu, který mu dává modrou barvu. Následně je střep ponořen do průhledné glazury, díky které se dekor neotírá. Při druhém, vysokém výpalu na 1 380 °C v plynové peci se všechny vrstvy slijí.',
+      'Vznikne tak slitý a odolný střep. Výrobky z něj můžete dávat do myčky i do mikrovlnné trouby a použít je třeba i jako zapékací mísu.',
     ],
     daniela: [
       'Narodila jsem se v Bratislavě. Od dětství mě bavilo kreslení a modelování. Ve svém rodném městě jsem také vystudovala keramiku na střední škole uměleckého průmyslu, a poté jsem pokračovala na pražské UMPRUM. Za zásadní ve svém uměleckém vzdělání považuji sochařskou a keramickou praxi v ateliéru Andreje Rudavského a praxi v porcelánových fabrikách v Dubí a Duchcově.',
-      'Největší inspirací je pro mne porcelán, protože je ve svém oboru takový „Rolls-Royce“. Jedná se o materiál velmi něžný, citlivý a především krásný. Práce s ním je sice technologicky velice náročná, ale poskytuje řadu možností, jak v oblasti tvarování, tak i dekorování.',
-      'Při dekorování používám různé technologie, jak podglazurové vypalované na 1 390 stupňů Celsia, vtavné vypalované na 1 250 stupňů, tak i naglazurové včetně zlacení (výpal na 800 stupňů). Tato tvorba je jednou z nejúžasnějších činností, které v životě mohu dělat. Jsem za to velmi vděčná.',
+      'Největší inspirací je pro mne porcelán. Je to materiál velmi něžný, citlivý a krásný. Práce s ním je sice technologicky velice náročná, ale poskytuje řadu možností, jak v oblasti tvarování, tak i dekorování.',
+      'Při dekorování používám různé technologie, jak podglazurové vypalované na 1 390 stupňů Celsia, vtavné vypalované na 1 250 stupňů, tak i naglazurové včetně zlacení (výpal na 800 stupňů). Tuto práci mám velmi ráda a jsem za ni vděčná.',
       'S mou prací se mimo jiné můžete setkat ve sbírkách Uměleckoprůmyslového muzea v Praze, Jihočeské Alšově galerii, ve Slovenském centru designu v Bratislavě, v muzeu Darney ve Francii, v Porvoo ve Finsku a v mnohých soukromých sbírkách u nás i v zahraničí.',
     ],
     martin: [
       'Narodil jsem se roku 1959 v Hradci Králové. Oba mí rodičové, povoláním keramici, mne vedli k lásce k tomuto povolání už jako dítě školou povinné. O prázdninách jsem docházel do hrnčířské dílny v Týništi nad Orlicí, kde jsem se později i vyučil hrnčířem. Následně jsem absolvoval SPŠK v Bechyni stejně jako mí rodičové, a dokonce i můj děda.',
-      'Po maturitě jsem pracoval v Družstvu Umělecké Výroby Keramo Praha a od roku 1987 jsem začal tvořit samostatně. Mým cílem bylo vždy vyrábět co možná nejdokonaleji řemeslně vyrobené zboží, za které by mne pochválil můj děda i jiní staří mistři, které jsem poznal v učení i na různých hrnčířských soutěžích.',
-      'Časem jsem se naučil točit na hrnčířském kruhu i z porcelánu a po poznání jeho velkých kvalit a předností, oproti klasické keramice, jsem se už ke keramice nevrátil. Již přes 25 let tak pracuji jenom s porcelánem. Poznal jsem, že porcelán je velmi náročný na zpracování, avšak výrobky z tohoto materiálu jsou velmi kvalitní, doslova hodny královské tabule.',
-      'Zboží, které vyrábím, si lidé nekupují proto, že ho nutně potřebují k životu, ale hlavně proto, že se jim líbí a pravidelným užíváním poznali jeho kvalitu. Tato skutečnost mne těší a je mi motorem se stále zlepšovat a vyrábět stále kvalitnější a oku milejší zboží. Stále je co se učit a stále je prostor pro zdokonalení.',
+      'Po maturitě jsem pracoval v Družstvu Umělecké Výroby Keramo Praha a od roku 1987 jsem začal tvořit samostatně. Vždy jsem chtěl vyrábět zboží, za jehož řemeslné zpracování by mne pochválil můj děda i jiní staří mistři, které jsem poznal v učení i na různých hrnčířských soutěžích.',
+      'Časem jsem se naučil točit na hrnčířském kruhu i z porcelánu, a když jsem poznal jeho přednosti oproti klasické keramice, ke keramice jsem se už nevrátil. Již přes 25 let tak pracuji jenom s porcelánem. Poznal jsem, že je velmi náročný na zpracování, ale výrobky z něj jsou pevné a odolné.',
+      'Zboží, které vyrábím, si lidé nekupují proto, že ho nutně potřebují k životu, ale hlavně proto, že se jim líbí a při každodenním používání se jim osvědčilo. To mne těší a je mi motorem se stále zlepšovat. Stále je co se učit a stále je prostor pro zdokonalení.',
     ],
   },
   en: {
@@ -57,28 +59,28 @@ const copy = {
     description: 'Daniela and Martin Kos, artists and a porcelain studio in Prague 6. Blue and white porcelain since 1995 and the artwork of both.',
     couple: 'Daniela and Martin Kos',
     coupleText: [
-      'Daniela and Martin Kos have worked in their Prague studio for decades. Their work ranges from tableware to art objects for indoor and outdoor spaces alike. People know them above all for their blue and white porcelain, which is at home in many households in the Czech Republic and abroad. It is technically precise, and yet every piece is one of a kind.',
+      'Daniela and Martin Kos have worked in their Prague studio for decades. Their work ranges from tableware to art objects for indoor and outdoor spaces. People know them above all for their blue and white porcelain, which is in use in many homes in the Czech Republic and abroad. Every piece is thrown and painted by hand, so no two are quite alike.',
       'Martin is a trained potter. He has stayed with the potter’s wheel since childhood and works mostly in porcelain. Daniela often draws on her fairy-tale imagination. Her works come with drawing or colour. She uses many different techniques in her work.',
     ],
     photoAlt: 'Martin and Daniela Kos looking through binoculars, a brick building with large windows behind them',
     blueWhite: 'Blue and white porcelain',
     blueWhiteText: [
-      'The blue and white porcelain stands out both for its look and for its technical quality. Every piece is thrown from technical porcelain, the material once used for electrical insulators, which stand outdoors in harsh conditions all year round.',
-      'The material is in no way harmful to health, but it is harder to work than ordinary porcelain or pottery. Making it takes several stages, which secure the quality of the finished piece.',
+      'All the blue and white pieces are thrown from technical porcelain. It was first used for electrical insulators, which stand outdoors in harsh conditions all year round.',
+      'The material is safe for food, but it is harder to work than ordinary porcelain or pottery.',
       'Every piece is thrown on the potter’s wheel and fired twice. After the first firing in an electric kiln, it is painted by hand with wax and then dipped in cobalt, which gives it its blue colour. Then it is dipped in a clear glaze, which keeps the decoration from wearing off. In the second, high firing at 1,380 °C in a gas kiln, all the layers fuse.',
-      'The result is a fully fused, highly durable body that you can use as an oven dish, for example, or put in the dishwasher or the microwave.',
+      'The result is a fused, durable body. The pieces can go in the dishwasher and the microwave, and you can use them as an oven dish too.',
     ],
     daniela: [
       'I was born in Bratislava. Since childhood I have loved drawing and modelling. In my home town I studied ceramics at the secondary school of applied arts, and then went on to UMPRUM in Prague. I consider the sculpture and ceramics training in Andrej Rudavský’s studio and the practice in the porcelain factories in Dubí and Duchcov essential to my artistic education.',
-      'My greatest inspiration is porcelain, because in its field it is a kind of Rolls-Royce. It is a very delicate, sensitive and above all beautiful material. Working with it is technically very demanding, but it offers many possibilities in both shaping and decoration.',
-      'I decorate with various techniques: underglaze, fired at 1,390 °C, in-glaze, fired at 1,250 °C, and overglaze including gilding (fired at 800 °C). This work is one of the most wonderful things I can do in life. I am very grateful for it.',
+      'My greatest inspiration is porcelain. It is a very delicate, sensitive and beautiful material. Working with it is technically very demanding, but it offers many possibilities in both shaping and decoration.',
+      'I decorate with various techniques: underglaze, fired at 1,390 °C, in-glaze, fired at 1,250 °C, and overglaze including gilding (fired at 800 °C). I love this work and I am grateful for it.',
       'My work can be found in the collections of the Museum of Decorative Arts in Prague, the Aleš South Bohemian Gallery, the Slovak Design Centre in Bratislava, the museum in Darney in France, Porvoo in Finland, and in many private collections at home and abroad.',
     ],
     martin: [
       'I was born in 1959 in Hradec Králové. My parents, both ceramicists, led me to love the craft when I was still a schoolboy. In the holidays I went to a pottery workshop in Týniště nad Orlicí, where I later trained as a potter. Then I graduated from the ceramics school in Bechyně, like my parents and even my grandfather.',
-      'After school I worked at the Keramo Praha arts and crafts cooperative, and in 1987 I began working on my own. My aim has always been to make craftwork as well as I possibly can, work that my grandfather and the other old masters I met in my training and at pottery competitions would praise.',
-      'In time I learned to throw porcelain on the wheel too, and once I knew its great qualities and its advantages over pottery, I never went back. For more than 25 years I have worked only in porcelain. I have learned that porcelain is very demanding to work, but what is made from it is of high quality, truly fit for a royal table.',
-      'People do not buy what I make because they need it to live, but mainly because they like it and have come to know its quality through everyday use. That pleases me and drives me to keep improving and to make ever better things that are a pleasure to look at. There is always more to learn and always room to improve.',
+      'After school I worked at the Keramo Praha arts and crafts cooperative, and in 1987 I began working on my own. I have always wanted to make things whose craftsmanship my grandfather and the other old masters I met in my training and at pottery competitions would praise.',
+      'In time I learned to throw porcelain on the wheel too, and once I knew its advantages over pottery, I never went back. For more than 25 years I have worked only in porcelain. I have learned that it is very demanding to work, but what is made from it is strong and durable.',
+      'People do not buy what I make because they need it to live, but mainly because they like it and it has proved itself in everyday use. That pleases me and drives me to keep improving. There is always more to learn and always room to improve.',
     ],
   },
 }[lang];
