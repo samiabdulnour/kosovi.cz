@@ -76,3 +76,4 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 
 - [ ] Odstranit poznámky k náhledu (`src/components/wire/`) a stránku `/struktura/`.
 - [ ] Odstranit lištu náhledu a `noindex` (řídí je proměnná `PUBLIC_PREVIEW_LABEL`, v produkci se nenastavuje).
+- [ ] Projít další fotky produktů (druhá a další fotka vedle hlavní): starý e-shop některým produktům přiřadil fotky jiných kusů (hrnek bílý s kolem, opraveno). Sami to chce projít až na konec.
