@@ -38,9 +38,6 @@ export interface MenuSet {
 export interface MenuGroup extends MenuItem {
   items: MenuItem[];
   sets?: MenuSet[];
-  /** Sizes under the drawings in the size chart. kosovi_eshop_vektory.pdf
-   *  gives them for the teapots only; the mugs keep theirs (Sami's screen). */
-  chartSizes?: boolean;
 }
 
 export interface Line {
@@ -77,7 +74,6 @@ export const lines: Line[] = [
         slug: 'hrnky',
         name: 'Hrnky',
         match: all('hrnky'),
-        chartSizes: true,
         items: [
           { slug: 'pitny-rezim', name: 'Pitný režim', silhouette: 'pitny-rezim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
           { slug: 'hrnek-velky', name: 'Hrnek velký', silhouette: 'hrnek-velky', match: [{ category: 'hrnky', subcategory: 'velky' }] },
@@ -98,9 +94,10 @@ export const lines: Line[] = [
         items: [
           { slug: 'talir-zavesny', name: 'Talíř závěsný', silhouette: 'talir-zavesny', match: [{ category: 'talire', subcategory: 'talire-zavesne-talire' }] },
           { slug: 'talir-praktik', name: 'Talíř Praktik', silhouette: 'talir-praktik', match: [{ category: 'talire', subcategory: 'talir-praktik' }] },
-          { slug: 'talir-jidelni', name: 'Talíř jídelní', silhouette: 'talir-jidelni', match: [] },
-          { slug: 'talir-desertni', name: 'Talíř desertní', silhouette: 'talir-desertni', match: [] },
-          { slug: 'talir-polevkovy', name: 'Talíř polévkový', silhouette: 'talir-polevkovy', match: [] },
+          // the dinner set's plates open the dinner set, made to order (Sami, November 2026)
+          { slug: 'talir-jidelni', name: 'Talíř jídelní', silhouette: 'talir-jidelni', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
+          { slug: 'talir-desertni', name: 'Talíř desertní', silhouette: 'talir-desertni', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
+          { slug: 'talir-polevkovy', name: 'Talíř polévkový', silhouette: 'talir-polevkovy', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
         ],
         sets: [{ name: 'Jídelní soupravy', items: ['talir-jidelni', 'talir-desertni', 'talir-polevkovy'] }],
       },
@@ -119,7 +116,6 @@ export const lines: Line[] = [
         slug: 'konvice',
         name: 'Konve',
         match: all('konvice-rovne', 'konvice-kulate'),
-        chartSizes: true,
         items: [
           { slug: 'konev-rovna-velka', name: 'Konev rovná velká', silhouette: 'konev-rovna-velka', match: [{ category: 'konvice-rovne', subcategory: 'velka' }] },
           { slug: 'konev-kulata-velka', name: 'Konev kulatá velká', silhouette: 'konev-kulata-velka', match: [{ category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' }] },

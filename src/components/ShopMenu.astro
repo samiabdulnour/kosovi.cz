@@ -5,9 +5,9 @@
 // list at the left, the open one underlined; from the ruler to the screen's
 // edge the open tab's kinds as white line drawings to scale, each where the
 // PDF puts it (data-x in its SVG), standing on a floor line, with short 10,
-// 20 and 30 cm ticks at the left. The name sits under each drawing, with the
-// size where the tab shows sizes (chartSizes: mugs and teapots); kinds sold
-// as a set (Jídelní soupravy) share a line and a name over theirs.
+// 20 and 30 cm ticks at the left. The name and, where the data has it, the
+// size sit under each drawing (Sami, November 2026); kinds sold as a set
+// (Jídelní soupravy) share a line and a name over theirs.
 // The chosen kind is filled dark blue. The size is the menu's own where it
 // has one, else the height in the product data (the diameter where there is
 // no height), rounded to whole centimetres.
@@ -43,7 +43,7 @@ const drawn = await Promise.all(
     .map(async (item) => ({
       item,
       shape: silhouette(item.silhouette!),
-      size: group?.chartSizes ? await kindSize(line.key, item) : undefined,
+      size: await kindSize(line.key, item),
     })),
 );
 const extent = Math.max(0, ...drawn.map((d) => d.shape.x + d.shape.w)) + 2;

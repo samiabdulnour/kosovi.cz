@@ -16,10 +16,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF). Kresby jsou teď Samiho z `kosovi_eshop_vektory.pdf`.
 - [x] Talíře a Misky a mísy jsou dvě záložky (Sami, listopad 2026).
 - [x] Úvod e-shopu podle `kosovi_eshop_vektory.pdf` (Sami, listopad 2026): nové kresby pro všech šest záložek, „Konve“ místo „Konvice“, „Talíř desertní“ místo „Talíř malý“, „Miska polévková“ místo „Miska velká“ (staré „Polévka/Snídaně“).
-- [ ] Úvod e-shopu, míry pod kresbami: PDF je uvádí jen u konví, u hrnků nejsou ani názvy. Na webu mají názvy všechny kresby, míry hrnky a konve. Kresby u ostatních záložek se od dat liší (cukřenka velká má v datech 7 cm, na kresbě 12 cm; talíř Praktik ⌀ 28 cm, na kresbě 20 cm; bábovka velká 10 cm, na kresbě 14,6 cm). Mají se míry ukázat i jinde, nebo kresby upravit?
-- [ ] Úvod e-shopu, konve: PDF má u kulaté střední 17 cm (a název „Konev kulatá velká“), data 19 cm. Web ukazuje 19 cm z dat.
-- [ ] Úvod e-shopu: značka 30 cm je na webu ve skutečné výšce 30 cm, v PDF je o 1,2 cm níž (u řádku s názvem řady).
-- [ ] Talíř jídelní, desertní a polévkový (Jídelní soupravy) nemají ve starém e-shopu žádné kusy, jejich výpisy jsou prázdné. Jediná „Jídelní souprava“ je jen v záložce Talíře.
+- [x] Úvod e-shopu: míry pod všemi kresbami, u kterých je data znají (Sami, listopad 2026). Kresby se od dat místy liší (cukřenka velká 7 cm v datech, 12 cm na kresbě; talíř Praktik ⌀ 28 cm, na kresbě 20 cm), každý kus je originál, takže to nevadí (Sami). Konev kulatá střední zůstává 19 cm z dat.
+- [x] Úvod e-shopu: značka 30 cm ve skutečné výšce (Sami, listopad 2026).
+- [x] Talíř jídelní, desertní a polévkový vedou na jídelní soupravu (Sami, listopad 2026).
 - [ ] Stránka produktu: krátké texty u jiných druhů než hrnků jsou návrh podle hrnku a ověřených faktů (`src/config/descriptions.ts`), potřebují Samiho schválení. Chybí péče o konvice s ratanovým uchem a jestli formy na bábovku smějí do trouby.
 - [x] Stránka produktu: podpis autorů odstraněn (Sami, listopad 2026).
 - [x] Stránka produktu podle `kosovi_detail_produktu.pdf` (Sami, listopad 2026): větší fotka, tlačítka okrovou, druhy záložky na skrytém okrovém panelu, který vyjede po najetí kurzorem, související kusy na zeleném pásu. Kresba velikosti zmizela.
