@@ -1,9 +1,10 @@
 // The makers' pages. Martin's after docs/design/kosovi_martin.pdf (Sami,
 // November 2026): five rows of photographs on colour fields across the whole
 // width, as on the homepage (src/components/Mosaic.astro), each with its
-// caption on hover; the first row opens his vases, teapots and tea sets in the
-// e-shop, the others the piece they show, or the vases where the piece is not
-// in the e-shop. The photos are the PDF's own (src/assets/artists/martin/).
+// caption on hover and opening its category in his part of the e-shop (vases,
+// teapots and tea sets, stamped mugs); a photo in none of them opens nothing
+// for now (Sami, November 2026). The photos are the PDF's own
+// (src/assets/artists/martin/).
 //
 // Daniela's after docs/design/kosovi_daniela_martin.pdf (Sami, November
 // 2026): under the label a composition of colour fields and two photographs
@@ -101,14 +102,14 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 437.4,
             w: 551.3,
             caption: { cs: 'Konve', en: 'Teapots' },
-            shop: { line: 'martin', entry: 'konve-solitery' },
+            shop: { line: 'martin', entry: 'konve-a-cajove-soupravy' },
             photo: { src: mKonve, alt: 'Zelená konvice s plastickým dekorem a ratanovým uchem na žlutém pozadí' },
           },
           {
             x: 988.7,
             w: 523.3,
             caption: { cs: 'Čajové soupravy', en: 'Tea sets' },
-            shop: { line: 'martin', entry: 'cajove-soupravy' },
+            shop: { line: 'martin', entry: 'konve-a-cajove-soupravy' },
             photo: { src: mCajoveSoupravy, alt: 'Světle modrá čajová souprava: konvice s rýhovaným tělem a tři misky' },
           },
         ],
@@ -121,7 +122,7 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 54.6,
             w: 848.2,
             caption: { cs: 'Vázy s vážkami', en: 'Vases with dragonflies' },
-            product: 'vaza-s-vazkami',
+            shop: { line: 'martin', entry: 'vazy' },
             light: true,
             photo: { src: mVazySVazkami, alt: 'Dvě kulaté vázy a vysoká váza s malovanými vážkami na modrém pozadí' },
           },
@@ -142,10 +143,10 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 0,
             w: 390,
             caption: { cs: 'Hrnek razítko', en: 'Stamped mug' },
-            product: 'hrnek-stredni-s-razitkem-ctverce-2',
+            shop: { line: 'martin', entry: 'hrnky-s-razitkem' },
             photo: { src: mHrnekRazitko1, alt: 'Šedý hrnek s razítkem čtverců' },
           },
-          // not in the e-shop, so it opens nothing
+          // in none of the three categories, so it opens nothing for now (Sami, November 2026)
           {
             x: 444.4,
             w: 523.7,
@@ -156,7 +157,7 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 1021.4,
             w: 490.6,
             caption: { cs: 'Hrnek razítko', en: 'Stamped mug' },
-            product: 'hrnek-maly-s-razitkem-dulku',
+            shop: { line: 'martin', entry: 'hrnky-s-razitkem' },
             photo: { src: mHrnekRazitko2, alt: 'Zelený hrnek s razítkem důlků' },
           },
         ],
@@ -176,14 +177,14 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 555.1,
             w: 538.9,
             caption: { cs: 'Čajová souprava', en: 'Tea set' },
-            product: 'cajova-souprava-5',
+            shop: { line: 'martin', entry: 'konve-a-cajove-soupravy' },
             photo: { src: mCajovaSouprava, alt: 'Čajová souprava: konvice s ratanovým uchem a tři misky s modrou malbou na žlutém pozadí' },
           },
           {
             x: 1094,
             w: 418,
             caption: { cs: 'Váza', en: 'Vase' },
-            product: 'modra-vaza',
+            shop: { line: 'martin', entry: 'vazy' },
             photo: { src: mVazaModra, alt: 'Vysoká váza s modrým vlnitým dekorem' },
           },
         ],
@@ -196,7 +197,7 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 272.1,
             w: 508.8,
             caption: { cs: 'Zlaté konvičky', en: 'Gilded pots' },
-            product: 'konvicka-pozlacena',
+            shop: { line: 'martin', entry: 'konve-a-cajove-soupravy' },
             light: true,
             photo: { src: mZlateKonvicky, alt: 'Dva šálky zlacené uvnitř na zeleném pozadí' },
           },

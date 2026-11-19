@@ -50,6 +50,8 @@ export interface Line {
   /** Credit shown on a product unless its own data says otherwise. */
   defaultMakers: Makers;
   menu: MenuGroup[];
+  /** Listings open with the e-shop's ochre band and tabs even without a size chart. */
+  band?: boolean;
 }
 
 const all = (...categories: string[]): Match[] => categories.map((category) => ({ category }));
@@ -159,21 +161,23 @@ export const lines: Line[] = [
     name: { cs: 'Martin Kos', en: 'Martin Kos' },
     makers: ['martin'],
     defaultMakers: { thrownBy: 'martin' },
+    // Three categories, after the photos Sami chose for them (Dropbox, November
+    // 2026): the tea set 1 is not among them yet. In the e-shop's band, without
+    // the size chart (Sami, November 2026).
     menu: [
-      { slug: 'cajove-soupravy', name: 'Čajové soupravy', match: all('cajove-soupravy'), items: [] },
-      { slug: 'konve-solitery', name: 'Konve solitéry', match: all('konve-solitery'), items: [] },
       { slug: 'vazy', name: 'Vázy', match: all('vazy'), items: [] },
       {
-        slug: 'hrnky-s-plastickym-dekorem',
-        name: 'Hrnky s plastickým dekorem',
-        match: all('hrnky-s-plastickym-dekorem'),
-        items: [
-          { slug: 'hrnek-maly', name: 'Hrnek malý', match: [{ category: 'hrnky-s-plastickym-dekorem', subcategory: 'maly-hrnky-s-razitkem' }] },
-          { slug: 'hrnek-stredni', name: 'Hrnek střední', match: [{ category: 'hrnky-s-plastickym-dekorem', subcategory: 'stredni-hrnky-s-razitkem' }] },
-          { slug: 'hrnek-velky', name: 'Hrnek velký', match: [{ category: 'hrnky-s-plastickym-dekorem', subcategory: 'velky-hrnky-s-razitkem' }] },
+        slug: 'konve-a-cajove-soupravy',
+        name: 'Konve a čajové soupravy',
+        match: [
+          { category: 'konve-solitery' },
+          { category: 'cajove-soupravy', slugs: ['cajova-souprava-3', 'cajova-souprava-4', 'cajova-souprava-5'] },
         ],
+        items: [],
       },
+      { slug: 'hrnky-s-razitkem', name: 'Hrnky s razítkem', match: all('hrnky-s-plastickym-dekorem'), items: [] },
     ],
+    band: true,
   },
   {
     key: 'daniela',
@@ -252,6 +256,11 @@ export function matches(entry: MenuItem, product: { category?: string; subcatego
 /** A line whose menu is tabs with a size chart (kosovi_eshop_2.pdf). */
 export function hasSizeChart(line: Line): boolean {
   return line.menu.some((group) => group.items.some((item) => item.silhouette));
+}
+
+/** A line whose listings open with the e-shop's ochre band and tabs (ShopMenu). */
+export function hasBand(line: Line): boolean {
+  return hasSizeChart(line) || line.band === true;
 }
 
 /** The menu column and item a product belongs to, for breadcrumbs. */

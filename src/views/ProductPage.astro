@@ -43,6 +43,11 @@ const zoomed = await Promise.all(
 const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 666 / 501)));
 
 const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
+// Martin's pieces are not sold through the cart: the button asks about the
+// piece by e-mail, with a link to its page, since several share a name
+// (Sami, November 2026).
+const askOnly = product.line === 'martin';
+const askAbout = `mailto:${studio.email}?subject=${encodeURIComponent(`Dotaz: ${product.title}`)}&body=${encodeURIComponent(`${product.title}\n${new URL(withBase(productPath(product.slug)), Astro.site ?? Astro.url).href}\n\n`)}`;
 const soldOut = product.stock === 0;
 const onRequest = product.price === null;
 // Made to order, so the page says so and the button orders by e-mail (Sami,
@@ -186,7 +191,11 @@ const metaDescription = kindText
               ))
             }
             {
-              onRequest || soldOut ? (
+              askOnly ? (
+                <a class="box wide" href={askAbout}>
+                  Zeptat se na produkt
+                </a>
+              ) : onRequest || soldOut ? (
                 <a class="box wide" href={ask(toOrder ? 'Objednávka' : onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
                   {toOrder ? 'Chci objednat' : onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
                 </a>
