@@ -12,7 +12,8 @@ export type LineKey = 'spolecna' | 'martin' | 'daniela';
 export interface Match {
   category: string;
   subcategory?: string;
-  /** Product slugs, where the old shop has no subcategory to tell them apart. */
+  /** Product slugs, where the old shop has no subcategory to tell them apart;
+   *  a listing shows them in this order. */
   slugs?: string[];
 }
 
@@ -187,6 +188,9 @@ export const lines: Line[] = [
     // 2026); the rest of her work comes later. In the e-shop's band, without
     // the size chart, like Martin's (Sami, November 2026).
     menu: [
+      // Listed in the order shown: the photos' backdrops take turns, sand
+      // first, the other colour spread evenly where there is less of it
+      // (Sami, November 2026).
       {
         slug: 'obtisky',
         name: 'Obtisky',
@@ -194,12 +198,12 @@ export const lines: Line[] = [
           {
             category: 'dekory',
             slugs: [
-              'talir-hluboky-1', 'talir-hluboky-2', 'talir-hluboky-3', 'talir-jidelni-2', 'talir-jidelni-3',
-              'miska-salatova', 'miska-snidane', 'miska-ovalna',
-              'miska-kulata-salatova-s-lodkami', 'miska-kulata-salatova-s-rybkami', 'miska-kulata-salatova-s-vlasovkami',
-              'miska-kulata-mala-1', 'miska-kulata-mala-2', 'miska-kulata-mala-4', 'miska-kulata-mala-5',
-              'miska-hranata-mala-3', 'miska-hranata-mala-4', 'miska-hranata-mala-8',
-              'tac-hranaty', 'tac-hranaty-1', 'tac-hranaty-2', 'tac-hranaty-3', 'tac-dlouhy-2', 'tac-ovalny',
+              'miska-kulata-salatova-s-lodkami', 'talir-hluboky-1', 'miska-kulata-salatova-s-rybkami',
+              'miska-kulata-salatova-s-vlasovkami', 'talir-hluboky-2', 'miska-kulata-mala-1', 'talir-hluboky-3',
+              'miska-kulata-mala-2', 'miska-kulata-mala-4', 'talir-jidelni-2', 'miska-kulata-mala-5',
+              'miska-hranata-mala-3', 'talir-jidelni-3', 'miska-hranata-mala-4', 'miska-salatova',
+              'miska-hranata-mala-8', 'tac-hranaty', 'miska-snidane', 'tac-hranaty-1', 'miska-ovalna',
+              'tac-hranaty-2', 'tac-hranaty-3', 'tac-ovalny', 'tac-dlouhy-2', 'tac-ctverec-2',
             ],
           },
         ],
@@ -212,8 +216,8 @@ export const lines: Line[] = [
           {
             category: 'dekory',
             slugs: [
-              'salek-a-podsalek-1', 'salek-a-podsalek-2', 'salek-a-podsalek-3', 'salek-a-podsalek-4', 'salek-a-podsalek-5',
-              'talir-dezertni', 'talir-hluboky-4', 'talir-jidelni-4', 'tac-ctverec-2',
+              'salek-a-podsalek-3', 'salek-a-podsalek-1', 'salek-a-podsalek-4', 'salek-a-podsalek-2',
+              'talir-dezertni', 'salek-a-podsalek-5', 'talir-hluboky-4', 'talir-jidelni-4',
             ],
           },
         ],

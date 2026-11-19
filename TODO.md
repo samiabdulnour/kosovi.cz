@@ -49,7 +49,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Tři nové Martinovy vázy (s důlky a květinami, tmavě modrá se zlatým okrajem a růžemi, s tečkami a tulipány) se jmenují „Váza“, cenu ani rozměry neuvádějí (Sami, listopad 2026).
 - [x] Čajová souprava 1 patří do kategorie Konve a čajové soupravy (Sami, listopad 2026).
 - [x] Danielina stránka podle `kosovi_daniela.pdf` (Sami, listopad 2026): řady fotek jako u Martina, popisky po najetí myší. Opraveno „kuchině“ na „kuchyně“.
-- [x] Danielin e-shop má tři kategorie podle fotek z Dropboxu (Sami, listopad 2026): Obtisky (24), Obtisky na cibulák (9), Autorské hrnky (2), s novými fotkami (50). Výpisy mají okrový pás se záložkami jako u Martina. Na Danielině stránce vedou do kategorií fotky Obtisky a Obtisky na cibulák.
+- [x] Danielin e-shop má tři kategorie podle fotek z Dropboxu (Sami, listopad 2026): Obtisky (25, s tácem čtverec 2), Obtisky na cibulák (8), Autorské hrnky (2), pozadí fotek se střídají, s novými fotkami (50). Výpisy mají okrový pás se záložkami jako u Martina. Na Danielině stránce vedou do kategorií fotky Obtisky a Obtisky na cibulák.
 - [x] Danielina výrobky mají místo „Vložit do košíku“ tlačítko „Zeptat se na produkt“ (Sami, listopad 2026).
 - [ ] Danielina stránka: ostatní fotky (Malovaný cibulák, Býk, Sošky, Hrnek, Ptáci, Kachličky do kuchyně, Miska na zmrzlinu) zatím nikam nevedou, kategorie pošle Sami později. Zbylé Danieliny výrobky (věšáčky, úchytky, obrázky, obklady a další) zatím nejsou v žádné kategorii.
 - [ ] Ve fázi 7 přesměrovat dosavadní adresy Danieliných kategorií (`/kolekce/daniela-kosova/dekory/`, `…/design/`, `…/obrazky/`, `…/obklady/` a podkategorie).

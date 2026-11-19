@@ -57,9 +57,14 @@ export async function getLineProducts(line: LineKey, category?: string): Promise
   return mixed(line, await getProducts((p) => p.line === line && (!category || p.category === category)));
 }
 
-/** Products under one e-shop menu entry (a column heading or an item). */
+/** Products under one e-shop menu entry (a column heading or an item), in
+ * the order its slugs list them where it lists them (Daniela's categories). */
 export async function getEntryProducts(line: LineKey, entry: MenuItem): Promise<Product[]> {
-  return inMenuOrder(line, await getProducts((p) => p.line === line && matches(entry, p)));
+  const products = inMenuOrder(line, await getProducts((p) => p.line === line && matches(entry, p)));
+  const listed = entry.match.flatMap((m) => m.slugs ?? []);
+  if (listed.length === 0) return products;
+  const rank = (p: Product) => (listed.includes(p.slug) ? listed.indexOf(p.slug) : listed.length);
+  return [...products].sort((a, b) => rank(a) - rank(b));
 }
 
 export async function getProductsBySlug(slugs: string[]): Promise<Product[]> {
