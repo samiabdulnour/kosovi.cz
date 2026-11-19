@@ -1,8 +1,8 @@
 ---
 // E-shop listing. The blue-and-white line opens with an ochre band across the
 // whole width (Sami's screen, November 2026): its name, the tabs and the size
-// chart (ShopMenu), then the products; Martin's line opens with the same band
-// without the chart (Sami, November 2026). Daniela's line
+// chart (ShopMenu), then the products. Martin's and Daniela's lines open with
+// their tabs in one row, as on the product pages (Sami, November 2026). Other lines
 // follow eshop.pdf: the line's name on the label line and the category menu
 // in columns. Then the products five a row, with a large illustration on the
 // line's own listing and in Ostatní, and the page numbers.
@@ -10,8 +10,9 @@ import type { Page } from 'astro';
 import Pagination from '../components/Pagination.astro';
 import ProductGrid from '../components/ProductGrid.astro';
 import ShopMenu from '../components/ShopMenu.astro';
+import ShopTabs from '../components/ShopTabs.astro';
 import Note from '../components/wire/Note.astro';
-import { hasBand, type Line, type MenuItem } from '../config/lines';
+import { hasSizeChart, type Line, type MenuItem } from '../config/lines';
 import { ILLUSTRATION_MIN_PRODUCTS, hasIllustration, illustrationsFor } from '../config/shop';
 import Base from '../layouts/Base.astro';
 import { collectionPath } from '../i18n/routes';
@@ -45,7 +46,9 @@ const alternates = {
 };
 
 const isCurrent = (item: MenuItem) => (item.slug === entry?.slug ? 'page' : undefined);
-const band = hasBand(line);
+const chart = hasSizeChart(line);
+const tabs = !chart && line.tabs === true;
+const group = line.menu.find((g) => g.slug === entry?.slug || g.items.some((i) => i.slug === entry?.slug));
 const emptyItems = line.menu.flatMap((g) => g.items).filter((i) => i.match.length === 0);
 
 // The large illustration: one per page, taking turns when there are more of
@@ -67,11 +70,21 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
 }
 ---
 
-<Base title={title} description={description} alternates={alternates} label={band ? undefined : lineName}>
-  {band && <ShopMenu line={line} lang={lang} entry={entry} />}
+<Base title={title} description={description} alternates={alternates} label={chart || tabs ? undefined : lineName}>
+  {chart && <ShopMenu line={line} lang={lang} entry={entry} />}
+  {
+    tabs && (
+      <>
+        <h1 class="visually-hidden">{entry ? `${lineName}, ${entry.name}` : lineName}</h1>
+        <div class="wrap tabs-row">
+          <ShopTabs line={line} lang={lang} group={group} isPage={!!group && group.slug === entry?.slug} />
+        </div>
+      </>
+    )
+  }
   <div class="wrap">
     {
-      band ? null : (
+      chart || tabs ? null : (
         <nav class="menu" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
           {
             line.menu.map((group) => (
@@ -99,7 +112,7 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
       )
     }
 
-    {band ? <div class="after-chart" /> : <h2 class="list-head">{entry ? entry.name : lineName}</h2>}
+    {chart ? <div class="after-chart" /> : tabs ? null : <h2 class="list-head">{entry ? entry.name : lineName}</h2>}
     <ProductGrid products={page.data} lang={lang} illustration={illustration} />
     <Pagination current={page.currentPage} last={page.lastPage} pathFor={pathFor} lang={lang} />
 
@@ -138,6 +151,11 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
 
   .list-head {
     padding-block: var(--space-7) var(--space-4);
+  }
+
+  /* as on the product pages */
+  .tabs-row {
+    padding-block: clamp(2rem, 3.6vw, 3.4rem) clamp(2.5rem, 7.5vw, 7.5rem);
   }
 
   .after-chart {

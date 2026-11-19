@@ -51,8 +51,9 @@ export interface Line {
   /** Credit shown on a product unless its own data says otherwise. */
   defaultMakers: Makers;
   menu: MenuGroup[];
-  /** Listings open with the e-shop's ochre band and tabs even without a size chart. */
-  band?: boolean;
+  /** Listings open with the tabs in one row under the header, as on product
+   *  pages, without the e-shop's ochre band (Sami, November 2026). */
+  tabs?: boolean;
 }
 
 const all = (...categories: string[]): Match[] => categories.map((category) => ({ category }));
@@ -163,7 +164,7 @@ export const lines: Line[] = [
     makers: ['martin'],
     defaultMakers: { thrownBy: 'martin' },
     // Three categories, after the photos Sami chose for them (Dropbox, November
-    // 2026). In the e-shop's band, without the size chart (Sami, November 2026).
+    // 2026), as tabs in one row like the product pages' (Sami, November 2026).
     menu: [
       { slug: 'vazy', name: 'Vázy', match: all('vazy'), items: [] },
       {
@@ -174,7 +175,7 @@ export const lines: Line[] = [
       },
       { slug: 'hrnky-s-razitkem', name: 'Hrnky s razítkem', match: all('hrnky-s-plastickym-dekorem'), items: [] },
     ],
-    band: true,
+    tabs: true,
   },
   {
     key: 'daniela',
@@ -185,8 +186,8 @@ export const lines: Line[] = [
     // hangers and knobs in "Design"?
     defaultMakers: { paintedBy: 'daniela' },
     // Three categories, after the photos Sami chose for them (Dropbox, November
-    // 2026); the rest of her work comes later. In the e-shop's band, without
-    // the size chart, like Martin's (Sami, November 2026).
+    // 2026); the rest of her work comes later. As tabs in one row like the
+    // product pages', like Martin's (Sami, November 2026).
     menu: [
       // Listed in the order shown: the photos' backdrops take turns, sand
       // first, the other colour spread evenly where there is less of it
@@ -230,7 +231,7 @@ export const lines: Line[] = [
         items: [],
       },
     ],
-    band: true,
+    tabs: true,
   },
 ];
 
@@ -272,11 +273,6 @@ export function matches(entry: MenuItem, product: { category?: string; subcatego
 /** A line whose menu is tabs with a size chart (kosovi_eshop_2.pdf). */
 export function hasSizeChart(line: Line): boolean {
   return line.menu.some((group) => group.items.some((item) => item.silhouette));
-}
-
-/** A line whose listings open with the e-shop's ochre band and tabs (ShopMenu). */
-export function hasBand(line: Line): boolean {
-  return hasSizeChart(line) || line.band === true;
 }
 
 /** The menu column and item a product belongs to, for breadcrumbs. */

@@ -15,7 +15,7 @@
 // with no tab open, the ruler and the floor stand empty until the pointer
 // shows a tab's drawings on them (Sami, November 2026).
 import type { Line, MenuGroup, MenuItem } from '../config/lines';
-import { collectionPath, pathOf } from '../i18n/routes';
+import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
 import { kindSize } from '../lib/sizes';
@@ -71,9 +71,6 @@ const charts = await Promise.all(
   }),
 );
 const hasCharts = charts.some((c) => c.drawn.length > 0);
-// A maker's line names its maker, and the name opens the maker's page (Sami,
-// November 2026).
-const home = line.key === 'spolecna' ? undefined : withBase(pathOf(line.key, lang));
 const note = 'Všechny míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
 const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang, g.slug));
 // A long tab name on two lines, as on Sami's screen: "Cukřenky / a mlíčenky"
@@ -88,7 +85,7 @@ const tabLines = (name: string) => {
   <div class="wrap band">
     <div class="head">
       <h1 class="line-name">
-        {home ? <a href={home}>{line.name[lang]}</a> : line.name[lang]}
+        {line.name[lang]}
         {entry && <span class="visually-hidden">, {entry.name}</span>}
       </h1>
       {hasCharts && <p class="note">{cz(note)}</p>}

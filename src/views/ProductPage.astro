@@ -38,7 +38,7 @@ const kindsHref = (slug: string) => withBase(collectionPath(line.slug.cs, 'cs', 
 // product's own underlined (Sami, November 2026).
 const drawer = group && group.items.length > 0
   ? listEntries(group).map((e) => ({ name: e.name, slug: e.slug, current: !!item && e.kinds.includes(item.slug) }))
-  : line.band
+  : line.tabs
     ? line.menu.map((g) => ({ name: g.name, slug: g.slug, current: g === group }))
     : [];
 const drawerLabel = group && group.items.length > 0 ? group.name : line.name.cs;
