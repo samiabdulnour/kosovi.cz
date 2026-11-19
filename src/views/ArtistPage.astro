@@ -1,13 +1,8 @@
 ---
-// A maker's page (src/config/artists.ts). Martin's after kosovi_martin.pdf
-// (Sami, November 2026): rows of photographs across the whole width, as on the
-// homepage, no page title under the header. Daniela's after
-// kosovi_daniela_martin.pdf: the name on the label line, a composition of
-// colour fields and two photographs across the whole width, then her pieces
-// five a row on the e-shop's tiles, each opening its product page.
-import Composition from '../components/Composition.astro';
+// A maker's page (src/config/artists.ts), after kosovi_martin.pdf and
+// kosovi_daniela.pdf (Sami, November 2026): rows of photographs across the
+// whole width, as on the homepage, no page title under the header.
 import Mosaic from '../components/Mosaic.astro';
-import WorkGrid from '../components/WorkGrid.astro';
 import Note from '../components/wire/Note.astro';
 import { artistPages } from '../config/artists';
 import { makers, type MakerKey } from '../config/site';
@@ -25,72 +20,41 @@ const { maker, lang } = Astro.props;
 const person = makers[maker];
 const design = artistPages[maker];
 
-// Every piece must exist in the catalogue; a wrong slug stops the build.
-const wanted = 'mosaic' in design
-  ? design.mosaic.flatMap((row) => row.items.flatMap((i) => (i.product ? [i.product] : [])))
-  : design.works.map((w) => w.product);
-const items = await getProductsBySlug(wanted);
+// A photo that opens a product needs the product; a wrong slug stops the build.
+const wanted = design.rows.flatMap((row) => row.items.flatMap((i) => (i.product ? [i.product] : [])));
+const found = await getProductsBySlug(wanted);
 for (const slug of wanted) {
-  if (!items.some((p) => p.slug === slug)) throw new Error(`src/config/artists.ts: no product "${slug}" for ${maker}`);
+  if (!found.some((p) => p.slug === slug)) throw new Error(`src/config/artists.ts: no product "${slug}" for ${maker}`);
 }
-const works =
-  'works' in design
-    ? design.works.map((w) => {
-        const item = items.find((p) => p.slug === w.product)!;
-        const src = w.src ?? item.images[w.image ?? 0]?.src;
-        if (!src) throw new Error(`src/config/artists.ts: "${w.product}" has no photo ${w.image ?? 0}`);
-        return { ...w, src, item };
-      })
-    : [];
 
 const description =
   lang === 'cs'
     ? `${person.name}: porcelán z ateliéru Daniely a Martina Kosových v Praze.`
     : `${person.name}: porcelain from the Kos studio in Prague.`;
+
+const notes: Record<MakerKey, string> = {
+  martin:
+    'Podle kosovi_martin.pdf. Popisky se ukážou po najetí myší, fotky vedou do Martinových kategorií v e-shopu (vázy, konve a čajové soupravy, hrnky s razítkem). Tenkostěnné hrnky do žádné nepatří, zatím nikam nevedou.',
+  daniela:
+    'Podle kosovi_daniela.pdf. Popisky se ukážou po najetí myší. Fotky zatím nikam nevedou, Danieliny kategorie přijdou později.',
+};
 ---
 
-{
-  'mosaic' in design ? (
-    <Base title={person.name} description={description} alternates={alternatesOf(maker)}>
-      <h1 class="visually-hidden">{person.name}</h1>
-      <div class="lead">
-        <Mosaic rows={design.mosaic} lang={lang} />
-      </div>
-      <div class="wrap">
-        <Note>
-          <p>
-            Podle kosovi_martin.pdf. Popisky se ukážou po najetí myší, fotky vedou do Martinových kategorií v e-shopu
-            (vázy, konve a čajové soupravy, hrnky s razítkem). Tenkostěnné hrnky do žádné nepatří, zatím nikam nevedou.
-          </p>
-        </Note>
-      </div>
-    </Base>
-  ) : (
-    <Base title={person.name} description={description} alternates={alternatesOf(maker)} label={person.name}>
-      <Composition composition={design.composition} />
-
-      <div class="wrap">
-        <section class="works" aria-label={lang === 'cs' ? 'Výběr prací' : 'Selected work'}>
-          <WorkGrid works={works} lang={lang} />
-        </section>
-        <Note>
-          <p>
-            Podle kosovi_daniela_martin.pdf. Dlaždice zatím ukazují fotky z PDF a vedou na stránky výrobků. Stránka volné
-            tvorby (/daniela-kosova/volna-tvorba/) sem zatím nevede.
-          </p>
-        </Note>
-      </div>
-    </Base>
-  )
-}
+<Base title={person.name} description={description} alternates={alternatesOf(maker)}>
+  <h1 class="visually-hidden">{person.name}</h1>
+  <div class="lead">
+    <Mosaic rows={design.rows} gap={design.gap} lang={lang} />
+  </div>
+  <div class="wrap">
+    <Note>
+      <p>{notes[maker]}</p>
+    </Note>
+  </div>
+</Base>
 
 <style>
-  /* The first row 92 points under the header's baseline, as in the PDF. */
+  /* The first row 92 points under the header's baseline, as in the PDFs. */
   .lead {
     margin-block-start: clamp(0.75rem, 3.85vw, 3.65rem);
-  }
-
-  .works {
-    padding-block-start: clamp(3rem, 8.5vw, 8rem);
   }
 </style>

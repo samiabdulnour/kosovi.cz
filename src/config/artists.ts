@@ -1,21 +1,12 @@
-// The makers' pages. Martin's after docs/design/kosovi_martin.pdf (Sami,
-// November 2026): five rows of photographs on colour fields across the whole
-// width, as on the homepage (src/components/Mosaic.astro), each with its
-// caption on hover and opening its category in his part of the e-shop (vases,
-// teapots and tea sets, stamped mugs); a photo in none of them opens nothing
-// for now (Sami, November 2026). The photos are the PDF's own
-// (src/assets/artists/martin/).
-//
-// Daniela's after docs/design/kosovi_daniela_martin.pdf (Sami, November
-// 2026): under the label a composition of colour fields and two photographs
-// across the whole width, then her pieces five a row as in the e-shop, each
-// opening its product page. Positions are the PDF's own, in points on a frame
-// 1512 wide whose top is the top of the fields, so the composition keeps its
-// proportions at any width. Her tiles use the PDF's own photos, as does the
-// composition (src/assets/artists/daniela/).
-import type { ImageMetadata } from 'astro';
+// The makers' pages: rows of photographs on colour fields across the whole
+// width, as on the homepage (src/components/Mosaic.astro), each photo with
+// its caption on hover. Martin's after docs/design/kosovi_martin.pdf, each
+// photo opening its category in his part of the e-shop (vases, teapots and
+// tea sets, stamped mugs); a photo in none of them opens nothing for now.
+// Daniela's after docs/design/kosovi_daniela.pdf, opening nothing until her
+// categories come (Sami, November 2026). The photos are the PDFs' own
+// (src/assets/artists/).
 import type { MakerKey } from './site';
-
 import type { MosaicRow } from './mosaic';
 
 import mVazy from '../assets/artists/martin/vazy.jpg';
@@ -32,62 +23,32 @@ import mVazaModra from '../assets/artists/martin/vaza-modra.jpg';
 import mZlateKonvicky from '../assets/artists/martin/zlate-konvicky.jpg';
 import mVazaKvetiny from '../assets/artists/martin/vaza-kvetiny.jpg';
 
-import dHeroMisa from '../assets/artists/daniela/hero-misa.jpg';
-import dHeroMiska from '../assets/artists/daniela/hero-miska.jpg';
-import d01 from '../assets/artists/daniela/01-salek-a-podsalek-3.jpg';
-import d02 from '../assets/artists/daniela/02-salek-a-podsalek-1-podsalek.jpg';
-import d03 from '../assets/artists/daniela/03-salek-a-podsalek-4.jpg';
-import d04 from '../assets/artists/daniela/04-salek-a-podsalek-2.jpg';
-import d05 from '../assets/artists/daniela/05-salek-a-podsalek-4-podsalek.jpg';
-import d06 from '../assets/artists/daniela/06-salek-a-podsalek-1.jpg';
-import d07 from '../assets/artists/daniela/07-salek-a-podsalek-3-podsalek.jpg';
-import d08 from '../assets/artists/daniela/08-salek-a-podsalek-1-salek.jpg';
-import d09 from '../assets/artists/daniela/09-salek-a-podsalek-5.jpg';
-import d10 from '../assets/artists/daniela/10-salek-a-podsalek-1-salek-2.jpg';
+import dObtisky from '../assets/artists/daniela/obtisky.jpg';
+import dCibulakTestoviny from '../assets/artists/daniela/cibulak-testoviny.jpg';
+import dObtiskyNaCibulak from '../assets/artists/daniela/obtisky-na-cibulak.jpg';
+import dByk from '../assets/artists/daniela/byk.jpg';
+import dCibulakOvoce from '../assets/artists/daniela/cibulak-ovoce.jpg';
+import dSosky from '../assets/artists/daniela/sosky.jpg';
+import dHrnek from '../assets/artists/daniela/hrnek.jpg';
+import dCibulakTalire from '../assets/artists/daniela/cibulak-talire.jpg';
+import dPtaci from '../assets/artists/daniela/ptaci.jpg';
+import dKachlicky from '../assets/artists/daniela/kachlicky.jpg';
+import dMiskaNaZmrzlinu from '../assets/artists/daniela/miska-na-zmrzlinu.jpg';
 
-/** A rectangle in points on the PDF's frame. */
-export interface Frame {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+export interface ArtistPageDesign {
+  rows: MosaicRow[];
+  /** Points between the rows on the 1512 wide frame, as in the PDF. */
+  gap: number;
 }
 
-export interface Composition {
-  /** Frame height in points (the width is 1512). */
-  h: number;
-  /** Extra space above the fields, in points (the PDF's Daniela page sits lower). */
-  above: number;
-  /** Colour fields, in the PDF's drawing order (later ones lie on top). */
-  fields: (Frame & { color: string })[];
-  photos: (Frame & { src: ImageMetadata; alt: string })[];
-}
-
-export interface Work {
-  /** The product it opens, by slug; its name and price make the caption. */
-  product: string;
-  /** Which of the product's photos to show (0 = the first), unless `src` is given. */
-  image?: number;
-  /** A photo of its own instead of the product's. */
-  src?: ImageMetadata;
-  alt: string;
-  /** Two columns wide, one row high. */
-  wide?: boolean;
-}
-
-export type ArtistPageDesign =
-  /** Rows of photographs, as on the homepage. */
-  | { mosaic: MosaicRow[] }
-  /** A composition, then the pieces five a row. */
-  | { composition: Composition; works: Work[] };
-
-export const compositionWidth = 1512;
+const painted = { cs: 'Malovaný cibulák', en: 'Painted onion pattern' };
 
 export const artistPages: Record<MakerKey, ArtistPageDesign> = {
   // Positions are the PDF's own (kosovi_martin.pdf), rounded to a tenth of a
   // point. The labels are the PDF's, "vážkami" for its "váškami".
   martin: {
-    mosaic: [
+    gap: 28,
+    rows: [
       {
         h: 605.5,
         items: [
@@ -212,44 +173,107 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
       },
     ],
   },
+  // Positions are the PDF's own (kosovi_daniela.pdf), rounded to a tenth of a
+  // point, the rows about 37 points apart. The labels are the PDF's,
+  // "kuchyně" for its "kuchině".
   daniela: {
-    composition: {
-      h: 596,
-      above: 36,
-      fields: [
-        { x: 480.6, y: 0, w: 1031.4, h: 596, color: '#d6cf93' },
-        { x: 0, y: 0, w: 480.6, h: 596, color: '#ff5828' },
-      ],
-      photos: [
-        {
-          x: 133.99,
-          y: 62.83,
-          w: 488.03,
-          h: 492.29,
-          src: dHeroMisa,
-          alt: 'Mísa s víkem malovaná modře, vedle tulipány ve váze',
-        },
-        {
-          x: 915.61,
-          y: 23.61,
-          w: 372.84,
-          h: 497.12,
-          src: dHeroMiska,
-          alt: 'Miska s modře malovaným okrajem plná červeného ovoce na dřevěném stole',
-        },
-      ],
-    },
-    works: [
-      { product: 'salek-a-podsalek-3', src: d01, alt: 'Šálek a podšálek s hustým modrým dekorem' },
-      { product: 'salek-a-podsalek-1', src: d02, alt: 'Podšálek s barevnými trojúhelníky a čarami, pohled shora' },
-      { product: 'salek-a-podsalek-4', src: d03, alt: 'Šálek a podšálek s modrými trojúhelníky' },
-      { product: 'salek-a-podsalek-2', src: d04, alt: 'Šálek a podšálek s barevnými plochami' },
-      { product: 'salek-a-podsalek-4', src: d05, alt: 'Podšálek s modrými trojúhelníky, pohled shora' },
-      { product: 'salek-a-podsalek-1', src: d06, alt: 'Šálek a podšálek s barevnými čarami' },
-      { product: 'salek-a-podsalek-3', src: d07, alt: 'Podšálek s hustým modrým dekorem, pohled shora' },
-      { product: 'salek-a-podsalek-1', src: d08, alt: 'Šálek s barevnými čarami' },
-      { product: 'salek-a-podsalek-5', src: d09, alt: 'Šálek a podšálek s modrými obrázky lodi a ryby' },
-      { product: 'salek-a-podsalek-1', src: d10, alt: 'Šálek s barevnými čarami, ucho vlevo' },
+    gap: 37,
+    rows: [
+      {
+        h: 605.5,
+        items: [
+          {
+            x: 0,
+            w: 437.4,
+            caption: { cs: 'Obtisky', en: 'Decals' },
+            photo: { src: dObtisky, alt: 'Miska s barevnými obtisky, loďkou, rybami a geometrickými tvary, na světle modrém pozadí' },
+          },
+          {
+            x: 437.4,
+            w: 523.3,
+            caption: painted,
+            photo: { src: dCibulakTestoviny, alt: 'Talíř s malovanými květy a těstovinami, vedle vidlička, na bílém ubrusu' },
+          },
+          {
+            x: 960.9,
+            w: 551.1,
+            caption: { cs: 'Obtisky na cibulák', en: 'Decals on onion pattern' },
+            photo: { src: dObtiskyNaCibulak, alt: 'Šálek s barevnými obtisky na oranžovém pozadí' },
+          },
+        ],
+      },
+      {
+        h: 737.3,
+        items: [
+          { x: 449.9, w: 1062.1, color: '#a8d4fd' },
+          {
+            x: 0,
+            w: 592.2,
+            caption: { cs: 'Býk', en: 'Bull' },
+            photo: { src: dByk, alt: 'Modrá kresba býčí hlavy s rohy' },
+          },
+          {
+            x: 592.8,
+            w: 621.2,
+            caption: painted,
+            photo: { src: dCibulakOvoce, alt: 'Hranatá miska s modře malovaným okrajem plná červeného ovoce na dřevěném stole' },
+          },
+        ],
+      },
+      {
+        h: 480,
+        items: [
+          {
+            x: 0,
+            w: 810.8,
+            caption: { cs: 'Sošky', en: 'Figurines' },
+            photo: { src: dSosky, alt: 'Tři bílé sošky s malovanými obličeji na červeném pozadí' },
+          },
+          {
+            x: 810.8,
+            w: 701.2,
+            caption: { cs: 'Hrnek', en: 'Cup' },
+            photo: { src: dHrnek, alt: 'Prořezávaný hrnek bez ucha na prořezávaném podšálku, na šedém pozadí' },
+          },
+        ],
+      },
+      {
+        h: 674.2,
+        items: [
+          { x: 0, w: 1512, color: '#ffb0d3' },
+          {
+            x: 117.9,
+            w: 789.3,
+            caption: painted,
+            light: true,
+            photo: { src: dCibulakTalire, alt: 'Dva talíře s modře malovanou tváří a býčí hlavou na tmavě modrém pozadí' },
+          },
+          {
+            x: 956.7,
+            w: 555.3,
+            caption: { cs: 'Ptáci', en: 'Birds' },
+            photo: { src: dPtaci, alt: 'Modrá a růžová kresba ptáků' },
+          },
+        ],
+      },
+      {
+        h: 675.8,
+        items: [
+          {
+            x: 0,
+            w: 681.3,
+            caption: { cs: 'Kachličky do kuchyně', en: 'Kitchen tiles' },
+            photo: { src: dKachlicky, alt: 'Čtvercové kachličky s barevnými anděly, položené vedle sebe' },
+          },
+          {
+            x: 668.7,
+            w: 843.3,
+            caption: { cs: 'Miska na zmrzlinu', en: 'Ice cream bowl' },
+            light: true,
+            photo: { src: dMiskaNaZmrzlinu, alt: 'Bílá miska na podnosu se skleněnými kuličkami místo nožek, na šedém pozadí' },
+          },
+        ],
+      },
     ],
   },
 };

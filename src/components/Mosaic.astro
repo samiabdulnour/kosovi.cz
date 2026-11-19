@@ -22,9 +22,11 @@ import { withBase } from '../i18n/utils';
 interface Props {
   rows: MosaicRow[];
   lang: Lang;
+  /** Points between the rows on the 1512 wide frame (the PDFs: 28, Daniela's 37). */
+  gap?: number;
 }
 
-const { rows, lang } = Astro.props;
+const { rows, lang, gap = 28 } = Astro.props;
 const blueWhite = getLine('spolecna');
 const authors: Record<Author, { name: string; href: string }> = {
   daniela: { name: makers.daniela.name, href: pathOf('daniela', lang) },
@@ -65,7 +67,7 @@ const posters = new Map(
 );
 ---
 
-<div class="mosaic">
+<div class="mosaic" style={`--gap-pt: ${gap}`}>
   {
     rows.map((row) => (
       <div class="row" style={`--h: ${row.h}`}>
@@ -107,15 +109,17 @@ const posters = new Map(
 </div>
 
 <style>
-  /* Rows a little apart, as in the PDF (about 28 points at 1512). */
+  /* Rows a little apart, as in the PDF (28 points at 1512 on the homepage),
+     scaled with the page. */
   .mosaic {
+    --row-gap: clamp(0.75rem, calc(var(--gap-pt) * 100vw / 1512), calc(var(--gap-pt) * 1px));
     display: grid;
-    row-gap: clamp(0.75rem, 1.85vw, 1.75rem);
+    row-gap: var(--row-gap);
   }
 
   .row {
     display: grid;
-    row-gap: clamp(0.75rem, 1.85vw, 1.75rem);
+    row-gap: var(--row-gap);
   }
 
   .area {

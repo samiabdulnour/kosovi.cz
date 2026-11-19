@@ -48,6 +48,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Martinův e-shop má tři kategorie podle fotek z Dropboxu (Sami, listopad 2026): Vázy, Konve a čajové soupravy, Hrnky s razítkem. Výpisy mají okrový pás se záložkami jako e-shop, bez pravítka. U Martinových výrobků kromě hrnků s razítkem je místo „Vložit do košíku“ tlačítko „Zeptat se na produkt“ (e-mail s názvem a odkazem); bez ceny se cena nepíše.
 - [x] Tři nové Martinovy vázy (s důlky a květinami, tmavě modrá se zlatým okrajem a růžemi, s tečkami a tulipány) se jmenují „Váza“, cenu ani rozměry neuvádějí (Sami, listopad 2026).
 - [x] Čajová souprava 1 patří do kategorie Konve a čajové soupravy (Sami, listopad 2026).
+- [x] Danielina stránka podle `kosovi_daniela.pdf` (Sami, listopad 2026): řady fotek jako u Martina, popisky po najetí myší. Opraveno „kuchině“ na „kuchyně“.
+- [ ] Danielina stránka: fotky zatím nikam nevedou, Sami pošle Danieliny kategorie později.
+- [x] V okrovém pásu Martinova e-shopu vede nápis „Martin Kos“ na Martinovu stránku (Sami, listopad 2026).
 - [ ] Ve fázi 7 přesměrovat dosavadní adresy Martinových kategorií (`/kolekce/martin-kos/konve-solitery/`, `…/cajove-soupravy/`, `…/hrnky-s-plastickym-dekorem/` a `…/hrnek-maly|stredni|velky/`) na nové.
 - [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
 - [x] Hlavička podle druhého `kosovi_homepage.pdf` (Sami, listopad 2026): Porcelán Kosovi vede na úvod, Modrobílý porcelán do e-shopu, Daniela a Martin na jejich stránky, vše ve stejné velikosti jako zbytek webu (16 px z PDF bylo moc, Sami, listopad 2026). „Daniela a Martin Kosovi“ z hlavičky zmizelo. Košík se v menu objeví, jen když v něm něco je.
