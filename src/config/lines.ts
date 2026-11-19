@@ -189,9 +189,9 @@ export const lines: Line[] = [
     // 2026); the rest of her work comes later. As tabs in one row like the
     // product pages', like Martin's (Sami, November 2026).
     menu: [
-      // Listed in the order shown: the photos' backdrops take turns, sand
-      // first, the other colour spread evenly where there is less of it
-      // (Sami, November 2026).
+      // Listed in the order shown, five a row: the photos' backdrops take
+      // turns, sand first, and the other colour runs in diagonals, never two
+      // under each other or side by side (Sami, November 2026).
       {
         slug: 'obtisky',
         name: 'Obtisky',
@@ -200,11 +200,11 @@ export const lines: Line[] = [
             category: 'dekory',
             slugs: [
               'miska-kulata-salatova-s-lodkami', 'talir-hluboky-1', 'miska-kulata-salatova-s-rybkami',
-              'miska-kulata-salatova-s-vlasovkami', 'talir-hluboky-2', 'miska-kulata-mala-1', 'talir-hluboky-3',
-              'miska-kulata-mala-2', 'miska-kulata-mala-4', 'talir-jidelni-2', 'miska-kulata-mala-5',
-              'miska-hranata-mala-3', 'talir-jidelni-3', 'miska-hranata-mala-4', 'miska-salatova',
-              'miska-hranata-mala-8', 'tac-hranaty', 'miska-snidane', 'tac-hranaty-1', 'miska-ovalna',
-              'tac-hranaty-2', 'tac-hranaty-3', 'tac-ovalny', 'tac-dlouhy-2', 'tac-ctverec-2',
+              'miska-kulata-salatova-s-vlasovkami', 'talir-hluboky-2', 'talir-hluboky-3', 'miska-kulata-mala-1',
+              'miska-kulata-mala-2', 'talir-jidelni-2', 'miska-kulata-mala-4', 'miska-kulata-mala-5',
+              'miska-hranata-mala-3', 'talir-jidelni-3', 'miska-hranata-mala-4', 'miska-hranata-mala-8',
+              'tac-hranaty', 'miska-salatova', 'tac-hranaty-1', 'tac-hranaty-2', 'miska-snidane', 'miska-ovalna',
+              'tac-hranaty-3', 'tac-dlouhy-2', 'tac-ovalny', 'tac-ctverec-2',
             ],
           },
         ],
@@ -218,7 +218,7 @@ export const lines: Line[] = [
             category: 'dekory',
             slugs: [
               'salek-a-podsalek-3', 'salek-a-podsalek-1', 'salek-a-podsalek-4', 'salek-a-podsalek-2',
-              'talir-dezertni', 'salek-a-podsalek-5', 'talir-hluboky-4', 'talir-jidelni-4',
+              'talir-dezertni', 'talir-hluboky-4', 'salek-a-podsalek-5', 'talir-jidelni-4',
             ],
           },
         ],
