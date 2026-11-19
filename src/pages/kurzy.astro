@@ -1,40 +1,39 @@
 ---
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
+// Kurzy in the type of O nás (Sami, November 2026), like Kontakt: no page
+// title under the header, the section name in capitals, the text in
+// Claristik (.essay in base.css). The text is Sami's (November 2026).
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { alternatesOf } from '../i18n/routes';
-import { cz } from '../lib/typography';
+import { cz, telHref } from '../lib/typography';
+
+const phone = '+420 728 717 232';
 ---
 
 <Base
   title="Kurzy"
-  label="Kurzy"
-  description="Kurzy keramiky a porcelánu v ateliéru Daniely a Martina Kosových v Praze, na požádání."
+  description="Workshopy dekorování porcelánu v dílně Daniely a Martina Kosových v Praze, pro 4–10 lidí."
   alternates={alternatesOf('courses')}
 >
-  <section class="section wrap">
-    <div class="split">
-      <div class="stack">
-        <p class="lead">{cz('Kurzy keramiky a porcelánu na požádání.')}</p>
-        <p>
-          Napište na <a href={`mailto:${studio.email}`}>{studio.email}</a>.
-        </p>
-      </div>
-      <Placeholder label="kurz v ateliéru" ratio="4 / 3" />
-    </div>
-    <Note title="Chybí">
-      <ul>
-        <li>TODO(fakta): formát, délka, počet lidí, cena.</li>
-        <li>TODO(fakta): dárkový poukaz. Jak se objednává, na jakou částku.</li>
-      </ul>
-    </Note>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">Dárkový poukaz</h2>
-    <Note>
-      <p>Sekce zůstane, pokud ateliér poukazy nabízí.</p>
-    </Note>
+  <h1 class="visually-hidden">Kurzy</h1>
+  <section class="wrap courses essay" aria-labelledby="workshopy">
+    <h2 id="workshopy">Kurzy</h2>
+    <p>
+      {
+        cz(
+          'V naší dílně pořádáme workshopy dekorování porcelánu, kde si každý může dekorovat porcelán podle svého vkusu. Pokud byste o workshop měli zájem nebo ho chtěli připravit třeba pro přátele či kolegy, napište nám na ',
+        )
+      }<a href={`mailto:${studio.email}`}>{studio.email}</a>{cz(' nebo zavolejte na ')}<a href={telHref(phone)}
+        >{cz('728 717 232')}</a
+      >.
+    </p>
+    <p>{cz('Kapacita workshopů je 4–10 lidí.')}</p>
   </section>
 </Base>
+
+<style>
+  /* where O nás puts its first section name, as on Kontakt */
+  .courses {
+    padding-block-start: calc(clamp(1.5rem, 4.5vw, 4.25rem) + clamp(2rem, 3.2vw, 3rem));
+  }
+</style>

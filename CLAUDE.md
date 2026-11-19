@@ -128,7 +128,7 @@ Keep old URLs wherever the page still exists, so fewer redirects are needed.
 | `/produkt/<slug>/` | Product page (same URL as the old site) |
 | `/martin-kos/`, `/daniela-kosova/` | Martin's page after `docs/design/kosovi_martin.pdf` (Sami, November 2026): no page title under the header, five rows of photographs on colour fields across the whole width, as on the homepage (`mosaic` in `src/config/artists.ts`, `src/components/Mosaic.astro`), the first row 92 points under the header's baseline, each photo with the PDF's label as its caption on hover ("Vázy s vážkami" for the PDF's "váškami"). Every photo opens its category in his part of the e-shop (vases, teapots and tea sets, stamped mugs), like the homepage; the thin-walled cups, in none of them, open nothing for now (Sami, November 2026). Daniela's page after `docs/design/kosovi_daniela.pdf` (Sami, November 2026; it replaces `kosovi_daniela_martin.pdf`), built the same way, the labels the PDF's ("Kachličky do kuchyně" for its "kuchině"); the photos labelled Obtisky and Obtisky na cibulák open those categories, the rest nothing until their categories come (Sami, November 2026) (`src/views/ArtistPage.astro`, layout and photos in `src/config/artists.ts`). Old URLs. The older "Volné" pages (`…/volna-tvorba/`) stay but nothing links to them |
 | `/o-nas/` | After `docs/design/kosovi_o_nas.pdf` (Sami, November 2026; the header in it is the old one), no page title under the header (Sami, November 2026): "Manželé Kosovi" on an olive field (#d6cf93) over the left half, the couple's photograph filling the right half to the screen's edge (Sami's screen, November 2026; without the sentence "Modelování, texty nebo malba."), "Modrobílý porcelán" on white, then both biographies side by side on a blue (#a6d3ff) and an orange (#ff8a00) field meeting in the middle, each across the whole width; section names in capitals at 17 px, the text in Claristik at 24 px on 28, tracked 2 % (`src/views/AboutPage.astro`). The text is Sami's from the PDF, the biographies Daniela's and Martin's own, with typing errors and punctuation corrected and the praise toned down (no superlatives, Sami, November 2026). (Replaces the former `/jak-vznika/` page.) |
-| `/kurzy/` | Courses on request, gift voucher |
+| `/kurzy/` | Workshops decorating porcelain, for 4–10 people, on request by e-mail or phone: Sami's text (November 2026) in the type of O nás, like Kontakt (no page title, the section name "Kurzy" in capitals, the text in Claristik) |
 | `/kontakt/` | Contact without the street address; workshop visits only by arrangement on the phone (Sami, November 2026). In the type of O nás (`.essay` in `src/styles/base.css`): no page title under the header, the studio's name as a section name, phones, e-mail and the note on visits in Claristik; no line on courses (Sami, November 2026). The footer keeps the address (Sami, November 2026) |
 | `/kosik/` | Cart and order form (old URL). Until phase 5 it shows how many pieces the browser holds and a button to empty the cart |
 | `/objednavka-odeslana/` | Confirmation |
@@ -183,6 +183,8 @@ From the current O nás page. These are the only facts copy may use.
 
 **Brand:** founded in 1995 with the blue-and-white porcelain. For several years Martin threw and Daniela painted; in recent years Martin makes it all. Both have worked in the visual arts for decades.
 
+**Courses, from Sami's text (November 2026):** workshops decorating porcelain in the studio, where everyone decorates porcelain to their own taste; also for a group of friends or colleagues; booked by e-mail or on the phone (728 717 232); 4 to 10 people.
+
 **Studio:** Na Vlčovce 6, 160 00 Praha 6. +420 607 635 393, +420 728 717 232, danielakosova@gmail.com. Courses in ceramics and porcelain on request. Workshop visits only after arranging them on the phone, and the contact page leaves out the address (Sami, November 2026).
 
 **Third-party, confirm before use:** Galerie Svatoš describes Martin as a third-generation potter and mentions his thin-walled porcelain perforated with small holes, giving the translucent cups a lace pattern.
@@ -227,6 +229,6 @@ From the current O nás page. These are the only facts copy may use.
 - Shipping methods, prices, pickup location. Do they use Zásilkovna?
 - Which 12 to 20 pieces are the signature pieces?
 - Will Daniela and Martin add products themselves? If yes, add a git-based CMS (Decap or Pages CMS) after launch.
-- Courses: format, length, price, gift voucher.
+- Courses: length, price, gift voucher (the format and the group size are on the page now).
 - Newsletter provider.
 - Who holds access to the Wedos hosting, the domain and the WordPress admin?

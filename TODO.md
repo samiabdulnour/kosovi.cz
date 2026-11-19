@@ -61,7 +61,8 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Patička: třetí sloupec s právními odkazy odstraněn, stránky zatím nemají text (Sami, listopad 2026). Odkazy (obchodní podmínky, ochrana osobních údajů, reklamace a odstoupení) vrátit do patičky, až budou texty; objednávkový formulář na obchodní podmínky odkazovat musí.
 - [x] Úvodní stránka: video vede na Danielinu stránku, černé konvice na Martinovu, tlačítko pro zastavení videa odstraněno (Sami, listopad 2026). Návštěvníkům s omezeným pohybem (`prefers-reduced-motion`) se video nespustí.
 - [x] Úvodní stránka podle druhého `kosovi_homepage.pdf` (Sami, listopad 2026): místo zeleného pásu s pěti hrnky a cenami jsou na zeleném pásu fotky jídelní soupravy a konvice s rybami, fotka se snídaní vypadla. Fotky jsou vyříznuté z PDF.
-- [ ] Kurzy: formát, délka, cena, dárkový poukaz.
+- [x] Kurzy: text od Samiho (listopad 2026), workshopy dekorování porcelánu pro 4–10 lidí, v typu O nás.
+- [ ] Kurzy: délka, cena, dárkový poukaz?
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?
 - [ ] Hosting: Cloudflare Pages (podle CLAUDE.md), nebo Cloudflare Workers se statickými soubory, které Cloudflare teď doporučuje pro nové projekty?
