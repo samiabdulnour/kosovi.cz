@@ -5,7 +5,8 @@
 // Daniela and Martin (their pages), O nás, Kurzy, Kontakt, the cart while
 // something is in it, and the language switch ("EN", on English pages "CZ").
 // The item a page belongs under is underlined. White on every page, without a
-// rule under it.
+// rule under it. On the homepage it stays in view while the page scrolls, only
+// its text, with no white behind it (Sami, November 2026).
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
@@ -22,9 +23,11 @@ interface Props {
   alternates?: Alternates;
   /** Where the page's path does not tell (a product page). */
   section?: Section;
+  /** Stays in view while the page scrolls, its text alone over the photographs (the homepage). */
+  sticky?: boolean;
 }
 
-const { lang, alternates = {}, section } = Astro.props;
+const { lang, alternates = {}, section, sticky = false } = Astro.props;
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 const t = useTranslations(lang);
@@ -54,7 +57,7 @@ const items = [
 ].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class="site-header">
+<header class:list={['site-header', { sticky }]}>
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
     <nav aria-label={t('nav.label')}>
@@ -171,6 +174,28 @@ const items = [
   .badge[hidden],
   li[hidden] {
     display: none;
+  }
+
+  /* The text alone stays at the top while the page scrolls. White text that
+     takes the difference with what lies under it is black on the white page,
+     as everywhere else, and light over dark photographs, so it stays legible
+     on any of them. The empty parts of the header let clicks through. */
+  .sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    color: #fff;
+    mix-blend-mode: difference;
+    pointer-events: none;
+  }
+
+  .sticky a {
+    pointer-events: auto;
+  }
+
+  .sticky .badge {
+    background: #fff;
+    color: #000;
   }
 
 </style>

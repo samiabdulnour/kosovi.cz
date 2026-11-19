@@ -24,7 +24,7 @@ const description = {
 }[lang];
 ---
 
-<Base description={description} alternates={alternatesOf('home')}>
+<Base description={description} alternates={alternatesOf('home')} stickyHeader>
   <h1 class="visually-hidden">{studio.name}</h1>
   <div class="lead">
     <Mosaic rows={[topRow, ...mosaic]} lang={lang} />

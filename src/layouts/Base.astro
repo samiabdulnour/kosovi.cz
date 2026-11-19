@@ -23,9 +23,11 @@ interface Props {
   label?: string;
   /** The header's item this page belongs under, where its path does not say. */
   section?: Section;
+  /** The header stays in view while the page scrolls (the homepage). */
+  stickyHeader?: boolean;
 }
 
-const { title, description, alternates = {}, label, section } = Astro.props;
+const { title, description, alternates = {}, label, section, stickyHeader } = Astro.props;
 const lang: Lang = langOf(Astro.currentLocale);
 const t = useTranslations(lang);
 const fullTitle = title ? `${title} · ${studio.name}` : `${studio.name} · ${t('site.tagline')}`;
@@ -51,7 +53,7 @@ const hreflangs = Object.entries(alternates) as [Lang, string][];
   <body>
     <a class="skip-link" href="#obsah">{t('skip.toMain')}</a>
     {previewLabel && <PreviewBar label={previewLabel} />}
-    <Header lang={lang} alternates={alternates} section={section} />
+    <Header lang={lang} alternates={alternates} section={section} sticky={stickyHeader} />
     <main id="obsah">
       {
         label && (
