@@ -71,7 +71,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Rozměry: import převzal výšku (299), průměr (141) a objem (167) z popisů. Technika a péče u produktů chybí úplně.
 - [ ] Sady: data neříkají, které kusy patří k sobě. Stránka produktu zatím ukazuje kusy ze stejné kategorie.
 - [ ] Zástupný text WordPressu v popisu: `hrnek-s-rybkami`, `hrnek-se-spiralou`. Tyto dva produkty nemají ani kategorii.
-- [ ] Bez popisu 15 produktů, bez fotografie `porcelanovy-panak-s-dvema-srdci`, jen jedna fotografie 357 produktů. Podrobnosti v `scripts/data/import-report.md`.
+- [ ] Bez popisu 15 produktů, jen jedna fotografie 357 produktů. `porcelanovy-panak-s-dvema-srdci` nemá fotku ani ve starém e-shopu, proto je zatím skrytý (Sami, listopad 2026): produkt bez fotky se na webu neukazuje, s fotkou se vrátí sám. Do té doby přesměrovat jeho starou adresu (fáze 7). Podrobnosti v `scripts/data/import-report.md`.
 - [ ] Varianty (barva očí) u 35 produktů Daniely: jak je nabízet v košíku (fáze 5).
 - [ ] Texty obchodních podmínek, ochrany osobních údajů a reklamačního řádu.
 - [ ] Nové fotografie (focení se plánuje). Pro produkt 4–6 záběrů včetně měřítka a detailu malby.

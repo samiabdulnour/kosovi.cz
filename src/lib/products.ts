@@ -9,9 +9,12 @@ function byFeaturedThenTitle(a: Product, b: Product): number {
   return a.title.localeCompare(b.title, 'cs');
 }
 
+// A product without a photo stays off the site until it has one (Sami,
+// November 2026: the shot glass with two hearts, which the old shop had no
+// photo of either). Its old URL needs a redirect meanwhile (phase 7).
 export async function getProducts(filter?: (p: Product) => boolean): Promise<Product[]> {
   const entries = await getCollection('products');
-  const products = entries.map((e) => e.data);
+  const products = entries.map((e) => e.data).filter((p) => p.images.length > 0);
   return (filter ? products.filter(filter) : products).sort(byFeaturedThenTitle);
 }
 
