@@ -183,34 +183,50 @@ export const lines: Line[] = [
     // TODO(fakta): right for decors, pictures and tiles. Is it right for the
     // hangers and knobs in "Design"?
     defaultMakers: { paintedBy: 'daniela' },
+    // Three categories, after the photos Sami chose for them (Dropbox, November
+    // 2026); the rest of her work comes later. In the e-shop's band, without
+    // the size chart, like Martin's (Sami, November 2026).
     menu: [
       {
-        slug: 'dekory',
-        name: 'Dekory',
-        match: all('dekory'),
-        items: [
-          { slug: 'talire', name: 'Talíře', match: [{ category: 'dekory', subcategory: 'talire-dekory' }] },
-          { slug: 'misky-kulate', name: 'Misky kulaté', match: [{ category: 'dekory', subcategory: 'misky-kulate' }] },
-          { slug: 'misky-hranate', name: 'Misky hranaté', match: [{ category: 'dekory', subcategory: 'misky-hranate' }] },
-          { slug: 'tacy', name: 'Tácy', match: [{ category: 'dekory', subcategory: 'tacy' }] },
-          { slug: 'salky-a-podsalky', name: 'Šálky a podšálky', match: [{ category: 'dekory', subcategory: 'salky-a-podsalky' }] },
-          { slug: 'hrnky', name: 'Hrnky', match: [{ category: 'dekory', subcategory: 'hrnky-dekory' }] },
-          { slug: 'jidelni-soupravy', name: 'Jídelní soupravy na zakázku', match: [{ category: 'dekory', subcategory: 'jidelni-soupravy-na-zakazku' }] },
+        slug: 'obtisky',
+        name: 'Obtisky',
+        match: [
+          {
+            category: 'dekory',
+            slugs: [
+              'talir-hluboky-1', 'talir-hluboky-2', 'talir-hluboky-3', 'talir-jidelni-2', 'talir-jidelni-3',
+              'miska-salatova', 'miska-snidane', 'miska-ovalna',
+              'miska-kulata-salatova-s-lodkami', 'miska-kulata-salatova-s-rybkami', 'miska-kulata-salatova-s-vlasovkami',
+              'miska-kulata-mala-1', 'miska-kulata-mala-2', 'miska-kulata-mala-4', 'miska-kulata-mala-5',
+              'miska-hranata-mala-3', 'miska-hranata-mala-4', 'miska-hranata-mala-8',
+              'tac-hranaty', 'tac-hranaty-1', 'tac-hranaty-2', 'tac-hranaty-3', 'tac-dlouhy-2', 'tac-ovalny',
+            ],
+          },
         ],
+        items: [],
       },
       {
-        slug: 'design',
-        name: 'Design',
-        match: all('design'),
-        items: [
-          { slug: 'vesacky', name: 'Věšáčky', match: [{ category: 'design', subcategory: 'vesacky' }] },
-          { slug: 'uchytky', name: 'Úchytky', match: [{ category: 'design', subcategory: 'uchytky' }] },
-          { slug: 'misky-srdcove', name: 'Misky srdcové', match: [{ category: 'design', subcategory: 'misky-srdcove' }] },
+        slug: 'obtisky-na-cibulak',
+        name: 'Obtisky na cibulák',
+        match: [
+          {
+            category: 'dekory',
+            slugs: [
+              'salek-a-podsalek-1', 'salek-a-podsalek-2', 'salek-a-podsalek-3', 'salek-a-podsalek-4', 'salek-a-podsalek-5',
+              'talir-dezertni', 'talir-hluboky-4', 'talir-jidelni-4', 'tac-ctverec-2',
+            ],
+          },
         ],
+        items: [],
       },
-      { slug: 'obrazky', name: 'Obrázky', match: all('obrazky'), items: [] },
-      { slug: 'obklady', name: 'Obklady', match: all('obklady'), items: [] },
+      {
+        slug: 'autorske-hrnky',
+        name: 'Autorské hrnky',
+        match: [{ category: 'dekory', slugs: ['hrnek-soliter-1', 'hrnek-soliter-2'] }],
+        items: [],
+      },
     ],
+    band: true,
   },
 ];
 

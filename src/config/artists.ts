@@ -3,8 +3,9 @@
 // its caption on hover. Martin's after docs/design/kosovi_martin.pdf, each
 // photo opening its category in his part of the e-shop (vases, teapots and
 // tea sets, stamped mugs); a photo in none of them opens nothing for now.
-// Daniela's after docs/design/kosovi_daniela.pdf, opening nothing until her
-// categories come (Sami, November 2026). The photos are the PDFs' own
+// Daniela's after docs/design/kosovi_daniela.pdf, those of her first two
+// categories opening them (decals, decals on onion pattern); the rest open
+// nothing until their categories come (Sami, November 2026). The photos are the PDFs' own
 // (src/assets/artists/).
 import type { MakerKey } from './site';
 import type { MosaicRow } from './mosaic';
@@ -183,6 +184,7 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 0,
             w: 437.4,
             caption: { cs: 'Obtisky', en: 'Decals' },
+            shop: { line: 'daniela', entry: 'obtisky' },
             photo: { src: dObtisky, alt: 'Miska s barevnými obtisky, loďkou, rybami a geometrickými tvary, na světle modrém pozadí' },
           },
           {
@@ -195,6 +197,7 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             x: 960.9,
             w: 551.1,
             caption: { cs: 'Obtisky na cibulák', en: 'Decals on onion pattern' },
+            shop: { line: 'daniela', entry: 'obtisky-na-cibulak' },
             photo: { src: dObtiskyNaCibulak, alt: 'Šálek s barevnými obtisky na oranžovém pozadí' },
           },
         ],
