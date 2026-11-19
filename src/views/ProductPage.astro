@@ -118,7 +118,12 @@ const metaDescription = kindText
     : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
 ---
 
-<Base title={name} description={metaDescription} alternates={{ cs: productPath(product.slug) }}>
+<Base
+  title={name}
+  description={metaDescription}
+  alternates={{ cs: productPath(product.slug) }}
+  section={product.line === 'spolecna' ? 'blueWhite' : product.line}
+>
   <div class="wrap">
     <div class="tabs-row">
       <ShopTabs line={line} lang="cs" group={group} />

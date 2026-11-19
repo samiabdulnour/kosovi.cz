@@ -1,11 +1,11 @@
 ---
-// Header after kosovi_homepage.pdf (Sami, November 2026): the brand on the
-// left, the studio's name on the label line (lined up with the e-shop's tabs,
-// the same size as the rest, Sami, November 2026), the menu on
-// the right ending with the language switch ("EN", on English pages "CZ").
-// The cart joins the menu only while something is in it. White on every page,
-// without a rule under it. The studio's name opens the homepage's row of
-// Daniela and Martin.
+// Header after the second kosovi_homepage.pdf (Sami, November 2026): the brand
+// on the left, opening the homepage; the menu on the right, all of it in
+// capitals at 16 px at 1512: Modrobílý porcelán (the e-shop's first listing),
+// Daniela and Martin (their pages), O nás, Kurzy, Kontakt, the cart while
+// something is in it, and the language switch ("EN", on English pages "CZ").
+// The item a page belongs under is underlined. White on every page, without a
+// rule under it.
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
@@ -13,27 +13,41 @@ import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { cz } from '../lib/typography';
 
+/** The header's item a page belongs under. */
+export type Section = 'blueWhite' | 'daniela' | 'martin';
+
 interface Props {
   lang: Lang;
   /** Paths of this page in each language, for the language switch. */
   alternates?: Alternates;
+  /** Where the page's path does not tell (a product page). */
+  section?: Section;
 }
 
-const { lang, alternates = {} } = Astro.props;
+const { lang, alternates = {}, section } = Astro.props;
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 const t = useTranslations(lang);
-const blueWhite = getLine('spolecna');
+const lineOf = (key: 'spolecna' | 'daniela' | 'martin') => collectionPath(getLine(key).slug[lang], lang);
 
 const current = Astro.url.pathname;
-const inShop = [pathOf('collections', lang), '/produkt/', pathOf('cart', 'cs')].some((p) =>
-  current.startsWith(withBase(p)),
-);
+const under = (...paths: string[]) => paths.some((p) => current.startsWith(withBase(p)));
 const cartPath = pathOf('cart', 'cs');
+// each maker's item covers their page and their part of the e-shop
+const here: Section | undefined =
+  section ??
+  (under(pathOf('daniela', lang), lineOf('daniela'))
+    ? 'daniela'
+    : under(pathOf('martin', lang), lineOf('martin'))
+      ? 'martin'
+      : under(pathOf('collections', lang), '/produkt/')
+        ? 'blueWhite'
+        : undefined);
 
 const items = [
-  // E-shop opens the first tab of the blue-and-white line, as in kosovi_eshop_2.pdf.
-  { href: collectionPath(blueWhite.slug[lang], lang, blueWhite.menu[0]?.slug), label: t('nav.shop'), current: inShop && !current.startsWith(withBase(cartPath)) },
+  { href: lineOf('spolecna'), label: t('nav.blueWhite'), current: here === 'blueWhite' },
+  { href: pathOf('daniela', lang), label: t('nav.daniela'), current: here === 'daniela' },
+  { href: pathOf('martin', lang), label: t('nav.martin'), current: here === 'martin' },
   { href: pathOf('about', lang), label: t('nav.about') },
   ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses') }] : []),
   { href: pathOf('contact', lang), label: t('nav.contact') },
@@ -43,7 +57,6 @@ const items = [
 <header class="site-header">
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
-    <a class="name" href={`${withBase(pathOf('home', lang))}#daniela-a-martin`}>{cz(studio.name)}</a>
     <nav aria-label={t('nav.label')}>
       <ul>
         {
@@ -96,28 +109,15 @@ const items = [
 </script>
 
 <style>
+  /* 16 px at 1512, as in the PDF */
   .bar {
-    display: grid;
-    grid-template-columns: 1fr auto;
-    grid-template-areas:
-      'brand nav'
-      'name name';
-    gap: var(--space-3) var(--gap);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
     align-items: baseline;
+    gap: var(--space-3) var(--gap);
     padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(0.9rem, 1.9vw, 1.8rem);
-  }
-
-  .brand {
-    grid-area: brand;
-  }
-
-  /* the same size as the rest (Sami, November 2026; the PDF had 16 px) */
-  .name {
-    grid-area: name;
-  }
-
-  nav {
-    grid-area: nav;
+    font-size: calc(var(--step-0) * 16 / 14.4);
   }
 
   ul {
@@ -171,14 +171,6 @@ const items = [
   .badge[hidden],
   li[hidden] {
     display: none;
-  }
-
-  @media (min-width: 48rem) {
-    .bar {
-      grid-template-columns: var(--label-start) 1fr auto;
-      grid-template-areas: 'brand name nav';
-      column-gap: 0;
-    }
   }
 
 </style>

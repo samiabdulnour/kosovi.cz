@@ -55,7 +55,7 @@ const posters = new Map(
 <div class="mosaic">
   {
     rows.map((row) => (
-      <div class="row" id={row.id} style={`--h: ${row.h}`}>
+      <div class="row" style={`--h: ${row.h}`}>
         {row.items.map((item) => {
           const { w } = clampItem(item);
           if (item.video)
@@ -101,15 +101,15 @@ const posters = new Map(
 </div>
 
 <style>
-  /* Rows a little apart, as in the PDF (about 22 points at 1512). */
+  /* Rows a little apart, as in the PDF (about 28 points at 1512). */
   .mosaic {
     display: grid;
-    row-gap: clamp(0.75rem, 1.45vw, 1.4rem);
+    row-gap: clamp(0.75rem, 1.85vw, 1.75rem);
   }
 
   .row {
     display: grid;
-    row-gap: clamp(0.75rem, 1.45vw, 1.4rem);
+    row-gap: clamp(0.75rem, 1.85vw, 1.75rem);
   }
 
   .area {

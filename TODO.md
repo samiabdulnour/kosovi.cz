@@ -44,10 +44,9 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] O nás podle `kosovi_o_nas.pdf` (Sami, listopad 2026): text z PDF s opravenými překlepy, chvalné obraty zmírněné na Samiho přání (bez superlativů, popis místo hodnocení, žádná nová fakta). Anglický překlad je pracovní (fáze 6).
 - [x] Mini hrnky „bike forever“, „ski forever“ a „wing foil forever“ odstraněny z webu (Sami, listopad 2026). Fotky a data jsou v historii gitu, ve `scripts/data/` zůstávají. Ve fázi 7 přesměrovat jejich staré adresy (`/produkt/porcelanovy-mini-hrnek-bike-forever/`, `…-ski-forever/`, `…-wing-foil-forever/`) na výpis mini hrnků.
 - [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
-- [x] Hlavička podle `kosovi_homepage.pdf` (Sami, listopad 2026): „EN“ místo „Košík“, „Daniela a Martin Kosovi“ větší a na pozici z PDF. Košík se v menu objeví, jen když v něm něco je.
+- [x] Hlavička podle druhého `kosovi_homepage.pdf` (Sami, listopad 2026): Porcelán Kosovi vede na úvod, Modrobílý porcelán do e-shopu, Daniela a Martin na jejich stránky, vše 16 px jako v PDF. „Daniela a Martin Kosovi“ z hlavičky zmizelo. Košík se v menu objeví, jen když v něm něco je.
 - [ ] Patička v `kosovi_homepage.pdf` má tři sloupce bez právních odkazů (obchodní podmínky atd.). Na webu zatím zůstává dosavadní patička se čtyřmi sloupci. Změnit?
-- [ ] Úvodní stránka: fotka se snídaní nemá v PDF jméno autora, takže nikam nevede. Má vést někam?
-- [x] Úvodní stránka, blok Daniely: talíře s kohoutem (vyříznuté ze Samiho snímku obrazovky, kurzor uprostřed odretušovaný). Původní soubor fotky by byl lepší, má-li ho Sami.
+- [x] Úvodní stránka podle druhého `kosovi_homepage.pdf` (Sami, listopad 2026): místo zeleného pásu s pěti hrnky a cenami jsou na zeleném pásu fotky jídelní soupravy a konvice s rybami, fotka se snídaní vypadla. Fotky jsou vyříznuté z PDF.
 - [ ] Kurzy: formát, délka, cena, dárkový poukaz.
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?

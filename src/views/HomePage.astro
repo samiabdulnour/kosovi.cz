@@ -1,82 +1,49 @@
 ---
-// Homepage after docs/design/kosovi_homepage.pdf (Sami, November 2026): a row
-// of two photographs on colour fields (the PDF's, in place of the former
-// moving strip), the blue-and-white porcelain on a green band (five pieces with
-// their name and price, each opening in the e-shop), then rows of photographs
-// across the whole width, each opening its author's part of the site, with the
-// author's name on hover (src/components/Mosaic.astro, src/config/home.ts).
+// Homepage after the second kosovi_homepage.pdf (Sami, November 2026): a row
+// of two pictures on colour fields, then rows of photographs across the whole
+// width, the first of them the blue-and-white porcelain on a green band. Each
+// photograph opens its author's part of the site and shows the author's name
+// on hover (src/components/Mosaic.astro, src/config/home.ts).
 import Mosaic from '../components/Mosaic.astro';
-import ProductGrid from '../components/ProductGrid.astro';
 import Note from '../components/wire/Note.astro';
-import { blueWhiteSelection, mosaic, topRow } from '../config/home';
-import { getLine } from '../config/lines';
+import { mosaic, topRow } from '../config/home';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath } from '../i18n/routes';
+import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
-import { getFeaturedProducts, getProductsBySlug } from '../lib/products';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
-const blueWhite = getLine('spolecna');
-const shopPath = collectionPath(blueWhite.slug[lang], lang);
 
 const description = {
   cs: 'Porcelánový ateliér Daniely a Martina Kosových v Praze. Modrobílé nádobí pro každý den a autorská díla obou výtvarníků.',
   en: 'Porcelain studio of Daniela and Martin Kos in Prague. Blue and white tableware for every day and the artworks of both artists.',
 }[lang];
-
-// Five pieces, one row of the e-shop's grid with its captions (Sami, November 2026).
-const PIECES = 5;
-const featured = (await getFeaturedProducts()).filter((p) => p.line === 'spolecna');
-const selection = (featured.length >= PIECES ? featured : await getProductsBySlug(blueWhiteSelection)).slice(0, PIECES);
 ---
 
 <Base description={description} alternates={alternatesOf('home')}>
   <h1 class="visually-hidden">{studio.name}</h1>
-  <Mosaic rows={[topRow]} lang={lang} />
-
-  <section class="blue-white" aria-labelledby="modrobily">
-    <div class="wrap">
-      <h2 class="section-head" id="modrobily"><a href={withBase(shopPath)}>{blueWhite.name[lang]}</a></h2>
-      <ProductGrid products={selection} lang={lang} />
-    </div>
-  </section>
-
-  <Mosaic rows={mosaic} lang={lang} />
+  <div class="lead">
+    <Mosaic rows={[topRow, ...mosaic]} lang={lang} />
+  </div>
 
   <div class="wrap">
     <Note>
       <p>
-        Podle kosovi_homepage.pdf. Jméno autora se ukáže po najetí myší (na dotykových displejích je vidět stále), fotka vede
-        na Danielinu nebo Martinovu stránku, nebo do e-shopu modrobílého porcelánu. Snídaně jméno nemá, nikam nevede.
+        Podle nového kosovi_homepage.pdf. Jméno autora se ukáže po najetí myší (na dotykových displejích je vidět stále),
+        fotka vede na Danielinu nebo Martinovu stránku, nebo do e-shopu modrobílého porcelánu. Video a černé konvice nahoře
+        nikam nevedou.
       </p>
     </Note>
   </div>
 </Base>
 
 <style>
-  /* The green band of kosovi_homepage.pdf across the whole width, its pieces
-     on 3:4 tiles as in the PDF (260 × 347 at 1512). */
-  .blue-white {
-    margin-block: clamp(0.75rem, 1.75vw, 1.65rem) clamp(0.75rem, 1.45vw, 1.4rem);
-    padding-block: clamp(1.25rem, 1.8vw, 1.7rem) clamp(0.5rem, 1vw, 1rem);
-    background: #84c6a1;
-  }
-
-  .blue-white .section-head {
-    padding-block: 0 clamp(0.6rem, 0.9vw, 0.85rem);
-  }
-
-  .blue-white :global(.product-grid) {
-    --row-space: clamp(1rem, 1.6vw, 1.5rem);
-  }
-
-  .blue-white :global(.card .tile) {
-    aspect-ratio: 3 / 4;
+  /* The first row 77 points under the header's baseline, as in the PDF. */
+  .lead {
+    margin-block-start: clamp(0.5rem, 2.85vw, 2.7rem);
   }
 </style>
