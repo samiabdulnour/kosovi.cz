@@ -37,8 +37,6 @@ import dMiskaNaZmrzlinu from '../assets/artists/daniela/miska-na-zmrzlinu.jpg';
 
 export interface ArtistPageDesign {
   rows: MosaicRow[];
-  /** Points between the rows on the 1512 wide frame, as in the PDF. */
-  gap: number;
 }
 
 const painted = { cs: 'Malovaný cibulák', en: 'Painted onion pattern' };
@@ -47,7 +45,6 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
   // Positions are the PDF's own (kosovi_martin.pdf), rounded to a tenth of a
   // point. The labels are the PDF's, "vážkami" for its "váškami".
   martin: {
-    gap: 28,
     rows: [
       {
         h: 605.5,
@@ -174,10 +171,10 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
     ],
   },
   // Positions are the PDF's own (kosovi_daniela.pdf), rounded to a tenth of a
-  // point, the rows about 37 points apart. The labels are the PDF's,
-  // "kuchyně" for its "kuchině".
+  // point; the rows as far apart as everywhere else, not the PDF's 37 points
+  // (Sami, November 2026). The labels are the PDF's, "kuchyně" for its
+  // "kuchině".
   daniela: {
-    gap: 37,
     rows: [
       {
         h: 605.5,
