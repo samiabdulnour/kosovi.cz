@@ -1,7 +1,8 @@
 ---
 // Header after the second kosovi_homepage.pdf (Sami, November 2026): the brand
 // on the left, opening the homepage; the menu on the right, all of it in
-// capitals at 16 px at 1512: Modrobílý porcelán (the e-shop's first listing),
+// capitals at the size of the rest of the site (the PDF's 16 px was too large,
+// Sami, November 2026): Modrobílý porcelán (the e-shop's first listing),
 // Daniela and Martin (their pages), O nás, Kurzy, Kontakt, the cart while
 // something is in it, and the language switch ("EN", on English pages "CZ").
 // The item a page belongs under is underlined. White on every page, without a
@@ -112,7 +113,6 @@ const items = [
 </script>
 
 <style>
-  /* 16 px at 1512, as in the PDF */
   .bar {
     display: flex;
     flex-wrap: wrap;
@@ -120,7 +120,6 @@ const items = [
     align-items: baseline;
     gap: var(--space-3) var(--gap);
     padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(0.9rem, 1.9vw, 1.8rem);
-    font-size: calc(var(--step-0) * 16 / 14.4);
   }
 
   ul {
