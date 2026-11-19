@@ -85,7 +85,7 @@ const [firstPhoto, ...morePhotos] = product.images.map((img, i) => ({ img, i }))
 // Five tiles (Sami, November 2026): "Ze stejné sady" is the same kind with a
 // similar decor (a motif in common: "s andělem na kole" goes with bicycles and
 // angels); "Se stejným dekorem" the same decor on other kinds, shown only when
-// there is one; Ostatní fills up with the tab's other pieces under "Další".
+// there is one; the tab's other pieces fill the rest under "Další".
 // Martin's and Daniela's pieces show all of them under "Další" alone.
 const TILES = 5;
 const sameSet = await getSameSet(product);
@@ -93,16 +93,18 @@ const sameDecor = await getSameDecor(product);
 const decor = sameDecor.slice(0, Math.max(2, TILES - sameSet.length));
 const set = sameSet.slice(0, TILES - decor.length);
 const shownSlugs = new Set([...set, ...decor].map((p) => p.slug));
-const tab =
-  group?.slug === 'ostatni' || product.line !== 'spolecna'
-    ? (await getSameTab(product)).filter((p) => !shownSlugs.has(p.slug)).slice(0, TILES - set.length - decor.length)
-    : [];
+// Whatever the set and the decor leave of the five tiles, the tab's other
+// pieces fill under "Další", on every product (Sami, November 2026: the
+// plates had no strip at all).
+const tab = (await getSameTab(product))
+  .filter((p) => !shownSlugs.has(p.slug))
+  .slice(0, TILES - set.length - decor.length);
 const groups =
   product.line === 'spolecna'
     ? [
         { title: 'Ze stejné sady', products: set },
-        { title: 'Další', products: tab },
         { title: 'Se stejným dekorem', products: decor },
+        { title: 'Další', products: tab },
       ]
     : [{ title: 'Další', products: [...set, ...tab, ...decor] }];
 const related = groups

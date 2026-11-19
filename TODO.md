@@ -28,7 +28,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Stránky Martina a Daniely (`kosovi_daniela_martin.pdf`): fotky z PDF jsou nové úpravy starých fotek z e-shopu (nové pozadí). Nahradit jimi i fotky těch výrobků v e-shopu? Má Sami ty úpravy ve větším rozlišení (v PDF mají kolem 900 × 1 055 px)?
 - [ ] Stránky Martina a Daniely: druhá strana PDF má nadpis „Martin Kos“, ale jsou na ní Danieliny šálky, použita pro Danielu. Velké fotky nahoře nikam nevedou (mísa s víkem a miska s ovocem v e-shopu nejsou). Stránky „Volná tvorba“ zůstaly, ale nic na ně nevede: zrušit?
 - [ ] Stránka produktu, fotky: okraje čtverce 531 × 501 jsou zatím doplněné barvou okrajů fotky (`src/lib/edges.ts`). Sami doplní pozadí fotek.
-- [ ] Stránka produktu, související kusy: 12 modrobílých kusů s dekorem, který jinde není (např. hrnek velký s kočárkem, se sovou, závěsné talíře 1–4), související kusy nemá. Doplnit je kusy ze stejné záložky jako u Ostatní?
+- [x] Stránka produktu, související kusy: zbytek z pěti dlaždic doplní kusy ze stejné záložky pod „Další“, u všech produktů (Sami, listopad 2026). Bez lišty zůstávají jen dva hrnky bez kategorie (`hrnek-s-rybkami`, `hrnek-se-spiralou`) a `obklad-na-objednavku`.
 - [ ] Košík: tlačítko zatím ukládá kusy do prohlížeče, stránka košíku a objednávka přijdou ve fázi 5.
 - [ ] Názvy produktů: návrh ukazuje „Hrnek velký / Srdce“ (druh a motiv), data mají celé staré názvy. Přejmenovat? Jeden název obsahuje „(kopírovat)“ z WordPressu.
 - [ ] Výběr čtyř kusů modrobílého porcelánu na úvod (`src/config/home.ts`).
