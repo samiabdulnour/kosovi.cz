@@ -212,12 +212,14 @@ def parts_of(kind, subs):
     raise ValueError(kind)
 
 
-def place_kept(path, out_path, axis_at, k):
-    """A drawing kept by hand (it ends at the floor): add where it stands."""
+def place_kept(path, out_path, axis_at, drop):
+    """A drawing kept by hand: add where it stands, its axis where the new
+    PDF has the piece's and its bottom as far under the floor as the new
+    drawing's (Sami, November 2026: the cups start at one height)."""
     svg = open(path).read()
     w, h = (float(v) for v in re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg).groups())
     axis = float(re.search(r'data-axis="([\d.]+)"', svg).group(1))
-    floor = h - 0.6 / k  # its frame reaches 0.6 points under the floor
+    floor = h - drop
     svg = svg.replace(f'data-axis="{axis:.3f}"', f'data-axis="{axis:.3f}" data-floor="{floor:.3f}" data-x="{axis_at - axis:.3f}"')
     open(out_path, 'w').write(svg)
     print(f'{os.path.basename(out_path)[:-4]:22s} {w:6.2f} x {h:5.2f} cm  at {axis_at - axis:6.2f} cm  axis {axis:5.2f} (kept)')
@@ -248,7 +250,7 @@ def main():
                 body += f'<path{paint} d="{d_of(group, x0, y0)}"{rule} vector-effect="non-scaling-stroke"/>'
             if kind == 'hrnek-espresso':
                 here = os.path.dirname(os.path.abspath(__file__))
-                place_kept(os.path.join(here, 'hrnek-espresso.svg'), f'{out}/{kind}.svg', (axis - ruler) / k, k)
+                place_kept(os.path.join(here, 'hrnek-espresso.svg'), f'{out}/{kind}.svg', (axis - ruler) / k, (y1 - floor) / k)
                 continue
             svg = (
                 f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {(x1 - x0) / k:.3f} {(y1 - y0) / k:.3f}" '
