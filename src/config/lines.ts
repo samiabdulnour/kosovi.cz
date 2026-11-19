@@ -166,7 +166,21 @@ export const lines: Line[] = [
     // Three categories, after the photos Sami chose for them (Dropbox, November
     // 2026), as tabs in one row like the product pages' (Sami, November 2026).
     menu: [
-      { slug: 'vazy', name: 'Vázy', match: all('vazy'), items: [] },
+      // listed in the order shown (Sami, November 2026); a new vase joins the list
+      {
+        slug: 'vazy',
+        name: 'Vázy',
+        match: [
+          {
+            category: 'vazy',
+            slugs: [
+              'bila-vaza', 'vaza-s-dulky', 'modra-vaza', 'vaza-modra-se-zlatym-okrajem', 'vaza-s-teckami',
+              'vaza-s-vazkami', 'mala-vaza-s-plastickymi-pruhy',
+            ],
+          },
+        ],
+        items: [],
+      },
       {
         slug: 'konve-a-cajove-soupravy',
         name: 'Konve a čajové soupravy',
