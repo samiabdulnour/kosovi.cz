@@ -7,7 +7,8 @@
 // something is in it, and the language switch ("EN", on English pages "CZ").
 // The item a page belongs under is underlined. White on every page, without a
 // rule under it. On the homepage it stays in view while the page scrolls, only
-// its text, with no white behind it (Sami, November 2026).
+// its black text, with no white behind it, except on phones (Sami, November
+// 2026).
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
 import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
@@ -175,26 +176,20 @@ const items = [
     display: none;
   }
 
-  /* The text alone stays at the top while the page scrolls. White text that
-     takes the difference with what lies under it is black on the white page,
-     as everywhere else, and light over dark photographs, so it stays legible
-     on any of them. The empty parts of the header let clicks through. */
-  .sticky {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    color: #fff;
-    mix-blend-mode: difference;
-    pointer-events: none;
-  }
+  /* The text alone stays at the top while the page scrolls, in black like
+     everywhere else (Sami, November 2026), from tablets up; on phones, where
+     the menu takes three lines, it stays in place. The empty parts of the
+     header let clicks through. */
+  @media (min-width: 48rem) {
+    .sticky {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
 
-  .sticky a {
-    pointer-events: auto;
+    .sticky a {
+      pointer-events: auto;
+    }
   }
-
-  .sticky .badge {
-    background: #fff;
-    color: #000;
-  }
-
 </style>
