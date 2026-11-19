@@ -52,9 +52,9 @@ const zoomed = await Promise.all(
 const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 666 / 501)));
 
 const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
-// Martin's pieces, the stamped mugs aside, are not sold through the cart:
-// the button asks about the piece by e-mail, with a link to its page, since
-// several share a name (Sami, November 2026).
+// Martin's pieces, the stamped mugs aside, and Daniela's are not sold
+// through the cart: the button asks about the piece by e-mail, with a link to
+// its page, since several share a name (Sami, November 2026).
 const askOnly = isAskOnly(product);
 const askAbout = `mailto:${studio.email}?subject=${encodeURIComponent(`Dotaz: ${product.title}`)}&body=${encodeURIComponent(`${product.title}\n${new URL(withBase(productPath(product.slug)), Astro.site ?? Astro.url).href}\n\n`)}`;
 const soldOut = product.stock === 0;
