@@ -162,17 +162,13 @@ export const lines: Line[] = [
     makers: ['martin'],
     defaultMakers: { thrownBy: 'martin' },
     // Three categories, after the photos Sami chose for them (Dropbox, November
-    // 2026): the tea set 1 is not among them yet. In the e-shop's band, without
-    // the size chart (Sami, November 2026).
+    // 2026). In the e-shop's band, without the size chart (Sami, November 2026).
     menu: [
       { slug: 'vazy', name: 'Vázy', match: all('vazy'), items: [] },
       {
         slug: 'konve-a-cajove-soupravy',
         name: 'Konve a čajové soupravy',
-        match: [
-          { category: 'konve-solitery' },
-          { category: 'cajove-soupravy', slugs: ['cajova-souprava-3', 'cajova-souprava-4', 'cajova-souprava-5'] },
-        ],
+        match: all('konve-solitery', 'cajove-soupravy'),
         items: [],
       },
       { slug: 'hrnky-s-razitkem', name: 'Hrnky s razítkem', match: all('hrnky-s-plastickym-dekorem'), items: [] },

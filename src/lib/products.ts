@@ -72,6 +72,18 @@ export function getFeaturedProducts(): Promise<Product[]> {
 }
 
 /** The product's own credit, or the default of its line. */
+/** Asked about by e-mail rather than put in the cart: Martin's pieces, except
+ *  the stamped mugs (Sami, November 2026). */
+export function askOnly(product: Product): boolean {
+  return product.line === 'martin' && product.category !== 'hrnky-s-plastickym-dekorem';
+}
+
+/** Whether the price, or "cena na dotaz", is written: not for a piece asked
+ *  about by e-mail that has no price (Martin's new vases, Sami, November 2026). */
+export function showsPrice(product: Product): boolean {
+  return product.price !== null || !askOnly(product);
+}
+
 export function makersOf(product: Product): Makers {
   const own = product.makers;
   return own.thrownBy || own.paintedBy ? own : getLine(product.line).defaultMakers;

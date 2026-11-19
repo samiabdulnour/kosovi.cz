@@ -8,7 +8,7 @@ import { productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { productName } from '../lib/names';
-import type { Product } from '../lib/products';
+import { showsPrice, type Product } from '../lib/products';
 import { formatCzk } from '../lib/typography';
 
 interface Props {
@@ -46,7 +46,9 @@ const fit = wide || (cover && cover.src.height > cover.src.width) ? 'cover' : 'c
         <span class="type">{type}</span>
         {decor && <span class="decor">{decor}</span>}
       </h3>
-      <span class="price">{product.price === null ? t('product.priceOnRequest') : formatCzk(product.price)}</span>
+      {showsPrice(product) && (
+        <span class="price">{product.price === null ? t('product.priceOnRequest') : formatCzk(product.price)}</span>
+      )}
       {product.stock === 0 && <span class="note">{lang === 'cs' ? 'vyprodáno' : 'sold out'}</span>}
     </span>
   </a>
