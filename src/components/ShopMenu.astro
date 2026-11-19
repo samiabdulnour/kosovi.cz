@@ -85,7 +85,8 @@ const tabLines = (name: string) => {
   <div class="wrap band">
     <div class="head">
       <h1 class="line-name">
-        {line.name[lang]}
+        <!-- the line's name opens its first listing, the e-shop's main page (Sami, November 2026) -->
+        <a href={withBase(collectionPath(line.slug[lang], lang))} aria-current={entry ? undefined : 'page'}>{line.name[lang]}</a>
         {entry && <span class="visually-hidden">, {entry.name}</span>}
       </h1>
       {hasCharts && <p class="note">{cz(note)}</p>}
