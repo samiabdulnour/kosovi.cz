@@ -37,16 +37,6 @@ const group: MenuGroup | undefined = line.menu.find(
 const TOP = 30; // the ruler's height
 const TICK = 3.23; // the ticks' length
 
-const drawn = await Promise.all(
-  (group?.items ?? [])
-    .filter((item) => item.silhouette)
-    .map(async (item) => ({
-      item,
-      shape: silhouette(item.silhouette!),
-      size: await kindSize(line.key, item),
-    })),
-);
-const extent = Math.max(0, ...drawn.map((d) => d.shape.x + d.shape.w)) + 2;
 // A label on two lines as in the PDF: "Konev rovná / velká 23 cm"; a
 // two-word name keeps its line and the size goes under it.
 const labelLines = (name: string, size?: string) => {
@@ -55,14 +45,30 @@ const labelLines = (name: string, size?: string) => {
   return [words.slice(0, -1).join(' '), [words.at(-1), size].filter(Boolean).join(' ')];
 };
 const marks = [10, 20, TOP];
-// a set's line runs 6 cm beyond the axes of its outer pieces, its name centred over it
-const inSet = new Set(group?.sets?.flatMap((s) => s.items) ?? []);
-const sets = (group?.sets ?? [])
-  .map((s) => {
-    const axes = drawn.filter((d) => s.items.includes(d.item.slug)).map((d) => d.shape.x + d.shape.axis);
-    return axes.length ? { name: s.name, from: Math.min(...axes) - 6, to: Math.max(...axes) + 6 } : undefined;
-  })
-  .filter((s) => s !== undefined);
+
+// Every tab's chart is on the page: the open tab's shows, and pointing at
+// another tab shows its chart instead until the pointer leaves the band
+// (Sami, November 2026).
+const charts = await Promise.all(
+  line.menu.map(async (g) => {
+    const drawn = await Promise.all(
+      g.items
+        .filter((item) => item.silhouette)
+        .map(async (item) => ({ item, shape: silhouette(item.silhouette!), size: await kindSize(line.key, item) })),
+    );
+    const extent = Math.max(0, ...drawn.map((d) => d.shape.x + d.shape.w)) + 2;
+    // a set's line runs 6 cm beyond the axes of its outer pieces, its name centred over it
+    const inSet = new Set(g.sets?.flatMap((s) => s.items) ?? []);
+    const sets = (g.sets ?? [])
+      .map((s) => {
+        const axes = drawn.filter((d) => s.items.includes(d.item.slug)).map((d) => d.shape.x + d.shape.axis);
+        return axes.length ? { name: s.name, from: Math.min(...axes) - 6, to: Math.max(...axes) + 6 } : undefined;
+      })
+      .filter((s) => s !== undefined);
+    return { group: g, drawn, extent, inSet, sets };
+  }),
+);
+const hasCharts = charts.some((c) => c.drawn.length > 0);
 const note = 'Všechny míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
 const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang, g.slug));
 // A long tab name on two lines, as on Sami's screen: "Cukřenky / a mlíčenky"
@@ -73,14 +79,14 @@ const tabLines = (name: string) => {
 };
 ---
 
-<div class="shop-band">
+<div class="shop-band" data-shop-band data-current={group?.slug ?? ''}>
   <div class="wrap band">
     <div class="head">
       <h1 class="line-name">
         {line.name[lang]}
         {entry && <span class="visually-hidden">, {entry.name}</span>}
       </h1>
-      {group && drawn.length > 0 && <p class="note">{cz(note)}</p>}
+      {hasCharts && <p class="note">{cz(note)}</p>}
     </div>
 
     <div class="body">
@@ -89,7 +95,11 @@ const tabLines = (name: string) => {
           {
             line.menu.map((g) => (
               <li class:list={{ apart: g.slug === 'ostatni' }}>
-                <a href={tabHref(g)} aria-current={g === group ? (g.slug === entry?.slug ? 'page' : 'true') : undefined}>
+                <a
+                  href={tabHref(g)}
+                  data-tab={g.slug}
+                  aria-current={g === group ? (g.slug === entry?.slug ? 'page' : 'true') : undefined}
+                >
                   {tabLines(g.name).map((l, i) => (
                     <>
                       {i > 0 && <br />}
@@ -104,65 +114,83 @@ const tabLines = (name: string) => {
       </nav>
 
       {
-        group && drawn.length > 0 && (
-          <div class="chart">
-            <div
-              class="scroll"
-              role="region"
-              tabindex="0"
-              aria-label={lang === 'cs' ? `Velikosti: ${group.name}` : `Sizes: ${group.name}`}
-            >
-              <div class="plane" style={`--top: ${TOP}; --extent: ${extent.toFixed(2)}; --tick: ${TICK}`}>
-                <span class="floor" aria-hidden="true" />
-                {marks.map((cm) => (
-                  <span class="tick" style={`--at: ${cm}`} aria-hidden="true">
-                    {cz(`${cm} cm`)}
-                  </span>
-                ))}
-                {sets.map((s) => (
-                  <span class="set" style={`--from: ${s.from.toFixed(2)}; --to: ${s.to.toFixed(2)}`}>
-                    {s.name}
-                  </span>
-                ))}
-                <ul class="items" role="list">
-                  {drawn.map(({ item, shape, size }) => (
-                    <li
-                      class:list={{ 'in-set': inSet.has(item.slug) }}
-                      style={`--x: ${shape.x}; --w: ${shape.w}; --h: ${shape.h}; --floor: ${shape.floor}; --axis: ${shape.axis}`}
-                    >
-                      <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
-                        <span class="drawing" set:html={shape.svg} />
-                        <span class="label">
-                          {labelLines(item.name, size).map((l) => (
-                            <span>{cz(l)}</span>
-                          ))}
-                        </span>
-                      </a>
-                    </li>
+        charts.map(({ group: g, drawn, extent, inSet, sets }) =>
+          drawn.length > 0 ? (
+            <div class="chart" data-tab-panel={g.slug} hidden={g !== group}>
+              <div
+                class="scroll"
+                role="region"
+                tabindex="0"
+                aria-label={lang === 'cs' ? `Velikosti: ${g.name}` : `Sizes: ${g.name}`}
+              >
+                <div class="plane" style={`--top: ${TOP}; --extent: ${extent.toFixed(2)}; --tick: ${TICK}`}>
+                  <span class="floor" aria-hidden="true" />
+                  {marks.map((cm) => (
+                    <span class="tick" style={`--at: ${cm}`} aria-hidden="true">
+                      {cz(`${cm} cm`)}
+                    </span>
                   ))}
-                </ul>
+                  {sets.map((s) => (
+                    <span class="set" style={`--from: ${s.from.toFixed(2)}; --to: ${s.to.toFixed(2)}`}>
+                      {s.name}
+                    </span>
+                  ))}
+                  <ul class="items" role="list">
+                    {drawn.map(({ item, shape, size }) => (
+                      <li
+                        class:list={{ 'in-set': inSet.has(item.slug) }}
+                        style={`--x: ${shape.x}; --w: ${shape.w}; --h: ${shape.h}; --floor: ${shape.floor}; --axis: ${shape.axis}`}
+                      >
+                        <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
+                          <span class="drawing" set:html={shape.svg} />
+                          <span class="label">
+                            {labelLines(item.name, size).map((l) => (
+                              <span>{cz(l)}</span>
+                            ))}
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
-          </div>
-        )
-      }
-
-      {
-        group && drawn.length === 0 && group.items.length > 0 && (
-          <ul class="list" role="list">
-            {group.items.map((item) => (
-              <li>
-                <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
-                  {item.name}
-                </a>
-              </li>
-            ))}
-          </ul>
+          ) : (
+            g.items.length > 0 && (
+              <ul class="list" role="list" data-tab-panel={g.slug} hidden={g !== group}>
+                {g.items.map((item) => (
+                  <li>
+                    <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          ),
         )
       }
     </div>
   </div>
 </div>
+
+<script>
+  // Pointing at a tab (or tabbing to it) shows its chart in place of the open
+  // tab's; leaving the band brings the open tab's back (Sami, November 2026).
+  for (const band of document.querySelectorAll<HTMLElement>('[data-shop-band]')) {
+    const panels = band.querySelectorAll<HTMLElement>('[data-tab-panel]');
+    const show = (slug: string) => panels.forEach((p) => (p.hidden = p.dataset.tabPanel !== slug));
+    const current = band.dataset.current ?? '';
+    for (const tab of band.querySelectorAll<HTMLElement>('a[data-tab]')) {
+      tab.addEventListener('mouseenter', () => show(tab.dataset.tab!));
+      tab.addEventListener('focus', () => show(tab.dataset.tab!));
+    }
+    band.addEventListener('mouseleave', () => show(current));
+    band.addEventListener('focusout', (event) => {
+      if (!band.contains(event.relatedTarget as Node | null)) show(current);
+    });
+  }
+</script>
 
 <style>
   /* Across the whole width, in the ochre of the photos' backdrops. */
@@ -241,6 +269,11 @@ const tabLines = (name: string) => {
     line-height: 1.5;
   }
 
+  /* the other tabs' charts wait hidden */
+  [data-tab-panel][hidden] {
+    display: none;
+  }
+
   /* From tablets up, as in the PDF at 1512: the ruler 197 points right of the
      page's margin, 30 cm above the floor; the line's name and the note on the
      ruler's top, the tabs from its 20 cm tick; the chart to the screen's edge. */
@@ -250,14 +283,16 @@ const tabLines = (name: string) => {
       display: grid;
       grid-template-columns: 14.7% minmax(0, 1fr);
       grid-template-rows: auto 1fr;
-      padding-block: 1.95vw 4.5vw;
+      /* the band ends 88 points under the floor (Sami's screen) */
+      padding-block: 1.95vw 1.1vw;
     }
 
     .head {
       grid-column: 1 / -1;
       grid-row: 1;
       z-index: 1;
-      margin-block-start: 0.5vw;
+      /* the line's name in capitals from the 30 cm tick down (Sami, November 2026) */
+      margin-block-start: -0.23vw;
       pointer-events: none;
     }
 

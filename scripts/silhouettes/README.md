@@ -15,8 +15,12 @@ v `src/config/lines.ts` (`silhouette`).
   spodní elipsou přes podlahu, talíře a podšálky (kreslené shora) na ní.
 - `data-x`: levá hrana kresby v cm od pravítka, tak jak ji klade PDF.
 - Vyplněné plochy mají třídu `f` (vybraný druh je vybarví tmavě modře,
-  `--color-select`), vnitřky (otvor hrnku, dno talíře, podšálek espressa)
-  třídu `i` (zůstávají v barvě pásu).
+  `--color-select`), vnitřky (otvor hrnku a mlíčenky, okraj misky, horní
+  elipsa bábovky, podšálek espressa) třídu `i` (zůstávají v barvě pásu).
+  Talíře a podšálky se vybarví celé, žebra bábovek jsou jen čáry.
+- Hrnek espresso má kresbu z `kosovi_eshop_2.pdf` (Sami, listopad 2026),
+  uloženou tady jako `hrnek-espresso.svg`; skript ji jen postaví na místo
+  espressa z nového PDF.
 
 Indexy kreseb v PDF a jejich druhy jsou na začátku skriptu (`BANDS`). Když
 Sami pošle nové PDF, je potřeba je projít znovu.

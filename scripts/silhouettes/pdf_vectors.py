@@ -5,8 +5,13 @@ The PDF has one ochre band per tab, each with a ruler at the left (short
 10, 20 and 30 cm ticks) and a floor line. Every drawing is a closed shape
 filled with the band's colour and stroked white. Here each one is cut into
 parts so the chosen kind can be filled dark blue (class f) while its inside
-(the opening of a cup, the well of a plate, the saucer of the espresso cup;
-class i) keeps the band's colour, as before (Sami, November 2026).
+(the opening of a cup or a jug, a bowl's rim, the top of a bábovka; class i)
+keeps the band's colour, as before (Sami, November 2026). Plates and saucers
+fill whole (Sami, November 2026).
+
+The espresso cup keeps its drawing from kosovi_eshop_2.pdf (Sami, November
+2026: the new one's saucer looked wrong), kept here as hrnek-espresso.svg;
+the script only places it, its axis where the new PDF has the cup's.
 
 The viewBox is the drawing's size in cm (the band's own ruler: 20 cm from the
 floor to the 20 cm tick). Attributes for the chart (src/components/ShopMenu.astro):
@@ -18,6 +23,8 @@ floor to the 20 cm tick). Attributes for the chart (src/components/ShopMenu.astr
 
 Usage: python -I pdf_vectors.py <kosovi_eshop_vektory.pdf> <out dir>
 """
+import os
+import re
 import sys
 
 import fitz
@@ -162,7 +169,7 @@ def parts_of(kind, subs):
         return [([body, hole], 'f', True), ([rim], 'i', False)], rim.cx()
     if kind.startswith(('talir', 'podsalek')):
         outer, inner = by_area
-        return [([outer], 'f', False), ([inner], 'i', False)], outer.cx()
+        return [([outer], 'f', False), ([inner], 'f', False)], outer.cx()
     if kind.startswith(('misa', 'miska')):
         body, rim = subs
         return [([body], 'f', False), ([rim], 'i', False)], rim.cx()
@@ -188,16 +195,32 @@ def parts_of(kind, subs):
         tube_top = min(small, key=lambda s: abs(s.cx() - axis))
         holes = [s for s in small if s is not tube_top]
         tube_sides = [s for s in subs if not s.closed and (s.box()[2] - s.box()[0]) < 6 and abs(s.cx() - axis) < 25]
-        body = [s for s in subs if s not in [inner, tube_top, *holes, *tube_sides]]
-        parts = [(body, 'f', False), ([inner], 'i', False)]
+        rest = [s for s in subs if s not in [rim, inner, tube_top, *holes, *tube_sides]]
+        body = max(rest, key=lambda s: s.area())
+        flutes = [s for s in rest if s is not body]
+        # the body filled, its flutes as lines over it; the top ellipse (rim,
+        # opening and the tube inside it) and the handles' holes left in the
+        # band's colour
+        parts = [([body], 'f', False), (flutes, 'line', False)]
         if holes:
             parts.append((holes, 'i', False))
-        parts.append(([*tube_sides, tube_top], 'f', False))
+        parts += [([rim], 'i', False), ([inner], 'i', False), ([*tube_sides, tube_top], 'i', False)]
         return parts, axis
     if kind == 'panak':
         top, body = subs
         return [([body], 'f', False), ([top], 'i', False)], top.cx()
     raise ValueError(kind)
+
+
+def place_kept(path, out_path, axis_at, k):
+    """A drawing kept by hand (it ends at the floor): add where it stands."""
+    svg = open(path).read()
+    w, h = (float(v) for v in re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', svg).groups())
+    axis = float(re.search(r'data-axis="([\d.]+)"', svg).group(1))
+    floor = h - 0.6 / k  # its frame reaches 0.6 points under the floor
+    svg = svg.replace(f'data-axis="{axis:.3f}"', f'data-axis="{axis:.3f}" data-floor="{floor:.3f}" data-x="{axis_at - axis:.3f}"')
+    open(out_path, 'w').write(svg)
+    print(f'{os.path.basename(out_path)[:-4]:22s} {w:6.2f} x {h:5.2f} cm  at {axis_at - axis:6.2f} cm  axis {axis:5.2f} (kept)')
 
 
 def main():
@@ -221,7 +244,12 @@ def main():
             body = ''
             for group, cls, evenodd in parts:
                 rule = ' fill-rule="evenodd"' if evenodd else ''
-                body += f'<path class="{cls}" d="{d_of(group, x0, y0)}"{rule} vector-effect="non-scaling-stroke"/>'
+                paint = ' fill="none"' if cls == 'line' else f' class="{cls}"'
+                body += f'<path{paint} d="{d_of(group, x0, y0)}"{rule} vector-effect="non-scaling-stroke"/>'
+            if kind == 'hrnek-espresso':
+                here = os.path.dirname(os.path.abspath(__file__))
+                place_kept(os.path.join(here, 'hrnek-espresso.svg'), f'{out}/{kind}.svg', (axis - ruler) / k, k)
+                continue
             svg = (
                 f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {(x1 - x0) / k:.3f} {(y1 - y0) / k:.3f}" '
                 f'data-axis="{(axis - x0) / k:.3f}" data-floor="{(floor - y0) / k:.3f}" data-x="{(x0 - ruler) / k:.3f}" '
