@@ -1,10 +1,12 @@
 ---
-// A maker's page after docs/design/kosovi_daniela_martin.pdf (Sami, November
-// 2026): the name on the label line, a composition of colour fields and two
-// photographs across the whole width, then their pieces five a row on the
-// e-shop's tiles, each opening its product page. Layout and photos in
-// src/config/artists.ts.
+// A maker's page (src/config/artists.ts). Martin's after kosovi_martin.pdf
+// (Sami, November 2026): rows of photographs across the whole width, as on the
+// homepage, no page title under the header. Daniela's after
+// kosovi_daniela_martin.pdf: the name on the label line, a composition of
+// colour fields and two photographs across the whole width, then her pieces
+// five a row on the e-shop's tiles, each opening its product page.
 import Composition from '../components/Composition.astro';
+import Mosaic from '../components/Mosaic.astro';
 import WorkGrid from '../components/WorkGrid.astro';
 import Note from '../components/wire/Note.astro';
 import { artistPages } from '../config/artists';
@@ -24,14 +26,22 @@ const person = makers[maker];
 const design = artistPages[maker];
 
 // Every piece must exist in the catalogue; a wrong slug stops the build.
-const items = await getProductsBySlug(design.works.map((w) => w.product));
-const works = design.works.map((w) => {
-  const item = items.find((p) => p.slug === w.product);
-  if (!item) throw new Error(`src/config/artists.ts: no product "${w.product}" for ${maker}`);
-  const src = w.src ?? item.images[w.image ?? 0]?.src;
-  if (!src) throw new Error(`src/config/artists.ts: "${w.product}" has no photo ${w.image ?? 0}`);
-  return { ...w, src, item };
-});
+const wanted = 'mosaic' in design
+  ? design.mosaic.flatMap((row) => row.items.flatMap((i) => (i.product ? [i.product] : [])))
+  : design.works.map((w) => w.product);
+const items = await getProductsBySlug(wanted);
+for (const slug of wanted) {
+  if (!items.some((p) => p.slug === slug)) throw new Error(`src/config/artists.ts: no product "${slug}" for ${maker}`);
+}
+const works =
+  'works' in design
+    ? design.works.map((w) => {
+        const item = items.find((p) => p.slug === w.product)!;
+        const src = w.src ?? item.images[w.image ?? 0]?.src;
+        if (!src) throw new Error(`src/config/artists.ts: "${w.product}" has no photo ${w.image ?? 0}`);
+        return { ...w, src, item };
+      })
+    : [];
 
 const description =
   lang === 'cs'
@@ -39,24 +49,48 @@ const description =
     : `${person.name}: porcelain from the Kos studio in Prague.`;
 ---
 
-<Base title={person.name} description={description} alternates={alternatesOf(maker)} label={person.name}>
-  <Composition composition={design.composition} />
+{
+  'mosaic' in design ? (
+    <Base title={person.name} description={description} alternates={alternatesOf(maker)}>
+      <h1 class="visually-hidden">{person.name}</h1>
+      <div class="lead">
+        <Mosaic rows={design.mosaic} lang={lang} />
+      </div>
+      <div class="wrap">
+        <Note>
+          <p>
+            Podle kosovi_martin.pdf. Popisky se ukážou po najetí myší. První řada vede do e-shopu na vázy, konve a čajové
+            soupravy, ostatní fotky na výrobek, který ukazují. Vázy s tulipány, růžemi a květinami v e-shopu nejsou, vedou
+            proto na vázy. Tenkostěnné hrnky v e-shopu nejsou, nikam nevedou.
+          </p>
+        </Note>
+      </div>
+    </Base>
+  ) : (
+    <Base title={person.name} description={description} alternates={alternatesOf(maker)} label={person.name}>
+      <Composition composition={design.composition} />
 
-  <div class="wrap">
-    <section class="works" aria-label={lang === 'cs' ? 'Výběr prací' : 'Selected work'}>
-      <WorkGrid works={works} lang={lang} />
-    </section>
-    <Note>
-      <p>
-        Podle kosovi_daniela_martin.pdf. Martinovy dlaždice ukazují fotky výrobků z e-shopu (nové fotky, listopad 2026),
-        Danieliny zatím fotky z PDF. Dlaždice vedou na stránky výrobků. Stránka volné tvorby ({maker === 'martin' ? '/martin-kos/volna-tvorba/' : '/daniela-kosova/volna-tvorba/'})
-        sem zatím nevede.
-      </p>
-    </Note>
-  </div>
-</Base>
+      <div class="wrap">
+        <section class="works" aria-label={lang === 'cs' ? 'Výběr prací' : 'Selected work'}>
+          <WorkGrid works={works} lang={lang} />
+        </section>
+        <Note>
+          <p>
+            Podle kosovi_daniela_martin.pdf. Dlaždice zatím ukazují fotky z PDF a vedou na stránky výrobků. Stránka volné
+            tvorby (/daniela-kosova/volna-tvorba/) sem zatím nevede.
+          </p>
+        </Note>
+      </div>
+    </Base>
+  )
+}
 
 <style>
+  /* The first row 92 points under the header's baseline, as in the PDF. */
+  .lead {
+    margin-block-start: clamp(0.75rem, 3.85vw, 3.65rem);
+  }
+
   .works {
     padding-block-start: clamp(3rem, 8.5vw, 8rem);
   }

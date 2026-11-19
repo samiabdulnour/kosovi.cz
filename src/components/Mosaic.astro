@@ -1,19 +1,21 @@
 ---
-// The homepage's rows of photographs (kosovi_homepage.pdf, src/config/home.ts),
-// placed as in the PDF on a frame 1512 wide and scaled with the page. Each
-// photograph opens its author's part of the site (Daniela's page, Martin's
-// page, the blue-and-white e-shop) and shows the author's name in its top
-// corner when the pointer is over it (Sami, November 2026); on touch screens,
-// which have no pointer to hover, the name always shows. On phones the
-// photographs stand one under another and the colour fields drop out.
+// Rows of photographs on colour fields (src/config/mosaic.ts), placed as in
+// Sami's PDFs on a frame 1512 wide and scaled with the page: the homepage
+// (kosovi_homepage.pdf) and Martin's page (kosovi_martin.pdf). A photograph
+// opens its author's part of the site (Daniela's page, Martin's page, the
+// blue-and-white e-shop), a product's page or a part of a line's e-shop, and
+// shows the author's name or its caption in its top corner when the pointer is
+// over it (Sami, November 2026); on touch screens, which have no pointer to
+// hover, the name always shows. On phones the photographs stand one under
+// another and the colour fields drop out.
 // A video plays silent in a loop, unless the visitor asked for less motion,
 // and opens its author's page like a photograph (no stop button, Sami,
 // November 2026).
 import { getImage, Image } from 'astro:assets';
-import { mosaicWidth, type Author, type MosaicItem, type MosaicRow } from '../config/home';
+import { mosaicWidth, type Author, type MosaicItem, type MosaicRow } from '../config/mosaic';
 import { getLine } from '../config/lines';
 import { makers } from '../config/site';
-import { collectionPath, pathOf } from '../i18n/routes';
+import { collectionPath, pathOf, productPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
 
@@ -28,6 +30,17 @@ const authors: Record<Author, { name: string; href: string }> = {
   daniela: { name: makers.daniela.name, href: pathOf('daniela', lang) },
   martin: { name: makers.martin.name, href: pathOf('martin', lang) },
   modrobily: { name: blueWhite.name[lang], href: collectionPath(blueWhite.slug[lang], lang) },
+};
+
+// Where a photograph leads and what it is called on hover.
+const target = (item: MosaicItem) => {
+  const author = item.by && authors[item.by];
+  const href = item.product
+    ? productPath(item.product)
+    : item.shop
+      ? collectionPath(getLine(item.shop.line).slug[lang], lang, item.shop.entry)
+      : author?.href;
+  return { href, name: item.caption?.[lang] ?? author?.name };
 };
 
 const W = mosaicWidth;
@@ -73,19 +86,18 @@ const posters = new Map(
               sizes={`(min-width: 48rem) ${Math.ceil((w / W) * 100)}vw, 100vw`}
             />
           );
-          const author = item.by && authors[item.by];
-          return author ? (
-            <a
-              class:list={['photo', { light: item.light, edge: item.x <= 1 }]}
-              href={withBase(author.href)}
-              style={`${place(item)}; --ratio: ${w} / ${row.h}`}
-            >
+          const { href, name } = target(item);
+          const look = ['photo', { light: item.light, edge: item.x <= 1 }];
+          const style = `${place(item)}; --ratio: ${w} / ${row.h}`;
+          return href ? (
+            <a class:list={look} href={withBase(href)} style={style}>
               {image}
-              <span class="name">{author.name}</span>
+              {name && <span class="name">{name}</span>}
             </a>
           ) : (
-            <span class="photo" style={`${place(item)}; --ratio: ${w} / ${row.h}`}>
+            <span class:list={look} style={style}>
               {image}
+              {name && <span class="name" aria-hidden="true">{name}</span>}
             </span>
           );
         })}
@@ -145,7 +157,7 @@ const posters = new Map(
     text-decoration: none;
   }
 
-  a.photo:hover .name,
+  .photo:hover .name,
   a.photo:focus-visible .name {
     opacity: 1;
   }

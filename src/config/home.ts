@@ -2,7 +2,7 @@
 // 2026): a row of two pictures on colour fields, then rows of photographs
 // across the whole width, the first of them the blue-and-white porcelain on a
 // green band. Swap photos freely, the page reads them at build time.
-import type { ImageMetadata } from 'astro';
+import type { MosaicRow } from './mosaic';
 import blackTeapots from '../assets/home/konvice-cerne.jpg';
 import paintingPoster from '../assets/home/malovani-talire-nahled.jpg';
 import paintingVideo from '../assets/home/malovani-talire.mp4?url';
@@ -45,31 +45,6 @@ export interface Block {
   field: Field;
 }
 
-/** Whose work a photograph shows: its name appears on hover and it opens their part of the site. */
-export type Author = 'daniela' | 'martin' | 'modrobily';
-
-export interface MosaicItem {
-  /** Left edge and width in points on the PDF's frame, 1512 wide. */
-  x: number;
-  w: number;
-  /** A flat colour field, a photograph, or a silent looping video. */
-  color?: string;
-  photo?: { src: ImageMetadata; alt: string };
-  /** MP4 (H.264) for every browser, WebM (VP9) for those without H.264. */
-  video?: { src: string; webm?: string; poster: ImageMetadata; label: string };
-  by?: Author;
-  /** The name in white, on a dark photograph. */
-  light?: boolean;
-}
-
-export interface MosaicRow {
-  /** Height in points on the 1512 wide frame. */
-  h: number;
-  /** Fields first, photographs after (later ones lie on top). */
-  items: MosaicItem[];
-}
-
-export const mosaicWidth = 1512;
 
 // The top row, under the header, in place of the former moving photo strip
 // (Sami, November 2026). The video opens Daniela's page, the black teapots

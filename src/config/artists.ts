@@ -1,19 +1,35 @@
-// The makers' pages after docs/design/kosovi_daniela_martin.pdf (Sami,
-// November 2026): under the label a composition of colour fields and two
-// photographs across the whole width, then their pieces five a row as in the
-// e-shop, each opening its product page.
+// The makers' pages. Martin's after docs/design/kosovi_martin.pdf (Sami,
+// November 2026): five rows of photographs on colour fields across the whole
+// width, as on the homepage (src/components/Mosaic.astro), each with its
+// caption on hover; the first row opens his vases, teapots and tea sets in the
+// e-shop, the others the piece they show, or the vases where the piece is not
+// in the e-shop. The photos are the PDF's own (src/assets/artists/martin/).
 //
-// Positions are the PDF's own, in points on a frame 1512 wide whose top is the
-// top of the fields, so the composition keeps its proportions at any width.
-// A piece shows one of its product's photos (Martin's, Sami's new edits from
-// November 2026), so swapping a product photo changes this page too; Daniela's
-// tiles still use the PDF's own photos, as do the compositions
-// (src/assets/artists/).
+// Daniela's after docs/design/kosovi_daniela_martin.pdf (Sami, November
+// 2026): under the label a composition of colour fields and two photographs
+// across the whole width, then her pieces five a row as in the e-shop, each
+// opening its product page. Positions are the PDF's own, in points on a frame
+// 1512 wide whose top is the top of the fields, so the composition keeps its
+// proportions at any width. Her tiles use the PDF's own photos, as does the
+// composition (src/assets/artists/daniela/).
 import type { ImageMetadata } from 'astro';
 import type { MakerKey } from './site';
 
-import mHeroKonvice from '../assets/artists/martin/hero-konvice.jpg';
-import mHeroVazy from '../assets/artists/martin/hero-vazy.jpg';
+import type { MosaicRow } from './mosaic';
+
+import mVazy from '../assets/artists/martin/vazy.jpg';
+import mKonve from '../assets/artists/martin/konve.jpg';
+import mCajoveSoupravy from '../assets/artists/martin/cajove-soupravy.jpg';
+import mVazySVazkami from '../assets/artists/martin/vazy-s-vazkami.jpg';
+import mVazaTulipany from '../assets/artists/martin/vaza-tulipany.jpg';
+import mHrnekRazitko1 from '../assets/artists/martin/hrnek-razitko-1.jpg';
+import mTenkostenneHrnky from '../assets/artists/martin/tenkostenne-hrnky.jpg';
+import mHrnekRazitko2 from '../assets/artists/martin/hrnek-razitko-2.jpg';
+import mVazaRuze from '../assets/artists/martin/vaza-ruze.jpg';
+import mCajovaSouprava from '../assets/artists/martin/cajova-souprava.jpg';
+import mVazaModra from '../assets/artists/martin/vaza-modra.jpg';
+import mZlateKonvicky from '../assets/artists/martin/zlate-konvicky.jpg';
+import mVazaKvetiny from '../assets/artists/martin/vaza-kvetiny.jpg';
 
 import dHeroMisa from '../assets/artists/daniela/hero-misa.jpg';
 import dHeroMiska from '../assets/artists/daniela/hero-miska.jpg';
@@ -58,53 +74,141 @@ export interface Work {
   wide?: boolean;
 }
 
-export interface ArtistPageDesign {
-  composition: Composition;
-  works: Work[];
-}
+export type ArtistPageDesign =
+  /** Rows of photographs, as on the homepage. */
+  | { mosaic: MosaicRow[] }
+  /** A composition, then the pieces five a row. */
+  | { composition: Composition; works: Work[] };
 
 export const compositionWidth = 1512;
 
 export const artistPages: Record<MakerKey, ArtistPageDesign> = {
+  // Positions are the PDF's own (kosovi_martin.pdf), rounded to a tenth of a
+  // point. The labels are the PDF's, "vážkami" for its "váškami".
   martin: {
-    composition: {
-      h: 632,
-      above: 0,
-      fields: [
-        { x: 650.2, y: 0, w: 861.8, h: 632, color: '#11611f' },
-        { x: 0, y: 0, w: 688.4, h: 632, color: '#0000ff' },
-        { x: 480.6, y: 481.8, w: 1031.4, h: 150.2, color: '#d6cf93' },
-        { x: 0, y: 481.8, w: 480.6, h: 150.2, color: '#ff5828' },
-      ],
-      photos: [
-        {
-          x: 134.11,
-          y: 98.56,
-          w: 420.17,
-          h: 443.21,
-          src: mHeroKonvice,
-          alt: 'Detail zelené konvice s plastickým dekorem a ratanovým uchem',
-        },
-        {
-          x: 777.06,
-          y: 59.61,
-          w: 649.94,
-          h: 520.97,
-          src: mHeroVazy,
-          alt: 'Dvě kulaté vázy a vysoká váza s malovanými vážkami na modrém pozadí',
-        },
-      ],
-    },
-    works: [
-      { product: 'cajova-souprava-4', alt: 'Čajová souprava 4: konvice s rýhovaným tělem a dvě misky' },
-      { product: 'konvice-modra', alt: 'Modrá konvice s promáčklým bokem' },
-      { product: 'cajova-souprava-3', alt: 'Čajová souprava 3: nízká konvice a tři misky s modrou malbou' },
-      { product: 'konvice-s-dekorem', image: 1, alt: 'Konvice s dekorem, vedle sítko a víčko' },
-      { product: 'konvice-bila', alt: 'Bílá konvice s ratanovým uchem' },
-      { product: 'konvicka-pozlacena', alt: 'Dva šálky zlacené uvnitř na zeleném pozadí', wide: true },
-      { product: 'konvice-zelena-s-plastickym-dekorem', alt: 'Zelená konvice s plastickým dekorem a ratanovým uchem' },
-      { product: 'konvice-modra-s-plastickym-dekorem', image: 1, alt: 'Detail modré konvice s plastickým dekorem, sítko a ratanové ucho' },
-      { product: 'cajova-souprava-5', alt: 'Čajová souprava 5: konvice s ratanovým uchem a tři misky s modrou malbou' },
+    mosaic: [
+      {
+        h: 605.5,
+        items: [
+          {
+            x: 0,
+            w: 437.4,
+            caption: { cs: 'Vázy', en: 'Vases' },
+            shop: { line: 'martin', entry: 'vazy' },
+            photo: { src: mVazy, alt: 'Bílá váza s plastickým povrchem a rozevřeným hrdlem' },
+          },
+          {
+            x: 437.4,
+            w: 551.3,
+            caption: { cs: 'Konve', en: 'Teapots' },
+            shop: { line: 'martin', entry: 'konve-solitery' },
+            photo: { src: mKonve, alt: 'Zelená konvice s plastickým dekorem a ratanovým uchem na žlutém pozadí' },
+          },
+          {
+            x: 988.7,
+            w: 523.3,
+            caption: { cs: 'Čajové soupravy', en: 'Tea sets' },
+            shop: { line: 'martin', entry: 'cajove-soupravy' },
+            photo: { src: mCajoveSoupravy, alt: 'Světle modrá čajová souprava: konvice s rýhovaným tělem a tři misky' },
+          },
+        ],
+      },
+      {
+        h: 674.4,
+        items: [
+          { x: 0, w: 1512, color: '#a2dcf5' },
+          {
+            x: 54.6,
+            w: 848.2,
+            caption: { cs: 'Vázy s vážkami', en: 'Vases with dragonflies' },
+            product: 'vaza-s-vazkami',
+            light: true,
+            photo: { src: mVazySVazkami, alt: 'Dvě kulaté vázy a vysoká váza s malovanými vážkami na modrém pozadí' },
+          },
+          {
+            x: 938.3,
+            w: 522.7,
+            caption: { cs: 'Váza', en: 'Vase' },
+            shop: { line: 'martin', entry: 'vazy' },
+            photo: { src: mVazaTulipany, alt: 'Bílá váza s plastickými tečkami, v ní žluté tulipány a fialové kosatce, za ní obraz' },
+          },
+        ],
+      },
+      {
+        h: 525.9,
+        items: [
+          { x: 366.5, w: 739.4, color: '#fff8dc' },
+          {
+            x: 0,
+            w: 390,
+            caption: { cs: 'Hrnek razítko', en: 'Stamped mug' },
+            product: 'hrnek-stredni-s-razitkem-ctverce-2',
+            photo: { src: mHrnekRazitko1, alt: 'Šedý hrnek s razítkem čtverců' },
+          },
+          // not in the e-shop, so it opens nothing
+          {
+            x: 444.4,
+            w: 523.7,
+            caption: { cs: 'Tenkostěnné hrnky', en: 'Thin-walled cups' },
+            photo: { src: mTenkostenneHrnky, alt: 'Bílé šálky a podšálky na dřevěném prkénku, pohled shora' },
+          },
+          {
+            x: 1021.4,
+            w: 490.6,
+            caption: { cs: 'Hrnek razítko', en: 'Stamped mug' },
+            product: 'hrnek-maly-s-razitkem-dulku',
+            photo: { src: mHrnekRazitko2, alt: 'Zelený hrnek s razítkem důlků' },
+          },
+        ],
+      },
+      {
+        h: 718.5,
+        items: [
+          { x: 156.8, w: 739.4, color: '#c6e2d0' },
+          {
+            x: 0,
+            w: 502,
+            caption: { cs: 'Váza', en: 'Vase' },
+            shop: { line: 'martin', entry: 'vazy' },
+            photo: { src: mVazaRuze, alt: 'Tmavě modrá váza se zlatým okrajem, v ní růže' },
+          },
+          {
+            x: 555.1,
+            w: 538.9,
+            caption: { cs: 'Čajová souprava', en: 'Tea set' },
+            product: 'cajova-souprava-5',
+            photo: { src: mCajovaSouprava, alt: 'Čajová souprava: konvice s ratanovým uchem a tři misky s modrou malbou na žlutém pozadí' },
+          },
+          {
+            x: 1094,
+            w: 418,
+            caption: { cs: 'Váza', en: 'Vase' },
+            product: 'modra-vaza',
+            photo: { src: mVazaModra, alt: 'Vysoká váza s modrým vlnitým dekorem' },
+          },
+        ],
+      },
+      {
+        h: 678.5,
+        items: [
+          { x: 0, w: 1294.5, color: '#a2dcf5' },
+          {
+            x: 272.1,
+            w: 508.8,
+            caption: { cs: 'Zlaté konvičky', en: 'Gilded pots' },
+            product: 'konvicka-pozlacena',
+            light: true,
+            photo: { src: mZlateKonvicky, alt: 'Dva šálky zlacené uvnitř na zeleném pozadí' },
+          },
+          {
+            x: 995.8,
+            w: 516.2,
+            caption: { cs: 'Váza', en: 'Vase' },
+            shop: { line: 'martin', entry: 'vazy' },
+            photo: { src: mVazaKvetiny, alt: 'Světle zelená váza s důlky, v ní bílé a růžové květiny, na dřevěném stole' },
+          },
+        ],
+      },
     ],
   },
   daniela: {
