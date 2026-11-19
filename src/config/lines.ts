@@ -174,8 +174,8 @@ export const lines: Line[] = [
           {
             category: 'vazy',
             slugs: [
-              'bila-vaza', 'vaza-s-dulky', 'modra-vaza', 'vaza-modra-se-zlatym-okrajem', 'vaza-s-teckami',
-              'vaza-s-vazkami', 'mala-vaza-s-plastickymi-pruhy',
+              'bila-vaza', 'vaza-s-dulky', 'modra-vaza', 'vaza-modra-se-zlatym-okrajem', 'vaza-s-vazkami',
+              'vaza-s-teckami', 'mala-vaza-s-plastickymi-pruhy',
             ],
           },
         ],
