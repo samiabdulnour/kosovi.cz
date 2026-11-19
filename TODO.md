@@ -61,6 +61,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Úvodní stránka: video vede na Danielinu stránku, černé konvice na Martinovu, tlačítko pro zastavení videa odstraněno (Sami, listopad 2026). Návštěvníkům s omezeným pohybem (`prefers-reduced-motion`) se video nespustí.
 - [x] Úvodní stránka podle druhého `kosovi_homepage.pdf` (Sami, listopad 2026): místo zeleného pásu s pěti hrnky a cenami jsou na zeleném pásu fotky jídelní soupravy a konvice s rybami, fotka se snídaní vypadla. Fotky jsou vyříznuté z PDF.
 - [x] Kurzy: text od Samiho (listopad 2026), workshopy dekorování porcelánu pro 4–10 lidí, v typu O nás.
+- [x] Kurzy: odstavec v poloviční šířce, pod ním řada čtyř fotek z Instagramu jako na homepage, každá vede na svůj příspěvek (Sami, listopad 2026). Fotky jsou uložené na webu; u videa je snímek z videa.
 - [ ] Kurzy: délka, cena, dárkový poukaz?
 - [ ] Newsletter: poskytovatel, nebo vůbec?
 - [ ] Kdo má přístup k hostingu Wedos, doméně a administraci WordPressu?

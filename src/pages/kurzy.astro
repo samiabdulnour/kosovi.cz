@@ -1,13 +1,63 @@
 ---
 // Kurzy in the type of O nás (Sami, November 2026), like Kontakt: no page
 // title under the header, the section name in capitals, the text in
-// Claristik (.essay in base.css). The text is Sami's (November 2026).
+// Claristik (.essay in base.css), half the width (Sami, November 2026). The
+// text is Sami's (November 2026). Under it a row of photographs from the
+// studio's Instagram, as on the homepage, each opening its post; the pictures
+// are kept here, so the page loads nothing from Instagram (src/assets/pages/kurzy/).
+import Mosaic from '../components/Mosaic.astro';
 import { studio } from '../config/site';
+import type { MosaicRow } from '../config/mosaic';
 import Base from '../layouts/Base.astro';
 import { alternatesOf } from '../i18n/routes';
 import { cz, telHref } from '../lib/typography';
+import decalsVideo from '../assets/pages/kurzy/ig-DJ1A1mpowKZ.jpg';
+import decalsAndMugs from '../assets/pages/kurzy/ig-DO8hke3iMI5.jpg';
+import tiles from '../assets/pages/kurzy/ig-DP6scdkiPn9.jpg';
+import gooseMugs from '../assets/pages/kurzy/ig-DRhpo9PCN1Z.jpg';
 
 const phone = '+420 728 717 232';
+const post = (code: string) => `https://www.instagram.com/p/${code}/`;
+const caption = { cs: 'Instagram', en: 'Instagram' };
+
+// Each photo in its own format, 500 points high on the 1512 wide frame, the
+// field showing in the gaps between them (the homepage's mint).
+const row: MosaicRow = {
+  h: 500,
+  items: [
+    { x: 0, w: 1512, color: '#c3eecd' },
+    {
+      x: 0,
+      w: 281.3,
+      url: post('DJ1A1mpowKZ'),
+      caption,
+      photo: { src: decalsVideo, alt: 'Ruce skládají vystřižené obtisky na modrý papír, pohled shora' },
+    },
+    {
+      x: 297.3,
+      w: 375,
+      url: post('DO8hke3iMI5'),
+      caption,
+      light: true,
+      photo: { src: decalsAndMugs, alt: 'Vystřižené obtisky s květinami a mrkví, vzorník barev a dva bílé hrnky na tmavém stole' },
+    },
+    {
+      x: 688.4,
+      w: 375,
+      url: post('DP6scdkiPn9'),
+      caption,
+      photo: { src: tiles, alt: 'Kachličky s malovaným beranem, krávou a koněm a vzorky glazur' },
+    },
+    {
+      x: 1079.5,
+      w: 432.5,
+      url: post('DRhpo9PCN1Z'),
+      caption,
+      light: true,
+      photo: { src: gooseMugs, alt: 'Dva hrnky s obtisky husy na talíři s květinovým okrajem, na červeném pozadí' },
+    },
+  ],
+};
 ---
 
 <Base
@@ -29,11 +79,26 @@ const phone = '+420 728 717 232';
     </p>
     <p>{cz('Kapacita workshopů je 4–10 lidí.')}</p>
   </section>
+
+  <section class="photos" aria-label="Z workshopů na Instagramu">
+    <Mosaic rows={[row]} lang="cs" />
+  </section>
 </Base>
 
 <style>
   /* where O nás puts its first section name, as on Kontakt */
   .courses {
     padding-block-start: calc(clamp(1.5rem, 4.5vw, 4.25rem) + clamp(2rem, 3.2vw, 3rem));
+  }
+
+  /* half the text's former width (Sami, November 2026) */
+  @media (min-width: 48rem) {
+    .courses p {
+      max-width: 50%;
+    }
+  }
+
+  .photos {
+    margin-block-start: clamp(2.5rem, 5.5vw, 5.25rem);
   }
 </style>

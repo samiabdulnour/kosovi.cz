@@ -35,11 +35,13 @@ const authors: Record<Author, { name: string; href: string }> = {
 // Where a photograph leads and what it is called on hover.
 const target = (item: MosaicItem) => {
   const author = item.by && authors[item.by];
-  const href = item.product
-    ? productPath(item.product)
-    : item.shop
-      ? collectionPath(getLine(item.shop.line).slug[lang], lang, item.shop.entry)
-      : author?.href;
+  const href = item.url
+    ? item.url
+    : item.product
+      ? productPath(item.product)
+      : item.shop
+        ? collectionPath(getLine(item.shop.line).slug[lang], lang, item.shop.entry)
+        : author?.href;
   return { href, name: item.caption?.[lang] ?? author?.name };
 };
 
@@ -90,7 +92,7 @@ const posters = new Map(
           const look = ['photo', { light: item.light, edge: item.x <= 1 }];
           const style = `${place(item)}; --ratio: ${w} / ${row.h}`;
           return href ? (
-            <a class:list={look} href={withBase(href)} style={style}>
+            <a class:list={look} href={item.url ? href : withBase(href)} style={style}>
               {image}
               {name && <span class="name">{name}</span>}
             </a>

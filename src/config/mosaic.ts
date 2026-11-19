@@ -25,6 +25,8 @@ export interface MosaicItem {
   product?: string;
   /** Opens this part of a line's e-shop (a menu entry, or the whole line). */
   shop?: { line: LineKey; entry?: string };
+  /** Opens a page elsewhere, e.g. an Instagram post (the Kurzy page). */
+  url?: string;
   /** The name in white, on a dark photograph. */
   light?: boolean;
 }
