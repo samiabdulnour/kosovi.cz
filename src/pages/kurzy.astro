@@ -19,33 +19,32 @@ import gooseMugs from '../assets/pages/kurzy/ig-DRhpo9PCN1Z.jpg';
 const phone = '+420 728 717 232';
 const post = (code: string) => `https://www.instagram.com/p/${code}/`;
 
-// Each photo in its own format, 500 points high on the 1512 wide frame, the
-// field showing in the gaps between them (the homepage's mint).
+// Each photo in its own format, side by side with no gaps, the row as high
+// as the four fill the 1512 wide frame (Sami, November 2026).
 const row: MosaicRow = {
-  h: 500,
+  h: 516.5,
   items: [
-    { x: 0, w: 1512, color: '#c3eecd' },
     {
       x: 0,
-      w: 281.3,
+      w: 290.5,
       url: post('DJ1A1mpowKZ'),
       photo: { src: decalsVideo, alt: 'Ruce skládají vystřižené obtisky na modrý papír, pohled shora' },
     },
     {
-      x: 297.3,
-      w: 375,
+      x: 290.5,
+      w: 387.4,
       url: post('DO8hke3iMI5'),
       photo: { src: decalsAndMugs, alt: 'Vystřižené obtisky s květinami a mrkví, vzorník barev a dva bílé hrnky na tmavém stole' },
     },
     {
-      x: 688.4,
-      w: 375,
+      x: 677.9,
+      w: 387.4,
       url: post('DP6scdkiPn9'),
       photo: { src: tiles, alt: 'Kachličky s malovaným beranem, krávou a koněm a vzorky glazur' },
     },
     {
-      x: 1079.5,
-      w: 432.5,
+      x: 1065.3,
+      w: 446.7,
       url: post('DRhpo9PCN1Z'),
       photo: { src: gooseMugs, alt: 'Dva hrnky s obtisky husy na talíři s květinovým okrajem, na červeném pozadí' },
     },

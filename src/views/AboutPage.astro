@@ -2,7 +2,7 @@
 // "O nás" after docs/design/kosovi_o_nas.pdf (Sami, November 2026): the couple
 // on an olive field over the left half, their photograph filling the right
 // half (Sami's screen), the blue-and-white porcelain on
-// white, then both biographies side by side on a blue and an orange field,
+// white with the studio's video of the wheel beside it, then both biographies side by side on a blue and an orange field,
 // each across the whole width. Section names in capitals, the text in
 // Claristik at 24 px on 28 at 1512 (the PDF's sizes).
 // The Czech text is Sami's (the PDF); the biographies are Daniela's and
@@ -10,8 +10,11 @@
 // corrected, and the praise toned down on Sami's request (November 2026):
 // no superlatives, description in place of verdicts, no new facts. The
 // English is a working translation (phase 6).
-import { Image } from 'astro:assets';
+import { getImage, Image } from 'astro:assets';
 import couplePhoto from '../assets/pages/o-nas/manzele-kosovi.jpg';
+import throwingPoster from '../assets/pages/o-nas/tocit-kvetinac-nahled.jpg';
+import throwingVideo from '../assets/pages/o-nas/tocit-kvetinac.mp4?url';
+import throwingVideoWebm from '../assets/pages/o-nas/tocit-kvetinac.webm?url';
 import Base from '../layouts/Base.astro';
 import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -23,6 +26,14 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = (text: string) => typeset(text, lang);
+// The studio's Instagram video of a porcelain flowerpot thrown on the wheel
+// (instagram.com/p/DHy6AnwI9tq, Sami, November 2026), kept here silent as
+// H.264 MP4 and VP9 WebM at 480 × 854, its first frame the poster.
+const poster = await getImage({ src: throwingPoster, width: 480, format: 'webp' });
+const videoLabel = {
+  cs: 'Točení porcelánového květináče na hrnčířském kruhu, od hnětení hmoty po hotový tvar',
+  en: 'A porcelain flowerpot thrown on the potter’s wheel, from wedging the clay to the finished form',
+}[lang];
 
 const copy = {
   cs: {
@@ -107,11 +118,15 @@ const copy = {
   </section>
 
   <section class="blue-white" aria-labelledby="modrobily-porcelan">
-    <div class="wrap columns">
-      <div class="text essay">
-        <h2 id="modrobily-porcelan">{copy.blueWhite}</h2>
+    <div class="wrap columns essay">
+      <h2 id="modrobily-porcelan">{copy.blueWhite}</h2>
+      <div class="text">
         {copy.blueWhiteText.map((p) => <p>{t(p)}</p>)}
       </div>
+      <video class="throwing" muted loop playsinline preload="metadata" poster={poster.src} aria-label={videoLabel} data-in-view>
+        <source src={throwingVideo} type="video/mp4" />
+        <source src={throwingVideoWebm} type="video/webm" />
+      </video>
     </div>
   </section>
 
@@ -158,6 +173,22 @@ const copy = {
 
   .blue-white {
     padding-block: clamp(2.75rem, 5.8vw, 5.5rem) clamp(3.5rem, 8.9vw, 8.4rem);
+  }
+
+  /* The video beside the text, about where Sami marked it (November 2026):
+     upright 3 : 4, from the first paragraph down, in the right column. */
+  .blue-white .columns {
+    row-gap: 0;
+  }
+
+  .throwing {
+    display: block;
+    width: min(100%, 24rem);
+    aspect-ratio: 3 / 4;
+    margin-block-start: var(--space-6);
+    margin-inline: auto;
+    object-fit: cover;
+    background: #e8e4dc;
   }
 
   /* Both biographies across the whole width: Daniela's field from the left
@@ -217,6 +248,18 @@ const copy = {
       align-items: start;
     }
 
+    .blue-white h2 {
+      grid-column: 1 / -1;
+    }
+
+    /* about 63.5 % to 90.7 % across at 1512, as on Sami's screen */
+    .throwing {
+      grid-column: 2;
+      width: 62.5%;
+      margin-block-start: 0;
+      margin-inline: auto 8.4%;
+    }
+
     .bios .columns {
       align-items: stretch;
     }
@@ -235,3 +278,18 @@ const copy = {
     }
   }
 </style>
+
+<script>
+  // The video plays silent in a loop while it is on screen, except for
+  // visitors who asked for less motion, who see its first frame.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const watch = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        if (isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      }
+    });
+    for (const video of document.querySelectorAll<HTMLVideoElement>('video[data-in-view]')) watch.observe(video);
+  }
+</script>
