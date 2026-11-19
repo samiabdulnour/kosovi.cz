@@ -51,6 +51,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Danielina stránka podle `kosovi_daniela.pdf` (Sami, listopad 2026): řady fotek jako u Martina, popisky po najetí myší. Opraveno „kuchině“ na „kuchyně“.
 - [ ] Danielina stránka: fotky zatím nikam nevedou, Sami pošle Danieliny kategorie později.
 - [x] V okrovém pásu Martinova e-shopu vede nápis „Martin Kos“ na Martinovu stránku (Sami, listopad 2026).
+- [x] Na stránce Martinova výrobku vyjíždí ze strany panel s jeho třemi kategoriemi jako v e-shopu (Sami, listopad 2026).
 - [ ] Ve fázi 7 přesměrovat dosavadní adresy Martinových kategorií (`/kolekce/martin-kos/konve-solitery/`, `…/cajove-soupravy/`, `…/hrnky-s-plastickym-dekorem/` a `…/hrnek-maly|stredni|velky/`) na nové.
 - [ ] Úvodní stránka podle `kosovi_homepage.pdf`: v PDF není claim („Od modrobílého porcelánu…“), proto na stránce teď chybí. Vrátit ho?
 - [x] Hlavička podle druhého `kosovi_homepage.pdf` (Sami, listopad 2026): Porcelán Kosovi vede na úvod, Modrobílý porcelán do e-shopu, Daniela a Martin na jejich stránky, vše ve stejné velikosti jako zbytek webu (16 px z PDF bylo moc, Sami, listopad 2026). „Daniela a Martin Kosovi“ z hlavičky zmizelo. Košík se v menu objeví, jen když v něm něco je.
