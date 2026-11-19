@@ -12,10 +12,14 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Košík v hlavičce s počtem kusů (počet se ukáže, až bude košík, fáze 5).
 - [ ] Ilustrace v e-shopu (bábovka) je jen na prvním výpisu modrobílého porcelánu a v sekci Ostatní, jinde je velký devátý kus výpisu (Sami, listopad 2026). Vede na Bábovku velkou a ukazuje „od 3 500 Kč“ (malá a velká mají v novém menu každá svou siluetu). Má vést jinam?
 - [ ] Jazyk: přepínač EN je teď v patičce, v nové hlavičce není. Vyhovuje to?
-- [ ] E-shop, kategorie z návrhu bez produktů ve starém e-shopu: Talíř jídelní, Talíř malý, Talíř polévkový. Sporné mapování: „Miska velká“ = dřívější „Polévka/Snídaně“? (`src/config/lines.ts`). Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`) nejsou.
-- [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: mlíčenky mají v datech průměr 5,5 a 8,5 cm, na fotkách jsou užší (kresby podle fotek); hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF).
+- [ ] E-shop: Hrnek Štefan a Odkládátka v novém menu (`kosovi_eshop_2.pdf`, `kosovi_eshop_vektory.pdf`) nejsou. („Miska velká“ je podle Samiho „Miska polévková“, dřívější „Polévka/Snídaně“.)
+- [ ] Menu se siluetami, rozměry: velikosti pod kresbami jsou z dat, zaokrouhlené na celé cm (Sami, listopad 2026). Opraveno podle Samiho: cukřenka velká má výšku 7 cm (data měla 17,5 cm), panák 4–6 cm a průměr se u panáků neuvádí (smazán z dat i popisů). Zbývá: hrnek espresso nemá rozměr žádný (zůstává 6 cm z PDF). Kresby jsou teď Samiho z `kosovi_eshop_vektory.pdf`.
 - [x] Talíře a Misky a mísy jsou dvě záložky (Sami, listopad 2026).
-- [ ] Menu se siluetami pro Talíře a pro Misky a mísy (Sami je ještě upravuje).
+- [x] Úvod e-shopu podle `kosovi_eshop_vektory.pdf` (Sami, listopad 2026): nové kresby pro všech šest záložek, „Konve“ místo „Konvice“, „Talíř desertní“ místo „Talíř malý“, „Miska polévková“ místo „Miska velká“ (staré „Polévka/Snídaně“).
+- [ ] Úvod e-shopu, míry pod kresbami: PDF je uvádí jen u konví, u hrnků nejsou ani názvy. Na webu mají názvy všechny kresby, míry hrnky a konve. Kresby u ostatních záložek se od dat liší (cukřenka velká má v datech 7 cm, na kresbě 12 cm; talíř Praktik ⌀ 28 cm, na kresbě 20 cm; bábovka velká 10 cm, na kresbě 14,6 cm). Mají se míry ukázat i jinde, nebo kresby upravit?
+- [ ] Úvod e-shopu, konve: PDF má u kulaté střední 17 cm (a název „Konev kulatá velká“), data 19 cm. Web ukazuje 19 cm z dat.
+- [ ] Úvod e-shopu: značka 30 cm je na webu ve skutečné výšce 30 cm, v PDF je o 1,2 cm níž (u řádku s názvem řady).
+- [ ] Talíř jídelní, desertní a polévkový (Jídelní soupravy) nemají ve starém e-shopu žádné kusy, jejich výpisy jsou prázdné. Jediná „Jídelní souprava“ je jen v záložce Talíře.
 - [ ] Stránka produktu: krátké texty u jiných druhů než hrnků jsou návrh podle hrnku a ověřených faktů (`src/config/descriptions.ts`), potřebují Samiho schválení. Chybí péče o konvice s ratanovým uchem a jestli formy na bábovku smějí do trouby.
 - [x] Stránka produktu: podpis autorů odstraněn (Sami, listopad 2026).
 - [x] Stránka produktu podle `kosovi_detail_produktu.pdf` (Sami, listopad 2026): větší fotka, tlačítka okrovou, druhy záložky na skrytém okrovém panelu, který vyjede po najetí kurzorem, související kusy na zeleném pásu. Kresba velikosti zmizela.

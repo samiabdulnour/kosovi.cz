@@ -1,14 +1,16 @@
 ---
 // E-shop menu of the blue-and-white line, on an ochre band across the whole
-// width (Sami's screen, November 2026, after kosovi_eshop_2.pdf): the line's
-// name at the left and the note on sizes at the right on one line; under them
-// the tabs as a list in the first listing column, the open one underlined,
-// and from the second column to the screen's edge the open tab's kinds as
-// white line drawings to scale on a floor line, a solid top line and dashed
-// 10 cm lines with their figures just under them at the left, the name and
-// size under each drawing. The chosen kind is filled dark blue. The size is
-// the menu's own where it has one, else the height in the product data (the
-// diameter where there is no height), rounded to whole centimetres.
+// width, after kosovi_eshop_vektory.pdf (Sami, November 2026): the line's name
+// at the left and the note on sizes at the right on one line; the tabs as a
+// list at the left, the open one underlined; from the ruler to the screen's
+// edge the open tab's kinds as white line drawings to scale, each where the
+// PDF puts it (data-x in its SVG), standing on a floor line, with short 10,
+// 20 and 30 cm ticks at the left. The name sits under each drawing, with the
+// size where the tab shows sizes (chartSizes: mugs and teapots); kinds sold
+// as a set (Jídelní soupravy) share a line and a name over theirs.
+// The chosen kind is filled dark blue. The size is the menu's own where it
+// has one, else the height in the product data (the diameter where there is
+// no height), rounded to whole centimetres.
 // A tab without drawings lists its kinds as text.
 import type { Line, MenuGroup, MenuItem } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
@@ -31,26 +33,36 @@ const group: MenuGroup | undefined = line.menu.find(
   (g) => g.slug === entry?.slug || g.items.some((i) => i.slug === entry?.slug),
 );
 
-// Chart geometry in centimetres (the screen draws 1 cm as 8.9 px at 1512).
-const GUTTER = 3.6; // room for the ruler's figures before the first drawing
-const TAIL = 4; // the row ends this much short of the screen's edge
+// Chart geometry in centimetres: 1 cm is 8.88 px at 1512 (the PDF's ruler).
+const TOP = 30; // the ruler's height
+const TICK = 3.23; // the ticks' length
 
 const drawn = await Promise.all(
   (group?.items ?? [])
     .filter((item) => item.silhouette)
-    .map(async (item) => {
-      const shape = silhouette(item.silhouette!);
-      // centred on the body's axis, so the column holds the wider side twice
-      const reach = Math.max(shape.axis, shape.w - shape.axis);
-      // the narrowest column that holds the piece; the columns then share out
-      // the rest of the chart's width
-      return { item, shape, size: await kindSize(line.key, item), column: 2 * reach + 2 };
-    }),
+    .map(async (item) => ({
+      item,
+      shape: silhouette(item.silhouette!),
+      size: group?.chartSizes ? await kindSize(line.key, item) : undefined,
+    })),
 );
-const total = GUTTER + TAIL + drawn.reduce((sum, d) => sum + d.column, 0);
-const tallest = Math.max(0, ...drawn.map((d) => d.shape.h));
-const top = Math.max(20, Math.ceil((tallest + 2) / 10) * 10);
-const marks = Array.from({ length: top / 10 + 1 }, (_, i) => i * 10);
+const extent = Math.max(0, ...drawn.map((d) => d.shape.x + d.shape.w)) + 2;
+// A label on two lines as in the PDF: "Konev rovná / velká 23 cm"; a
+// two-word name keeps its line and the size goes under it.
+const labelLines = (name: string, size?: string) => {
+  const words = name.split(' ');
+  if (words.length < 3) return size ? [name, size] : [name];
+  return [words.slice(0, -1).join(' '), [words.at(-1), size].filter(Boolean).join(' ')];
+};
+const marks = [10, 20, TOP];
+// a set's line runs 6 cm beyond the axes of its outer pieces, its name centred over it
+const inSet = new Set(group?.sets?.flatMap((s) => s.items) ?? []);
+const sets = (group?.sets ?? [])
+  .map((s) => {
+    const axes = drawn.filter((d) => s.items.includes(d.item.slug)).map((d) => d.shape.x + d.shape.axis);
+    return axes.length ? { name: s.name, from: Math.min(...axes) - 6, to: Math.max(...axes) + 6 } : undefined;
+  })
+  .filter((s) => s !== undefined);
 const note = 'Všechny míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
 const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang, g.slug));
 // A long tab name on two lines, as on Sami's screen: "Cukřenky / a mlíčenky"
@@ -93,36 +105,37 @@ const tabLines = (name: string) => {
 
       {
         group && drawn.length > 0 && (
-          <div class="chart" style={`--total: ${total.toFixed(2)}; --top: ${top}; --lead: ${GUTTER}; --tail: ${TAIL}; --n: ${drawn.length}`}>
+          <div class="chart">
             <div
               class="scroll"
               role="region"
               tabindex="0"
               aria-label={lang === 'cs' ? `Velikosti: ${group.name}` : `Sizes: ${group.name}`}
             >
-              <div class="body-chart">
+              <div class="plane" style={`--top: ${TOP}; --extent: ${extent.toFixed(2)}; --tick: ${TICK}`}>
+                <span class="floor" aria-hidden="true" />
                 {marks.map((cm) => (
-                  <span class:list={['line', { dashed: cm > 0 && cm < top }]} style={`--at: ${cm}`} aria-hidden="true" />
+                  <span class="tick" style={`--at: ${cm}`} aria-hidden="true">
+                    {cz(`${cm} cm`)}
+                  </span>
                 ))}
-                {marks
-                  .filter((cm) => cm > 0)
-                  .map((cm) => (
-                    <span class="mark" style={`--at: ${cm}`} aria-hidden="true">
-                      {cz(`${cm} cm`)}
-                    </span>
-                  ))}
+                {sets.map((s) => (
+                  <span class="set" style={`--from: ${s.from.toFixed(2)}; --to: ${s.to.toFixed(2)}`}>
+                    {s.name}
+                  </span>
+                ))}
                 <ul class="items" role="list">
-                  {drawn.map(({ item, shape, size, column }) => (
-                    <li style={`--col: ${column.toFixed(2)}`}>
+                  {drawn.map(({ item, shape, size }) => (
+                    <li
+                      class:list={{ 'in-set': inSet.has(item.slug) }}
+                      style={`--x: ${shape.x}; --w: ${shape.w}; --h: ${shape.h}; --floor: ${shape.floor}; --axis: ${shape.axis}`}
+                    >
                       <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
-                        <span
-                          class="drawing"
-                          style={`--w: ${shape.w}; --h: ${shape.h}; --shift: ${(shape.w / 2 - shape.axis).toFixed(3)}`}
-                          set:html={shape.svg}
-                        />
+                        <span class="drawing" set:html={shape.svg} />
                         <span class="label">
-                          <span class="name">{item.name}</span>
-                          {size && <span class="size">{cz(size)}</span>}
+                          {labelLines(item.name, size).map((l) => (
+                            <span>{cz(l)}</span>
+                          ))}
                         </span>
                       </a>
                     </li>
@@ -202,7 +215,7 @@ const tabLines = (name: string) => {
   .body {
     display: grid;
     gap: var(--space-6) 0;
-    margin-block-start: clamp(2rem, 3.5vw, 3.3rem);
+    margin-block-start: var(--space-5);
   }
 
   /* The tabs one under another, the long names on two lines, Ostatní a line
@@ -228,107 +241,131 @@ const tabLines = (name: string) => {
     line-height: 1.5;
   }
 
-  /* From tablets up: the tabs in the first listing column, just under the
-     chart's top line; the chart from the second column to the screen's edge. */
+  /* From tablets up, as in the PDF at 1512: the ruler 197 points right of the
+     page's margin, 30 cm above the floor; the line's name and the note on the
+     ruler's top, the tabs from its 20 cm tick; the chart to the screen's edge. */
   @media (min-width: 48rem) {
-    .body {
+    .band {
       --bleed: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
-      grid-template-columns: 20.15% minmax(0, 1fr);
+      display: grid;
+      grid-template-columns: 14.7% minmax(0, 1fr);
+      grid-template-rows: auto 1fr;
+      padding-block: 1.95vw 4.5vw;
+    }
+
+    .head {
+      grid-column: 1 / -1;
+      grid-row: 1;
+      z-index: 1;
+      margin-block-start: 0.5vw;
+      pointer-events: none;
+    }
+
+    /* the line's name stays left of the ruler, on two lines where it must */
+    .line-name {
+      max-width: calc(14.7% - 0.75rem);
+    }
+
+    .head > * {
+      pointer-events: auto;
+    }
+
+    .body {
+      display: contents;
     }
 
     .tabs,
     .list {
-      padding-block-start: 0.55rem;
+      grid-row: 1 / -1;
+      padding-block-start: calc((var(--top, 30) - 20) * var(--cm));
     }
 
-    .chart {
+    .tabs {
+      grid-column: 1;
+    }
+
+    .chart,
+    .list {
+      grid-column: 2;
+      grid-row: 1 / -1;
       margin-inline-end: calc(-1 * var(--bleed));
     }
   }
 
   /* --- size chart ------------------------------------------------------- */
 
-  .chart {
-    /* 1 cm on screen: 8.9 px at 1512 and in step with the page, smaller where
-       the row would not fit (the ruler then still reads true), never too
-       small to read; on phones the chart scrolls sideways. */
-    container-type: inline-size;
-    --label-h: 3rem;
+  /* 1 cm on screen: 8.88 px at 1512 and in step with the page, never so
+     small that the labels run into each other; narrower screens scroll the
+     chart sideways. */
+  .shop-band {
+    --cm: max(6px, 0.5873vw);
+    --label-h: 4.5rem;
   }
 
   .scroll {
-    --cm: max(4.4px, min(0.589vw, 100cqw / var(--total)));
     overflow-x: auto;
   }
 
-  /* never so narrow that a column cannot hold its label (phones scroll) */
-  .body-chart {
+  .plane {
     position: relative;
-    width: max(calc(var(--total) * var(--cm)), calc(var(--n) * 5.5rem + 2.25rem));
-    min-width: 100%;
+    width: max(100%, calc(var(--extent) * var(--cm)));
     height: calc(var(--top) * var(--cm) + var(--label-h));
   }
 
-  /* White lines: the floor and the top solid, the 10 cm steps dashed; 1px under
-     the mark, so the top line stays inside the scroll box. */
-  .line {
+  /* the floor from the ruler to the screen's edge */
+  .floor {
     position: absolute;
+    top: calc(var(--top) * var(--cm));
     left: 0;
     right: 0;
-    bottom: calc(var(--label-h) + var(--at) * var(--cm) - 1px);
     height: 1px;
     background: #fff;
   }
 
-  .line.dashed {
-    background: repeating-linear-gradient(to right, #fff 0 4px, transparent 4px 8px);
-  }
-
-  /* each figure just under its line, at the chart's left */
-  .mark {
+  /* short ticks at the left, each figure just under its tick */
+  .tick {
     position: absolute;
-    top: calc(100% - var(--label-h) - var(--at) * var(--cm) + 0.45rem);
-    left: 0.15rem;
+    top: calc((var(--top) - var(--at)) * var(--cm));
+    left: 0;
+    width: calc(var(--tick) * var(--cm));
+    padding-block-start: 0.2rem;
+    border-top: 1px solid #fff;
+    color: #ded8a9;
     font-size: 0.625rem;
     line-height: 1;
     white-space: nowrap;
   }
 
-  /* each column as wide as its piece needs, plus an equal share of the rest */
   .items {
-    position: relative;
-    display: flex;
-    height: 100%;
     margin: 0;
-    padding: 0 calc(var(--tail) * var(--cm)) 0 max(calc(var(--lead) * var(--cm)), 2.25rem);
+    padding: 0;
     list-style: none;
   }
 
+  /* each drawing where the PDF puts it, its floor point on the floor */
   .items li {
-    flex: 1 1 calc(var(--col) * var(--cm));
-    display: flex;
+    position: absolute;
+    left: calc(var(--x) * var(--cm));
+    top: calc((var(--top) - var(--floor)) * var(--cm));
+    width: calc(var(--w) * var(--cm));
+    height: calc(var(--h) * var(--cm));
   }
 
   .items a {
-    flex: 1;
-    display: grid;
-    grid-template-rows: 1fr var(--label-h);
-    justify-items: center;
-    align-items: end;
+    display: block;
+    height: 100%;
   }
 
   .items a:hover {
     text-decoration: none;
   }
 
-  /* The body's axis on the column's centre, over the label. White outlines on
-     the band's colour, so the lines behind a piece do not show through it. */
+  /* White outlines on the band's colour, so the floor behind a piece does not
+     show through it. */
   .drawing {
     display: block;
-    width: calc(var(--w) * var(--cm));
-    height: calc(var(--h) * var(--cm));
+    height: 100%;
     color: #fff;
-    transform: translateX(calc(var(--shift) * var(--cm)));
   }
 
   .drawing :global(.f),
@@ -337,8 +374,8 @@ const tabLines = (name: string) => {
   }
 
   /* The chosen kind is filled dark blue; pointing at a kind shows the same.
-     Its inside (the opening of a cup, the espresso saucer) keeps the band's
-     colour (Sami, November 2026). */
+     Its inside (the opening of a cup, the well of a plate, the espresso
+     saucer) keeps the band's colour (Sami, November 2026). */
   .items a[aria-current='page'] .drawing :global(.f),
   .items a:hover .drawing :global(.f) {
     fill: var(--color-select);
@@ -351,11 +388,33 @@ const tabLines = (name: string) => {
     overflow: visible;
   }
 
-  /* name and size close under the floor, as on the screen */
+  /* name and size under the floor, centred on the body's axis; a set's pieces
+     one step lower, under the set's line and name */
   .label {
-    align-self: start;
+    position: absolute;
+    top: calc(var(--floor) * var(--cm) + 1.25rem);
+    left: calc(var(--axis) * var(--cm));
     display: grid;
-    padding-block-start: 0.7rem;
+    transform: translateX(-50%);
+    color: #fff9e3;
+    font-size: 0.6875rem;
+    line-height: 1.1;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .in-set .label {
+    top: calc(var(--floor) * var(--cm) + 2.95rem);
+  }
+
+  .set {
+    position: absolute;
+    top: calc(var(--top) * var(--cm) + 0.75rem);
+    left: calc(var(--from) * var(--cm));
+    width: calc((var(--to) - var(--from)) * var(--cm));
+    padding-block-start: 0.5rem;
+    border-top: 1px solid #fff;
+    color: #fff9e3;
     font-size: 0.6875rem;
     line-height: 1.1;
     text-align: center;

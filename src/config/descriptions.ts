@@ -15,7 +15,7 @@ export const kindTexts: Partial<Record<LineKey, Record<string, string>>> = {
     'talir-zavesny': 'Porcelánový závěsný talíř, ručně točený i malovaný.',
     'talir-praktik': 'Porcelánový talíř ručně točený i malovaný. Můžete ho vkládat do myčky i mikrovlnné trouby.',
     'miska-mala': 'Porcelánová miska ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
-    'miska-velka': 'Porcelánová miska ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
+    'miska-polevkova': 'Porcelánová miska ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
     'misa-salatova': 'Porcelánová salátová mísa ručně točená i malovaná. Můžete ji vkládat do myčky i mikrovlnné trouby.',
     talire: 'Porcelán ručně točený i malovaný. Můžete ho vkládat do myčky i mikrovlnné trouby.',
     'misky-a-misy': 'Porcelán ručně točený i malovaný. Můžete ho vkládat do myčky i mikrovlnné trouby.',

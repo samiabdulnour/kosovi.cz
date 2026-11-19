@@ -1,27 +1,30 @@
-# Siluety pro menu e-shopu
+# Kresby pro menu e-shopu
 
-Čárové kresby v měřítku pro menu podle `docs/design/kosovi_eshop_2.pdf`.
-Velikost kresby (viewBox) je v centimetrech, spodní hrana je podlaha,
-`data-axis` je osa těla (kresba i popisek se na ni centrují).
-Výstup: `src/assets/silhouettes/<název>.svg`, název se uvádí u položky menu
-v `src/config/lines.ts` (`silhouette`). Vyplněné plochy mají třídu `f`
-(vybraný druh je vybarví tmavě modře, `--color-select`), vnitřky a podšálek
-espressa třídu `i` (zůstávají bílé, `--color-select-inside`).
+Čárové kresby v měřítku pro úvod e-shopu podle
+`docs/design/kosovi_eshop_vektory.pdf` (Sami, listopad 2026): pro každou
+záložku jeden okrový pás s pravítkem a podlahou, kresby jsou Samiho vektory.
 
-- `pdf_mugs.py`: hrnky převzaté přímo z PDF, přepočtené podle pravítka
-  v PDF (čáry 0, 10 a 20 cm). Otvor v uchu je průhledný, espresso je
-  otočené uchem doleva jako ostatní.
-- `draw.py`: ostatní kusy (konvice, cukřenky, mlíčenky, podšálky,
-  bábovky, panák) jako čistá geometrie ve stylu hrnků z PDF. Profil těla,
-  ucho, hubička, víko a ratan jsou naměřené z fotek (`masks.py`,
-  `measure.py`), pro každou velikost konvice zvlášť; rozměry v cm jsou
-  z dat produktů.
+`pdf_vectors.py` vytáhne z PDF každou kresbu jako SVG do
+`src/assets/silhouettes/<název>.svg`. Název se uvádí u položky menu
+v `src/config/lines.ts` (`silhouette`).
+
+- Velikost kresby (viewBox) je v centimetrech podle pravítka v PDF
+  (20 cm od podlahy ke značce 20 cm).
+- `data-axis`: osa těla v cm od levé hrany, popisek se na ni centruje.
+- `data-floor`: podlaha v cm od horní hrany. Hrnky, konve a misky stojí
+  spodní elipsou přes podlahu, talíře a podšálky (kreslené shora) na ní.
+- `data-x`: levá hrana kresby v cm od pravítka, tak jak ji klade PDF.
+- Vyplněné plochy mají třídu `f` (vybraný druh je vybarví tmavě modře,
+  `--color-select`), vnitřky (otvor hrnku, dno talíře, podšálek espressa)
+  třídu `i` (zůstávají v barvě pásu).
+
+Indexy kreseb v PDF a jejich druhy jsou na začátku skriptu (`BANDS`). Když
+Sami pošle nové PDF, je potřeba je projít znovu.
 
 ```
-python3 -m venv .venv && .venv/bin/pip install pymupdf rembg pillow numpy scipy
-.venv/bin/python pdf_mugs.py ../../docs/design/kosovi_eshop_2.pdf ../../src/assets/silhouettes
-python3 draw.py ../../src/assets/silhouettes
-# měření nové fotky (čísla se pak přepíší do draw.py)
-.venv/bin/python masks.py <složka modelu> <masky> <fotka.jpg>
-.venv/bin/python measure.py <fotka.jpg> <maska.png>
+python3 -m venv .venv && .venv/bin/pip install pymupdf
+.venv/bin/python pdf_vectors.py ../../docs/design/kosovi_eshop_vektory.pdf ../../src/assets/silhouettes
 ```
+
+Dřívější kresby (hrnky z `kosovi_eshop_2.pdf`, ostatní kusy narýsované podle
+fotek) a jejich skripty jsou v historii gitu.

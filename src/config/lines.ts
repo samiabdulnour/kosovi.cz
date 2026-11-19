@@ -27,9 +27,20 @@ export interface MenuItem {
   size?: string;
 }
 
+/** Kinds sold together, named under their drawings in the size chart. */
+export interface MenuSet {
+  name: string;
+  /** Item slugs, in the chart's order. */
+  items: string[];
+}
+
 /** A tab of the e-shop menu (a column in lines without a size chart) and its items. */
 export interface MenuGroup extends MenuItem {
   items: MenuItem[];
+  sets?: MenuSet[];
+  /** Sizes under the drawings in the size chart. kosovi_eshop_vektory.pdf
+   *  gives them for the teapots only; the mugs keep theirs (Sami's screen). */
+  chartSizes?: boolean;
 }
 
 export interface Line {
@@ -66,6 +77,7 @@ export const lines: Line[] = [
         slug: 'hrnky',
         name: 'Hrnky',
         match: all('hrnky'),
+        chartSizes: true,
         items: [
           { slug: 'pitny-rezim', name: 'Pitný režim', silhouette: 'pitny-rezim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
           { slug: 'hrnek-velky', name: 'Hrnek velký', silhouette: 'hrnek-velky', match: [{ category: 'hrnky', subcategory: 'velky' }] },
@@ -76,41 +88,44 @@ export const lines: Line[] = [
           { slug: 'hrnek-espresso', name: 'Hrnek espresso', size: '6 cm', silhouette: 'hrnek-espresso', match: [{ category: 'hrnky', subcategory: 'hrhen-na-presso-s-podsalkem' }] },
         ],
       },
-      // Plates, and bowls with dishes, are two tabs (Sami, November 2026).
-      // TODO(rozhodnutí): Sami is reworking both; they keep the text menu.
+      // Plates, and bowls with dishes, are two tabs (Sami, November 2026); their
+      // drawings, names and order are kosovi_eshop_vektory.pdf's, as are the
+      // other tabs' (Sami, November 2026). The plates are drawn from above.
       {
         slug: 'talire',
         name: 'Talíře',
         match: all('talire'),
         items: [
-          { slug: 'talir-jidelni', name: 'Talíř jídelní', match: [] },
-          { slug: 'talir-maly', name: 'Talíř malý', match: [] },
-          { slug: 'talir-polevkovy', name: 'Talíř polévkový', match: [] },
-          { slug: 'talir-zavesny', name: 'Talíř závěsný', match: [{ category: 'talire', subcategory: 'talire-zavesne-talire' }] },
-          { slug: 'talir-praktik', name: 'Talíř Praktik', match: [{ category: 'talire', subcategory: 'talir-praktik' }] },
+          { slug: 'talir-zavesny', name: 'Talíř závěsný', silhouette: 'talir-zavesny', match: [{ category: 'talire', subcategory: 'talire-zavesne-talire' }] },
+          { slug: 'talir-praktik', name: 'Talíř Praktik', silhouette: 'talir-praktik', match: [{ category: 'talire', subcategory: 'talir-praktik' }] },
+          { slug: 'talir-jidelni', name: 'Talíř jídelní', silhouette: 'talir-jidelni', match: [] },
+          { slug: 'talir-desertni', name: 'Talíř desertní', silhouette: 'talir-desertni', match: [] },
+          { slug: 'talir-polevkovy', name: 'Talíř polévkový', silhouette: 'talir-polevkovy', match: [] },
         ],
+        sets: [{ name: 'Jídelní soupravy', items: ['talir-jidelni', 'talir-desertni', 'talir-polevkovy'] }],
       },
       {
         slug: 'misky-a-misy',
         name: 'Misky a mísy',
         match: all('misky', 'misy'),
         items: [
-          { slug: 'miska-mala', name: 'Miska malá', match: [{ category: 'misky', subcategory: 'mala' }] },
-          // TODO(fakta): the old shop has "Polévka/Snídaně" bowls. Are these the large ones?
-          { slug: 'miska-velka', name: 'Miska velká', match: [{ category: 'misky', subcategory: 'polevkova-snidanova' }] },
-          { slug: 'misa-salatova', name: 'Mísa salátová', match: [{ category: 'misky', subcategory: 'salatova' }] },
+          { slug: 'misa-salatova', name: 'Mísa salátová', silhouette: 'misa-salatova', match: [{ category: 'misky', subcategory: 'salatova' }] },
+          // the old shop's "Polévka/Snídaně" bowls (Sami's name, November 2026)
+          { slug: 'miska-polevkova', name: 'Miska polévková', silhouette: 'miska-polevkova', match: [{ category: 'misky', subcategory: 'polevkova-snidanova' }] },
+          { slug: 'miska-mala', name: 'Miska malá', silhouette: 'miska-mala', match: [{ category: 'misky', subcategory: 'mala' }] },
         ],
       },
       {
         slug: 'konvice',
-        name: 'Konvice',
+        name: 'Konve',
         match: all('konvice-rovne', 'konvice-kulate'),
+        chartSizes: true,
         items: [
           { slug: 'konev-rovna-velka', name: 'Konev rovná velká', silhouette: 'konev-rovna-velka', match: [{ category: 'konvice-rovne', subcategory: 'velka' }] },
-          { slug: 'konev-rovna-stredni', name: 'Konev rovná střední', silhouette: 'konev-rovna-stredni', match: [{ category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' }] },
-          { slug: 'konev-rovna-mala', name: 'Konev rovná malá', silhouette: 'konev-rovna-mala', match: [{ category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' }] },
           { slug: 'konev-kulata-velka', name: 'Konev kulatá velká', silhouette: 'konev-kulata-velka', match: [{ category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' }] },
+          { slug: 'konev-rovna-stredni', name: 'Konev rovná střední', silhouette: 'konev-rovna-stredni', match: [{ category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' }] },
           { slug: 'konev-kulata-stredni', name: 'Konev kulatá střední', silhouette: 'konev-kulata-stredni', match: [{ category: 'konvice-kulate', subcategory: 'stredi' }] },
+          { slug: 'konev-rovna-mala', name: 'Konev rovná malá', silhouette: 'konev-rovna-mala', match: [{ category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' }] },
           { slug: 'konev-kulata-mala', name: 'Konev kulatá malá', silhouette: 'konev-kulata-mala', match: [{ category: 'konvice-kulate', subcategory: 'mala-konvice-kulate' }] },
         ],
       },
