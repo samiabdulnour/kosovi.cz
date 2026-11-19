@@ -1,7 +1,8 @@
 ---
-// Three columns on the e-shop menu's lines: address, contacts, rights with the
-// language switch. A size smaller than the rest of the site. The legal links
-// come back once their pages have text (Sami, November 2026).
+// Four columns on the e-shop menu's lines (Sami, November 2026): the studio's
+// name and Instagram; the e-mail and the phones; the note on visits and the
+// address; the rights with the language switch. A size smaller than the rest
+// of the site. The legal links come back once their pages have text.
 import { pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
@@ -18,25 +19,19 @@ const t = useTranslations(lang);
 const year = new Date().getFullYear();
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
+// the mobile first, then the landline (Sami, November 2026)
+const phones = [...studio.phones].reverse();
+// as on Kontakt (Sami, November 2026)
+const visits = {
+  cs: 'Návštěva dílny je možná pouze po telefonickém dohovoru',
+  en: 'Visits to the workshop by arrangement on the phone only',
+}[lang];
 ---
 
 <footer class="site-footer">
   <div class="wrap cols">
-    <address>
-      {cz(studio.name)}<br />
-      {studio.address.street}<br />
-      {cz(`${studio.address.postalCode} ${studio.address.city}`)}
-    </address>
     <p>
-      {
-        studio.phones.map((phone) => (
-          <>
-            <a href={telHref(phone)}>{cz(phone)}</a>
-            <br />
-          </>
-        ))
-      }
-      <a href={`mailto:${studio.email}`}>{studio.email}</a><br />
+      {cz(studio.name)}<br />
       {
         studio.instagram ? (
           <a href={`https://www.instagram.com/${studio.instagram}/`}>
@@ -47,6 +42,22 @@ const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
         )
       }
     </p>
+    <p>
+      <a href={`mailto:${studio.email}`}>{studio.email}</a>
+      {
+        phones.map((phone) => (
+          <>
+            <br />
+            <a href={telHref(phone)}>{cz(phone)}</a>
+          </>
+        ))
+      }
+    </p>
+    <address>
+      {lang === 'cs' ? cz(visits) : visits}<br />
+      {studio.address.street}<br />
+      {cz(`${studio.address.postalCode} ${studio.address.city}`)}
+    </address>
     <div>
       <p>{t('footer.rights')} {year}</p>
       <p class="lang">
@@ -77,7 +88,7 @@ const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
     margin-block-start: var(--space-4);
   }
 
-  /* Two columns on tablets, three on wide screens, the rights at the right. */
+  /* Two columns on tablets, four on wide screens, the rights at the right. */
   @media (min-width: 48rem) {
     .cols {
       grid-template-columns: var(--label-start) 1fr;
@@ -91,7 +102,7 @@ const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 
   @media (min-width: 70rem) {
     .cols {
-      grid-template-columns: var(--label-start) 1fr auto;
+      grid-template-columns: var(--label-start) var(--label-start) 1fr auto;
     }
 
     .cols > :last-child {
