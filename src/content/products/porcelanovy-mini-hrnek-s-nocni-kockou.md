@@ -1,5 +1,5 @@
 ---
-title: "Porcelánový mini hrnek s noční kočkou"
+title: "Porcelánový mini hrnek den a noc"
 slug: "porcelanovy-mini-hrnek-s-nocni-kockou"
 line: "spolecna"
 category: "hrnky"
@@ -14,7 +14,9 @@ dimensions:
   volumeMl: 90
 images:
   - src: "../../assets/products/porcelanovy-mini-hrnek-s-nocni-kockou/01.jpg"
-    alt: "Porcelánový mini hrnek s noční kočkou"
+    alt: "Porcelánový mini hrnek den a noc"
+  - src: "../../assets/products/porcelanovy-mini-hrnek-s-nocni-kockou/02.jpg"
+    alt: "Porcelánový mini hrnek den a noc, foto 2"
 oldUrl: "https://kosovi.cz/produkt/porcelanovy-mini-hrnek-s-nocni-kockou/"
 description: |-
   Ručně vyráběný porcelán točený na hrnčířském kruhu. Vypalovaný minimálně 2x v peci při 1000°C a 2x při 1400°C.

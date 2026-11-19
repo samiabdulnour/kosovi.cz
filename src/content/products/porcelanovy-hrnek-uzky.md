@@ -15,6 +15,8 @@ dimensions:
 images:
   - src: "../../assets/products/porcelanovy-hrnek-uzky/01.jpg"
     alt: "Porcelánový hrnek úzký  den a noc"
+  - src: "../../assets/products/porcelanovy-hrnek-uzky/02.jpg"
+    alt: "Porcelánový hrnek úzký  den a noc, foto 2"
 oldUrl: "https://kosovi.cz/produkt/porcelanovy-hrnek-uzky/"
 description: |-
   Ručně vyráběný porcelán točený na hrnčířském kruhu. Vypalovaný minimálně 2x v peci při 1000°C a 2x při 1400°C.
