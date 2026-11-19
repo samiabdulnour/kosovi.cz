@@ -11,7 +11,9 @@
 // The chosen kind is filled dark blue. The size is the menu's own where it
 // has one, else the height in the product data (the diameter where there is
 // no height), rounded to whole centimetres.
-// A tab without drawings lists its kinds as text.
+// A tab without drawings lists its kinds as text. On the line's first listing,
+// with no tab open, the ruler and the floor stand empty until the pointer
+// shows a tab's drawings on them (Sami, November 2026).
 import type { Line, MenuGroup, MenuItem } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -113,6 +115,20 @@ const tabLines = (name: string) => {
         </ul>
       </nav>
 
+      {
+        !group && hasCharts && (
+          <div class="chart empty" data-tab-panel="" aria-hidden="true">
+            <div class="plane" style={`--top: ${TOP}; --extent: 0; --tick: ${TICK}`}>
+              <span class="floor" />
+              {marks.map((cm) => (
+                <span class="tick" style={`--at: ${cm}`}>
+                  {cz(`${cm} cm`)}
+                </span>
+              ))}
+            </div>
+          </div>
+        )
+      }
       {
         charts.map(({ group: g, drawn, extent, inSet, sets }) =>
           drawn.length > 0 ? (
@@ -272,6 +288,13 @@ const tabLines = (name: string) => {
   /* the other tabs' charts wait hidden */
   [data-tab-panel][hidden] {
     display: none;
+  }
+
+  /* phones have no pointer to show a tab's drawings on the empty ruler */
+  @media (max-width: 47.99rem) {
+    .empty {
+      display: none;
+    }
   }
 
   /* From tablets up, as in the PDF at 1512: the ruler 197 points right of the
