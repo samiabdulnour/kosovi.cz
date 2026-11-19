@@ -72,8 +72,8 @@ export interface MosaicRow {
 export const mosaicWidth = 1512;
 
 // The top row, under the header, in place of the former moving photo strip
-// (Sami, November 2026). No names in the PDF, so the pictures open nothing.
-// The hand painting plates is Sami's video (IMG_1295.MOV, November 2026),
+// (Sami, November 2026). The video opens Daniela's page, the black teapots
+// Martin's (Sami, November 2026). The hand painting plates is Sami's video (IMG_1295.MOV, November 2026),
 // encoded silent at 576 × 960 as H.264 MP4 and VP9 WebM; its first frame is
 // the poster.
 export const topRow: MosaicRow = {
@@ -90,8 +90,9 @@ export const topRow: MosaicRow = {
         poster: paintingPoster,
         label: 'Ruka maluje štětcem obličej na bílý talíř, vedle talíř s ženskou tváří, na růžovém pozadí',
       },
+      by: 'daniela',
     },
-    { x: 634, w: 878, photo: { src: blackTeapots, alt: 'Dvě černé kulaté konvice s bílými uchy a výlevkami na oranžovém pozadí' } },
+    { x: 634, w: 878, by: 'martin', photo: { src: blackTeapots, alt: 'Dvě černé kulaté konvice s bílými uchy a výlevkami na oranžovém pozadí' } },
   ],
 };
 

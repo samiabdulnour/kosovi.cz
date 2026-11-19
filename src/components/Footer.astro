@@ -1,6 +1,7 @@
 ---
-// Four columns on the e-shop menu's lines: address, contacts, legal links,
-// rights with the language switch. A size smaller than the rest of the site.
+// Three columns on the e-shop menu's lines: address, contacts, rights with the
+// language switch. A size smaller than the rest of the site. The legal links
+// come back once their pages have text (Sami, November 2026).
 import { pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
@@ -17,12 +18,6 @@ const t = useTranslations(lang);
 const year = new Date().getFullYear();
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
-
-const legal = [
-  { label: t('footer.terms'), path: pathOf('terms', 'cs') },
-  { label: t('footer.privacy'), path: pathOf('privacy', 'cs') },
-  { label: t('footer.returns'), path: pathOf('returns', 'cs') },
-];
 ---
 
 <footer class="site-footer">
@@ -52,19 +47,6 @@ const legal = [
         )
       }
     </p>
-    <nav aria-label={t('footer.legal')}>
-      <ul role="list">
-        {
-          legal.map(({ label, path }) => (
-            <li>
-              <a href={withBase(path)} hreflang={lang === 'cs' ? undefined : 'cs'}>
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
     <div>
       <p>{t('footer.rights')} {year}</p>
       <p class="lang">
@@ -91,16 +73,11 @@ const legal = [
     font-style: normal;
   }
 
-  ul {
-    padding: 0;
-    list-style: none;
-  }
-
   .lang {
     margin-block-start: var(--space-4);
   }
 
-  /* Two columns on tablets, four on wide screens. */
+  /* Two columns on tablets, three on wide screens, the rights at the right. */
   @media (min-width: 48rem) {
     .cols {
       grid-template-columns: var(--label-start) 1fr;
@@ -114,7 +91,7 @@ const legal = [
 
   @media (min-width: 70rem) {
     .cols {
-      grid-template-columns: var(--label-start) var(--label-start) 1fr auto;
+      grid-template-columns: var(--label-start) 1fr auto;
     }
 
     .cols > :last-child {
