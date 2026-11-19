@@ -1,10 +1,14 @@
 ---
 // A maker's page (src/config/artists.ts), after kosovi_martin.pdf and
-// kosovi_daniela.pdf (Sami, November 2026): rows of photographs across the
-// whole width, as on the homepage, no page title under the header.
+// kosovi_daniela.pdf (Sami, November 2026): the maker's e-shop categories as
+// tabs in one row, where their listings and product pages have them (Sami,
+// November 2026), then rows of photographs across the whole width, as on the
+// homepage; no page title under the header.
 import Mosaic from '../components/Mosaic.astro';
+import ShopTabs from '../components/ShopTabs.astro';
 import Note from '../components/wire/Note.astro';
 import { artistPages } from '../config/artists';
+import { getLine } from '../config/lines';
 import { makers, type MakerKey } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { alternatesOf } from '../i18n/routes';
@@ -19,6 +23,7 @@ interface Props {
 const { maker, lang } = Astro.props;
 const person = makers[maker];
 const design = artistPages[maker];
+const line = getLine(maker);
 
 // A photo that opens a product needs the product; a wrong slug stops the build.
 const wanted = design.rows.flatMap((row) => row.items.flatMap((i) => (i.product ? [i.product] : [])));
@@ -42,9 +47,10 @@ const notes: Record<MakerKey, string> = {
 
 <Base title={person.name} description={description} alternates={alternatesOf(maker)}>
   <h1 class="visually-hidden">{person.name}</h1>
-  <div class="lead">
-    <Mosaic rows={design.rows} lang={lang} />
+  <div class="wrap tabs-row">
+    <ShopTabs line={line} lang={lang} />
   </div>
+  <Mosaic rows={design.rows} lang={lang} />
   <div class="wrap">
     <Note>
       <p>{notes[maker]}</p>
@@ -53,8 +59,8 @@ const notes: Record<MakerKey, string> = {
 </Base>
 
 <style>
-  /* The first row 92 points under the header's baseline, as in the PDFs. */
-  .lead {
-    margin-block-start: clamp(0.75rem, 3.85vw, 3.65rem);
+  /* as on the e-shop's listings and product pages */
+  .tabs-row {
+    padding-block: clamp(2rem, 3.6vw, 3.4rem) clamp(2.5rem, 7.5vw, 7.5rem);
   }
 </style>

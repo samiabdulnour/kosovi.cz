@@ -51,6 +51,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [x] Danielina stránka podle `kosovi_daniela.pdf` (Sami, listopad 2026): řady fotek jako u Martina, popisky po najetí myší. Opraveno „kuchině“ na „kuchyně“.
 - [x] Danielin e-shop má tři kategorie podle fotek z Dropboxu (Sami, listopad 2026): Obtisky (25, s tácem čtverec 2), Obtisky na cibulák (8), Autorské hrnky (2), pozadí fotek se střídají, s novými fotkami (50). Výpisy mají záložky v jednom řádku jako u Martina. Na Danielině stránce vedou do kategorií fotky Obtisky a Obtisky na cibulák.
 - [x] Danielina výrobky mají místo „Vložit do košíku“ tlačítko „Zeptat se na produkt“ (Sami, listopad 2026).
+- [x] Martinova a Danielina stránka mají nad fotkami řádek se svými kategoriemi e-shopu, stejně jako jejich výpisy a detaily produktů (Sami, listopad 2026).
 - [ ] Danielina stránka: ostatní fotky (Malovaný cibulák, Býk, Sošky, Hrnek, Ptáci, Kachličky do kuchyně, Miska na zmrzlinu) zatím nikam nevedou, kategorie pošle Sami později. Zbylé Danieliny výrobky (věšáčky, úchytky, obrázky, obklady a další) zatím nejsou v žádné kategorii.
 - [ ] Ve fázi 7 přesměrovat dosavadní adresy Danieliných kategorií (`/kolekce/daniela-kosova/dekory/`, `…/design/`, `…/obrazky/`, `…/obklady/` a podkategorie).
 - [x] Na stránce Martinova výrobku vyjíždí ze strany panel s jeho třemi kategoriemi jako v e-shopu (Sami, listopad 2026).
