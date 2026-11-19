@@ -21,11 +21,12 @@ const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 // the mobile first, then the landline (Sami, November 2026)
 const phones = [...studio.phones].reverse();
-// as on Kontakt (Sami, November 2026)
+// as on Kontakt, on two lines, the address on the third (Sami, November 2026)
 const visits = {
-  cs: 'Návštěva dílny je možná pouze po telefonickém dohovoru',
-  en: 'Visits to the workshop by arrangement on the phone only',
+  cs: ['Návštěva dílny je možná pouze', 'po telefonickém dohovoru'],
+  en: ['Visits to the workshop', 'by arrangement on the phone only'],
 }[lang];
+const typeset = (s: string) => (lang === 'cs' ? cz(s) : s);
 ---
 
 <footer class="site-footer">
@@ -54,9 +55,9 @@ const visits = {
       }
     </p>
     <address>
-      {lang === 'cs' ? cz(visits) : visits}<br />
-      {studio.address.street}<br />
-      {cz(`${studio.address.postalCode} ${studio.address.city}`)}
+      {typeset(visits[0])}<br />
+      {typeset(visits[1])}<br />
+      {cz(`${studio.address.street}, ${studio.address.postalCode} ${studio.address.city}`)}
     </address>
     <div>
       <p>{t('footer.rights')} {year}</p>
