@@ -30,8 +30,31 @@ function inMenuOrder(line: LineKey, products: Product[]): Product[] {
   return [...products].sort((a, b) => Number(b.featured) - Number(a.featured) || rank(a) - rank(b));
 }
 
+/** Featured pieces first, then one piece of each kind in turn, in the menu's
+ * order, so a line's first page shows its range and not one kind (Sami,
+ * November 2026: it opened on the Pitný režim mugs only). */
+function mixed(line: LineKey, products: Product[]): Product[] {
+  const entries = getLine(line).menu.flatMap((group) => [...group.items, group]);
+  const kinds = new Map<number, Product[]>();
+  for (const p of products) {
+    const i = entries.findIndex((e) => matches(e, p));
+    const key = i === -1 ? entries.length : i;
+    kinds.set(key, [...(kinds.get(key) ?? []), p]);
+  }
+  const order = [...kinds.keys()].sort((a, b) => a - b);
+  const out: Product[] = [];
+  for (let round = 0; out.length < products.length; round++) {
+    for (const key of order) {
+      const piece = kinds.get(key)![round];
+      if (piece) out.push(piece);
+    }
+  }
+  return [...out.filter((p) => p.featured), ...out.filter((p) => !p.featured)];
+}
+
+/** A whole line, for its first listing (no tab chosen): a mix of its kinds. */
 export async function getLineProducts(line: LineKey, category?: string): Promise<Product[]> {
-  return inMenuOrder(line, await getProducts((p) => p.line === line && (!category || p.category === category)));
+  return mixed(line, await getProducts((p) => p.line === line && (!category || p.category === category)));
 }
 
 /** Products under one e-shop menu entry (a column heading or an item). */
