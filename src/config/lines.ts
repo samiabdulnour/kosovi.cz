@@ -32,6 +32,8 @@ export interface MenuSet {
   name: string;
   /** Item slugs, in the chart's order. */
   items: string[];
+  /** One entry for them all in a list of kinds (the product page's panel). */
+  entry?: string;
 }
 
 /** A tab of the e-shop menu (a column in lines without a size chart) and its items. */
@@ -99,7 +101,7 @@ export const lines: Line[] = [
           { slug: 'talir-desertni', name: 'Talíř desertní', silhouette: 'talir-desertni', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
           { slug: 'talir-polevkovy', name: 'Talíř polévkový', silhouette: 'talir-polevkovy', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
         ],
-        sets: [{ name: 'Jídelní soupravy', items: ['talir-jidelni', 'talir-desertni', 'talir-polevkovy'] }],
+        sets: [{ name: 'Jídelní soupravy', items: ['talir-jidelni', 'talir-desertni', 'talir-polevkovy'], entry: 'Jídelní souprava' }],
       },
       {
         slug: 'misky-a-misy',
@@ -211,6 +213,21 @@ export const lines: Line[] = [
     ],
   },
 ];
+
+/**
+ * A tab's kinds for a list: the kinds of a set with an entry of its own
+ * become that one entry (the dinner set's plates: "Jídelní souprava", Sami,
+ * November 2026), linking to its first kind.
+ */
+export function listEntries(group: MenuGroup): { name: string; slug: string; kinds: string[] }[] {
+  const out: { name: string; slug: string; kinds: string[] }[] = [];
+  for (const item of group.items) {
+    const set = group.sets?.find((s) => s.entry && s.items.includes(item.slug));
+    if (!set) out.push({ name: item.name, slug: item.slug, kinds: [item.slug] });
+    else if (set.items[0] === item.slug) out.push({ name: set.entry!, slug: item.slug, kinds: set.items });
+  }
+  return out;
+}
 
 export function getLine(key: LineKey): Line {
   const line = lines.find((l) => l.key === key);

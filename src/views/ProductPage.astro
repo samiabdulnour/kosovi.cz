@@ -12,7 +12,7 @@ import { getImage, Image } from 'astro:assets';
 import ProductCard from '../components/ProductCard.astro';
 import ShopTabs from '../components/ShopTabs.astro';
 import { kindTexts } from '../config/descriptions';
-import { getLine, placeOf } from '../config/lines';
+import { getLine, listEntries, placeOf } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
@@ -45,6 +45,12 @@ const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 666
 const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
 const soldOut = product.stock === 0;
 const onRequest = product.price === null;
+// Made to order, so the page says so and the button orders by e-mail (Sami,
+// November 2026): the dinner set. Keyed by the old shop's subcategory.
+const madeToOrder: Record<string, string> = {
+  'jidelni-soupravy': 'Jídelní soupravy jsou na objednávku',
+};
+const toOrder = product.subcategory ? madeToOrder[product.subcategory] : undefined;
 const maxQty = product.stock && product.stock > 0 ? Math.min(product.stock, 10) : 10;
 
 // The kind's short text (src/config/descriptions.ts), else the old description.
@@ -122,10 +128,10 @@ const metaDescription = kindText
           <nav class="drawer" aria-label={group.name}>
             <div class="panel">
               <ul role="list">
-                {group.items.map((i) => (
+                {listEntries(group).map((e) => (
                   <li>
-                    <a href={kindsHref(i.slug)} aria-current={i === item ? 'true' : undefined}>
-                      {i.name}
+                    <a href={kindsHref(e.slug)} aria-current={item && e.kinds.includes(item.slug) ? 'true' : undefined}>
+                      {e.name}
                     </a>
                   </li>
                 ))}
@@ -157,7 +163,7 @@ const metaDescription = kindText
       <div class="info">
         <div class="top">
           <h1>{name}</h1>
-          <p class="price">{onRequest ? 'Cena na dotaz' : formatCzk(product.price!)}</p>
+          <p class="price">{toOrder ? cz(toOrder) : onRequest ? 'Cena na dotaz' : formatCzk(product.price!)}</p>
 
           <form class="buy" data-cart-form data-slug={product.slug}>
             {
@@ -174,8 +180,8 @@ const metaDescription = kindText
             }
             {
               onRequest || soldOut ? (
-                <a class="box wide" href={ask(onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
-                  {onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
+                <a class="box wide" href={ask(toOrder ? 'Objednávka' : onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
+                  {toOrder ? 'Chci objednat' : onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
                 </a>
               ) : (
                 <>
