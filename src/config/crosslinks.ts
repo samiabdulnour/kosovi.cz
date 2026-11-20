@@ -1,4 +1,4 @@
-// Pieces from the other parts of the e-shop, on a green band under a listing,
+// Pieces from the other parts of the e-shop, on the light blue band under a listing,
 // as under a product page (src/components/RelatedBand.astro), so that the
 // blue-and-white porcelain, Daniela's work and Martin's lead to each other
 // (Sami, November 2026: Martin's teapots under the blue-and-white teapots,
