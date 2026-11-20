@@ -1,6 +1,7 @@
 ---
 // The e-shop's categories as tabs (kosovi_eshop_2.pdf), on listings and on
-// product pages. The open tab is underlined.
+// product pages. The open tab is underlined. On phones one under another
+// (Sami, November 2026).
 import type { Line, MenuGroup } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -48,5 +49,13 @@ const { line, lang, group, isPage = false } = Astro.props;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.6em;
+  }
+
+  @media (max-width: 47.99rem) {
+    ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
   }
 </style>

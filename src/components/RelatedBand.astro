@@ -3,7 +3,8 @@
 // whole width, five tiles as in the listing, each group under its heading; on
 // phones two a row. Under a product page its related pieces, under a listing
 // the pieces of the other parts of the e-shop (src/config/crosslinks.ts, Sami,
-// November 2026).
+// November 2026); there phones show four of them, two of each group, under
+// one heading (Sami, November 2026).
 import ProductCard from './ProductCard.astro';
 import type { Lang } from '../i18n/ui';
 import type { Product } from '../lib/products';
@@ -15,13 +16,24 @@ interface Props {
   lang: Lang;
   /** Space above the band, where the default (a product page's) is too much. */
   gap?: string;
+  /** Phones show this many tiles, shared between the groups, and several
+   *  groups under this one heading. */
+  phone?: { tiles: number; heading: string };
 }
 
-const { groups, label, lang, gap } = Astro.props;
+const { groups, label, lang, gap, phone } = Astro.props;
 // Each heading spans its own tiles.
 const shown = groups
   .filter((g) => g.products.length > 0)
   .map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, h) => n + h.products.length, 0) }));
+// How many of each group's tiles phones show: an even share, the first group
+// taking what an uneven split leaves.
+const onPhone = shown.map((g, i) => {
+  if (!phone) return g.products.length;
+  const share = Math.floor(phone.tiles / shown.length) + (i < phone.tiles % shown.length ? 1 : 0);
+  return Math.min(g.products.length, share);
+});
+const merged = phone && shown.length > 1;
 ---
 
 {
@@ -29,13 +41,14 @@ const shown = groups
     <div class="related-band" style={gap ? `--band-gap: ${gap}` : undefined}>
       <div class="wrap">
         <section class="related" aria-label={label}>
-          {shown.map((g) => (
+          {merged && <h2 class="phone-only">{phone.heading}</h2>}
+          {shown.map((g, gi) => (
             <>
-              <h2 style={`--start: ${g.start}; --span: ${g.products.length}`}>
+              <h2 class:list={{ 'not-phone': merged }} style={`--start: ${g.start}; --span: ${g.products.length}`}>
                 {g.href ? <a href={g.href}>{g.title}</a> : g.title}
               </h2>
-              {g.products.map((p) => (
-                <div class="tile">
+              {g.products.map((p, pi) => (
+                <div class:list={['tile', { 'not-phone': pi >= onPhone[gi] }]}>
                   <ProductCard product={p} lang={lang} />
                 </div>
               ))}
@@ -71,7 +84,17 @@ const shown = groups
     padding-block-end: 0.75rem;
   }
 
+  @media (max-width: 47.99rem) {
+    .not-phone {
+      display: none;
+    }
+  }
+
   @media (min-width: 48rem) {
+    .phone-only {
+      display: none;
+    }
+
     .related {
       grid-template-columns: repeat(5, minmax(0, 1fr));
     }

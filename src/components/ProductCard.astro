@@ -71,7 +71,9 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
     object-fit: contain;
   }
 
-  /* On phones the price goes under the name; from tablets up it sits beside it. */
+  /* On phones and tablets the price goes under the name and the decor, so the
+     name keeps whole words on the narrow tiles (Sami, November 2026); on wider
+     screens it sits beside the name. */
   .caption {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -115,7 +117,7 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
     grid-column: 1 / -1;
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 64rem) {
     .caption {
       grid-template-columns: minmax(0, 1fr) auto;
     }

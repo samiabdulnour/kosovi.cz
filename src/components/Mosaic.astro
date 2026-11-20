@@ -5,9 +5,9 @@
 // opens its author's part of the site (Daniela's page, Martin's page, the
 // blue-and-white e-shop), a product's page or a part of a line's e-shop, and
 // shows the author's name or its caption in its top corner when the pointer is
-// over it (Sami, November 2026); on touch screens, which have no pointer to
-// hover, the name always shows. On phones the photographs stand one under
-// another and the colour fields drop out.
+// over it (Sami, November 2026); touch screens, which have no pointer to
+// hover, show none (Sami, November 2026). On phones the photographs stand one
+// under another and the colour fields drop out.
 // A video plays silent in a loop, unless the visitor asked for less motion,
 // and opens its author's page like a photograph (no stop button, Sami,
 // November 2026).
@@ -164,12 +164,6 @@ const posters = new Map(
   .photo:hover .name,
   a.photo:focus-visible .name {
     opacity: 1;
-  }
-
-  @media (hover: none) {
-    .name {
-      opacity: 1;
-    }
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -155,6 +155,7 @@ const cross = await Promise.all(
     label={lang === 'cs' ? 'Z dalších částí e-shopu' : 'From the other parts of the shop'}
     lang={lang}
     gap={page.lastPage > 1 ? 'clamp(3rem, 6.5vw, 6.25rem)' : 'var(--space-6)'}
+    phone={{ tiles: 4, heading: lang === 'cs' ? 'Další' : 'More' }}
   />
 </Base>
 

@@ -139,6 +139,22 @@ const items = [
     text-underline-offset: 0.45em;
   }
 
+  /* On phones the menu items one under another, at the left under the
+     studio's name (Sami, November 2026). */
+  @media (max-width: 47.99rem) {
+    .bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-5);
+    }
+
+    ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.7rem;
+    }
+  }
+
   /* As tall as the capitals beside it, from their top to the baseline: an
      inline-block that hides its overflow sits with its bottom edge on the
      baseline in every browser. Moment's capitals are 0.67 em tall; the number

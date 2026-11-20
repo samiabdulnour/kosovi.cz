@@ -144,7 +144,7 @@ const metaDescription = kindText
     <div class="product">
       {
         drawer.length > 0 && (
-          <nav class="drawer" aria-label={drawerLabel}>
+          <nav class:list={['drawer', { repeats: !(group && group.items.length > 0) }]} aria-label={drawerLabel}>
             <div class="panel">
               <ul role="list">
                 {drawer.map((e) => (
@@ -355,13 +355,33 @@ const metaDescription = kindText
     text-underline-offset: 0.3em;
   }
 
-  /* On phones a band across the whole width over the photo. */
+  /* On tablets and phones a band across the whole width under the product's
+     text, sizes and rule, its kinds one under another (Sami, November 2026).
+     Phones leave it out where it lists the same categories as the tabs above
+     (Martin's and Daniela's pieces). */
   .drawer {
+    order: 1;
     margin-inline: calc(-1 * var(--gutter));
+  }
+
+  .photos {
+    order: 2;
   }
 
   .panel {
     padding: var(--space-4) var(--gutter);
+  }
+
+  @media (max-width: 59.99rem) {
+    .panel ul {
+      flex-direction: column;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .drawer.repeats {
+      display: none;
+    }
   }
 
   .photos {

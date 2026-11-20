@@ -14,7 +14,11 @@
 // A tab without drawings lists its kinds as text. On the line's first listing,
 // with no tab open, the ruler and the floor stand empty until the pointer
 // shows a tab's drawings on them (Sami, November 2026).
-import type { Line, MenuGroup, MenuItem } from '../config/lines';
+// On tablets the tabs stand in one row, like the header's menu, and the chart
+// under them runs across the whole width, at one scale for every tab so the
+// widest tab's drawings fit; on phones there are no drawings, the open tab's
+// kinds stand as text in a second column beside the tabs (Sami, November 2026).
+import { listEntries, type Line, type MenuGroup, type MenuItem } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { withBase } from '../i18n/utils';
@@ -71,6 +75,8 @@ const charts = await Promise.all(
   }),
 );
 const hasCharts = charts.some((c) => c.drawn.length > 0);
+// the widest tab's chart sets the tablets' scale, the same for every tab
+const maxExtent = Math.max(0, ...charts.map((c) => c.extent));
 const note = 'Všechny míry jsou pouze orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.';
 const tabHref = (g: MenuGroup) => withBase(collectionPath(line.slug[lang], lang, g.slug));
 // A long tab name on two lines, as on Sami's screen: "Cukřenky / a mlíčenky"
@@ -81,7 +87,7 @@ const tabLines = (name: string) => {
 };
 ---
 
-<div class="shop-band" data-shop-band data-current={group?.slug ?? ''}>
+<div class="shop-band" data-shop-band data-current={group?.slug ?? ''} style={`--max-extent: ${maxExtent.toFixed(2)}`}>
   <div class="wrap band">
     <div class="head">
       <h1 class="line-name">
@@ -105,7 +111,12 @@ const tabLines = (name: string) => {
                 >
                   {tabLines(g.name).map((l, i) => (
                     <>
-                      {i > 0 && <br />}
+                      {i > 0 && (
+                        <>
+                          {' '}
+                          <br />
+                        </>
+                      )}
                       {cz(l)}
                     </>
                   ))}
@@ -115,6 +126,23 @@ const tabLines = (name: string) => {
           }
         </ul>
       </nav>
+
+      {
+        line.menu.map(
+          (g) =>
+            g.items.length > 0 && (
+              <ul class="kinds" role="list" hidden={g !== group} aria-label={g.name}>
+                {listEntries(g).map((e) => (
+                  <li>
+                    <a href={withBase(collectionPath(line.slug[lang], lang, e.slug))} aria-current={entry && e.kinds.includes(entry.slug) ? 'page' : undefined}>
+                      {cz(e.name)}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            ),
+        )
+      }
 
       {
         !group && hasCharts && (
@@ -229,7 +257,8 @@ const tabLines = (name: string) => {
 
   .shop-band a:hover,
   .tabs [aria-current],
-  .list [aria-current='page'] {
+  .list [aria-current='page'],
+  .kinds [aria-current='page'] {
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 0.3em;
@@ -286,22 +315,86 @@ const tabLines = (name: string) => {
     line-height: 1.5;
   }
 
-  /* the other tabs' charts wait hidden */
-  [data-tab-panel][hidden] {
+  /* the other tabs' charts and kinds wait hidden */
+  [data-tab-panel][hidden],
+  .kinds[hidden] {
     display: none;
   }
 
-  /* phones have no pointer to show a tab's drawings on the empty ruler */
+  /* Phones: no drawings, which take too much room; the open tab's kinds as
+     text in a second column beside the tabs (Sami, November 2026). */
   @media (max-width: 47.99rem) {
+    .body {
+      grid-template-columns: auto minmax(0, 1fr);
+      column-gap: var(--space-6);
+    }
+
+    .chart,
+    .list {
+      display: none;
+    }
+
+    .kinds {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      line-height: 1.5;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .kinds {
+      display: none;
+    }
+  }
+
+  /* touch screens have no pointer to show a tab's drawings on the empty ruler */
+  @media (hover: none) {
     .empty {
       display: none;
     }
   }
 
-  /* From tablets up, as in the PDF at 1512: the ruler 197 points right of the
-     page's margin, 30 cm above the floor; the line's name and the note on the
-     ruler's top, the tabs from its 20 cm tick; the chart to the screen's edge. */
-  @media (min-width: 48rem) {
+  /* Tablets: the tabs in one row like the header's menu, the chart under them
+     from the page's margin to the screen's edge, at one scale for every tab,
+     so that the widest tab's drawings fit (Sami, November 2026). */
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    /* doubled to win over the default scale below */
+    .shop-band.shop-band {
+      --cm: calc((100vw - var(--gutter)) / var(--max-extent));
+    }
+
+    .tabs ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2) clamp(1rem, 3.9vw, 3.7rem);
+      line-height: normal;
+    }
+
+    .tabs .apart {
+      margin-block-start: 0;
+    }
+
+    .tabs br {
+      display: none;
+    }
+
+    .chart,
+    .list {
+      margin-inline-end: calc(-1 * var(--gutter));
+    }
+
+    .plane .label,
+    .plane .set {
+      font-size: 0.6rem;
+    }
+  }
+
+  /* From small laptops up, as in the PDF at 1512: the ruler 197 points right
+     of the page's margin, 30 cm above the floor; the line's name and the note
+     on the ruler's top, the tabs from its 20 cm tick; the chart to the
+     screen's edge. */
+  @media (min-width: 64rem) {
     .band {
       --bleed: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
       display: grid;

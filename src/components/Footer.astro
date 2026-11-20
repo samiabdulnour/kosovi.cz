@@ -1,8 +1,9 @@
 ---
 // Four columns on the e-shop menu's lines (Sami, November 2026): the studio's
 // name and Instagram; the e-mail and the phones; the note on visits and the
-// address; the rights with the language switch. A size smaller than the rest
-// of the site. The legal links come back once their pages have text.
+// address; the rights with the language switch. On tablets three, the rights
+// and the switch under the name (Sami, November 2026). A size smaller than the
+// rest of the site. The legal links come back once their pages have text.
 import { pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
@@ -89,11 +90,17 @@ const typeset = (s: string) => (lang === 'cs' ? cz(s) : s);
     margin-block-start: var(--space-4);
   }
 
-  /* Two columns on tablets, four on wide screens, the rights at the right. */
+  /* Three columns on tablets, the rights under the studio's name; four on
+     wide screens, the rights at the right. */
   @media (min-width: 48rem) {
     .cols {
-      grid-template-columns: var(--label-start) 1fr;
+      grid-template-columns: var(--label-start) var(--label-start) 1fr;
       column-gap: 0;
+    }
+
+    .cols > :last-child {
+      grid-column: 1;
+      grid-row: 2;
     }
 
     .cols > * {
@@ -107,6 +114,8 @@ const typeset = (s: string) => (lang === 'cs' ? cz(s) : s);
     }
 
     .cols > :last-child {
+      grid-column: auto;
+      grid-row: auto;
       padding-inline-end: 0;
     }
   }
