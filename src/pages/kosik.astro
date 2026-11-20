@@ -11,7 +11,9 @@ import { formatCzk } from '../lib/typography';
 const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku' : 'Odeslat objednávku zavazující k platbě';
 ---
 
-<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')} label="Košík">
+<Base title="Košík" description="Košík a objednávka. Platba bankovním převodem po potvrzení objednávky." alternates={alternatesOf('cart')}>
+  {/* no title under the header (Sami, November 2026) */}
+  <h1 class="visually-hidden">Košík</h1>
   <div class="section wrap">
 
     {/* Until the cart (phase 5): how many pieces the browser holds, and a way
