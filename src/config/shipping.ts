@@ -7,10 +7,9 @@ export interface ShippingMethod {
   note?: string;
 }
 
-// Zásilkovna for 200 Kč, or personal pickup for nothing, only after
-// arranging it first (Sami, November 2026).
-// TODO(fakta): where the pickup is (the studio?).
+// Zásilkovna for 200 Kč, or personal pickup for nothing in the workshop in
+// Dejvice, only after arranging it first (Sami, November 2026).
 export const shippingMethods: ShippingMethod[] = [
   { id: 'zasilkovna', name: 'Zásilkovna', price: 200 },
-  { id: 'osobni-odber', name: 'Osobní odběr', price: 0, note: 'pouze po předchozí domluvě' },
+  { id: 'osobni-odber', name: 'Osobní odběr v dílně v Dejvicích', price: 0, note: 'pouze po předchozí domluvě' },
 ];

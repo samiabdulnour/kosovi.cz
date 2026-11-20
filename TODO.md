@@ -37,7 +37,7 @@ Otevřené otázky a chybějící fakta. Rozhoduje Sami. V kódu jsou místa ozn
 - [ ] Výpal: 309 popisů produktů uvádí „2x při 1400°C“ (některé „minimálně 2x v peci při 1000°C a 2x při 1400°C“), stránka O nás dva výpaly, druhý na 1 380 °C. Které číslo platí?
 - [ ] Režim objednávky: nezávazná (`request`), nebo závazná (`binding`)? `src/config/order.ts`, zatím zástupně `request`.
 - [x] Doprava (Sami, listopad 2026): Zásilkovna 200 Kč, osobní odběr 0 Kč pouze po předchozí domluvě; Česká pošta ne. Platba převodem přes QR kód. `src/config/shipping.ts`, `src/config/order.ts`.
-- [ ] Kde je osobní odběr (v ateliéru?).
+- [x] Osobní odběr je v dílně v Dejvicích (Sami, listopad 2026).
 - [ ] Kterých 12–20 kusů jsou vybrané kusy (`featured: true`)?
 - [ ] Budou Daniela a Martin přidávat produkty sami? Pokud ano, po spuštění git CMS (Decap nebo Pages CMS).
 - [x] Návštěva dílny: pouze po telefonickém dohovoru, adresa na stránce Kontakt není (Sami, listopad 2026).
