@@ -97,31 +97,36 @@ const facts: [string, string][] = [...shownSizes, ...(product.catalogNo ? [['Kat
 const allPorcelain = !(group?.slug === 'konvice' || ['konve-solitery', 'cajove-soupravy'].includes(product.category ?? ''));
 const [firstPhoto, ...morePhotos] = product.images.map((img, i) => ({ img, i }));
 
-// Five tiles (Sami, November 2026): "Ze stejné sady" is the same kind with a
-// similar decor (a motif in common: "s andělem na kole" goes with bicycles and
-// angels); "Se stejným dekorem" the same decor on other kinds, shown only when
-// there is one; the tab's other pieces fill the rest under "Další".
-// Martin's and Daniela's pieces show all of them under "Další" alone.
+// Five tiles a page (Sami, November 2026): "Ze stejné sady" is the same kind
+// with a similar decor (a motif in common: "s andělem na kole" goes with
+// bicycles and angels); "Se stejným dekorem" the same decor on other kinds,
+// at least two when there are; the tab's other pieces fill the rest under
+// "Další". Up to three pages, each built the same way, to page through with
+// the band's arrows (Sami, November 2026). Martin's and Daniela's pieces show
+// them all under "Další" alone.
 const TILES = 5;
+const PAGES = 3;
 const sameSet = await getSameSet(product);
 const sameDecor = await getSameDecor(product);
-const decor = sameDecor.slice(0, Math.max(2, TILES - sameSet.length));
-const set = sameSet.slice(0, TILES - decor.length);
-const shownSlugs = new Set([...set, ...decor].map((p) => p.slug));
-// Whatever the set and the decor leave of the five tiles, the tab's other
-// pieces fill under "Další", on every product (Sami, November 2026: the
-// plates had no strip at all).
-const tab = (await getSameTab(product))
-  .filter((p) => !shownSlugs.has(p.slug))
-  .slice(0, TILES - set.length - decor.length);
+const related = new Set([...sameSet, ...sameDecor].map((p) => p.slug));
+const setPool = [...sameSet];
+const decorPool = [...sameDecor];
+const tabPool = (await getSameTab(product)).filter((p) => !related.has(p.slug));
+const pages: { set: Product[]; decor: Product[]; tab: Product[] }[] = [];
+for (let i = 0; i < PAGES && (setPool.length || decorPool.length || tabPool.length); i++) {
+  const decor = decorPool.splice(0, Math.min(TILES, Math.max(2, TILES - setPool.length)));
+  const set = setPool.splice(0, TILES - decor.length);
+  const tab = tabPool.splice(0, TILES - set.length - decor.length);
+  pages.push({ set, decor, tab });
+}
 const groups =
   product.line === 'spolecna'
-    ? [
+    ? pages.flatMap(({ set, decor, tab }) => [
         { title: 'Ze stejné sady', products: set },
         { title: 'Se stejným dekorem', products: decor },
         { title: 'Další', products: tab },
-      ]
-    : [{ title: 'Další', products: [...set, ...tab, ...decor] }];
+      ])
+    : [{ title: 'Další', products: pages.flatMap(({ set, tab, decor }) => [...set, ...tab, ...decor]) }];
 
 const metaDescription = kindText
   ? `${name}. ${kindText}`
@@ -283,7 +288,7 @@ const metaDescription = kindText
     </div>
   </div>
 
-  <RelatedBand groups={groups} label="Další kusy" lang="cs" phone={{ tiles: 4 }} />
+  <RelatedBand groups={groups} label="Další kusy" lang="cs" />
 </Base>
 
 <script>

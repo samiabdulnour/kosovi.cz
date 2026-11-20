@@ -76,18 +76,24 @@ if (pick && page.data.length >= ILLUSTRATION_MIN_PRODUCTS) {
 // The other parts of the e-shop, by this listing's tab (a kind's listing
 // takes its tab's). A heading opens the listing its pieces come from; a whole
 // maker's line opens the maker's page.
-const cross = await Promise.all(
+// Up to three pages, each made like the first (three of Martin's and two of
+// Daniela's, say), to page through with the band's arrows (Sami, November 2026).
+const PAGES = 3;
+const crossGroups = await Promise.all(
   (crossLinks[line.key][group?.slug ?? ''] ?? []).map(async (g) => {
-    const other = getLine(g.from.line);
-    const key = g.from.line;
-    const href = g.from.entry
-      ? collectionPath(other.slug[lang], lang, g.from.entry)
-      : key === 'spolecna'
+    const to = g.link ?? g.from;
+    const other = getLine(to.line);
+    const href = to.entry
+      ? collectionPath(other.slug[lang], lang, to.entry)
+      : to.line === 'spolecna'
         ? collectionPath(other.slug[lang], lang)
-        : pathOf(key, lang);
-    return { title: g.title[lang], href: withBase(href), products: await getCrossPieces(g) };
+        : pathOf(to.line, lang);
+    return { title: g.title[lang], href: withBase(href), count: g.count, products: await getCrossPieces({ ...g, count: g.count * PAGES }) };
   }),
 );
+const cross = Array.from({ length: PAGES }, (_, i) =>
+  crossGroups.map((g) => ({ title: g.title, href: g.href, products: g.products.slice(i * g.count, (i + 1) * g.count) })),
+).flat();
 ---
 
 <Base title={title} description={description} alternates={alternates} label={chart || tabs ? undefined : lineName}>
@@ -155,7 +161,7 @@ const cross = await Promise.all(
     label={lang === 'cs' ? 'Z dalších částí e-shopu' : 'From the other parts of the shop'}
     lang={lang}
     gap={page.lastPage > 1 ? 'clamp(3rem, 6.5vw, 6.25rem)' : 'var(--space-6)'}
-    phone={{ tiles: 4, heading: lang === 'cs' ? 'Další' : 'More' }}
+    phone={{ heading: lang === 'cs' ? 'Další' : 'More' }}
   />
 </Base>
 

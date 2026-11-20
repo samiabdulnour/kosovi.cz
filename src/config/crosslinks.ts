@@ -16,6 +16,8 @@ export interface CrossGroup {
   from: { line: LineKey; entry?: string };
   /** Only pieces whose slug starts with one of these (Daniela's plates among her decals). */
   only?: string[];
+  /** Where the heading leads, where not to the listing the pieces come from. */
+  link?: { line: LineKey; entry?: string };
   /** How many tiles; a band has five. */
   count: number;
 }
@@ -51,8 +53,10 @@ export const crossLinks: Record<LineKey, Record<string, CrossGroup[]>> = {
     talire: [
       {
         title: { cs: 'Talíře od Daniely', en: 'Plates by Daniela' },
-        from: { line: 'daniela', entry: 'obtisky' },
+        // her plates from both decal tabs, the heading opening Obtisky
+        from: { line: 'daniela' },
         only: ['talir-'],
+        link: { line: 'daniela', entry: 'obtisky' },
         count: 5,
       },
     ],
