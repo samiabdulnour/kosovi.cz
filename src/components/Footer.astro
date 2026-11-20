@@ -90,32 +90,53 @@ const typeset = (s: string) => (lang === 'cs' ? cz(s) : s);
     margin-block-start: var(--space-4);
   }
 
-  /* Three columns on tablets, the rights under the studio's name; four on
-     wide screens, the rights at the right. */
-  @media (min-width: 48rem) {
+  /* Three columns on tablets: the e-mail and the phones on the page's
+     optical centre, the note on visits and the address at its right edge, the
+     rights a line under the studio's name and the switch right under them
+     (Sami, November 2026). Four on wide screens, the rights at the right. */
+  @media (min-width: 48rem) and (max-width: 69.99rem) {
     .cols {
-      grid-template-columns: var(--label-start) var(--label-start) 1fr;
-      column-gap: 0;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0 var(--gap);
+    }
+
+    .cols > :nth-child(2) {
+      justify-self: center;
+    }
+
+    .cols > :nth-child(3) {
+      justify-self: end;
+    }
+
+    /* the rights in the first column after one empty line, whatever the
+       other columns' height */
+    .cols > :first-child,
+    .cols > :last-child {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
     }
 
     .cols > :last-child {
-      grid-column: 1;
-      grid-row: 2;
+      margin-block-start: calc(3 * var(--leading-body) * 1em);
     }
 
-    .cols > * {
-      padding-inline-end: var(--gap);
+    .lang {
+      margin-block-start: 0;
     }
   }
 
   @media (min-width: 70rem) {
     .cols {
       grid-template-columns: var(--label-start) var(--label-start) 1fr auto;
+      column-gap: 0;
+    }
+
+    .cols > * {
+      padding-inline-end: var(--gap);
     }
 
     .cols > :last-child {
-      grid-column: auto;
-      grid-row: auto;
       padding-inline-end: 0;
     }
   }

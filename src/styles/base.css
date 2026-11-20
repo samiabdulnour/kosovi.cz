@@ -173,6 +173,13 @@ a:hover {
   --line: 1.1667;
 }
 
+/* 2 points smaller on tablets (Sami, November 2026) */
+@media (min-width: 48rem) and (max-width: 63.99rem) {
+  .essay {
+    --text: calc(clamp(1.0625rem, 1.5875vw, 1.5rem) - 2px);
+  }
+}
+
 .essay h2 {
   margin-block-end: calc(var(--text) * var(--line));
   font-size: calc(var(--step-0) * 17 / 14.4);

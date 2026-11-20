@@ -16,9 +16,9 @@ interface Props {
   lang: Lang;
   /** Space above the band, where the default (a product page's) is too much. */
   gap?: string;
-  /** Phones show this many tiles, shared between the groups, and several
-   *  groups under this one heading. */
-  phone?: { tiles: number; heading: string };
+  /** Phones show this many tiles: with a heading, shared between the groups
+   *  and several groups under that one heading; without, the first ones. */
+  phone?: { tiles: number; heading?: string };
 }
 
 const { groups, label, lang, gap, phone } = Astro.props;
@@ -26,14 +26,19 @@ const { groups, label, lang, gap, phone } = Astro.props;
 const shown = groups
   .filter((g) => g.products.length > 0)
   .map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, h) => n + h.products.length, 0) }));
-// How many of each group's tiles phones show: an even share, the first group
-// taking what an uneven split leaves.
+// How many of each group's tiles phones show: under one heading an even
+// share, the first group taking what an uneven split leaves; else the first
+// tiles in order (Sami, November 2026).
 const onPhone = shown.map((g, i) => {
   if (!phone) return g.products.length;
+  if (!phone.heading) {
+    const before = shown.slice(0, i).reduce((n, h) => n + h.products.length, 0);
+    return Math.max(0, Math.min(g.products.length, phone.tiles - before));
+  }
   const share = Math.floor(phone.tiles / shown.length) + (i < phone.tiles % shown.length ? 1 : 0);
   return Math.min(g.products.length, share);
 });
-const merged = phone && shown.length > 1;
+const merged = !!phone?.heading && shown.length > 1;
 ---
 
 {
@@ -41,10 +46,10 @@ const merged = phone && shown.length > 1;
     <div class="related-band" style={gap ? `--band-gap: ${gap}` : undefined}>
       <div class="wrap">
         <section class="related" aria-label={label}>
-          {merged && <h2 class="phone-only">{phone.heading}</h2>}
+          {merged && <h2 class="phone-only">{phone?.heading}</h2>}
           {shown.map((g, gi) => (
             <>
-              <h2 class:list={{ 'not-phone': merged }} style={`--start: ${g.start}; --span: ${g.products.length}`}>
+              <h2 class:list={{ 'not-phone': merged || onPhone[gi] === 0 }} style={`--start: ${g.start}; --span: ${g.products.length}`}>
                 {g.href ? <a href={g.href}>{g.title}</a> : g.title}
               </h2>
               {g.products.map((p, pi) => (

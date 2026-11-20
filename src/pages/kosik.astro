@@ -1,11 +1,11 @@
 ---
 import Note from '../components/wire/Note.astro';
-import { ORDER_MODE } from '../config/order';
+import { ORDER_MODE, paymentMethods } from '../config/order';
 import { shippingMethods } from '../config/shipping';
 import Base from '../layouts/Base.astro';
 import { alternatesOf, pathOf } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
-import { formatCzk } from '../lib/typography';
+import { cz, formatCzk } from '../lib/typography';
 
 // Czech consumer law: a binding order button must state the obligation to pay.
 const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku' : 'Odeslat objednávku zavazující k platbě';
@@ -43,7 +43,25 @@ const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku'
           shippingMethods.map((m) => (
             <label class="inline">
               <input type="radio" name="shipping" value={m.id} disabled />
-              {m.name}, {m.price === null ? 'cena TODO' : formatCzk(m.price)}
+              <span>
+                {m.name}, {formatCzk(m.price)}
+                {m.note && <span class="condition">, {cz(m.note)}</span>}
+              </span>
+            </label>
+          ))
+        }
+      </fieldset>
+
+      <fieldset class="stack">
+        <legend>Platba</legend>
+        {
+          paymentMethods.map((m, i) => (
+            <label class="inline">
+              <input type="radio" name="payment" value={m.id} checked={i === 0} disabled />
+              <span>
+                {m.name}
+                {m.note && <span class="hint">{cz(m.note)}</span>}
+              </span>
             </label>
           ))
         }
@@ -69,7 +87,7 @@ const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku'
       <ul id="order-note">
         <li>Žádná online platba. Zákazník pošle objednávku, ateliér ji potvrdí, platí se převodem.</li>
         <li>Režim objednávky: {ORDER_MODE === 'request' ? 'nezávazná (zástupná volba)' : 'závazná'}. TODO(rozhodnutí): Sami ještě nerozhodl.</li>
-        <li>Doprava a ceny: TODO(fakta). Zásilkovna by měla vlastní widget pro výběr výdejního místa.</li>
+        <li>Doprava: Zásilkovna za 200 Kč, nebo osobní odběr zdarma po předchozí domluvě (Sami, listopad 2026). Zásilkovna by měla vlastní widget pro výběr výdejního místa. TODO(fakta): kde je osobní odběr.</li>
         <li>Ochrana proti spamu: skryté pole (honeypot) a Cloudflare Turnstile.</li>
       </ul>
     </Note>
@@ -112,14 +130,26 @@ const submitLabel = ORDER_MODE === 'request' ? 'Odeslat nezávaznou objednávku'
     margin-block-start: var(--space-7);
   }
 
+  /* no frames round the groups (Sami, November 2026) */
   fieldset {
-    padding: var(--space-4);
-    border: 1px solid var(--color-line);
+    margin: 0;
+    padding: 0 0 var(--space-5);
+    border: 0;
   }
 
   legend {
-    padding-inline: var(--space-2);
+    padding: 0;
+    margin-block-end: var(--space-3);
     font-weight: var(--weight);
+  }
+
+  .hint {
+    display: block;
+    margin-block-start: var(--space-1);
+    font-family: var(--font-serif);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
   }
 
   label {

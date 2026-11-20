@@ -206,9 +206,16 @@ const copy = {
     padding-block: clamp(2.5rem, 4.6vw, 4.4rem) clamp(2.5rem, 5vw, 4.75rem);
   }
 
-  /* the names stand two lines above the biographies */
+  /* the names stand two lines above the biographies, on tablets one (Sami,
+     November 2026) */
   .bio h2 {
     margin-block-end: calc(2 * var(--text) * var(--line));
+  }
+
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .bio h2 {
+      margin-block-end: calc(var(--text) * var(--line));
+    }
   }
 
   .daniela {

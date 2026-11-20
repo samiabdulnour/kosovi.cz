@@ -90,7 +90,8 @@ export const mosaic: MosaicRow[] = [
     h: 474,
     items: [
       { x: 0, w: 756, by: 'daniela', light: true, photo: { src: platesWithCockerel, alt: 'Dva talíře s modře malovaným kohoutem na tmavě modrém pozadí' } },
-      { x: 755, w: 757, by: 'martin', photo: { src: bowlWithApple, alt: 'Bílá mísa s prořezávaným okrajem a jablkem na fialovém pozadí' } },
+      // on phones the fourth photograph (Sami, November 2026)
+      { x: 755, w: 757, by: 'martin', phone: 4, photo: { src: bowlWithApple, alt: 'Bílá mísa s prořezávaným okrajem a jablkem na fialovém pozadí' } },
     ],
   },
   {
@@ -122,8 +123,9 @@ export const mosaic: MosaicRow[] = [
     h: 530,
     items: [
       { x: 0, w: 1512, color: '#acd4fd' },
-      { x: 0, w: 470, by: 'martin', photo: { src: teaSetStacked, alt: 'Světle modrá konvice s horním uchem a misky naskládané na sobě' } },
-      { x: 449, w: 422, by: 'daniela', photo: { src: colourfulBowl, alt: 'Miska s barevnými trojúhelníky a čarami na oranžovém pozadí' } },
+      // on phones the colourful bowl before the stacked tea set (Sami, November 2026)
+      { x: 0, w: 470, by: 'martin', phone: 16, photo: { src: teaSetStacked, alt: 'Světle modrá konvice s horním uchem a misky naskládané na sobě' } },
+      { x: 449, w: 422, by: 'daniela', phone: 15, photo: { src: colourfulBowl, alt: 'Miska s barevnými trojúhelníky a čarami na oranžovém pozadí' } },
       {
         x: 868,
         w: 644,

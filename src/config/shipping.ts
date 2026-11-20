@@ -1,13 +1,16 @@
 export interface ShippingMethod {
   id: string;
   name: string;
-  // CZK. null until Sami confirms the price.
-  price: number | null;
+  /** CZK. */
+  price: number;
+  /** A condition written after the price. */
+  note?: string;
 }
 
-// TODO(fakta): methods, prices and the pickup location. Do they use Zásilkovna?
+// Zásilkovna for 200 Kč, or personal pickup for nothing, only after
+// arranging it first (Sami, November 2026).
+// TODO(fakta): where the pickup is (the studio?).
 export const shippingMethods: ShippingMethod[] = [
-  { id: 'osobni-odber', name: 'Osobní odběr', price: null },
-  { id: 'ceska-posta', name: 'Česká pošta', price: null },
-  { id: 'zasilkovna', name: 'Zásilkovna', price: null },
+  { id: 'zasilkovna', name: 'Zásilkovna', price: 200 },
+  { id: 'osobni-odber', name: 'Osobní odběr', price: 0, note: 'pouze po předchozí domluvě' },
 ];

@@ -90,6 +90,8 @@ export const artistPages: Record<MakerKey, ArtistPageDesign> = {
             w: 522.7,
             caption: { cs: 'Váza', en: 'Vase' },
             shop: { line: 'martin', entry: 'vazy' },
+            // on phones the third photograph (Sami, November 2026)
+            phone: 3,
             photo: { src: mVazaTulipany, alt: 'Bílá váza s plastickými tečkami, v ní žluté tulipány a fialové kosatce, za ní obraz' },
           },
         ],

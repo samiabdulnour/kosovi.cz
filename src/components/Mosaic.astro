@@ -56,6 +56,20 @@ const place = (i: MosaicItem) => {
   return `--x: ${pct(x)}; --w: ${pct(w)}`;
 };
 
+// The order on phones: photographs with a place of their own take it, the
+// others fill the rest in the order of the rows (Sami, November 2026).
+const pictures = rows.flatMap((row) => row.items).filter((item) => item.photo || item.video);
+const slots: (MosaicItem | undefined)[] = new Array(pictures.length);
+for (const item of pictures) {
+  if (item.phone) {
+    if (item.phone < 1 || item.phone > pictures.length || slots[item.phone - 1]) throw new Error(`Mosaic: no free place ${item.phone} on phones`);
+    slots[item.phone - 1] = item;
+  }
+}
+const loose = pictures.filter((item) => !item.phone);
+for (let i = 0; i < slots.length; i++) if (!slots[i]) slots[i] = loose.shift();
+const phoneOrder = new Map(slots.map((item, i) => [item!, i + 1]));
+
 // Posters for the videos, made at build time like any other image.
 const posters = new Map(
   await Promise.all(
@@ -90,7 +104,7 @@ const posters = new Map(
           );
           const { href, name } = target(item);
           const look = ['photo', { light: item.light, edge: item.x <= 1 }];
-          const style = `${place(item)}; --ratio: ${w} / ${row.h}`;
+          const style = `${place(item)}; --ratio: ${w} / ${row.h}; --order: ${phoneOrder.get(item)}`;
           return href ? (
             <a class:list={look} href={item.url ? href : withBase(href)} style={style}>
               {image}
@@ -117,9 +131,14 @@ const posters = new Map(
     row-gap: var(--row-gap);
   }
 
+  /* On phones the photographs of all rows stand in one column, in their
+     phone order. */
   .row {
-    display: grid;
-    row-gap: var(--row-gap);
+    display: contents;
+  }
+
+  .row > .photo {
+    order: var(--order);
   }
 
   .area {
@@ -205,10 +224,19 @@ const posters = new Map(
 
 <script>
   // Videos play silent in a loop, except for visitors who asked for less
-  // motion, who see the first frame.
+  // motion, who see the first frame. Phones may hold the first attempt back
+  // (iOS until the video can play, or in Low Power Mode until the page is
+  // touched), so it is tried again then.
   if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
     for (const video of document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]')) {
-      video.play().catch(() => {});
+      video.muted = true;
+      video.autoplay = true;
+      const start = () => {
+        if (video.paused) video.play().catch(() => {});
+      };
+      start();
+      video.addEventListener('canplay', start, { once: true });
+      document.addEventListener('touchend', start, { once: true, passive: true });
     }
   }
 </script>

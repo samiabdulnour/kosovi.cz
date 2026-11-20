@@ -29,6 +29,9 @@ export interface MosaicItem {
   url?: string;
   /** The name in white, on a dark photograph. */
   light?: boolean;
+  /** Its place on phones, where the photographs stand one under another, if
+   *  not the place of its row (1 is the first photograph). */
+  phone?: number;
 }
 
 export interface MosaicRow {
