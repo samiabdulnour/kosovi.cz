@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { getLine, matches, placeOf, type LineKey, type Makers, type MenuItem } from '../config/lines';
+import type { CrossGroup } from '../config/crosslinks';
+import { getLine, matches, menuEntries, placeOf, type LineKey, type Makers, type MenuItem } from '../config/lines';
 import { decorMotifs } from './names';
 
 export type Product = CollectionEntry<'products'>['data'];
@@ -130,4 +131,24 @@ export async function getSameDecor(product: Product): Promise<Product[]> {
 export async function getSameTab(product: Product): Promise<Product[]> {
   const { group } = placeOf(getLine(product.line), product);
   return group ? around(product, group) : [];
+}
+
+/**
+ * A group of pieces from another part of the e-shop, for the green band under
+ * a listing (src/config/crosslinks.ts): its listing's pieces with a tab's kinds
+ * taking turns, or, for a whole line, one of each tab in turn.
+ */
+export async function getCrossPieces(group: CrossGroup): Promise<Product[]> {
+  const line = getLine(group.from.line);
+  const entry = group.from.entry && menuEntries(line).find((e) => e.slug === group.from.entry);
+  if (group.from.entry && !entry) throw new Error(`src/config/crosslinks.ts: no tab "${group.from.entry}" in ${line.key}`);
+  const keep = (p: Product) => !group.only || group.only.some((start) => p.slug.startsWith(start));
+  const lists = await Promise.all(
+    (entry ? [entry] : line.menu).map(async (e) => mixed(line.key, await getEntryProducts(line.key, e)).filter(keep)),
+  );
+  const out: Product[] = [];
+  for (let round = 0; out.length < group.count && lists.some((l) => l[round]); round++) {
+    for (const list of lists) if (list[round] && out.length < group.count) out.push(list[round]);
+  }
+  return out;
 }
