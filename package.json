@@ -11,10 +11,12 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "astro": "astro"
+    "astro": "astro",
+    "import": "node scripts/import-wp.ts"
   },
   "dependencies": {
-    "astro": "7.4.2"
+    "astro": "7.4.2",
+    "sharp": "0.35.5"
   },
   "devDependencies": {
     "@astrojs/check": "0.9.12",

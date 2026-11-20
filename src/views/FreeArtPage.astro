@@ -1,0 +1,64 @@
+---
+// Gallery of a maker's own art ("Volné"). The design does not draw this page
+// yet, and there are no photographs of the work, so it stays a frame.
+import { Image } from 'astro:assets';
+import Note from '../components/wire/Note.astro';
+import { makers, type MakerKey } from '../config/site';
+import Base from '../layouts/Base.astro';
+import { alternatesOf } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { useTranslations } from '../i18n/utils';
+
+interface Props {
+  maker: MakerKey;
+  lang: Lang;
+}
+
+const { maker, lang } = Astro.props;
+const t = useTranslations(lang);
+const person = makers[maker];
+const fields = ['sky', 'peach', 'olive', 'lavender', 'sand', 'salmon'];
+---
+
+<Base
+  title={`${t('artist.free')} · ${person.name}`}
+  description={lang === 'cs' ? `Volná tvorba: ${person.name}.` : `Fine art by ${person.name}.`}
+  alternates={alternatesOf(maker === 'martin' ? 'martinFree' : 'danielaFree')}
+  label={person.name}
+>
+  <div class="wrap">
+    <h2 class="section-head">{t('artist.free')}</h2>
+    <ul class="gallery" role="list">
+      {
+        maker === 'daniela' && (
+          <li class="field" style="--field: var(--field-sky)">
+            <Image src={person.portrait.src} alt={person.portrait.alt} widths={[480, 800, 1152]} sizes="(min-width: 48rem) 30vw, 100vw" />
+          </li>
+        )
+      }
+      {fields.map((field) => <li class="field" style={`--field: var(--field-${field})`} aria-hidden="true" />)}
+    </ul>
+    <Note>
+      <p>TODO(fakta): fotografie volné tvorby {maker === 'martin' ? 'Martina' : 'Daniely'} (obrazy, sochy, objekty), názvy, roky, techniky. Barevná pole drží místo.</p>
+    </Note>
+  </div>
+</Base>
+
+<style>
+  .gallery {
+    display: grid;
+    gap: var(--gap);
+    padding: 0;
+    list-style: none;
+  }
+
+  .gallery .field {
+    aspect-ratio: 4 / 3;
+  }
+
+  @media (min-width: 48rem) {
+    .gallery {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

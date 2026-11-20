@@ -1,0 +1,242 @@
+---
+// Rows of photographs on colour fields (src/config/mosaic.ts), placed as in
+// Sami's PDFs on a frame 1512 wide and scaled with the page: the homepage
+// (kosovi_homepage.pdf) and Martin's page (kosovi_martin.pdf). A photograph
+// opens its author's part of the site (Daniela's page, Martin's page, the
+// blue-and-white e-shop), a product's page or a part of a line's e-shop, and
+// shows the author's name or its caption in its top corner when the pointer is
+// over it (Sami, November 2026); touch screens, which have no pointer to
+// hover, show none (Sami, November 2026). On phones the photographs stand one
+// under another and the colour fields drop out.
+// A video plays silent in a loop, unless the visitor asked for less motion,
+// and opens its author's page like a photograph (no stop button, Sami,
+// November 2026).
+import { getImage, Image } from 'astro:assets';
+import { mosaicWidth, type Author, type MosaicItem, type MosaicRow } from '../config/mosaic';
+import { getLine } from '../config/lines';
+import { makers } from '../config/site';
+import { collectionPath, pathOf, productPath } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+
+interface Props {
+  rows: MosaicRow[];
+  lang: Lang;
+}
+
+const { rows, lang } = Astro.props;
+const blueWhite = getLine('spolecna');
+const authors: Record<Author, { name: string; href: string }> = {
+  daniela: { name: makers.daniela.name, href: pathOf('daniela', lang) },
+  martin: { name: makers.martin.name, href: pathOf('martin', lang) },
+  modrobily: { name: blueWhite.name[lang], href: collectionPath(blueWhite.slug[lang], lang) },
+};
+
+// Where a photograph leads and what it is called on hover.
+const target = (item: MosaicItem) => {
+  const author = item.by && authors[item.by];
+  const href = item.url
+    ? item.url
+    : item.product
+      ? productPath(item.product)
+      : item.shop
+        ? collectionPath(getLine(item.shop.line).slug[lang], lang, item.shop.entry)
+        : author?.href;
+  return { href, name: item.caption?.[lang] ?? author?.name };
+};
+
+const W = mosaicWidth;
+const pct = (v: number) => `${((v / W) * 100).toFixed(3)}%`;
+const clampItem = (i: MosaicItem) => {
+  const x = Math.max(0, i.x);
+  return { x, w: Math.min(W, i.x + i.w) - x };
+};
+const place = (i: MosaicItem) => {
+  const { x, w } = clampItem(i);
+  return `--x: ${pct(x)}; --w: ${pct(w)}`;
+};
+
+// The order on phones: photographs with a place of their own take it, the
+// others fill the rest in the order of the rows (Sami, November 2026).
+const pictures = rows.flatMap((row) => row.items).filter((item) => item.photo || item.video);
+const slots: (MosaicItem | undefined)[] = new Array(pictures.length);
+for (const item of pictures) {
+  if (item.phone) {
+    if (item.phone < 1 || item.phone > pictures.length || slots[item.phone - 1]) throw new Error(`Mosaic: no free place ${item.phone} on phones`);
+    slots[item.phone - 1] = item;
+  }
+}
+const loose = pictures.filter((item) => !item.phone);
+for (let i = 0; i < slots.length; i++) if (!slots[i]) slots[i] = loose.shift();
+const phoneOrder = new Map(slots.map((item, i) => [item!, i + 1]));
+
+// Posters for the videos, made at build time like any other image.
+const posters = new Map(
+  await Promise.all(
+    rows
+      .flatMap((row) => row.items)
+      .filter((item) => item.video)
+      .map(async (item) => [item, await getImage({ src: item.video!.poster, width: 576, format: 'webp' })] as const),
+  ),
+);
+---
+
+<div class="mosaic">
+  {
+    rows.map((row) => (
+      <div class="row" style={`--h: ${row.h}`}>
+        {row.items.map((item) => {
+          const { w } = clampItem(item);
+          if (!item.photo && !item.video)
+            return <span class="area" style={`${place(item)}; background: ${item.color}`} aria-hidden="true" />;
+          const image = item.video ? (
+            <video muted loop playsinline preload="auto" poster={posters.get(item)?.src} aria-label={item.video.label} data-autoplay>
+              <source src={item.video.src} type="video/mp4" />
+              {item.video.webm && <source src={item.video.webm} type="video/webm" />}
+            </video>
+          ) : (
+            <Image
+              src={item.photo!.src}
+              alt={item.photo!.alt}
+              widths={[480, 800, 1200, 1600, 2000].filter((x) => x <= item.photo!.src.width)}
+              sizes={`(min-width: 48rem) ${Math.ceil((w / W) * 100)}vw, 100vw`}
+            />
+          );
+          const { href, name } = target(item);
+          const look = ['photo', { light: item.light, edge: item.x <= 1 }];
+          const style = `${place(item)}; --ratio: ${w} / ${row.h}; --order: ${phoneOrder.get(item)}`;
+          return href ? (
+            <a class:list={look} href={item.url ? href : withBase(href)} style={style}>
+              {image}
+              {name && <span class="name">{name}</span>}
+            </a>
+          ) : (
+            <span class:list={look} style={style}>
+              {image}
+              {name && <span class="name" aria-hidden="true">{name}</span>}
+            </span>
+          );
+        })}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  /* Rows a little apart, 28 points at 1512 on every page (the homepage's PDF;
+     Sami, November 2026), scaled with the page. */
+  .mosaic {
+    --row-gap: clamp(0.75rem, 1.85vw, 1.75rem);
+    display: grid;
+    row-gap: var(--row-gap);
+  }
+
+  /* On phones the photographs of all rows stand in one column, in their
+     phone order. */
+  .row {
+    display: contents;
+  }
+
+  .row > .photo {
+    order: var(--order);
+  }
+
+  .area {
+    display: none;
+  }
+
+  .photo {
+    position: relative;
+    display: block;
+    aspect-ratio: var(--ratio);
+    overflow: hidden;
+  }
+
+  .photo :global(img),
+  .photo video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* The author's name in the top corner, on the page's margin where the
+     photograph starts at the page's edge. */
+  .name {
+    position: absolute;
+    top: clamp(0.75rem, 1.2vw, 1.15rem);
+    left: var(--gutter);
+    color: var(--color-ink);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+
+  .light .name {
+    color: #fff;
+  }
+
+  a.photo:hover {
+    text-decoration: none;
+  }
+
+  .photo:hover .name,
+  a.photo:focus-visible .name {
+    opacity: 1;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .name {
+      transition: none;
+    }
+  }
+
+  /* From tablets up, each row is the PDF's frame scaled to the page. */
+  @media (min-width: 48rem) {
+    .row {
+      position: relative;
+      display: block;
+      aspect-ratio: 1512 / var(--h);
+    }
+
+    .area,
+    .photo {
+      position: absolute;
+      top: 0;
+      left: var(--x);
+      width: var(--w);
+      height: 100%;
+    }
+
+    .area {
+      display: block;
+    }
+
+    .photo {
+      aspect-ratio: auto;
+    }
+
+    .photo:not(.edge) .name {
+      left: clamp(1rem, 1.6vw, 1.5rem);
+    }
+  }
+</style>
+
+<script>
+  // Videos play silent in a loop, except for visitors who asked for less
+  // motion, who see the first frame. Phones may hold the first attempt back
+  // (iOS until the video can play, or in Low Power Mode until the page is
+  // touched), so it is tried again then.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    for (const video of document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]')) {
+      video.muted = true;
+      video.autoplay = true;
+      const start = () => {
+        if (video.paused) video.play().catch(() => {});
+      };
+      start();
+      video.addEventListener('canplay', start, { once: true });
+      document.addEventListener('touchend', start, { once: true, passive: true });
+    }
+  }
+</script>

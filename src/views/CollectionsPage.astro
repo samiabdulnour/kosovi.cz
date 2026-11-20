@@ -1,83 +1,60 @@
 ---
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { lines } from '../config/lines';
-import { makers } from '../config/site';
+// E-shop overview: the three collections, blue and white porcelain first.
+import FieldBlock from '../components/FieldBlock.astro';
+import type { Field } from '../config/home';
+import { lines, type LineKey } from '../config/lines';
 import Base from '../layouts/Base.astro';
 import { alternatesOf, collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
-import { getLineProducts } from '../lib/products';
+import { useTranslations, withBase } from '../i18n/utils';
+import { photoOf } from '../lib/photos';
 
 interface Props {
   lang: Lang;
 }
 
 const { lang } = Astro.props;
+const t = useTranslations(lang);
 
-const copy = {
-  cs: {
-    title: 'Kolekce',
-    description: 'Kolekce porcelánového ateliéru Daniely a Martina Kosových: modrobílý porcelán, točený porcelán Martina Kose a výtvarná práce Daniely Kosové.',
-    count: (n: number) => `${n} ${n === 1 ? 'kus' : n >= 2 && n <= 4 ? 'kusy' : 'kusů'}`,
-  },
-  en: {
-    title: 'Collections',
-    description: 'Collections of the Kos porcelain studio: blue and white porcelain, thrown porcelain by Martin Kos and artwork by Daniela Kosová.',
-    count: (n: number) => `${n} pieces`,
-  },
-}[lang];
+const covers: Record<LineKey, { product: string; field: Field }> = {
+  spolecna: { product: 'porcelanovy-hrnek-pitny-rezim-s-capy', field: 'sky' },
+  martin: { product: 'cajova-souprava-1', field: 'olive' },
+  daniela: { product: 'talir-jidelni-3', field: 'peach' },
+};
 
-const oldCounts = { spolecna: 294, martin: 37, daniela: 85 };
-const withCounts = await Promise.all(
-  lines.map(async (line) => ({ line, count: (await getLineProducts(line.key)).length })),
+const blocks = await Promise.all(
+  lines.map(async (line) => ({
+    line,
+    field: covers[line.key].field,
+    photo: await photoOf(covers[line.key]),
+  })),
 );
+
+const description =
+  lang === 'cs'
+    ? 'E-shop porcelánového ateliéru Daniely a Martina Kosových: modrobílý porcelán a užitá tvorba Martina Kose a Daniely Kosové.'
+    : 'Shop of the Kos porcelain studio: blue and white porcelain and pieces by Martin Kos and Daniela Kosová.';
 ---
 
-<Base title={copy.title} description={copy.description} alternates={alternatesOf('collections')}>
-  <div class="section wrap">
-    <h1 class="section-head">{copy.title}</h1>
-    <ul class="lines" role="list">
-      {
-        withCounts.map(({ line, count }) => (
-          <li class="split">
-            <Placeholder label={line.name.cs.toLowerCase()} ratio="3 / 2" />
-            <div class="stack">
-              <h2>
-                <a href={withBase(collectionPath(line.slug[lang], lang))}>{line.name[lang]}</a>
-              </h2>
-              <p class="muted">{line.makers.map((m) => makers[m].name).join(', ')}</p>
-              <p>{line.categories.map((c) => c.name).join(', ')}</p>
-              <p class="muted">
-                {copy.count(count)} <span class="old">(starý e-shop: {oldCounts[line.key]})</span>
-              </p>
-            </div>
-          </li>
-        ))
-      }
-    </ul>
-    <Note title="Kolekce">
-      <p>Společná řada první, pak samostatná tvorba. Počty kusů se doplní po importu (fáze 2), v závorce jsou počty ze starého e-shopu pro kontrolu.</p>
-    </Note>
+<Base title={t('nav.shop')} description={description} alternates={alternatesOf('collections')} label={t('nav.shop')}>
+  <div class="wrap lines">
+    {
+      blocks.map(({ line, field, photo }) => (
+        <FieldBlock href={withBase(collectionPath(line.slug[lang], lang))} caption={line.name[lang]} field={field} photo={photo} ratio="4 / 3" />
+      ))
+    }
   </div>
 </Base>
 
 <style>
   .lines {
-    padding: 0;
-    list-style: none;
+    display: grid;
+    gap: var(--space-6) var(--gap);
   }
 
-  .lines > li + li {
-    margin-block-start: var(--space-7);
-  }
-
-  .old {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-  }
-
-  :global(html[data-notes='off']) .old {
-    display: none;
+  @media (min-width: 48rem) {
+    .lines {
+      grid-template-columns: repeat(3, 1fr);
+    }
   }
 </style>

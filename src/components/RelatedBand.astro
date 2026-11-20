@@ -1,0 +1,213 @@
+---
+// Pieces on a light blue band (Sami, November 2026; it was green) across the
+// whole width, each group under its heading. Under a product page its related
+// pieces, under a listing the pieces of the other parts of the e-shop
+// (src/config/crosslinks.ts, Sami, November 2026). The pieces run in one row,
+// five in view as in the listing (two on phones), and arrows at the band's
+// edges page through them; touch screens can also swipe (Sami, November 2026).
+// Under a listing, phones show several groups under one heading (Sami,
+// November 2026).
+import ProductCard from './ProductCard.astro';
+import type { Lang } from '../i18n/ui';
+import type { Product } from '../lib/products';
+
+interface Props {
+  groups: { title: string; href?: string; products: Product[] }[];
+  /** Names the band for screen readers. */
+  label: string;
+  lang: Lang;
+  /** Space above the band, where the default (a product page's) is too much. */
+  gap?: string;
+  /** Phones show several groups under this one heading. */
+  phone?: { heading: string };
+}
+
+const { groups, label, lang, gap, phone } = Astro.props;
+// Neighbouring groups with the same heading become one; each heading spans its
+// own tiles.
+const joined: Props['groups'] = [];
+for (const g of groups.filter((g) => g.products.length > 0)) {
+  const last = joined.at(-1);
+  if (last && last.title === g.title && last.href === g.href) last.products = [...last.products, ...g.products];
+  else joined.push({ ...g, products: [...g.products] });
+}
+const shown = joined.map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, h) => n + h.products.length, 0) }));
+const merged = !!phone && new Set(shown.map((g) => g.title)).size > 1;
+const t = lang === 'cs' ? { prev: 'Předchozí kusy', next: 'Další kusy' } : { prev: 'Previous pieces', next: 'More pieces' };
+---
+
+{
+  shown.length > 0 && (
+    <div class="related-band" style={gap ? `--band-gap: ${gap}` : undefined} data-carousel>
+      <div class="wrap">
+        <section class:list={['related', { merged }]} aria-label={label}>
+          {merged && <h2 class="phone-only">{phone?.heading}</h2>}
+          <div class="viewport">
+            <div class="track" data-track>
+              {shown.map((g) => (
+                <>
+                  <h2 class:list={{ 'not-phone': merged }} style={`--start: ${g.start}; --span: ${g.products.length}`}>
+                    {g.href ? <a href={g.href}>{g.title}</a> : g.title}
+                  </h2>
+                  {g.products.map((p) => (
+                    <div class="tile">
+                      <ProductCard product={p} lang={lang} />
+                    </div>
+                  ))}
+                </>
+              ))}
+            </div>
+            <button class="arrow prev" type="button" aria-label={t.prev} data-prev>
+              <span aria-hidden="true">←</span>
+            </button>
+            <button class="arrow next" type="button" aria-label={t.next} data-next>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  )
+}
+
+<script>
+  // The arrows page through the row by its visible width; each stays hidden
+  // while the row has nothing more that way, and both while it all fits.
+  for (const band of document.querySelectorAll<HTMLElement>('[data-carousel]')) {
+    const track = band.querySelector<HTMLElement>('[data-track]')!;
+    const prev = band.querySelector<HTMLButtonElement>('[data-prev]')!;
+    const next = band.querySelector<HTMLButtonElement>('[data-next]')!;
+    const smooth = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const page = () => track.clientWidth + (parseFloat(getComputedStyle(track).columnGap) || 0);
+    const update = () => {
+      const max = track.scrollWidth - track.clientWidth;
+      band.toggleAttribute('data-scrolls', max > 1);
+      prev.disabled = track.scrollLeft <= 1;
+      next.disabled = track.scrollLeft >= max - 1;
+    };
+    prev.addEventListener('click', () => track.scrollBy({ left: -page(), behavior: smooth ? 'smooth' : 'auto' }));
+    next.addEventListener('click', () => track.scrollBy({ left: page(), behavior: smooth ? 'smooth' : 'auto' }));
+    track.addEventListener('scroll', update, { passive: true });
+    addEventListener('resize', update);
+    update();
+  }
+</script>
+
+<style>
+  .related-band {
+    margin-block-start: var(--band-gap, clamp(3.5rem, 9.2vw, 8.7rem));
+    padding-block-start: 1.75rem;
+    background: #cbe2f7;
+    overflow-x: clip;
+  }
+
+  /* The row: two tiles in view on phones, five from tablets up; a heading
+     over each group's tiles, then the photos and the captions on shared rows. */
+  .viewport {
+    --per: 2;
+    --col-gap: 0.65rem;
+    position: relative;
+    container-type: inline-size;
+  }
+
+  .track {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: calc((100% - (var(--per) - 1) * var(--col-gap)) / var(--per));
+    grid-template-rows: auto auto auto;
+    column-gap: var(--col-gap);
+    /* room for the keyboard focus ring inside the scrolling row */
+    margin: -4px;
+    padding: 4px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-inline: 4px;
+    scrollbar-width: none;
+  }
+
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tile {
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: 2 / span 2;
+    scroll-snap-align: start;
+  }
+
+  /* A group's heading stays at the row's left edge while its tiles are in
+     view. */
+  h2 {
+    position: sticky;
+    left: 4px;
+    grid-row: 1;
+    grid-column: var(--start) / span var(--span);
+    justify-self: start;
+    padding-block-end: 0.75rem;
+    white-space: nowrap;
+  }
+
+  /* The arrows in the band's margins, level with the middle of the photos. */
+  .arrow {
+    --head: calc(var(--step-0) * 1.25 + 0.75rem);
+    --photo: calc((100cqi - (var(--per) - 1) * var(--col-gap)) / var(--per) * 302 / 260);
+    position: absolute;
+    top: calc(var(--head) + var(--photo) / 2);
+    display: none;
+    place-items: center;
+    width: var(--gutter);
+    height: 3rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-ink);
+    font: inherit;
+    font-size: calc(var(--step-0) * 1.6);
+    line-height: 1;
+    transform: translateY(-50%);
+    cursor: pointer;
+  }
+
+  .merged .arrow {
+    --head: 0px;
+  }
+
+  [data-scrolls] .arrow {
+    display: grid;
+  }
+
+  .arrow:disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .prev {
+    right: 100%;
+  }
+
+  .next {
+    left: 100%;
+  }
+
+  @media (max-width: 47.99rem) {
+    .not-phone {
+      display: none;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .phone-only {
+      display: none;
+    }
+
+    .viewport {
+      --per: 5;
+    }
+
+    .merged .arrow {
+      --head: calc(var(--step-0) * 1.25 + 0.75rem);
+    }
+  }
+</style>

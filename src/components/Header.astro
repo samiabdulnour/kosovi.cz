@@ -1,114 +1,221 @@
 ---
+// Header after the second kosovi_homepage.pdf (Sami, November 2026): the brand
+// on the left, opening the homepage; the menu on the right, all of it in
+// capitals at the size of the rest of the site (the PDF's 16 px was too large,
+// Sami, November 2026): Modrobílý porcelán (the e-shop's first listing),
+// Daniela and Martin (their pages), O nás, Kurzy, Kontakt, the cart while
+// something is in it, and the language switch ("EN", on English pages "CZ").
+// The item a page belongs under is underlined. White on every page, without a
+// rule under it. On the homepage it stays in view while the page scrolls, only
+// its black text, with no white behind it, except on phones (Sami, November
+// 2026).
+import { getLine } from '../config/lines';
 import { studio } from '../config/site';
-import { pathOf, type Alternates, type RouteKey } from '../i18n/routes';
+import { collectionPath, pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
 import { cz } from '../lib/typography';
 
+/** The header's item a page belongs under. */
+export type Section = 'blueWhite' | 'daniela' | 'martin';
+
 interface Props {
   lang: Lang;
-  alternates: Alternates;
+  /** Paths of this page in each language, for the language switch. */
+  alternates?: Alternates;
+  /** Where the page's path does not tell (a product page). */
+  section?: Section;
+  /** Stays in view while the page scrolls, its text alone over the photographs (the homepage). */
+  sticky?: boolean;
 }
 
-const { lang, alternates } = Astro.props;
-const t = useTranslations(lang);
+const { lang, alternates = {}, section, sticky = false } = Astro.props;
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
-
-const items: { key: RouteKey; label: string }[] = [
-  { key: 'collections', label: t('nav.collections') },
-  { key: 'martin', label: t('nav.martin') },
-  { key: 'daniela', label: t('nav.daniela') },
-  { key: 'process', label: t('nav.process') },
-  { key: 'about', label: t('nav.about') },
-  ...(lang === 'cs' ? [{ key: 'courses' as const, label: t('nav.courses') }] : []),
-  { key: 'contact', label: t('nav.contact') },
-];
+const t = useTranslations(lang);
+const lineOf = (key: 'spolecna' | 'daniela' | 'martin') => collectionPath(getLine(key).slug[lang], lang);
 
 const current = Astro.url.pathname;
-function isCurrent(path: string): 'page' | 'true' | undefined {
-  const href = withBase(path);
-  if (current === href) return 'page';
-  return current.startsWith(href) ? 'true' : undefined;
-}
+const under = (...paths: string[]) => paths.some((p) => current.startsWith(withBase(p)));
+const cartPath = pathOf('cart', 'cs');
+// each maker's item covers their page and their part of the e-shop
+const here: Section | undefined =
+  section ??
+  (under(pathOf('daniela', lang), lineOf('daniela'))
+    ? 'daniela'
+    : under(pathOf('martin', lang), lineOf('martin'))
+      ? 'martin'
+      : under(pathOf('collections', lang), '/produkt/')
+        ? 'blueWhite'
+        : undefined);
+
+const items = [
+  { href: lineOf('spolecna'), label: t('nav.blueWhite'), current: here === 'blueWhite' },
+  { href: pathOf('daniela', lang), label: t('nav.daniela'), current: here === 'daniela' },
+  { href: pathOf('martin', lang), label: t('nav.martin'), current: here === 'martin' },
+  { href: pathOf('about', lang), label: t('nav.about') },
+  ...(lang === 'cs' ? [{ href: pathOf('courses', 'cs'), label: t('nav.courses') }] : []),
+  { href: pathOf('contact', lang), label: t('nav.contact') },
+].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class="site-header">
+<header class:list={['site-header', { sticky }]}>
   <div class="wrap bar">
-    <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.name)}</a>
+    <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
     <nav aria-label={t('nav.label')}>
-      <ul class="nav">
+      <ul>
         {
-          items.map(({ key, label }) => {
-            const path = pathOf(key, lang);
-            return (
-              <li>
-                <a href={withBase(path)} aria-current={isCurrent(path)}>
-                  {label}
-                </a>
-              </li>
-            );
-          })
+          items.map((item) => (
+            <li>
+              <a href={withBase(item.href)} aria-current={item.current ? 'page' : undefined}>
+                {item.label}
+              </a>
+            </li>
+          ))
         }
+        <li data-cart-item hidden>
+          <a href={withBase(cartPath)} aria-current={current === withBase(cartPath) ? 'page' : undefined}>
+            {t('nav.cart')}
+            <span class="badge" data-cart-count hidden></span>
+          </a>
+        </li>
+        <li>
+          <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang} aria-label={t('lang.switch')}>
+            {otherLang === 'en' ? 'EN' : 'CZ'}
+          </a>
+        </li>
       </ul>
     </nav>
-    <ul class="tools">
-      {
-        lang === 'cs' && (
-          <li>
-            <a href={withBase(pathOf('cart', 'cs'))} aria-current={isCurrent(pathOf('cart', 'cs'))}>
-              {t('nav.cart')}
-            </a>
-          </li>
-        )
-      }
-      <li>
-        <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>{t('lang.switch')}</a>
-      </li>
-    </ul>
   </div>
 </header>
 
-<style>
-  .site-header {
-    border-bottom: 1px solid var(--color-line);
+<script>
+  // The cart lives in localStorage ([{ slug, qty }], phase 5); the badge shows
+  // how many pieces, and updates when a product page adds some.
+  function showCount() {
+    let count = 0;
+    try {
+      const items: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+      if (Array.isArray(items)) {
+        count = items.reduce((sum: number, l: { qty?: unknown }) => sum + (typeof l?.qty === 'number' ? l.qty : 1), 0);
+      }
+    } catch {}
+    for (const badge of document.querySelectorAll<HTMLElement>('[data-cart-count]')) {
+      badge.textContent = String(count);
+      badge.hidden = count === 0;
+    }
+    // the cart shows in the menu only while something is in it
+    for (const item of document.querySelectorAll<HTMLElement>('[data-cart-item]')) {
+      item.hidden = count === 0;
+    }
   }
+  showCount();
+  document.addEventListener('kosovi-cart', showCount);
+</script>
 
+<style>
   .bar {
     display: flex;
     flex-wrap: wrap;
+    justify-content: space-between;
     align-items: baseline;
-    gap: var(--space-3) var(--space-6);
-    padding-block: var(--space-4);
-  }
-
-  .brand {
-    font-weight: 600;
-    text-decoration: none;
-  }
-
-  nav {
-    flex: 1 1 auto;
+    gap: var(--space-3) var(--gap);
+    padding-block: clamp(1.75rem, 3.8vw, 3.6rem) clamp(0.9rem, 1.9vw, 1.8rem);
   }
 
   ul {
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-1) var(--space-4);
+    justify-content: flex-end;
+    /* about 59 points between the items at 1512, as in the PDF */
+    gap: var(--space-2) clamp(1rem, 3.9vw, 3.7rem);
     padding: 0;
     list-style: none;
   }
 
-  a {
-    text-decoration: none;
-  }
-
-  a:hover,
-  [aria-current] {
-    text-decoration: underline;
-  }
-
   [aria-current='page'] {
-    text-decoration-thickness: 2px;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.45em;
+  }
+
+  /* On tablets and phones at the footer's size (Sami, November 2026). */
+  @media (max-width: 63.99rem) {
+    .site-header {
+      font-size: var(--step-footer);
+    }
+  }
+
+  /* On phones the menu items one under another, at the left under the
+     studio's name, spaced like the footer's lines (Sami, November 2026). */
+  @media (max-width: 47.99rem) {
+    .bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: var(--space-5);
+    }
+
+    ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      line-height: var(--leading-body);
+    }
+
+    /* close under the word, clear of the next line */
+    [aria-current='page'] {
+      text-underline-offset: 0.12em;
+    }
+  }
+
+  /* As tall as the capitals beside it, from their top to the baseline: an
+     inline-block that hides its overflow sits with its bottom edge on the
+     baseline in every browser. Moment's capitals are 0.67 em tall; the number
+     inside is 0.6 em, so the box is 0.67 / 0.6 of its own em. */
+  .badge {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: baseline;
+    min-width: calc(0.67em / 0.6);
+    height: calc(0.67em / 0.6);
+    margin-inline-start: 0.45em;
+    padding-inline: 0.25em;
+    border-radius: 0.2em;
+    background: var(--color-ink);
+    color: var(--color-paper);
+    font-size: 0.6em;
+    line-height: calc(0.67em / 0.6);
+    letter-spacing: 0;
+    text-align: center;
+  }
+
+  /* Where the browser can trim the line to the figure's own height (from the
+     top of the capitals to the baseline), centre the figure by padding alone,
+     so it does not depend on how a browser rounds the font's line metrics. */
+  @supports (text-box: trim-both cap alphabetic) {
+    .badge {
+      padding-block: calc((0.67em / 0.6 - 0.67em) / 2);
+      line-height: 1;
+      text-box: trim-both cap alphabetic;
+    }
+  }
+
+  .badge[hidden],
+  li[hidden] {
+    display: none;
+  }
+
+  /* The text alone stays at the top while the page scrolls, in black like
+     everywhere else, on computers, tablets and phones alike (Sami, November
+     2026). The empty parts of the header let clicks through. */
+  .sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
+
+  .sticky a {
+    pointer-events: auto;
   }
 </style>

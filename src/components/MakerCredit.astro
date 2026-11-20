@@ -1,11 +1,11 @@
 ---
-// "Točil Martin, malovala Daniela". Shows only the makers the data names.
+// "Točil Martin, malovala Daniela". Shows only the makers it is given.
+import type { Makers } from '../config/lines';
 import type { Lang } from '../i18n/ui';
 import { useTranslations } from '../i18n/utils';
-import type { Product } from '../lib/products';
 
 interface Props {
-  makers: Product['makers'];
+  makers: Makers;
   lang: Lang;
 }
 

@@ -1,0 +1,22 @@
+/*
+ * Sami's own typefaces (November 2026), self-hosted.
+ * Moment: the text in capitals, a variable font whose weight axis runs from
+ * 100 (Regular) to 200 (Bold); --weight and --weight-medium in tokens.css
+ * pick the values. Claristik clarendon: the text in small letters in the
+ * e-shop (the decor, "vyprodáno", the notes), one regular weight.
+ */
+@font-face {
+  font-family: "Moment";
+  src: url("../assets/fonts/moment-vf.woff2") format("woff2");
+  font-weight: 100 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Claristik";
+  src: url("../assets/fonts/claristik.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}

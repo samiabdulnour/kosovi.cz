@@ -1,71 +1,143 @@
 ---
-import ContactBlock from './ContactBlock.astro';
-import { pathOf } from '../i18n/routes';
+// Four columns on the e-shop menu's lines (Sami, November 2026): the studio's
+// name and Instagram; the e-mail and the phones; the note on visits and the
+// address; the rights with the language switch. On tablets three, the rights
+// and the switch under the name (Sami, November 2026). A size smaller than the
+// rest of the site. The legal links come back once their pages have text.
+import { pathOf, type Alternates } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
 import { useTranslations, withBase } from '../i18n/utils';
+import { studio } from '../config/site';
+import { cz, telHref } from '../lib/typography';
 
 interface Props {
   lang: Lang;
+  alternates: Alternates;
 }
 
-const { lang } = Astro.props;
+const { lang, alternates } = Astro.props;
 const t = useTranslations(lang);
-
-// Legal pages exist only in Czech.
-const legal = [
-  { label: t('footer.terms'), path: pathOf('terms', 'cs') },
-  { label: t('footer.privacy'), path: pathOf('privacy', 'cs') },
-  { label: t('footer.returns'), path: pathOf('returns', 'cs') },
-];
+const year = new Date().getFullYear();
+const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
+const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
+// the mobile first, then the landline (Sami, November 2026)
+const phones = [...studio.phones].reverse();
+// as on Kontakt, on two lines, the address on the third (Sami, November 2026)
+const visits = {
+  cs: ['Návštěva dílny je možná pouze', 'po telefonickém dohovoru'],
+  en: ['Visits to the workshop', 'by arrangement on the phone only'],
+}[lang];
+const typeset = (s: string) => (lang === 'cs' ? cz(s) : s);
 ---
 
 <footer class="site-footer">
   <div class="wrap cols">
+    <p>
+      {cz(studio.name)}<br />
+      {
+        studio.instagram ? (
+          <a href={`https://www.instagram.com/${studio.instagram}/`}>
+            IG<span class="visually-hidden">, Instagram</span>
+          </a>
+        ) : (
+          <span title="TODO(fakta): účet na Instagramu">IG</span>
+        )
+      }
+    </p>
+    <p>
+      <a href={`mailto:${studio.email}`}>{studio.email}</a>
+      {
+        phones.map((phone) => (
+          <>
+            <br />
+            <a href={telHref(phone)}>{cz(phone)}</a>
+          </>
+        ))
+      }
+    </p>
+    <address>
+      {typeset(visits[0])}<br />
+      {typeset(visits[1])}<br />
+      {cz(`${studio.address.street}, ${studio.address.postalCode} ${studio.address.city}`)}
+    </address>
     <div>
-      <p class="tagline">{t('site.tagline')}</p>
-      <ContactBlock />
+      <p>{t('footer.rights')} {year}</p>
+      <p class="lang">
+        <a href={withBase(switchPath)} hreflang={otherLang} lang={otherLang}>{t('lang.switch')}</a>
+      </p>
     </div>
-    <nav aria-label={t('footer.legal')}>
-      <ul>
-        {
-          legal.map(({ label, path }) => (
-            <li>
-              <a href={withBase(path)} hreflang={lang === 'cs' ? undefined : 'cs'}>
-                {label}
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </nav>
   </div>
 </footer>
 
 <style>
   .site-footer {
     margin-block-start: var(--space-8);
-    padding-block: var(--space-7);
+    padding-block: var(--space-4) var(--space-7);
     border-top: 1px solid var(--color-line);
-    font-size: var(--step--1);
+    font-size: var(--step-footer);
   }
 
   .cols {
     display: grid;
-    gap: var(--space-6);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: var(--space-5) var(--gap);
   }
 
-  .tagline {
-    margin-block-end: var(--space-3);
-    font-weight: 600;
+  address {
+    font-style: normal;
   }
 
-  ul {
-    padding: 0;
-    list-style: none;
+  .lang {
+    margin-block-start: var(--space-4);
   }
 
-  li + li {
-    margin-block-start: var(--space-2);
+  /* Three columns on tablets: the e-mail and the phones on the page's
+     optical centre, the note on visits and the address at its right edge, the
+     rights a line under the studio's name and the switch right under them
+     (Sami, November 2026). Four on wide screens, the rights at the right. */
+  @media (min-width: 48rem) and (max-width: 69.99rem) {
+    .cols {
+      grid-template-columns: 1fr auto 1fr;
+      gap: 0 var(--gap);
+    }
+
+    .cols > :nth-child(2) {
+      justify-self: center;
+    }
+
+    .cols > :nth-child(3) {
+      justify-self: end;
+    }
+
+    /* the rights in the first column after one empty line, whatever the
+       other columns' height */
+    .cols > :first-child,
+    .cols > :last-child {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+    }
+
+    .cols > :last-child {
+      margin-block-start: calc(3 * var(--leading-body) * 1em);
+    }
+
+    .lang {
+      margin-block-start: 0;
+    }
+  }
+
+  @media (min-width: 70rem) {
+    .cols {
+      grid-template-columns: var(--label-start) var(--label-start) 1fr auto;
+      column-gap: 0;
+    }
+
+    .cols > * {
+      padding-inline-end: var(--gap);
+    }
+
+    .cols > :last-child {
+      padding-inline-end: 0;
+    }
   }
 </style>

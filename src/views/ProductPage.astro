@@ -1,214 +1,634 @@
 ---
+// Product page after kosovi_detail_produktu.pdf (Sami, November 2026): the
+// e-shop's tabs, then the photo and beside it the name, the price, the
+// quantity and the button for the cart, and at the photo's foot a short text,
+// the sizes with the catalogue number, the material, a rule and the note on
+// sizes. The kinds of the open tab sit on an ochre panel at the left that
+// stays hidden and slides out when the pointer comes over its place (Sami,
+// November 2026). Under them, on a light blue band across the whole width, related
+// pieces: the same kind with a similar decor, the same decor on other kinds,
+// and in Ostatní the tab's other pieces. No maker credit on this page.
 import { getImage, Image } from 'astro:assets';
-import MakerCredit from '../components/MakerCredit.astro';
-import Price from '../components/Price.astro';
-import ProductGrid from '../components/ProductGrid.astro';
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { getLine } from '../config/lines';
+import RelatedBand from '../components/RelatedBand.astro';
+import ShopTabs from '../components/ShopTabs.astro';
+import { kindTexts } from '../config/descriptions';
+import { getLine, listEntries, placeOf } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
 import { collectionPath, productPath } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
-import { getLineProducts, type Product } from '../lib/products';
-import { cz } from '../lib/typography';
+import { photoFit } from '../lib/edges';
+import { askOnly as isAskOnly, getSameDecor, getSameSet, getSameTab, showsPrice, type Product } from '../lib/products';
+import { productLabel } from '../lib/names';
+import { cz, formatCzk, formatNumber } from '../lib/typography';
 
 // Product pages are Czech only for now (English comes later, see CLAUDE.md).
 interface Props {
   product: Product;
-  /** The /produkt/vzor/ template preview, before real products exist. */
-  sample?: boolean;
 }
 
-const { product, sample = false } = Astro.props;
+const { product } = Astro.props;
+// Shown without "Porcelánový" (design eshop.pdf); the data keeps the old title.
+const name = productLabel(product.title);
 const line = getLine(product.line);
-const category = line.categories.find((c) => c.slug === product.category);
-
-// TODO: "related pieces from the same set" needs a set field in the data.
-// Until then, show other pieces from the same category.
-const related = (await getLineProducts(product.line, product.category))
-  .filter((p) => p.slug !== product.slug)
-  .slice(0, 4);
-
-const gallerySlots = ['celkový pohled', 'v ruce, pro měřítko', 'detail malby', 'pohled shora', 'další pohled'];
+const { group, item } = placeOf(line, product);
+const kindsHref = (slug: string) => withBase(collectionPath(line.slug.cs, 'cs', slug));
+// The panel that slides out from the side: the open tab's kinds, or, in a
+// line whose tabs have no kinds (Martin's), the line's categories, the
+// product's own underlined (Sami, November 2026).
+const drawer = group && group.items.length > 0
+  ? listEntries(group).map((e) => ({ name: e.name, slug: e.slug, current: !!item && e.kinds.includes(item.slug) }))
+  : line.tabs
+    ? line.menu.map((g) => ({ name: g.name, slug: g.slug, current: g === group }))
+    : [];
+const drawerLabel = group && group.items.length > 0 ? group.name : line.name.cs;
 
 // Large version for the zoom link. Never link to the raw original.
 const zoomed = await Promise.all(
   product.images.map((img) => getImage({ src: img.src, width: Math.min(2400, img.src.width) })),
 );
+// Photos that do not fit the PDF's box (666 × 501) get its empty sides painted
+// in their own edge colours (src/lib/edges.ts).
+const fits = await Promise.all(product.images.map((img) => photoFit(img.src, 666 / 501)));
 
-const askHref = `mailto:${studio.email}?subject=${encodeURIComponent(`Dotaz na cenu: ${product.title}`)}`;
+const ask = (subject: string) => `mailto:${studio.email}?subject=${encodeURIComponent(`${subject}: ${product.title}`)}`;
+// Martin's pieces, the stamped mugs aside, and Daniela's are not sold
+// through the cart: the button asks about the piece by e-mail, with a link to
+// its page, since several share a name (Sami, November 2026).
+const askOnly = isAskOnly(product);
+const askAbout = `mailto:${studio.email}?subject=${encodeURIComponent(`Dotaz: ${product.title}`)}&body=${encodeURIComponent(`${product.title}\n${new URL(withBase(productPath(product.slug)), Astro.site ?? Astro.url).href}\n\n`)}`;
+const soldOut = product.stock === 0;
+const onRequest = product.price === null;
+// Made to order, so the page says so and the button orders by e-mail (Sami,
+// November 2026): the dinner set. Keyed by the old shop's subcategory.
+const madeToOrder: Record<string, string> = {
+  'jidelni-soupravy': 'Jídelní soupravy jsou na objednávku',
+};
+const toOrder = product.subcategory ? madeToOrder[product.subcategory] : undefined;
+const maxQty = product.stock && product.stock > 0 ? Math.min(product.stock, 10) : 10;
 
-const { dimensions, care } = product;
-const params: [string, string | undefined][] = [
-  ['Výška', dimensions?.heightCm !== undefined ? cz(`${dimensions.heightCm} cm`) : undefined],
-  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${dimensions.diameterCm} cm`) : undefined],
-  ['Objem', dimensions?.volumeMl !== undefined ? cz(`${dimensions.volumeMl} ml`) : undefined],
-  ['Technika', product.technique],
-  ['Myčka', care?.dishwasher === undefined ? undefined : care.dishwasher ? 'ano' : 'ne'],
-  ['Mikrovlnná trouba', care?.microwave === undefined ? undefined : care.microwave ? 'ano' : 'ne'],
-  ['Katalogové číslo', product.catalogNo],
+// The kind's short text (src/config/descriptions.ts), else the old description.
+const texts = kindTexts[product.line] ?? {};
+const kindText = (item && texts[item.slug]) ?? (group && texts[group.slug]);
+// The kind's text breaks after its first sentence (Sami, November 2026).
+const firstStop = kindText ? kindText.indexOf('. ') : -1;
+const paragraphs = kindText
+  ? [firstStop > 0 ? [cz(kindText.slice(0, firstStop + 1)), cz(kindText.slice(firstStop + 2))] : [cz(kindText)]]
+  : (product.description ?? '')
+      .split(/\n{2,}/)
+      .map((p) => p.split('\n').map((l) => cz(l.trim())))
+      .filter((lines) => lines.some(Boolean));
+
+// Sizes rounded to whole centimetres, as in the size chart (Sami, November
+// 2026); "Průměr" where the PDF has "Šířka" (Sami, November 2026).
+const { dimensions } = product;
+const height = item?.size ?? (dimensions?.heightCm !== undefined ? `${Math.round(dimensions.heightCm)} cm` : undefined);
+const sizes: [string, string | undefined][] = [
+  ['Výška', height && cz(height)],
+  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${Math.round(dimensions.diameterCm)} cm`) : undefined],
+  ['Objem', dimensions?.volumeMl !== undefined ? cz(`${formatNumber(dimensions.volumeMl)} ml`) : undefined],
 ];
+const shownSizes = sizes.filter((f): f is [string, string] => f[1] !== undefined);
+const facts: [string, string][] = [...shownSizes, ...(product.catalogNo ? [['Katalogové číslo', product.catalogNo] as [string, string]] : [])];
+// "100% porcelán" (the PDF) on every piece (Sami, November 2026) except the
+// teapots and tea sets, whose handles are rattan.
+// By the blue-and-white tab and by Martin's old shop categories, since his
+// teapots and tea sets share a tab now.
+const allPorcelain = !(group?.slug === 'konvice' || ['konve-solitery', 'cajove-soupravy'].includes(product.category ?? ''));
+const [firstPhoto, ...morePhotos] = product.images.map((img, i) => ({ img, i }));
 
-const description = product.description
-  ? product.description.slice(0, 155)
-  : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
+// Five tiles a page (Sami, November 2026): "Ze stejné sady" is the same kind
+// with a similar decor (a motif in common: "s andělem na kole" goes with
+// bicycles and angels); "Se stejným dekorem" the same decor on other kinds,
+// at least two when there are; the tab's other pieces fill the rest under
+// "Další". Up to three pages, each built the same way, to page through with
+// the band's arrows (Sami, November 2026). Martin's and Daniela's pieces show
+// them all under "Další" alone.
+const TILES = 5;
+const PAGES = 3;
+const sameSet = await getSameSet(product);
+const sameDecor = await getSameDecor(product);
+const related = new Set([...sameSet, ...sameDecor].map((p) => p.slug));
+const setPool = [...sameSet];
+const decorPool = [...sameDecor];
+const tabPool = (await getSameTab(product)).filter((p) => !related.has(p.slug));
+const pages: { set: Product[]; decor: Product[]; tab: Product[] }[] = [];
+for (let i = 0; i < PAGES && (setPool.length || decorPool.length || tabPool.length); i++) {
+  const decor = decorPool.splice(0, Math.min(TILES, Math.max(2, TILES - setPool.length)));
+  const set = setPool.splice(0, TILES - decor.length);
+  const tab = tabPool.splice(0, TILES - set.length - decor.length);
+  pages.push({ set, decor, tab });
+}
+const groups =
+  product.line === 'spolecna'
+    ? pages.flatMap(({ set, decor, tab }) => [
+        { title: 'Ze stejné sady', products: set },
+        { title: 'Se stejným dekorem', products: decor },
+        { title: 'Další', products: tab },
+      ])
+    : [{ title: 'Další', products: pages.flatMap(({ set, tab, decor }) => [...set, ...tab, ...decor]) }];
+
+const metaDescription = kindText
+  ? `${name}. ${kindText}`
+  : product.description
+    ? product.description.replace(/\s+/g, ' ').slice(0, 155)
+    : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
 ---
 
-<Base title={product.title} description={description} alternates={{ cs: productPath(product.slug) }}>
-  <div class="section wrap">
-    <p class="muted crumbs">
-      <a href={withBase(collectionPath(line.slug.cs, 'cs'))}>{line.name.cs}</a>
-      {
-        category && (
-          <>
-            {' / '}
-            <a href={withBase(collectionPath(line.slug.cs, 'cs', category.slug))}>{category.name}</a>
-          </>
-        )
-      }
-    </p>
+<Base
+  title={name}
+  description={metaDescription}
+  alternates={{ cs: productPath(product.slug) }}
+  section={product.line === 'spolecna' ? 'blueWhite' : product.line}
+>
+  <div class="wrap">
+    <div class="tabs-row">
+      <ShopTabs line={line} lang="cs" group={group} />
+    </div>
 
     <div class="product">
-      <div class="gallery">
-        {
-          product.images.length > 0
-            ? product.images.map((img, i) => (
-                <a href={zoomed[i]?.src}>
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    widths={[480, 800, 1200, 1600]}
-                    sizes="(min-width: 60rem) 55vw, 100vw"
-                    loading={i === 0 ? 'eager' : 'lazy'}
-                  />
-                </a>
+      {
+        drawer.length > 0 && (
+          <nav class:list={['drawer', { repeats: !(group && group.items.length > 0) }]} aria-label={drawerLabel}>
+            <div class="panel">
+              <ul role="list">
+                {drawer.map((e) => (
+                  <li>
+                    <a href={kindsHref(e.slug)} aria-current={e.current ? 'true' : undefined}>
+                      {e.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </nav>
+        )
+      }
+
+      {
+        firstPhoto && (
+          <a
+            class="photo first"
+            href={zoomed[firstPhoto.i]?.src}
+            data-sides={fits[firstPhoto.i]?.sides}
+            style={fits[firstPhoto.i]?.style || undefined}
+          >
+            <Image
+              src={firstPhoto.img.src}
+              alt={firstPhoto.img.alt}
+              widths={[480, 800, 1200, 1600]}
+              sizes="(min-width: 60rem) 45vw, 100vw"
+              loading="eager"
+            />
+          </a>
+        )
+      }
+
+      <div class="info">
+        <div class="top">
+          <h1>{name}</h1>
+          {showsPrice(product) && <p class="price">{toOrder ? cz(toOrder) : onRequest ? 'Cena na dotaz' : formatCzk(product.price!)}</p>}
+
+          <form class="buy" data-cart-form data-slug={product.slug}>
+            {
+              product.options?.map((option, i) => (
+                <label class="box option">
+                  <span class="visually-hidden">{option.name}</span>
+                  <select name={`option-${i}`} data-option={option.name}>
+                    {option.values.map((value) => (
+                      <option>{value}</option>
+                    ))}
+                  </select>
+                </label>
               ))
-            : gallerySlots.map((label) => <Placeholder label={label} ratio="4 / 5" />)
-        }
-      </div>
-
-      <div class="info stack">
-        <h1>{product.title}</h1>
-        <MakerCredit makers={product.makers} lang="cs" />
-        <Price price={product.price} lang="cs" />
-        {
-          product.price === null ? (
-            <p>
-              <a class="button button--quiet" href={askHref}>
-                Zeptat se na cenu
-              </a>
+            }
+            {
+              askOnly ? (
+                <a class="box wide" href={askAbout}>
+                  Zeptat se na produkt
+                </a>
+              ) : onRequest || soldOut ? (
+                <a class="box wide" href={ask(toOrder ? 'Objednávka' : onRequest ? 'Dotaz na cenu' : 'Dotaz na dostupnost')}>
+                  {toOrder ? 'Chci objednat' : onRequest ? 'Zeptat se na cenu' : 'Zeptat se na dostupnost'}
+                </a>
+              ) : (
+                <>
+                  <label class="box qty">
+                    <span class="visually-hidden">Počet kusů</span>
+                    <select name="qty">
+                      {Array.from({ length: maxQty }, (_, i) => (
+                        <option value={i + 1}>{i + 1} ks</option>
+                      ))}
+                    </select>
+                  </label>
+                  <button class="box add" type="submit">
+                    Vložit do košíku
+                  </button>
+                </>
+              )
+            }
+            <p class="added" role="status" aria-live="polite" data-added hidden>
+              {cz('Přidáno do košíku.')} <a href={withBase('/kosik/')}>Otevřít košík</a>
             </p>
-          ) : (
-            <p>
-              <button class="button" type="button" disabled>
-                Vložit do košíku
-              </button>
-            </p>
-          )
-        }
+          </form>
+        </div>
 
-        <dl class="params">
+        <div class="bottom">
+          <div class="text">
+            {
+              paragraphs.map((lines) => (
+                <p>
+                  {lines.map((l, i) => (
+                    <>
+                      {i > 0 && <br />}
+                      {l}
+                    </>
+                  ))}
+                </p>
+              ))
+            }
+            {soldOut && <p>{cz('Tento kus je vyprodaný.')}</p>}
+          </div>
+
           {
-            params.map(([label, value]) => (
-              <div class={value === undefined ? 'missing' : undefined}>
-                <dt>{label}</dt>
-                <dd>{value ?? 'TODO(fakta)'}</dd>
-              </div>
-            ))
+            facts.length > 0 && (
+              <dl class="facts">
+                {facts.map(([label, value]) => (
+                  <div>
+                    <dt>{label}</dt>
+                    <dd>{value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )
           }
-        </dl>
-
-        <p class="handmade">{cz('Každý kus je ručně vyrobený, a proto se od ostatních mírně liší.')}</p>
-
-        {product.description && <p>{cz(product.description)}</p>}
-
-        <Note title="Stránka produktu">
-          <ul>
-            <li>Kdo kus vyrobil, cena nebo „cena na dotaz“, rozměry a objem, technika, péče, poznámka o ruční výrobě.</li>
-            <li>4–6 velkých fotografií včetně záběru pro měřítko a detailu malby. Proklik na plnou velikost, lightbox ve fázi 4. Pinch zoom zůstává povolený.</li>
-            <li>Košík a dotaz na cenu přijdou ve fázi 5.</li>
-            {sample && <li>Tohle je vzorová stránka bez dat. Skutečné produkty přibudou importem (fáze 2) na stejných adresách jako na starém webu.</li>}
-          </ul>
-        </Note>
+          {allPorcelain && <p class="material">100% porcelán</p>}
+          {
+            shownSizes.length > 0 && (
+              <>
+                <hr />
+                <p class="note">{cz('Míry jsou orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.')}</p>
+              </>
+            )
+          }
+        </div>
       </div>
+
+      {
+        morePhotos.length > 0 && (
+          <div class="photos">
+            {morePhotos.map(({ img, i }) => (
+              <a class="photo" href={zoomed[i]?.src} data-sides={fits[i]?.sides} style={fits[i]?.style || undefined}>
+                <Image src={img.src} alt={img.alt} widths={[480, 800, 1200, 1600]} sizes="(min-width: 60rem) 45vw, 100vw" />
+              </a>
+            ))}
+          </div>
+        )
+      }
     </div>
   </div>
 
-  <section class="section wrap">
-    <h2 class="section-head">Ze stejné sady</h2>
-    <ProductGrid products={related} lang="cs" placeholders={4} />
-    <Note>
-      <p>Data zatím neříkají, které kusy patří do jedné sady. Do té doby se zobrazují kusy ze stejné kategorie.</p>
-    </Note>
-  </section>
+  <RelatedBand groups={groups} label="Další kusy" lang="cs" />
 </Base>
 
+<script>
+  // The cart lives in localStorage until the order flow (phase 5):
+  // [{ slug, qty, options }], the header's badge shows the sum of pieces.
+  type Line = { slug: string; qty: number; options?: Record<string, string> };
+  for (const form of document.querySelectorAll<HTMLFormElement>('[data-cart-form]')) {
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const slug = form.dataset.slug!;
+      const qty = Number((form.elements.namedItem('qty') as HTMLSelectElement | null)?.value ?? 1);
+      const options: Record<string, string> = {};
+      form.querySelectorAll<HTMLSelectElement>('select[data-option]').forEach((s) => {
+        options[s.dataset.option!] = s.value;
+      });
+      let cart: Line[] = [];
+      try {
+        const stored: unknown = JSON.parse(localStorage.getItem('kosovi-cart') ?? '[]');
+        if (Array.isArray(stored)) cart = stored as Line[];
+      } catch {}
+      const same = cart.find((l) => l.slug === slug && JSON.stringify(l.options ?? {}) === JSON.stringify(options));
+      if (same) same.qty = (same.qty ?? 1) + qty;
+      else cart.push({ slug, qty, options });
+      try {
+        localStorage.setItem('kosovi-cart', JSON.stringify(cart));
+      } catch {}
+      document.dispatchEvent(new CustomEvent('kosovi-cart'));
+      const added = form.querySelector<HTMLElement>('[data-added]');
+      if (added) added.hidden = false;
+    });
+  }
+</script>
+
 <style>
-  .crumbs {
-    margin-block-end: var(--space-5);
+  .tabs-row {
+    padding-block: clamp(2rem, 3.6vw, 3.4rem) clamp(2.5rem, 7.5vw, 7.5rem);
   }
 
   .product {
     display: grid;
+    gap: var(--space-5);
+  }
+
+  /* The kinds of the open tab on an ochre panel, white, the product's kind
+     underlined. */
+  .panel {
+    background: var(--color-ochre);
+    color: #fff;
+  }
+
+  .panel ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2) var(--space-5);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .panel a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .panel a:hover,
+  .panel [aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.3em;
+  }
+
+  /* On tablets and phones a band across the whole width at the end, after
+     the product's text, sizes, rule and further photos, its kinds one under
+     another (Sami, November 2026). Phones leave it out where it lists the same
+     categories as the tabs above (Martin's and Daniela's pieces). */
+  .drawer {
+    order: 2;
+    margin-inline: calc(-1 * var(--gutter));
+  }
+
+  .photos {
+    order: 1;
+  }
+
+  .panel {
+    padding: var(--space-4) var(--gutter);
+  }
+
+  @media (max-width: 59.99rem) {
+    .panel {
+      font-size: var(--step-footer);
+    }
+
+    .panel ul {
+      flex-direction: column;
+      gap: 0;
+      line-height: var(--leading-body);
+    }
+
+    /* close under the word, clear of the next line */
+    .panel a:hover,
+    .panel [aria-current] {
+      text-underline-offset: 0.12em;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .drawer.repeats {
+      display: none;
+    }
+  }
+
+  .photos {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  /* The whole photo in the PDF's box (666 × 501). Where it leaves the box's
+     sides empty, they carry the photo's own edge colours (set inline, see
+     src/lib/edges.ts) and the photo's edges fade into them. */
+  .photo {
+    position: relative;
+    display: block;
+    aspect-ratio: 666 / 501;
+    overflow: hidden;
+    background: var(--color-tile);
+  }
+
+  .photo :global(img) {
+    position: absolute;
+    inset: 0;
+    width: var(--pw, 100%);
+    height: var(--ph, 100%);
+    margin: auto;
+    object-fit: contain;
+  }
+
+  .photo[data-sides='x'] :global(img) {
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  .photo[data-sides='y'] :global(img) {
+    -webkit-mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, #000 8%, #000 92%, transparent);
+  }
+
+  /* Name, price and the cart at the top; text, sizes, material and the note at
+     the photo's foot. */
+  .info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     gap: var(--space-6);
   }
 
-  @media (min-width: 60rem) {
-    .product {
-      grid-template-columns: 3fr 2fr;
-      align-items: start;
-    }
-
-    .info {
-      position: sticky;
-      top: var(--space-5);
-    }
+  h1 {
+    font-size: inherit;
   }
 
-  .gallery {
+  .price {
+    margin-block-start: 1.0625rem;
+    white-space: nowrap;
+  }
+
+  /* Text in small letters: Claristik clarendon, 14 px at 1512 as in the PDF. */
+  .text,
+  .note,
+  .added {
+    font-family: var(--font-serif);
+    font-size: clamp(0.8125rem, 0.6rem + 0.29vw, 0.875rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 1.36;
+    text-transform: none;
+    color: #333;
+  }
+
+  .buy {
     display: grid;
-    gap: var(--space-4);
+    grid-template-columns: 31.6% 1fr;
+    gap: var(--space-2) 2.5%;
+    margin-block-start: 1.6rem;
   }
 
-  .gallery :global(img) {
+  .box {
+    display: grid;
+    place-items: center;
+    min-height: 1.75rem;
+    padding-inline: var(--space-2);
+    border: 0;
+    border-radius: 0;
+    background: var(--color-ochre);
+    color: var(--color-ink);
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  /* "1 ks" centred in its box without the browser's arrow, as in the PDF */
+  .box select {
     width: 100%;
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    letter-spacing: inherit;
+    text-transform: inherit;
+    text-align: center;
+    text-align-last: center;
+    cursor: pointer;
   }
 
-  .params {
+  .option,
+  .wide,
+  .added {
+    grid-column: 1 / -1;
+  }
+
+  .add:hover,
+  .wide:hover,
+  .box:has(select:hover) {
+    background: color-mix(in srgb, var(--color-ochre) 55%, var(--color-select));
+    color: #fff;
+  }
+
+  .facts {
     display: grid;
-    gap: var(--space-2);
-    padding-block: var(--space-4);
-    border-block: 1px solid var(--color-line);
+    margin: 3rem 0 0;
+    padding: 0;
+    line-height: 1.18;
   }
 
-  .params > div {
+  .text:empty + .facts {
+    margin-block-start: 0;
+  }
+
+  .facts > div {
     display: flex;
     justify-content: space-between;
     gap: var(--space-4);
   }
 
-  dt {
-    color: var(--color-muted);
+  dt,
+  dd {
+    margin: 0;
   }
 
   dd {
-    margin: 0;
     text-align: end;
   }
 
-  .missing dd {
-    font-family: var(--font-mono);
-    font-size: var(--step--1);
-    color: var(--color-muted);
+  .material {
+    margin-block-start: 1.0625rem;
   }
 
-  /* Unknown values show only in the preview, the live page hides them. */
-  :global(html:not([data-notes='on'])) .missing {
-    display: none;
+  hr {
+    margin-block: 2.1rem 2rem;
+    border: 0;
+    border-top: 1px solid var(--color-ink);
   }
 
-  .handmade {
-    font-size: var(--step--1);
+  /* From the PDF at 1512: the panel from the screen's edge to 10 points short
+     of the photo, the photo two and a half listing columns wide, the rest from
+     70.5 % across. */
+  @media (min-width: 60rem) {
+    .product {
+      --bleed: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
+      container-type: inline-size;
+      grid-template-columns: 20.15% 49.6% 0.75% 1fr;
+      gap: var(--space-3) 0;
+      align-items: start;
+    }
+
+    .photo.first {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    .photos {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .info {
+      grid-column: 4;
+      grid-row: 1;
+      align-self: stretch;
+      padding-inline-start: 0.66vw;
+    }
+
+    hr {
+      margin-inline-start: -0.66vw;
+    }
+
+    /* Hidden until the pointer comes over its place (or a link in it takes
+       the focus), then it slides out from the side (Sami, November 2026). */
+    /* as tall as the photo beside it, whatever the text column needs */
+    .drawer {
+      grid-column: 1;
+      grid-row: 1;
+      align-self: start;
+      height: calc(49.6cqi * 501 / 666);
+      position: relative;
+      overflow: hidden;
+      margin-inline: calc(-1 * var(--bleed)) 0.66vw;
+    }
+
+    .panel {
+      position: absolute;
+      inset: 0;
+      padding: 4.75vw 0 0 calc(var(--bleed) - var(--gutter) + 2.8vw);
+      transform: translateX(-100%);
+      transition: transform 0.35s ease;
+    }
+
+    .drawer:hover .panel,
+    .drawer:focus-within .panel {
+      transform: none;
+    }
+
+    .panel ul {
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+  }
+
+  /* Without a pointer that can hover, the panel stays out. */
+  @media (min-width: 60rem) and (hover: none) {
+    .panel {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .panel {
+      transition: none;
+    }
   }
 </style>
