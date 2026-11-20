@@ -62,7 +62,9 @@ shown.forEach((n, i) => {
     flex-wrap: wrap;
     justify-content: center;
     gap: var(--space-1) var(--space-3);
-    margin-block-start: var(--space-7);
+    /* close under the products, whose last row ends in its row's space
+       (Sami, November 2026) */
+    margin-block-start: var(--space-4);
     padding: var(--space-2) var(--space-4);
   }
 

@@ -12,9 +12,11 @@ interface Props {
   /** Names the band for screen readers. */
   label: string;
   lang: Lang;
+  /** Space above the band, where the default (a product page's) is too much. */
+  gap?: string;
 }
 
-const { groups, label, lang } = Astro.props;
+const { groups, label, lang, gap } = Astro.props;
 // Each heading spans its own tiles.
 const shown = groups
   .filter((g) => g.products.length > 0)
@@ -23,7 +25,7 @@ const shown = groups
 
 {
   shown.length > 0 && (
-    <div class="related-band">
+    <div class="related-band" style={gap ? `--band-gap: ${gap}` : undefined}>
       <div class="wrap">
         <section class="related" aria-label={label}>
           {shown.map((g) => (
@@ -46,7 +48,7 @@ const shown = groups
 
 <style>
   .related-band {
-    margin-block-start: clamp(3.5rem, 9.2vw, 8.7rem);
+    margin-block-start: var(--band-gap, clamp(3.5rem, 9.2vw, 8.7rem));
     padding-block-start: 1.75rem;
     background: #96c19d;
   }

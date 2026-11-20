@@ -147,7 +147,15 @@ const cross = await Promise.all(
     }
   </div>
 
-  <RelatedBand groups={cross} label={lang === 'cs' ? 'Z dalších částí e-shopu' : 'From the other parts of the shop'} lang={lang} />
+  {/* Less space above than under a product page, since the last row of
+      products already ends in its row's space (Sami, November 2026): the page
+      numbers midway between the products and the band. */}
+  <RelatedBand
+    groups={cross}
+    label={lang === 'cs' ? 'Z dalších částí e-shopu' : 'From the other parts of the shop'}
+    lang={lang}
+    gap={page.lastPage > 1 ? 'clamp(3rem, 6.5vw, 6.25rem)' : 'var(--space-6)'}
+  />
 </Base>
 
 <style>
