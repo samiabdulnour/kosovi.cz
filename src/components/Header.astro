@@ -206,19 +206,16 @@ const items = [
   }
 
   /* The text alone stays at the top while the page scrolls, in black like
-     everywhere else (Sami, November 2026), from tablets up; on phones, where
-     the menu takes three lines, it stays in place. The empty parts of the
-     header let clicks through. */
-  @media (min-width: 48rem) {
-    .sticky {
-      position: sticky;
-      top: 0;
-      z-index: 10;
-      pointer-events: none;
-    }
+     everywhere else, on computers, tablets and phones alike (Sami, November
+     2026). The empty parts of the header let clicks through. */
+  .sticky {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    pointer-events: none;
+  }
 
-    .sticky a {
-      pointer-events: auto;
-    }
+  .sticky a {
+    pointer-events: auto;
   }
 </style>
