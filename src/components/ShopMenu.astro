@@ -77,6 +77,13 @@ const charts = await Promise.all(
   }),
 );
 const hasCharts = charts.some((c) => c.drawn.length > 0);
+// On computers the chart starts at the page's margin and its drawings from
+// about 11 cm in, the gaps between them a little wider than in the PDF, so the
+// widest tab (the teapots) reaches the screen's edge (Sami's screen, November
+// 2026). Positions in cm from the page's margin.
+const DESK_START = 11;
+const DESK_SPREAD = 1.12;
+const deskX = (x: number, minX: number) => (DESK_START + (x - minX) * DESK_SPREAD).toFixed(2);
 // the widest tab's chart, from its first drawing on, sets the tablets' scale,
 // the same for every tab
 const maxSpan = Math.max(0, ...charts.filter((c) => c.drawn.length > 0).map((c) => c.extent - c.minX));
@@ -172,7 +179,7 @@ const tabLines = (name: string) => {
                 aria-label={lang === 'cs' ? `Velikosti: ${g.name}` : `Sizes: ${g.name}`}
               >
                 <div
-                  class="plane"
+                  class:list={['plane', { 'with-sets': sets.length > 0 }]}
                   style={`--top: ${TOP}; --extent: ${extent.toFixed(2)}; --tick: ${TICK}; --min-x: ${minX.toFixed(2)}`}
                 >
                   <span class="floor" aria-hidden="true" />
@@ -182,7 +189,10 @@ const tabLines = (name: string) => {
                     </span>
                   ))}
                   {sets.map((s) => (
-                    <span class="set" style={`--from: ${s.from.toFixed(2)}; --to: ${s.to.toFixed(2)}`}>
+                    <span
+                      class="set"
+                      style={`--from: ${s.from.toFixed(2)}; --to: ${s.to.toFixed(2)}; --dfrom: ${deskX(s.from, minX)}; --dto: ${deskX(s.to, minX)}`}
+                    >
                       {s.name}
                     </span>
                   ))}
@@ -190,7 +200,7 @@ const tabLines = (name: string) => {
                     {drawn.map(({ item, shape, size }) => (
                       <li
                         class:list={{ 'in-set': inSet.has(item.slug) }}
-                        style={`--x: ${shape.x}; --w: ${shape.w}; --h: ${shape.h}; --floor: ${shape.floor}; --axis: ${shape.axis}`}
+                        style={`--x: ${shape.x}; --dx: ${deskX(shape.x, minX)}; --w: ${shape.w}; --h: ${shape.h}; --floor: ${shape.floor}; --axis: ${shape.axis}`}
                       >
                         <a href={href(item)} aria-current={item.slug === entry?.slug ? 'page' : undefined}>
                           <span class="drawing" set:html={shape.svg} />
@@ -337,12 +347,29 @@ const tabLines = (name: string) => {
   }
 
   /* Phones: no drawings, which take too much room; the open tab's kinds as
-     text in a second column beside the tabs; spaced like the footer's lines;
-     no note on sizes (Sami, November 2026). */
+     text in a second column beside the tabs, lined up with the second column
+     of photos under the band; at the size of a product's name, spaced like
+     the footer's lines; no note on sizes (Sami, November 2026). */
   @media (max-width: 47.99rem) {
     .body {
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: var(--space-6);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 0.65rem;
+    }
+
+    .head,
+    .tabs,
+    .kinds {
+      font-size: var(--step-0);
+    }
+
+    /* the tabs on one line each, with no gap before Ostatní, as in the
+       product page's band */
+    .tabs br {
+      display: none;
+    }
+
+    .tabs .apart {
+      margin-block-start: 0;
     }
 
     .chart,
@@ -379,34 +406,54 @@ const tabLines = (name: string) => {
   /* Tablets: the tabs in one row like the header's menu, the chart under them
      to the screen's edge, its first drawing under the tabs and the ticks near
      the screen's left edge, at one scale for every tab, so that the widest
-     tab's drawings fit; the note on sizes under the chart (Sami, November
-     2026). */
+     tab's drawings fit; the note on sizes close under the chart's labels; no
+     line name (the header has it) and little room above and below, so the
+     band stays narrow (Sami, November 2026). */
   @media (min-width: 48rem) and (max-width: 63.99rem) {
     /* doubled to win over the default scale below */
     .shop-band.shop-band {
       --cm: calc((100vw - var(--gutter)) / var(--max-span));
+      --label-h: 2.75rem;
     }
 
-    .band {
+    .plane.with-sets {
+      --label-h: 4.4rem;
+    }
+
+    .band.band {
       display: flex;
       flex-direction: column;
+      padding-block: 1.25rem 1.25rem;
     }
 
     .head {
       display: contents;
     }
 
+    /* there for screen readers only */
     .line-name {
-      order: 1;
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
     }
 
     .body {
       order: 2;
+      gap: var(--space-4);
+      margin-block-start: 0;
     }
 
     .note {
       order: 3;
       margin-block-start: var(--space-2);
+    }
+
+    /* the empty ruler of the first listing has no labels under its floor */
+    .chart.empty .plane {
+      height: calc(var(--top) * var(--cm) + 0.5rem);
     }
 
     .chart .scroll {
@@ -454,53 +501,100 @@ const tabLines = (name: string) => {
      of the page's margin, 30 cm above the floor; the line's name and the note
      on the ruler's top, the tabs from its 20 cm tick; the chart to the
      screen's edge. */
+  /* Computers, after Sami's screen (November 2026): no line name (the
+     header has it); the tabs in one row at the right; under them the chart
+     from the page's margin to the screen's edge, the ticks at its left and the
+     drawings from about 11 cm in (--dx); the note on sizes at the bottom
+     left, under the labels. */
   @media (min-width: 64rem) {
     .band {
       --bleed: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
-      display: grid;
-      grid-template-columns: 14.7% minmax(0, 1fr);
-      grid-template-rows: auto 1fr;
-      /* the band ends 88 points under the floor (Sami's screen) */
-      padding-block: 1.95vw 1.1vw;
+      display: flex;
+      flex-direction: column;
+      padding-block: 1.2vw 1.2vw;
     }
 
     .head {
-      grid-column: 1 / -1;
-      grid-row: 1;
-      z-index: 1;
-      /* the line's name in capitals from the 30 cm tick down (Sami, November 2026) */
-      margin-block-start: -0.23vw;
-      pointer-events: none;
-    }
-
-    /* the line's name stays left of the ruler, on two lines where it must */
-    .line-name {
-      max-width: calc(14.7% - 0.75rem);
-    }
-
-    .head > * {
-      pointer-events: auto;
-    }
-
-    .body {
       display: contents;
     }
 
-    .tabs,
-    .list {
-      grid-row: 1 / -1;
-      padding-block-start: calc((var(--top, 30) - 20) * var(--cm));
+    /* there for screen readers only */
+    .line-name {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
     }
 
-    .tabs {
-      grid-column: 1;
+    .body {
+      order: 1;
+      gap: 0.65vw;
+      margin-block-start: 0;
+    }
+
+    .note {
+      order: 2;
+      max-width: none;
+      margin-block-start: 1.25vw;
+    }
+
+    /* about 89 points apart at 1512, the last at the page's right margin */
+    .tabs ul {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-2) 5.9vw;
+      line-height: normal;
+    }
+
+    .tabs .apart {
+      margin-block-start: 0;
+    }
+
+    .tabs br {
+      display: none;
     }
 
     .chart,
     .list {
-      grid-column: 2;
-      grid-row: 1 / -1;
       margin-inline-end: calc(-1 * var(--bleed));
+    }
+
+    .chart .scroll {
+      overflow: visible;
+    }
+
+    .plane.plane {
+      width: 100%;
+    }
+
+    .plane .tick {
+      left: 0.75rem;
+    }
+
+    .plane .items li {
+      left: calc(var(--dx) * var(--cm));
+    }
+
+    .plane .set {
+      left: calc(var(--dfrom) * var(--cm));
+      width: calc((var(--dto) - var(--dfrom)) * var(--cm));
+    }
+
+    /* room under the floor for two lines of labels, more where a set's
+       labels stand a step lower */
+    .shop-band {
+      --label-h: 2.9rem;
+    }
+
+    .plane.with-sets {
+      --label-h: 4.75rem;
+    }
+
+    /* the empty ruler of the first listing has no labels under its floor */
+    .chart.empty .plane {
+      height: calc(var(--top) * var(--cm) + 0.5rem);
     }
   }
 

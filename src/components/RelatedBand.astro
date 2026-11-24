@@ -5,7 +5,7 @@
 // (src/config/crosslinks.ts, Sami, November 2026). The pieces run in one row,
 // five in view as in the listing (two on phones), and arrows at the band's
 // edges page through them; touch screens can also swipe (Sami, November 2026).
-// Under a listing, phones show several groups under one heading (Sami,
+// Tablets and phones show one heading, "Další", over all the groups (Sami,
 // November 2026).
 import ProductCard from './ProductCard.astro';
 import type { Lang } from '../i18n/ui';
@@ -18,11 +18,9 @@ interface Props {
   lang: Lang;
   /** Space above the band, where the default (a product page's) is too much. */
   gap?: string;
-  /** Phones show several groups under this one heading. */
-  phone?: { heading: string };
 }
 
-const { groups, label, lang, gap, phone } = Astro.props;
+const { groups, label, lang, gap } = Astro.props;
 // Neighbouring groups with the same heading become one; each heading spans its
 // own tiles.
 const joined: Props['groups'] = [];
@@ -32,21 +30,23 @@ for (const g of groups.filter((g) => g.products.length > 0)) {
   else joined.push({ ...g, products: [...g.products] });
 }
 const shown = joined.map((g, i, all) => ({ ...g, start: 1 + all.slice(0, i).reduce((n, h) => n + h.products.length, 0) }));
-const merged = !!phone && new Set(shown.map((g) => g.title)).size > 1;
-const t = lang === 'cs' ? { prev: 'Předchozí kusy', next: 'Další kusy' } : { prev: 'Previous pieces', next: 'More pieces' };
+const t =
+  lang === 'cs'
+    ? { more: 'Další', prev: 'Předchozí kusy', next: 'Další kusy' }
+    : { more: 'More', prev: 'Previous pieces', next: 'More pieces' };
 ---
 
 {
   shown.length > 0 && (
     <div class="related-band" style={gap ? `--band-gap: ${gap}` : undefined} data-carousel>
       <div class="wrap">
-        <section class:list={['related', { merged }]} aria-label={label}>
-          {merged && <h2 class="phone-only">{phone?.heading}</h2>}
+        <section class="related" aria-label={label}>
+          <h2 class="compact-only">{t.more}</h2>
           <div class="viewport">
             <div class="track" data-track>
               {shown.map((g) => (
                 <>
-                  <h2 class:list={{ 'not-phone': merged }} style={`--start: ${g.start}; --span: ${g.products.length}`}>
+                  <h2 class="wide-only" style={`--start: ${g.start}; --span: ${g.products.length}`}>
                     {g.href ? <a href={g.href}>{g.title}</a> : g.title}
                   </h2>
                   {g.products.map((p) => (
@@ -170,10 +170,6 @@ const t = lang === 'cs' ? { prev: 'Předchozí kusy', next: 'Další kusy' } : {
     cursor: pointer;
   }
 
-  .merged .arrow {
-    --head: 0px;
-  }
-
   [data-scrolls] .arrow {
     display: grid;
   }
@@ -191,23 +187,30 @@ const t = lang === 'cs' ? { prev: 'Předchozí kusy', next: 'Další kusy' } : {
     left: 100%;
   }
 
-  @media (max-width: 47.99rem) {
-    .not-phone {
+  /* Tablets and phones: one heading over the row, outside it. */
+  .compact-only {
+    padding-block-end: 0.75rem;
+  }
+
+  @media (max-width: 63.99rem) {
+    .wide-only {
+      display: none;
+    }
+
+    .arrow {
+      --head: 0px;
+    }
+  }
+
+  @media (min-width: 64rem) {
+    .compact-only {
       display: none;
     }
   }
 
   @media (min-width: 48rem) {
-    .phone-only {
-      display: none;
-    }
-
     .viewport {
       --per: 5;
-    }
-
-    .merged .arrow {
-      --head: calc(var(--step-0) * 1.25 + 0.75rem);
     }
   }
 </style>

@@ -103,7 +103,13 @@ const cross = Array.from({ length: PAGES }, (_, i) =>
       <>
         <h1 class="visually-hidden">{entry ? `${lineName}, ${entry.name}` : lineName}</h1>
         <div class="wrap tabs-row">
-          <ShopTabs line={line} lang={lang} group={group} isPage={!!group && group.slug === entry?.slug} />
+          <ShopTabs
+            line={line}
+            lang={lang}
+            group={group}
+            isPage={!!group && group.slug === entry?.slug}
+            name={line.key === 'spolecna' ? undefined : { text: lineName, href: withBase(pathOf(line.key, lang)) }}
+          />
         </div>
       </>
     )
@@ -161,7 +167,6 @@ const cross = Array.from({ length: PAGES }, (_, i) =>
     label={lang === 'cs' ? 'Z dalších částí e-shopu' : 'From the other parts of the shop'}
     lang={lang}
     gap={page.lastPage > 1 ? 'clamp(3rem, 6.5vw, 6.25rem)' : 'var(--space-6)'}
-    phone={{ heading: lang === 'cs' ? 'Další' : 'More' }}
   />
 </Base>
 
@@ -193,6 +198,13 @@ const cross = Array.from({ length: PAGES }, (_, i) =>
   /* as on the product pages */
   .tabs-row {
     padding-block: clamp(2rem, 3.6vw, 3.4rem) clamp(2.5rem, 7.5vw, 7.5rem);
+  }
+
+  /* on phones the ochre band right under the header (ShopTabs) */
+  @media (max-width: 47.99rem) {
+    .tabs-row {
+      padding-block: 0 2rem;
+    }
   }
 
   .after-chart {

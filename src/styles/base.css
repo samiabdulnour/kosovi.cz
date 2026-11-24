@@ -180,6 +180,14 @@ a:hover {
   }
 }
 
+/* the section names at the size of a product's name on tablets and phones
+   (Sami, November 2026) */
+@media (max-width: 63.99rem) {
+  .essay h2 {
+    font-size: var(--step-0);
+  }
+}
+
 .essay h2 {
   margin-block-end: calc(var(--text) * var(--line));
   font-size: calc(var(--step-0) * 17 / 14.4);

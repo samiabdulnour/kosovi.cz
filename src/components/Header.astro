@@ -7,7 +7,8 @@
 // something is in it, and the language switch ("EN", on English pages "CZ").
 // The item a page belongs under is underlined. White on every page, without a
 // rule under it. On the homepage it stays in view while the page scrolls, only
-// its black text, with no white behind it, except on phones (Sami, November
+// its black text, with no white behind it (Sami, November 2026). On phones
+// every other page folds the menu behind a three-line button (Sami, November
 // 2026).
 import { getLine } from '../config/lines';
 import { studio } from '../config/site';
@@ -27,9 +28,11 @@ interface Props {
   section?: Section;
   /** Stays in view while the page scrolls, its text alone over the photographs (the homepage). */
   sticky?: boolean;
+  /** On phones the menu folds behind a three-line button (every page but the homepage). */
+  collapsible?: boolean;
 }
 
-const { lang, alternates = {}, section, sticky = false } = Astro.props;
+const { lang, alternates = {}, section, sticky = false, collapsible = false } = Astro.props;
 const otherLang: Lang = lang === 'cs' ? 'en' : 'cs';
 const switchPath = alternates[otherLang] ?? pathOf('home', otherLang);
 const t = useTranslations(lang);
@@ -59,10 +62,22 @@ const items = [
 ].map((item) => ({ ...item, current: item.current || current === withBase(item.href) }));
 ---
 
-<header class:list={['site-header', { sticky }]}>
+<header class:list={['site-header', { sticky }]} data-collapsible={collapsible ? '' : undefined}>
   <div class="wrap bar">
     <a class="brand" href={withBase(pathOf('home', lang))}>{cz(studio.brand)}</a>
-    <nav aria-label={t('nav.label')}>
+    {
+      collapsible && (
+        <button class="menu-button" type="button" aria-controls="site-menu" aria-expanded="false" data-menu-button>
+          <span class="visually-hidden">Menu</span>
+          <span class="lines" aria-hidden="true">
+            <span />
+            <span />
+            <span />
+          </span>
+        </button>
+      )
+    }
+    <nav id="site-menu" aria-label={t('nav.label')}>
       <ul>
         {
           items.map((item) => (
@@ -111,6 +126,25 @@ const items = [
   }
   showCount();
   document.addEventListener('kosovi-cart', showCount);
+
+  // On phones the menu of every page but the homepage folds behind the button;
+  // without the script it stays open.
+  for (const header of document.querySelectorAll<HTMLElement>('.site-header[data-collapsible]')) {
+    const button = header.querySelector<HTMLButtonElement>('[data-menu-button]');
+    if (!button) continue;
+    header.classList.add('folds');
+    const set = (open: boolean) => {
+      header.classList.toggle('open', open);
+      button.setAttribute('aria-expanded', String(open));
+    };
+    button.addEventListener('click', () => set(!header.classList.contains('open')));
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && header.classList.contains('open')) {
+        set(false);
+        button.focus();
+      }
+    });
+  }
 </script>
 
 <style>
@@ -146,9 +180,19 @@ const items = [
     }
   }
 
-  /* On phones the menu items one under another, at the left under the
-     studio's name, spaced like the footer's lines (Sami, November 2026). */
+  .menu-button {
+    display: none;
+  }
+
+  /* On phones at the size of a product's name; the menu items one under
+     another, at the left under the studio's name, spaced like the footer's
+     lines; on every page but the homepage folded behind a three-line button
+     at the right (Sami, November 2026). */
   @media (max-width: 47.99rem) {
+    .site-header {
+      font-size: var(--step-0);
+    }
+
     .bar {
       flex-direction: column;
       align-items: flex-start;
@@ -165,6 +209,82 @@ const items = [
     /* close under the word, clear of the next line */
     [aria-current='page'] {
       text-underline-offset: 0.12em;
+    }
+
+    .folds .bar {
+      flex-flow: row wrap;
+      justify-content: space-between;
+      align-items: center;
+      row-gap: var(--space-5);
+    }
+
+    .folds nav {
+      display: none;
+      flex-basis: 100%;
+    }
+
+    .folds.open nav {
+      display: block;
+    }
+
+    .folds .menu-button {
+      display: grid;
+      place-items: center;
+      width: 2.75rem;
+      height: 2.75rem;
+      margin: -0.75rem -0.6rem -0.75rem 0;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: var(--color-ink);
+      cursor: pointer;
+    }
+
+    .lines {
+      position: relative;
+      display: block;
+      width: 1.375rem;
+      height: 0.875rem;
+    }
+
+    .lines > span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: currentColor;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .lines > span:nth-child(1) {
+      top: 0;
+    }
+
+    .lines > span:nth-child(2) {
+      top: calc(50% - 1px);
+    }
+
+    .lines > span:nth-child(3) {
+      bottom: 0;
+    }
+
+    /* open, the lines cross */
+    .open .lines > span:nth-child(1) {
+      transform: translateY(calc(0.4375rem - 1px)) rotate(45deg);
+    }
+
+    .open .lines > span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .open .lines > span:nth-child(3) {
+      transform: translateY(calc(-0.4375rem + 1px)) rotate(-45deg);
+    }
+  }
+
+  @media (max-width: 47.99rem) and (prefers-reduced-motion: reduce) {
+    .lines > span {
+      transition: none;
     }
   }
 

@@ -122,4 +122,12 @@ const fit = cover && cover.src.height > cover.src.width ? 'cover' : 'contain';
       grid-template-columns: minmax(0, 1fr) auto;
     }
   }
+
+  /* On tablets at the header's size, the decor in step with it (Sami,
+     November 2026). */
+  @media (min-width: 48rem) and (max-width: 63.99rem) {
+    .caption {
+      font-size: var(--step-footer);
+    }
+  }
 </style>

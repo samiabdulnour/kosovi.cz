@@ -11,7 +11,8 @@ import { artistPages } from '../config/artists';
 import { getLine } from '../config/lines';
 import { makers, type MakerKey } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf } from '../i18n/routes';
+import { alternatesOf, pathOf } from '../i18n/routes';
+import { withBase } from '../i18n/utils';
 import type { Lang } from '../i18n/ui';
 import { getProductsBySlug } from '../lib/products';
 
@@ -48,7 +49,7 @@ const notes: Record<MakerKey, string> = {
 <Base title={person.name} description={description} alternates={alternatesOf(maker)}>
   <h1 class="visually-hidden">{person.name}</h1>
   <div class="wrap tabs-row">
-    <ShopTabs line={line} lang={lang} />
+    <ShopTabs line={line} lang={lang} name={{ text: person.name, href: withBase(pathOf(maker, lang)), current: true }} />
   </div>
   <Mosaic rows={design.rows} lang={lang} />
   <div class="wrap">
@@ -62,5 +63,12 @@ const notes: Record<MakerKey, string> = {
   /* as on the e-shop's listings and product pages */
   .tabs-row {
     padding-block: clamp(2rem, 3.6vw, 3.4rem) clamp(2.5rem, 7.5vw, 7.5rem);
+  }
+
+  /* on phones the ochre band right under the header (ShopTabs) */
+  @media (max-width: 47.99rem) {
+    .tabs-row {
+      padding-block: 0 2rem;
+    }
   }
 </style>

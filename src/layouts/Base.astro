@@ -53,7 +53,7 @@ const hreflangs = Object.entries(alternates) as [Lang, string][];
   <body>
     <a class="skip-link" href="#obsah">{t('skip.toMain')}</a>
     {previewLabel && <PreviewBar label={previewLabel} />}
-    <Header lang={lang} alternates={alternates} section={section} sticky={stickyHeader} />
+    <Header lang={lang} alternates={alternates} section={section} sticky={stickyHeader} collapsible={!stickyHeader} />
     <main id="obsah">
       {
         label && (

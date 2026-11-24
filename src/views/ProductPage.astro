@@ -15,7 +15,7 @@ import { kindTexts } from '../config/descriptions';
 import { getLine, listEntries, placeOf } from '../config/lines';
 import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { collectionPath, productPath } from '../i18n/routes';
+import { collectionPath, pathOf, productPath } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
 import { photoFit } from '../lib/edges';
 import { askOnly as isAskOnly, getSameDecor, getSameSet, getSameTab, showsPrice, type Product } from '../lib/products';
@@ -42,6 +42,17 @@ const drawer = group && group.items.length > 0
     ? line.menu.map((g) => ({ name: g.name, slug: g.slug, current: g === group }))
     : [];
 const drawerLabel = group && group.items.length > 0 ? group.name : line.name.cs;
+// Below 60rem the blue-and-white tab's kinds stand in the ochre band at the
+// top instead (ShopTabs); makers' pieces have no kinds, and phones put their
+// name over the tabs (Sami, November 2026).
+const blueWhite = product.line === 'spolecna';
+const bandKinds =
+  blueWhite && group && group.items.length > 0
+    ? drawer.map((e) => ({ name: e.name, href: kindsHref(e.slug), current: e.current }))
+    : [];
+const bandName = blueWhite
+  ? { text: line.name.cs, href: withBase(collectionPath(line.slug.cs, 'cs')) }
+  : { text: line.name.cs, href: withBase(pathOf(product.line as 'martin' | 'daniela', 'cs')) };
 
 // Large version for the zoom link. Never link to the raw original.
 const zoomed = await Promise.all(
@@ -142,8 +153,8 @@ const metaDescription = kindText
   section={product.line === 'spolecna' ? 'blueWhite' : product.line}
 >
   <div class="wrap">
-    <div class="tabs-row">
-      <ShopTabs line={line} lang="cs" group={group} />
+    <div class:list={['tabs-row', blueWhite ? 'band-narrow' : 'band-phone']}>
+      <ShopTabs line={line} lang="cs" group={group} name={bandName} kinds={bandKinds} bandBelow={blueWhite ? 'narrow' : 'phone'} />
     </div>
 
     <div class="product">
@@ -360,44 +371,27 @@ const metaDescription = kindText
     text-underline-offset: 0.3em;
   }
 
-  /* On tablets and phones a band across the whole width at the end, after
-     the product's text, sizes, rule and further photos, its kinds one under
-     another (Sami, November 2026). Phones leave it out where it lists the same
-     categories as the tabs above (Martin's and Daniela's pieces). */
-  .drawer {
-    order: 2;
-    margin-inline: calc(-1 * var(--gutter));
-  }
-
-  .photos {
-    order: 1;
-  }
-
-  .panel {
-    padding: var(--space-4) var(--gutter);
-  }
-
+  /* Below 60rem (tablets and phones) no panel: the blue-and-white tab's
+     kinds stand in the ochre band at the top (ShopTabs), the makers' pieces
+     have only their tabs; the photos come first and the product's name, price,
+     text and sizes after the last of them (Sami, November 2026). */
   @media (max-width: 59.99rem) {
-    .panel {
-      font-size: var(--step-footer);
+    .drawer {
+      display: none;
     }
 
-    .panel ul {
-      flex-direction: column;
-      gap: 0;
-      line-height: var(--leading-body);
+    .info {
+      order: 1;
     }
 
-    /* close under the word, clear of the next line */
-    .panel a:hover,
-    .panel [aria-current] {
-      text-underline-offset: 0.12em;
+    .band-narrow {
+      padding-block: 0 2rem;
     }
   }
 
   @media (max-width: 47.99rem) {
-    .drawer.repeats {
-      display: none;
+    .band-phone {
+      padding-block: 0 2rem;
     }
   }
 
