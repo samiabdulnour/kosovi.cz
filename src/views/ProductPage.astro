@@ -279,7 +279,8 @@ const metaDescription = kindText
           }
           {allPorcelain && <p class="material">100% porcelán</p>}
           {
-            shownSizes.length > 0 && (
+            /* not on Daniela's pieces (Sami, November 2026) */
+            shownSizes.length > 0 && product.line !== 'daniela' && (
               <>
                 <hr />
                 <p class="note">{cz('Míry jsou orientační, každý kus je originální, a proto se jejich velikosti můžou lišit.')}</p>
