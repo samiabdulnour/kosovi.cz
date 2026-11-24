@@ -81,22 +81,32 @@ const maxQty = product.stock && product.stock > 0 ? Math.min(product.stock, 10) 
 // The kind's short text (src/config/descriptions.ts), else the old description.
 const texts = kindTexts[product.line] ?? {};
 const kindText = (item && texts[item.slug]) ?? (group && texts[group.slug]);
-// The kind's text breaks after its first sentence (Sami, November 2026).
+// The kind's text breaks after its first sentence (Sami, November 2026), or
+// where it has a line break of its own (the stamped mugs', Sami).
 const firstStop = kindText ? kindText.indexOf('. ') : -1;
 const paragraphs = kindText
-  ? [firstStop > 0 ? [cz(kindText.slice(0, firstStop + 1)), cz(kindText.slice(firstStop + 2))] : [cz(kindText)]]
+  ? [
+      kindText.includes('\n')
+        ? kindText.split('\n').map((l) => cz(l.trim()))
+        : firstStop > 0
+          ? [cz(kindText.slice(0, firstStop + 1)), cz(kindText.slice(firstStop + 2))]
+          : [cz(kindText)],
+    ]
   : (product.description ?? '')
       .split(/\n{2,}/)
       .map((p) => p.split('\n').map((l) => cz(l.trim())))
       .filter((lines) => lines.some(Boolean));
 
-// Sizes rounded to whole centimetres, as in the size chart (Sami, November
-// 2026); "Průměr" where the PDF has "Šířka" (Sami, November 2026).
+// The blue-and-white pieces' sizes rounded to whole centimetres, as in the
+// size chart (Sami, November 2026); Martin's as the old site gives them
+// (7,5 cm, Sami, November 2026). "Průměr" where the PDF has "Šířka" (Sami,
+// November 2026).
 const { dimensions } = product;
-const height = item?.size ?? (dimensions?.heightCm !== undefined ? `${Math.round(dimensions.heightCm)} cm` : undefined);
+const cm = (value: number) => `${product.line === 'spolecna' ? Math.round(value) : formatNumber(value)} cm`;
+const height = item?.size ?? (dimensions?.heightCm !== undefined ? cm(dimensions.heightCm) : undefined);
 const sizes: [string, string | undefined][] = [
   ['Výška', height && cz(height)],
-  ['Průměr', dimensions?.diameterCm !== undefined ? cz(`${Math.round(dimensions.diameterCm)} cm`) : undefined],
+  ['Průměr', dimensions?.diameterCm !== undefined ? cz(cm(dimensions.diameterCm)) : undefined],
   ['Objem', dimensions?.volumeMl !== undefined ? cz(`${formatNumber(dimensions.volumeMl)} ml`) : undefined],
 ];
 // Where the data lists the old site's sizes (Daniela's pieces), those, as they
@@ -141,7 +151,7 @@ const groups =
     : [{ title: 'Další', products: pages.flatMap(({ set, tab, decor }) => [...set, ...tab, ...decor]) }];
 
 const metaDescription = kindText
-  ? `${name}. ${kindText}`
+  ? `${name}. ${kindText.replace(/\s+/g, ' ')}`
   : product.description
     ? product.description.replace(/\s+/g, ' ').slice(0, 155)
     : `${product.title}. ${line.name.cs}, porcelán z ateliéru Daniely a Martina Kosových v Praze.`;
