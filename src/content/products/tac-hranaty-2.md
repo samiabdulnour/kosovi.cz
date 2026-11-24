@@ -13,6 +13,7 @@ images:
   - src: "../../assets/products/tac-hranaty-2/01.jpg"
     alt: "Tác čtverec"
 oldUrl: "https://kosovi.cz/produkt/tac-hranaty-2/"
-description: |-
-  Rozměr 15,5 x 15,5 cm
+sizes:
+  - label: "Rozměr"
+    value: "15,5 × 15,5 cm"
 ---

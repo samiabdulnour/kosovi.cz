@@ -13,8 +13,7 @@ images:
   - src: "../../assets/products/miska-hranata-mala-4/01.jpg"
     alt: "Miska hranatá malá 4"
 oldUrl: "https://kosovi.cz/produkt/miska-hranata-mala-4/"
-description: |-
-  Rozměr cca 9,5×9,5cm
-
-  Všechny rozměry jsou přibližné, jde o ruční práci.
+sizes:
+  - label: "Rozměr"
+    value: "cca 9,5 × 9,5 cm"
 ---

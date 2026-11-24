@@ -13,6 +13,7 @@ images:
   - src: "../../assets/products/tac-ctverec-2/01.jpg"
     alt: "Tác čtverec 2"
 oldUrl: "https://kosovi.cz/produkt/tac-ctverec-2/"
-description: |-
-  Rozměr 15,5 x 15,5 cm
+sizes:
+  - label: "Rozměr"
+    value: "15,5 × 15,5 cm"
 ---

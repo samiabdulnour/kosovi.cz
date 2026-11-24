@@ -13,6 +13,7 @@ images:
   - src: "../../assets/products/tac-ovalny/01.jpg"
     alt: "Tác oválný"
 oldUrl: "https://kosovi.cz/produkt/tac-ovalny/"
-description: |-
-  Rozměr 15cm x 30cm
+sizes:
+  - label: "Rozměr"
+    value: "15 × 30 cm"
 ---

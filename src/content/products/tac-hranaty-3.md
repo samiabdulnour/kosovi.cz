@@ -13,6 +13,7 @@ images:
   - src: "../../assets/products/tac-hranaty-3/01.jpg"
     alt: "Tác dlouhý"
 oldUrl: "https://kosovi.cz/produkt/tac-hranaty-3/"
-description: |-
-  Rozměr 41cm x 10,5cm
+sizes:
+  - label: "Rozměr"
+    value: "41 × 10,5 cm"
 ---

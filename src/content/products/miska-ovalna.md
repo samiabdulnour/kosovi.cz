@@ -19,7 +19,9 @@ images:
   - src: "../../assets/products/miska-ovalna/03.jpg"
     alt: "Miska oválná, foto 3"
 oldUrl: "https://kosovi.cz/produkt/miska-ovalna/"
-description: |-
-  Výška 7cm
-  Rozměr 23cm x 18,5cm
+sizes:
+  - label: "Výška"
+    value: "7 cm"
+  - label: "Rozměr"
+    value: "23 × 18,5 cm"
 ---

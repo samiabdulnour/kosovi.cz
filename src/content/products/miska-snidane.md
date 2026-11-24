@@ -18,7 +18,9 @@ images:
   - src: "../../assets/products/miska-snidane/02.jpg"
     alt: "Miska snídaně, foto 2"
 oldUrl: "https://kosovi.cz/produkt/miska-snidane/"
-description: |-
-  Výška 6,7cm
-  Průměr 15cm
+sizes:
+  - label: "Výška"
+    value: "6,7 cm"
+  - label: "Průměr"
+    value: "15 cm"
 ---

@@ -22,10 +22,14 @@ images:
   - src: "../../assets/products/salek-a-podsalek-2/04.jpg"
     alt: "Šálek a podšálek 2, foto 4"
 oldUrl: "https://kosovi.cz/produkt/salek-a-podsalek-2/"
-description: |-
-  Rozměr 17,5 x 11,2 cm
-  Talířek: průměr 18cm
-  Hrnek:
-  výška 8,5cm
-  průměr 12cm
+sizes:
+  - label: "Rozměr"
+    value: "17,5 × 11,2 cm"
+  - label: "Průměr podšálku"
+    value: "18 cm"
+  - label: "Výška hrnku"
+    value: "8,5 cm"
+  - label: "Průměr hrnku"
+    value: "12 cm"
+description: "Cibulákový hrnek s podšálkem s autorským dekorem."
 ---

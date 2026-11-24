@@ -15,6 +15,7 @@ images:
   - src: "../../assets/products/talir-hluboky-2/01.jpg"
     alt: "Talíř hluboký 2"
 oldUrl: "https://kosovi.cz/produkt/talir-hluboky-2/"
-description: |-
-  Průměr 21cm
+sizes:
+  - label: "Průměr"
+    value: "21 cm"
 ---

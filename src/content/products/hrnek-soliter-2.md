@@ -18,7 +18,9 @@ images:
   - src: "../../assets/products/hrnek-soliter-2/02.jpg"
     alt: "Hrnek solitér 2, foto 2"
 oldUrl: "https://kosovi.cz/produkt/hrnek-soliter-2/"
-description: |-
-  Výška 12,8cm
-  Průměr 9cm
+sizes:
+  - label: "Výška"
+    value: "12,8 cm"
+  - label: "Průměr"
+    value: "9 cm"
 ---

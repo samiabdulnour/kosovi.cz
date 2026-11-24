@@ -37,6 +37,10 @@ const products = defineCollection({
           volumeMl: z.number().optional(),
         })
         .optional(),
+      // Sizes as the old site lists them, in its order and unrounded (Daniela's
+      // pieces, Sami, November 2026); the product page shows them in place of
+      // the ones made from `dimensions`.
+      sizes: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
       technique: z.string().optional(),
       care: z
         .object({

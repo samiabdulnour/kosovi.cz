@@ -16,7 +16,9 @@ images:
   - src: "../../assets/products/miska-kulata-salatova-s-rybkami/01.jpg"
     alt: "Miska kulatá salátová s rybkami"
 oldUrl: "https://kosovi.cz/produkt/miska-kulata-salatova-s-rybkami/"
-description: |-
-  Výška 9,5cm
-  Průměr 19,5cm
+sizes:
+  - label: "Výška"
+    value: "9,5 cm"
+  - label: "Průměr"
+    value: "19,5 cm"
 ---

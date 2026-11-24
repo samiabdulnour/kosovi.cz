@@ -15,6 +15,7 @@ images:
   - src: "../../assets/products/talir-jidelni-3/01.jpg"
     alt: "Talíř jídelní 3"
 oldUrl: "https://kosovi.cz/produkt/talir-jidelni-3/"
-description: |-
-  Průměr 28cm
+sizes:
+  - label: "Průměr"
+    value: "28 cm"
 ---

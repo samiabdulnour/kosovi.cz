@@ -180,7 +180,14 @@ const posters = new Map(
     text-decoration: none;
   }
 
-  .photo:hover .name,
+  /* only where a pointer can hover: a touch screen keeps the hover after a
+     tap (Sami, November 2026: the name stayed on the homepage's video) */
+  @media (hover: hover) {
+    .photo:hover .name {
+      opacity: 1;
+    }
+  }
+
   a.photo:focus-visible .name {
     opacity: 1;
   }

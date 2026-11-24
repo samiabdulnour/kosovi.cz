@@ -16,7 +16,9 @@ images:
   - src: "../../assets/products/miska-kulata-mala-5/01.jpg"
     alt: "Miska kulatá malá 5"
 oldUrl: "https://kosovi.cz/produkt/miska-kulata-mala-5/"
-description: |-
-  Výška 3cm
-  Průměr 7,2cm
+sizes:
+  - label: "Výška"
+    value: "3 cm"
+  - label: "Průměr"
+    value: "7,2 cm"
 ---

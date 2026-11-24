@@ -18,7 +18,9 @@ images:
   - src: "../../assets/products/miska-salatova/02.jpg"
     alt: "Miska salátová, foto 2"
 oldUrl: "https://kosovi.cz/produkt/miska-salatova/"
-description: |-
-  Výška 9cm
-  Průměr 19,5cm
+sizes:
+  - label: "Výška"
+    value: "9 cm"
+  - label: "Průměr"
+    value: "19,5 cm"
 ---

@@ -116,6 +116,19 @@ const after = illustration ? products.slice(AFTER) : [];
     white-space: nowrap;
   }
 
+  /* On phones the large photo is a block of its own across both columns, its
+     height from its own proportions rather than from the shared rows, which
+     Safari sized too short, so it ran over the next products (Sami, November
+     2026). */
+  @media (max-width: 47.99rem) {
+    .illustration,
+    .illustration > a,
+    .illustration .photo {
+      display: block;
+      grid-row: auto;
+    }
+  }
+
   @media (min-width: 48rem) {
     .product-grid {
       --row-space: clamp(3rem, 5.5vw, 5.5rem);

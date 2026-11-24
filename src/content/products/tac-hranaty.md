@@ -13,6 +13,7 @@ images:
   - src: "../../assets/products/tac-hranaty/01.jpg"
     alt: "Tác hranatý"
 oldUrl: "https://kosovi.cz/produkt/tac-hranaty/"
-description: |-
-  Rozměr 25cm x 12,7cm
+sizes:
+  - label: "Rozměr"
+    value: "25 × 12,7 cm"
 ---

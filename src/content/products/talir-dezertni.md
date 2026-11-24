@@ -15,6 +15,7 @@ images:
   - src: "../../assets/products/talir-dezertni/01.jpg"
     alt: "Talíř dezertní"
 oldUrl: "https://kosovi.cz/produkt/talir-dezertni/"
-description: |-
-  Průměr 18cm
+sizes:
+  - label: "Průměr"
+    value: "18 cm"
 ---

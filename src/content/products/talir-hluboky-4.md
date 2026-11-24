@@ -15,6 +15,7 @@ images:
   - src: "../../assets/products/talir-hluboky-4/01.jpg"
     alt: "Talíř hluboký 4"
 oldUrl: "https://kosovi.cz/produkt/talir-hluboky-4/"
-description: |-
-  Průměr 24cm
+sizes:
+  - label: "Průměr"
+    value: "24 cm"
 ---
