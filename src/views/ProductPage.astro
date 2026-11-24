@@ -105,11 +105,8 @@ const shownSizes = product.sizes?.length
   ? product.sizes.map((s): [string, string] => [s.label, cz(s.value)])
   : sizes.filter((f): f is [string, string] => f[1] !== undefined);
 const facts: [string, string][] = [...shownSizes, ...(product.catalogNo ? [['Katalogové číslo', product.catalogNo] as [string, string]] : [])];
-// "100% porcelán" (the PDF) on every piece (Sami, November 2026) except the
-// teapots and tea sets, whose handles are rattan.
-// By the blue-and-white tab and by Martin's old shop categories, since his
-// teapots and tea sets share a tab now.
-const allPorcelain = !(group?.slug === 'konvice' || ['konve-solitery', 'cajove-soupravy'].includes(product.category ?? ''));
+// No "100% porcelán" (Sami, November 2026: it was on every piece but the
+// teapots and tea sets with rattan handles).
 const [firstPhoto, ...morePhotos] = product.images.map((img, i) => ({ img, i }));
 
 // Five tiles a page (Sami, November 2026): "Ze stejné sady" is the same kind
@@ -277,7 +274,6 @@ const metaDescription = kindText
               </dl>
             )
           }
-          {allPorcelain && <p class="material">100% porcelán</p>}
           {
             /* not on Daniela's pieces (Sami, November 2026) */
             shownSizes.length > 0 && product.line !== 'daniela' && (
@@ -544,9 +540,6 @@ const metaDescription = kindText
     text-align: end;
   }
 
-  .material {
-    margin-block-start: 1.0625rem;
-  }
 
   hr {
     margin-block: 2.1rem 2rem;
