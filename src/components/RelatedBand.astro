@@ -47,9 +47,9 @@ const t =
             <div class="track" data-track>
               {shown.map((g) => (
                 <>
-                  <h2 class="wide-only" style={`--start: ${g.start}; --span: ${g.products.length}`}>
-                    {g.href ? <a href={g.href}>{g.title}</a> : g.title}
-                  </h2>
+                  <div class="head wide-only" style={`--start: ${g.start}; --span: ${g.products.length}`}>
+                    <h2>{g.href ? <a href={g.href}>{g.title}</a> : g.title}</h2>
+                  </div>
                   {g.products.map((p) => (
                     <div class="tile">
                       <ProductCard product={p} lang={lang} />
@@ -139,15 +139,24 @@ const t =
   }
 
   /* A group's heading stays at the row's left edge while its tiles are in
-     view. */
-  h2 {
-    position: sticky;
-    left: 4px;
+     view, and leaves with them: it sticks inside a box as wide as its own
+     tiles, so it never runs over the next group's heading (Sami, November
+     2026). */
+  .head {
     grid-row: 1;
     grid-column: var(--start) / span var(--span);
-    justify-self: start;
+    min-width: 0;
+  }
+
+  h2 {
     padding-block-end: 0.75rem;
-    white-space: nowrap;
+  }
+
+  .head h2 {
+    position: sticky;
+    left: 0;
+    width: fit-content;
+    max-width: 100%;
   }
 
   /* The arrows in the band's margins, level with the middle of the photos. */

@@ -13,7 +13,8 @@
 // no height), rounded to whole centimetres.
 // A tab without drawings lists its kinds as text. On the line's first listing,
 // with no tab open, the ruler and the floor stand empty until the pointer
-// shows a tab's drawings on them (Sami, November 2026).
+// shows a tab's drawings on them, the band as tall as with drawings (Sami,
+// November 2026).
 // On tablets the tabs stand in one row, like the header's menu, and the chart
 // under them runs across the whole width, at one scale for every tab so the
 // widest tab's drawings fit; on phones there are no drawings, the open tab's
@@ -469,11 +470,6 @@ const tabLines = (name: string) => {
       margin-block-start: var(--space-2);
     }
 
-    /* the empty ruler of the first listing has no labels under its floor */
-    .chart.empty .plane {
-      height: calc(var(--top) * var(--cm) + 0.5rem);
-    }
-
     .chart .scroll {
       overflow: visible;
     }
@@ -609,14 +605,10 @@ const tabLines = (name: string) => {
     }
 
     /* room under the floor for two lines of labels, the same for every tab
-       (Sami, November 2026: the plates' band was taller) */
+       (Sami, November 2026: the plates' band was taller), the empty ruler of
+       the first listing included (Sami, November 2026) */
     .shop-band {
       --label-h: 2.9rem;
-    }
-
-    /* the empty ruler of the first listing has no labels under its floor */
-    .chart.empty .plane {
-      height: calc(var(--top) * var(--cm) + 0.5rem);
     }
   }
 

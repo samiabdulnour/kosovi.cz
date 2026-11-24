@@ -47,3 +47,15 @@ a nejvyšší bod včetně ratanového ucha (oranžově).
 Bílé předměty (bábovky, bílé podšálky) skript na světlém pozadí nenajde.
 Bílý okraj nad malovaným pruhem (hrnky se spirálami, některé mini hrnky)
 se od obrysu odtrhne, `mugbox.py` ho proto dohledá řádek po řádku nad ním.
+
+## Rozšíření pozadí do formátu dlaždice
+
+Fotka na šířku na barevném pozadí by v dlaždici e-shopu (260 × 302) měla
+nahoře a dole šedé pásy. `extend_backdrop.py` pozadí nahoře a dole
+prodlouží: nahoru zrcadlí horní řádky (musí to být čisté pozadí), dolů
+protáhne barvu posledních řádků po sloupcích se zrnem fotky. Poslední
+číslo je podíl přidané výšky nahoře.
+
+```
+.venv/bin/python extend_backdrop.py vstup.jpg vystup.jpg 260 302 0.42
+```
