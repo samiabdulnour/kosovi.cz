@@ -7,8 +7,8 @@
 // kinds (Sami, November 2026). Phones get the band everywhere; the
 // blue-and-white product page gets it below 60rem, where it replaces the
 // product page's panel of kinds. On computers the first tab starts under the
-// header's first item and the last ends at the page's right margin, as in the
-// blue-and-white line's ochre band (Sami, November 2026).
+// header's first item and the tabs keep the header menu's gaps (Sami,
+// November 2026).
 import type { Line, MenuGroup } from '../config/lines';
 import { collectionPath } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
@@ -77,7 +77,7 @@ const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone'
 
 <script>
   // On computers the first tab starts where the header's first item does
-  // (Modrobílý porcelán), the last at the page's right margin. The header's
+  // (Modrobílý porcelán). The header's
   // items move when the cart joins them, so the start is measured, again on
   // resizing; without the script the tabs keep to the left.
   const first = document.querySelector<HTMLElement>('.site-header nav a');
@@ -118,9 +118,9 @@ const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone'
   }
 
   @media (min-width: 64rem) {
+    /* the header menu's gaps (Header.astro), not spread to the page's edge */
     [data-tabs-aligned] .tabs ul {
-      justify-content: space-between;
-      column-gap: 1rem;
+      column-gap: clamp(1rem, 3.9vw, 3.7rem);
       padding-inline-start: var(--tabs-start);
     }
   }
