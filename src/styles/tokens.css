@@ -88,4 +88,14 @@
   --gap: clamp(1rem, 2vw, 2rem);
   --label-start: 30.2%;
   --radius: 0;
+
+  /* How far under the header the e-shop's tabs start: the ochre band's and
+     the tabs row's alike (Sami, November 2026). */
+  --tabs-top: 1.25rem;
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --tabs-top: 1.2vw;
+  }
 }

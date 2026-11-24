@@ -54,6 +54,9 @@ export interface Line {
   /** Listings open with the tabs in one row under the header, as on product
    *  pages, without the e-shop's ochre band (Sami, November 2026). */
   tabs?: boolean;
+  /** The colour of the band the tabs stand on, the maker's own (Sami,
+   *  November 2026); the text on it is black. */
+  band?: string;
 }
 
 const all = (...categories: string[]): Match[] => categories.map((category) => ({ category }));
@@ -190,6 +193,7 @@ export const lines: Line[] = [
       { slug: 'hrnky-s-razitkem', name: 'Hrnky s razítkem', match: all('hrnky-s-plastickym-dekorem'), items: [] },
     ],
     tabs: true,
+    band: '#ff5828',
   },
   {
     key: 'daniela',
@@ -246,6 +250,7 @@ export const lines: Line[] = [
       },
     ],
     tabs: true,
+    band: '#fff45f',
   },
 ];
 

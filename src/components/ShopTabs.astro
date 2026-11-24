@@ -32,7 +32,11 @@ interface Props {
 const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone' } = Astro.props;
 ---
 
-<div class:list={['shop-tabs', `band-${bandBelow}`]} data-shop-tabs>
+<div
+  class:list={['shop-tabs', `band-${bandBelow}`, { colored: !!line.band }]}
+  style={line.band ? `--band-color: ${line.band}` : undefined}
+  data-shop-tabs
+>
   {
     name && (
       <p class="line-name">
@@ -123,11 +127,37 @@ const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone'
   }
 
   @media (min-width: 48rem) {
-    /* the header menu's gaps (Header.astro), not spread to the page's edge */
+    /* the header menu's gaps (Header.astro), not spread to the page's edge;
+       a line's height as in the ochre band, so the tabs start as far under
+       the header */
+    .tabs ul {
+      line-height: normal;
+    }
+
     [data-tabs-aligned] .tabs ul {
       column-gap: clamp(1rem, 3.9vw, 3.7rem);
       padding-inline-start: var(--tabs-start);
     }
+  }
+
+  /* Martin's and Daniela's tabs on a band of their own colour across the
+     whole width, right under the header, the text black (Sami, November
+     2026); the products start as far under it as under the ochre band. */
+  .colored {
+    margin-block-start: calc(-1 * var(--tabs-top));
+    margin-inline: calc(50% - 50vw);
+    padding-block: var(--tabs-top) clamp(2rem, 3.6vw, 3.4rem);
+    padding-inline: calc(50vw - 50%);
+    background: var(--band-color);
+    color: var(--color-ink);
+  }
+
+  .colored a {
+    color: inherit;
+  }
+
+  :global(.tabs-row:has(> .shop-tabs.colored)) {
+    padding-block-end: clamp(2rem, 3.2vw, 3rem);
   }
 
   /* the band's parts wait for narrow screens */
@@ -187,6 +217,13 @@ const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone'
       background: var(--color-ochre);
       color: #fff;
       font-size: var(--step-0);
+    }
+
+    /* the maker's own colour, the text black */
+    .band-phone.colored {
+      margin-block-start: 0;
+      background: var(--band-color);
+      color: var(--color-ink);
     }
 
     .band-phone .cols {

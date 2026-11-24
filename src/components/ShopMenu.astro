@@ -441,7 +441,7 @@ const tabLines = (name: string) => {
     .band.band {
       display: flex;
       flex-direction: column;
-      padding-block: 1.25rem 1.25rem;
+      padding-block: var(--tabs-top) 1.25rem;
     }
 
     .head {
@@ -529,7 +529,7 @@ const tabLines = (name: string) => {
       --bleed: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter)));
       display: flex;
       flex-direction: column;
-      padding-block: 1.2vw 1.2vw;
+      padding-block: var(--tabs-top) 1.2vw;
     }
 
     .head {
