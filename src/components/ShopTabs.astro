@@ -80,13 +80,18 @@ const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone'
   // (Modrobílý porcelán). The header's
   // items move when the cart joins them, so the start is measured, again on
   // resizing; without the script the tabs keep to the left.
+  // From tablets up, wherever the header's menu stands in one row; not where
+  // the tabs are the ochre band (phones, and the blue-and-white product page
+  // below 60rem).
   const first = document.querySelector<HTMLElement>('.site-header nav a');
-  const wide = matchMedia('(min-width: 64rem)');
+  const tablet = matchMedia('(min-width: 48rem)');
+  const laptop = matchMedia('(min-width: 60rem)');
   const rows = [...document.querySelectorAll<HTMLElement>('[data-shop-tabs]')];
   const align = () => {
     for (const row of rows) {
       const list = row.querySelector<HTMLElement>('.tabs ul');
-      if (!list || !first || !wide.matches) {
+      const band = row.classList.contains('band-narrow') ? !laptop.matches : !tablet.matches;
+      if (!list || !first || band) {
         row.removeAttribute('data-tabs-aligned');
         continue;
       }
@@ -117,7 +122,7 @@ const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone'
     text-underline-offset: 0.6em;
   }
 
-  @media (min-width: 64rem) {
+  @media (min-width: 48rem) {
     /* the header menu's gaps (Header.astro), not spread to the page's edge */
     [data-tabs-aligned] .tabs ul {
       column-gap: clamp(1rem, 3.9vw, 3.7rem);
