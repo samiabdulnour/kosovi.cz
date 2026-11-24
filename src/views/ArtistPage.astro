@@ -60,16 +60,17 @@ const notes: Record<MakerKey, string> = {
 </Base>
 
 <style>
-  /* as on the e-shop's listings and product pages */
-  /* the tabs as far under the header as in the ochre band (Sami, November 2026) */
+  /* the tabs as far under the header as in the ochre band; the maker's
+     coloured band runs down to the photos, with no white between (Sami,
+     November 2026) */
   .tabs-row {
-    padding-block: var(--tabs-top) clamp(2.5rem, 7.5vw, 7.5rem);
+    padding-block: var(--tabs-top) 0;
   }
 
-  /* on phones the ochre band right under the header (ShopTabs) */
+  /* on phones the maker's band right under the header (ShopTabs) */
   @media (max-width: 47.99rem) {
     .tabs-row {
-      padding-block: 0 2rem;
+      padding-block: 0;
     }
   }
 </style>
