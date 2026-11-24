@@ -179,7 +179,7 @@ const tabLines = (name: string) => {
                 aria-label={lang === 'cs' ? `Velikosti: ${g.name}` : `Sizes: ${g.name}`}
               >
                 <div
-                  class:list={['plane', { 'with-sets': sets.length > 0 }]}
+                  class="plane"
                   style={`--top: ${TOP}; --extent: ${extent.toFixed(2)}; --tick: ${TICK}; --min-x: ${minX.toFixed(2)}`}
                 >
                   <span class="floor" aria-hidden="true" />
@@ -438,10 +438,6 @@ const tabLines = (name: string) => {
       --label-h: 2.75rem;
     }
 
-    .plane.with-sets {
-      --label-h: 4.4rem;
-    }
-
     .band.band {
       display: flex;
       flex-direction: column;
@@ -612,14 +608,10 @@ const tabLines = (name: string) => {
       width: calc((var(--dto) - var(--dfrom)) * var(--cm));
     }
 
-    /* room under the floor for two lines of labels, more where a set's
-       labels stand a step lower */
+    /* room under the floor for two lines of labels, the same for every tab
+       (Sami, November 2026: the plates' band was taller) */
     .shop-band {
       --label-h: 2.9rem;
-    }
-
-    .plane.with-sets {
-      --label-h: 4.75rem;
     }
 
     /* the empty ruler of the first listing has no labels under its floor */
@@ -739,16 +731,19 @@ const tabLines = (name: string) => {
     white-space: nowrap;
   }
 
+  /* A set's line and name close under the floor and its pieces' names right
+     under them, so the plates' band is no taller than the others (Sami,
+     November 2026). */
   .in-set .label {
-    top: calc(var(--floor) * var(--cm) + 2.95rem);
+    top: calc(var(--floor) * var(--cm) + 1.9rem);
   }
 
   .set {
     position: absolute;
-    top: calc(var(--top) * var(--cm) + 0.75rem);
+    top: calc(var(--top) * var(--cm) + 0.55rem);
     left: calc(var(--from) * var(--cm));
     width: calc((var(--to) - var(--from)) * var(--cm));
-    padding-block-start: 0.5rem;
+    padding-block-start: 0.3rem;
     border-top: 1px solid #fff;
     color: #fff9e3;
     font-size: 0.6875rem;
