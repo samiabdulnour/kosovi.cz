@@ -134,7 +134,7 @@ export async function getSameTab(product: Product): Promise<Product[]> {
 }
 
 /**
- * A group of pieces from another part of the e-shop, for the light blue band under
+ * A group of pieces from another part of the e-shop, for the pale green band under
  * a listing (src/config/crosslinks.ts): its listing's pieces with a tab's kinds
  * taking turns, or, for a whole line, one of each tab in turn.
  */
