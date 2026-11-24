@@ -7,7 +7,8 @@ export const routes = {
   collections: { cs: '/kolekce/', en: '/en/collections/' },
   martin: { cs: '/martin-kos/', en: '/en/martin-kos/' },
   daniela: { cs: '/daniela-kosova/', en: '/en/daniela-kosova/' },
-  process: { cs: '/jak-vznika/', en: '/en/how-its-made/' },
+  martinFree: { cs: '/martin-kos/volna-tvorba/', en: '/en/martin-kos/fine-art/' },
+  danielaFree: { cs: '/daniela-kosova/volna-tvorba/', en: '/en/daniela-kosova/fine-art/' },
   about: { cs: '/o-nas/', en: '/en/about/' },
   courses: { cs: '/kurzy/' },
   contact: { cs: '/kontakt/', en: '/en/contact/' },
@@ -34,9 +35,10 @@ export function pathOf(key: RouteKey, lang: Lang): string {
   return route[lang] ?? route.cs ?? '/';
 }
 
-export function collectionPath(lineSlug: string, lang: Lang, category?: string): string {
-  const root = pathOf('collections', lang);
-  return category ? `${root}${lineSlug}/${category}/` : `${root}${lineSlug}/`;
+/** E-shop listing of a line, optionally one menu entry and a page number. */
+export function collectionPath(lineSlug: string, lang: Lang, entry?: string, page = 1): string {
+  const base = `${pathOf('collections', lang)}${lineSlug}/${entry ? `${entry}/` : ''}`;
+  return page > 1 ? `${base}${page}/` : base;
 }
 
 export function productPath(slug: string): string {

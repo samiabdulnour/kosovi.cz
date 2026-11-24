@@ -1,0 +1,273 @@
+---
+// The e-shop's categories as tabs (kosovi_eshop_2.pdf), on the makers' pages,
+// listings and product pages, the open tab underlined. On narrow screens an
+// ochre band across the whole width, like the blue-and-white listing's on
+// phones: the line's name, then the tabs one under another and, beside them in
+// a second column lined up with the second column of photos, the open tab's
+// kinds (Sami, November 2026). Phones get the band everywhere; the
+// blue-and-white product page gets it below 60rem, where it replaces the
+// product page's panel of kinds. On computers the first tab starts under the
+// header's first item and the tabs keep the header menu's gaps (Sami,
+// November 2026).
+import type { Line, MenuGroup } from '../config/lines';
+import { collectionPath } from '../i18n/routes';
+import type { Lang } from '../i18n/ui';
+import { withBase } from '../i18n/utils';
+
+interface Props {
+  line: Line;
+  lang: Lang;
+  /** The open tab. */
+  group?: MenuGroup;
+  /** True when this page is the tab's own listing. */
+  isPage?: boolean;
+  /** The line's name at the top of the band (phones). */
+  name?: { text: string; href: string; current?: boolean };
+  /** The open tab's kinds, in the band's second column. */
+  kinds?: { name: string; href: string; current: boolean }[];
+  /** Below which width the tabs become the band: phones, or below 60rem. */
+  bandBelow?: 'phone' | 'narrow';
+  /** The coloured band reaches down to what follows, with no white between
+   *  (the makers' pages, whose photos touch it; Sami, November 2026). */
+  touches?: boolean;
+}
+
+const { line, lang, group, isPage = false, name, kinds = [], bandBelow = 'phone', touches = false } = Astro.props;
+---
+
+<div
+  class:list={['shop-tabs', `band-${bandBelow}`, { colored: !!line.band, touches }]}
+  style={line.band ? `--band-color: ${line.band}` : undefined}
+  data-shop-tabs
+>
+  {
+    name && (
+      <p class="line-name">
+        <a href={name.href} aria-current={name.current ? 'page' : undefined}>
+          {name.text}
+        </a>
+      </p>
+    )
+  }
+  <div class="cols">
+    <nav class="tabs" aria-label={lang === 'cs' ? 'Kategorie' : 'Categories'}>
+      <ul role="list">
+        {
+          line.menu.map((g) => (
+            <li>
+              <a
+                href={withBase(collectionPath(line.slug[lang], lang, g.slug))}
+                aria-current={g === group ? (isPage ? 'page' : 'true') : undefined}
+              >
+                {g.name}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+    {
+      kinds.length > 0 && (
+        <ul class="kinds" role="list" aria-label={group?.name}>
+          {kinds.map((k) => (
+            <li>
+              <a href={k.href} aria-current={k.current ? 'true' : undefined}>
+                {k.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</div>
+
+<script>
+  // On computers the first tab starts where the header's first item does
+  // (Modrobílý porcelán). The header's
+  // items move when the cart joins them, so the start is measured, again on
+  // resizing; without the script the tabs keep to the left.
+  // From tablets up, wherever the header's menu stands in one row; not where
+  // the tabs are the ochre band (phones, and the blue-and-white product page
+  // below 60rem).
+  const first = document.querySelector<HTMLElement>('.site-header nav a');
+  const tablet = matchMedia('(min-width: 48rem)');
+  const laptop = matchMedia('(min-width: 60rem)');
+  const rows = [...document.querySelectorAll<HTMLElement>('[data-shop-tabs]')];
+  const align = () => {
+    for (const row of rows) {
+      const list = row.querySelector<HTMLElement>('.tabs ul');
+      const band = row.classList.contains('band-narrow') ? !laptop.matches : !tablet.matches;
+      if (!list || !first || band) {
+        row.removeAttribute('data-tabs-aligned');
+        continue;
+      }
+      const start = first.getBoundingClientRect().left - list.getBoundingClientRect().left;
+      row.style.setProperty('--tabs-start', `${Math.max(0, start)}px`);
+      row.setAttribute('data-tabs-aligned', '');
+    }
+  };
+  align();
+  addEventListener('resize', align);
+  document.addEventListener('kosovi-cart', () => requestAnimationFrame(align));
+  document.fonts?.ready.then(align);
+</script>
+
+<style>
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-3) clamp(1.5rem, 7.3vw, 7rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  [aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.6em;
+  }
+
+  @media (min-width: 48rem) {
+    /* the header menu's gaps (Header.astro), not spread to the page's edge;
+       a line's height as in the ochre band, so the tabs start as far under
+       the header */
+    .tabs ul {
+      line-height: normal;
+    }
+
+    [data-tabs-aligned] .tabs ul {
+      column-gap: clamp(1rem, 3.9vw, 3.7rem);
+      padding-inline-start: var(--tabs-start);
+    }
+  }
+
+  /* Martin's and Daniela's tabs on a band of their own colour across the
+     whole width, right under the header, the text black (Sami, November
+     2026); the products start as far under it as under the ochre band. */
+  .colored {
+    margin-block-start: calc(-1 * var(--tabs-top));
+    margin-inline: calc(50% - 50vw);
+    padding-block: var(--tabs-top) clamp(2rem, 3.6vw, 3.4rem);
+    padding-inline: calc(50vw - 50%);
+    background: var(--band-color);
+    color: var(--color-ink);
+  }
+
+  .colored a {
+    color: inherit;
+  }
+
+  :global(.tabs-row:has(> .shop-tabs.colored)) {
+    padding-block-end: clamp(2rem, 3.2vw, 3rem);
+  }
+
+  /* on the makers' pages the band runs down to the photos, the white gap
+     taken into it (Sami, November 2026) */
+  .colored.touches {
+    padding-block-end: calc(clamp(2rem, 3.6vw, 3.4rem) + clamp(2rem, 3.2vw, 3rem));
+  }
+
+  :global(.tabs-row:has(> .shop-tabs.colored.touches)) {
+    padding-block-end: 0;
+  }
+
+  /* the band's parts wait for narrow screens */
+  .line-name,
+  .kinds {
+    display: none;
+  }
+
+  /* On tablets at the footer's size (Sami, November 2026). */
+  @media (max-width: 63.99rem) {
+    .shop-tabs {
+      font-size: var(--step-footer);
+    }
+  }
+
+  /* The band: ochre across the whole width, in white at the size of a
+     product's name, the lists spaced like the footer's lines. */
+  @media (max-width: 59.99rem) {
+    .band-narrow {
+      margin-inline: calc(-1 * var(--gutter));
+      padding: clamp(1.5rem, 3.1vw, 2.9rem) var(--gutter) clamp(2.5rem, 6vw, 5.75rem);
+      background: var(--color-ochre);
+      color: #fff;
+      font-size: var(--step-0);
+    }
+
+    .band-narrow .cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 0.65rem;
+    }
+
+    .band-narrow ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      line-height: var(--leading-body);
+    }
+
+    .band-narrow .kinds {
+      display: flex;
+    }
+
+    .band-narrow a {
+      color: inherit;
+    }
+
+    .band-narrow [aria-current] {
+      text-underline-offset: 0.12em;
+    }
+  }
+
+  @media (max-width: 47.99rem) {
+    .band-phone {
+      margin-inline: calc(-1 * var(--gutter));
+      padding: clamp(1.5rem, 3.1vw, 2.9rem) var(--gutter) clamp(2.5rem, 6vw, 5.75rem);
+      background: var(--color-ochre);
+      color: #fff;
+      font-size: var(--step-0);
+    }
+
+    /* the maker's own colour, the text black */
+    .band-phone.colored {
+      margin-block-start: 0;
+      background: var(--band-color);
+      color: var(--color-ink);
+    }
+
+    .band-phone .cols {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 0.65rem;
+    }
+
+    .band-phone ul {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      line-height: var(--leading-body);
+    }
+
+    .band-phone .kinds {
+      display: flex;
+    }
+
+    .band-phone a {
+      color: inherit;
+    }
+
+    .band-phone [aria-current] {
+      text-underline-offset: 0.12em;
+    }
+
+    /* the line's name over the tabs, as on the blue-and-white listing */
+    .line-name {
+      display: block;
+      margin-block-end: var(--space-5);
+    }
+  }
+</style>

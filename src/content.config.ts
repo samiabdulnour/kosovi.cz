@@ -12,14 +12,21 @@ const products = defineCollection({
       // Keep the old WooCommerce slug, /produkt/<slug>/ stays the same.
       slug: z.string(),
       line: z.enum(['spolecna', 'martin', 'daniela']),
-      category: z.string(),
-      makers: z.object({
-        thrownBy: z.literal('martin').optional(),
-        paintedBy: z.literal('daniela').optional(),
-      }),
+      // Category slug from src/config/lines.ts. A few old products have none.
+      category: z.string().optional(),
+      // Old shop subcategory slug (size or shape, e.g. "velky", "mini").
+      subcategory: z.string().optional(),
+      // Per-product override. Empty means the line default from lines.ts.
+      makers: z
+        .object({
+          thrownBy: z.literal('martin').optional(),
+          paintedBy: z.literal('daniela').optional(),
+        })
+        .default({}),
       // CZK. null means "cena na dotaz".
       price: z.number().nullable(),
-      stock: z.number().int(),
+      // null: in stock, but the old shop did not track the quantity.
+      stock: z.number().int().nullable(),
       // Signature pieces, Sami picks them.
       featured: z.boolean().default(false),
       catalogNo: z.string().optional(),
@@ -30,6 +37,10 @@ const products = defineCollection({
           volumeMl: z.number().optional(),
         })
         .optional(),
+      // Sizes as the old site lists them, in its order and unrounded (Daniela's
+      // pieces, Sami, November 2026); the product page shows them in place of
+      // the ones made from `dimensions`.
+      sizes: z.array(z.object({ label: z.string(), value: z.string() })).optional(),
       technique: z.string().optional(),
       care: z
         .object({
@@ -38,6 +49,8 @@ const products = defineCollection({
         })
         .optional(),
       images: z.array(z.object({ src: image(), alt: z.string() })),
+      // Choices the customer makes, e.g. eye colour on Daniela's hangers.
+      options: z.array(z.object({ name: z.string(), values: z.array(z.string()) })).optional(),
       description: z.string().optional(),
       oldUrl: z.url().optional(),
     }),
@@ -50,6 +63,7 @@ const pages = defineCollection({
     title: z.string(),
     description: z.string().optional(),
     lang: z.enum(['cs', 'en']),
+    oldUrl: z.url().optional(),
   }),
 });
 

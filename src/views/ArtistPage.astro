@@ -1,16 +1,20 @@
 ---
-import ProductGrid from '../components/ProductGrid.astro';
+// A maker's page (src/config/artists.ts), after kosovi_martin.pdf and
+// kosovi_daniela.pdf (Sami, November 2026): the maker's e-shop categories as
+// tabs in one row, where their listings and product pages have them (Sami,
+// November 2026), then rows of photographs across the whole width, as on the
+// homepage; no page title under the header.
+import Mosaic from '../components/Mosaic.astro';
+import ShopTabs from '../components/ShopTabs.astro';
 import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { danielaCollections, danielaFacts, martinFacts } from '../config/facts';
+import { artistPages } from '../config/artists';
 import { getLine } from '../config/lines';
 import { makers, type MakerKey } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, collectionPath } from '../i18n/routes';
-import type { Lang } from '../i18n/ui';
+import { alternatesOf, pathOf } from '../i18n/routes';
 import { withBase } from '../i18n/utils';
-import { getLineProducts } from '../lib/products';
-import { typeset } from '../lib/typography';
+import type { Lang } from '../i18n/ui';
+import { getProductsBySlug } from '../lib/products';
 
 interface Props {
   maker: MakerKey;
@@ -19,101 +23,54 @@ interface Props {
 
 const { maker, lang } = Astro.props;
 const person = makers[maker];
+const design = artistPages[maker];
 const line = getLine(maker);
-const products = await getLineProducts(maker);
-const t = (text: string) => typeset(text, lang);
 
-const facts = (maker === 'martin' ? martinFacts : danielaFacts)[lang];
-const collections = maker === 'daniela' ? danielaCollections[lang] : [];
+// A photo that opens a product needs the product; a wrong slug stops the build.
+const wanted = design.rows.flatMap((row) => row.items.flatMap((i) => (i.product ? [i.product] : [])));
+const found = await getProductsBySlug(wanted);
+for (const slug of wanted) {
+  if (!found.some((p) => p.slug === slug)) throw new Error(`src/config/artists.ts: no product "${slug}" for ${maker}`);
+}
 
-const copy = {
-  cs: {
-    description:
-      maker === 'martin'
-        ? 'Martin Kos točí porcelán na hrnčířském kruhu. Životopis, způsob práce a jeho kusy.'
-        : 'Daniela Kosová maluje porcelán kobaltem a tvoří vlastní výtvarná díla. Životopis, způsob práce a její práce.',
-    bio: 'Životopis',
-    how: 'Jak pracuje',
-    collections: 'Zastoupení ve sbírkách',
-    pieces: maker === 'martin' ? 'Jeho kusy' : 'Její práce',
-    all: `Všechny kusy v kolekci ${line.name.cs}`,
-  },
-  en: {
-    description:
-      maker === 'martin'
-        ? 'Martin Kos throws porcelain on the potter’s wheel. Biography, how he works and his pieces.'
-        : 'Daniela Kosová paints porcelain with cobalt and makes her own artwork. Biography, how she works and her pieces.',
-    bio: 'Biography',
-    how: maker === 'martin' ? 'How he works' : 'How she works',
-    collections: 'Collections',
-    pieces: maker === 'martin' ? 'His pieces' : 'Her work',
-    all: `All pieces in the ${line.name.en} collection`,
-  },
-}[lang];
+const description =
+  lang === 'cs'
+    ? `${person.name}: porcelán z ateliéru Daniely a Martina Kosových v Praze.`
+    : `${person.name}: porcelain from the Kos studio in Prague.`;
 
-const photo = maker === 'martin' ? 'Martin u hrnčířského kruhu' : 'Daniela při malování';
+const notes: Record<MakerKey, string> = {
+  martin:
+    'Podle kosovi_martin.pdf. Popisky se ukážou po najetí myší, fotky vedou do Martinových kategorií v e-shopu (vázy, konve a čajové soupravy, hrnky s razítkem). Tenkostěnné hrnky do žádné nepatří, zatím nikam nevedou.',
+  daniela:
+    'Podle kosovi_daniela.pdf. Popisky se ukážou po najetí myší. Obtisky a Obtisky na cibulák vedou do Danieliných kategorií v e-shopu, ostatní fotky zatím nikam, jejich kategorie přijdou později.',
+};
 ---
 
-<Base title={person.name} description={copy.description} alternates={alternatesOf(maker)}>
-  <section class="section wrap">
-    <div class="split">
-      <Placeholder label={photo} ratio="4 / 5" />
-      <div class="stack">
-        <h1>{person.name}</h1>
-        <p class="lead">{t(person.role[lang])}</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section wrap">
-    <div class="split">
-      <div class="stack">
-        <h2>{copy.bio}</h2>
-        <ul class="facts">
-          {facts.map((fact) => <li>{t(fact)}</li>)}
-        </ul>
-        {
-          collections.length > 0 && (
-            <>
-              <h3>{copy.collections}</h3>
-              <ul class="facts">
-                {collections.map((c) => (
-                  <li>{c}</li>
-                ))}
-              </ul>
-            </>
-          )
-        }
-      </div>
-      <div class="stack">
-        <h2>{copy.how}</h2>
-        <Placeholder label={maker === 'martin' ? 'točení, krátké video' : 'malba kobaltem, krátké video'} kind="video" ratio="16 / 9" />
-        <Note>
-          <p>TODO(fakta): jak {maker === 'martin' ? 'Martin' : 'Daniela'} pracuje, vlastními slovy. Zatím jsou k dispozici jen fakta ze starého webu.</p>
-          {
-            maker === 'martin' && (
-              <p>Ke schválení: Galerie Svatoš uvádí, že Martin je hrnčíř ve třetí generaci a dělá tenkostěnný porcelán s drobnými otvory, které dávají průsvitným šálkům krajkový vzor. Použít až po potvrzení.</p>
-            )
-          }
-        </Note>
-      </div>
-    </div>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.pieces}</h2>
-    <ProductGrid products={products} lang={lang} placeholders={8} limit={8} />
-    <p class="after-grid">
-      <a href={withBase(collectionPath(line.slug[lang], lang))}>{t(copy.all)}</a>
-    </p>
+<Base title={person.name} description={description} alternates={alternatesOf(maker)}>
+  <h1 class="visually-hidden">{person.name}</h1>
+  <div class="wrap tabs-row">
+    <ShopTabs line={line} lang={lang} name={{ text: person.name, href: withBase(pathOf(maker, lang)), current: true }} touches />
+  </div>
+  <Mosaic rows={design.rows} lang={lang} />
+  <div class="wrap">
     <Note>
-      <p>Galerijní prezentace samostatné tvorby. Kde cena není stanovená, zobrazí se „cena na dotaz“.</p>
+      <p>{notes[maker]}</p>
     </Note>
-  </section>
+  </div>
 </Base>
 
 <style>
-  .after-grid {
-    margin-block-start: var(--space-5);
+  /* the tabs as far under the header as in the ochre band; the maker's
+     coloured band runs down to the photos, with no white between (Sami,
+     November 2026) */
+  .tabs-row {
+    padding-block: var(--tabs-top) 0;
+  }
+
+  /* on phones the maker's band right under the header (ShopTabs) */
+  @media (max-width: 47.99rem) {
+    .tabs-row {
+      padding-block: 0;
+    }
   }
 </style>

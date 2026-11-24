@@ -14,9 +14,8 @@ interface Props {
 const { route, title, description } = Astro.props;
 ---
 
-<Base title={title} description={description} alternates={alternatesOf(route)}>
+<Base title={title} description={description} alternates={alternatesOf(route)} label={title}>
   <div class="section wrap stack">
-    <h1>{title}</h1>
     <Note>
       <p>TODO(text): text dodá nebo schválí Sami. Uloží se do src/content/pages.</p>
     </Note>

@@ -1,12 +1,13 @@
 ---
-import ContactBlock from '../components/ContactBlock.astro';
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
+// Kontakt in the type of O nás (Sami, November 2026): no page title under the
+// header, the studio's name in capitals as a section name, then the phones,
+// the e-mail and the note on visits in Claristik (.essay in base.css). No
+// street address and no line on courses (Sami, November 2026).
+import { studio } from '../config/site';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, pathOf } from '../i18n/routes';
+import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
-import { typeset } from '../lib/typography';
+import { cz, telHref, typeset } from '../lib/typography';
 
 interface Props {
   lang: Lang;
@@ -17,44 +18,51 @@ const { lang } = Astro.props;
 const copy = {
   cs: {
     title: 'Kontakt',
-    description: 'Kontakt na porcelánový ateliér Daniely a Martina Kosových, Na Vlčovce 6, Praha 6.',
-    visit: 'Návštěva dílny',
-    courses: 'Kurzy keramiky a porcelánu na požádání.',
-    coursesLink: 'Kurzy',
+    description: 'Kontakt na porcelánový ateliér Daniely a Martina Kosových v Praze.',
+    // Sami, November 2026
+    visitText: 'Návštěva dílny je možná pouze po telefonickém dohovoru.',
   },
   en: {
     title: 'Contact',
-    description: 'Contact the porcelain studio of Daniela and Martin Kos, Na Vlčovce 6, Prague 6.',
-    visit: 'Visiting the workshop',
-    courses: 'Ceramics and porcelain courses on request.',
-    coursesLink: '',
+    description: 'Contact the porcelain studio of Daniela and Martin Kos in Prague.',
+    visitText: 'Visits to the workshop by arrangement on the phone only.',
   },
 }[lang];
 ---
 
 <Base title={copy.title} description={copy.description} alternates={alternatesOf('contact')}>
-  <div class="section wrap">
-    <h1 class="section-head">{copy.title}</h1>
-    <div class="split">
-      <div class="stack">
-        <ContactBlock />
-        <p>
-          {typeset(copy.courses, lang)}
-          {lang === 'cs' && <a href={withBase(pathOf('courses', 'cs'))}>{copy.coursesLink}</a>}
-        </p>
-      </div>
-      <Placeholder label="mapa nebo fotografie vchodu" ratio="4 / 3" />
-    </div>
-    <h2 class="visit">{copy.visit}</h2>
-    <Note>
-      <p>TODO(rozhodnutí): mohou zákazníci navštívit dílnu? Sekce zůstane jen pokud to Sami potvrdí.</p>
-      <p>Mapa: odkaz na Mapy.cz místo vloženého widgetu, aby web neměl cizí sledovací kód.</p>
-    </Note>
-  </div>
+  <h1 class="visually-hidden">{copy.title}</h1>
+  <section class="wrap contact essay" aria-labelledby="atelier">
+    <h2 id="atelier">{cz(studio.name)}</h2>
+    <address>
+      <p>
+        {
+          studio.phones.map((phone, i) => (
+            <>
+              {i > 0 && <br />}
+              <a href={telHref(phone)}>{cz(phone)}</a>
+            </>
+          ))
+        }
+        <br />
+        <a href={`mailto:${studio.email}`}>{studio.email}</a>
+      </p>
+    </address>
+    <p class="visit">{typeset(copy.visitText, lang)}</p>
+  </section>
 </Base>
 
 <style>
+  /* where O nás puts its first section name */
+  .contact {
+    padding-block-start: calc(clamp(1.5rem, 4.5vw, 4.25rem) + clamp(2rem, 3.2vw, 3rem));
+  }
+
+  address {
+    font-style: normal;
+  }
+
   .visit {
-    margin-block-start: var(--space-7);
+    margin-block-start: calc(2 * var(--text) * var(--line));
   }
 </style>

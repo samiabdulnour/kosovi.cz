@@ -18,6 +18,12 @@ export function typeset(text: string, lang: 'cs' | 'en'): string {
 }
 
 const czk = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 0 });
+const decimal = new Intl.NumberFormat('cs-CZ', { maximumFractionDigits: 1 });
+
+/** "5,5" with a decimal comma and non-breaking digit groups. */
+export function formatNumber(value: number): string {
+  return decimal.format(value).replace(/\s/gu, NBSP);
+}
 
 /** "4 000 Kč" with non-breaking spaces. */
 export function formatCzk(value: number): string {

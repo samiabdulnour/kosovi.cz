@@ -1,13 +1,23 @@
 ---
-import ContactBlock from '../components/ContactBlock.astro';
-import Note from '../components/wire/Note.astro';
-import Placeholder from '../components/wire/Placeholder.astro';
-import { danielaCollections, porcelainFacts } from '../config/facts';
-import { makers } from '../config/site';
+// "O nás" after docs/design/kosovi_o_nas.pdf (Sami, November 2026): the couple
+// on an olive field over the left half, their photograph filling the right
+// half (Sami's screen), the blue-and-white porcelain on
+// white with the studio's video of the wheel beside it, then both biographies side by side on a blue and an orange field,
+// each across the whole width. Section names in capitals, the text in
+// Claristik at 24 px on 28 at 1512 (the PDF's sizes).
+// The Czech text is Sami's (the PDF); the biographies are Daniela's and
+// Martin's own from the old site. Typing errors and punctuation are
+// corrected, and the praise toned down on Sami's request (November 2026):
+// no superlatives, description in place of verdicts, no new facts. The
+// English is a working translation (phase 6).
+import { getImage, Image } from 'astro:assets';
+import couplePhoto from '../assets/pages/o-nas/manzele-kosovi.jpg';
+import throwingPoster from '../assets/pages/o-nas/tocit-kvetinac-nahled.jpg';
+import throwingVideo from '../assets/pages/o-nas/tocit-kvetinac.mp4?url';
+import throwingVideoWebm from '../assets/pages/o-nas/tocit-kvetinac.webm?url';
 import Base from '../layouts/Base.astro';
-import { alternatesOf, pathOf } from '../i18n/routes';
+import { alternatesOf } from '../i18n/routes';
 import type { Lang } from '../i18n/ui';
-import { withBase } from '../i18n/utils';
 import { typeset } from '../lib/typography';
 
 interface Props {
@@ -16,81 +26,277 @@ interface Props {
 
 const { lang } = Astro.props;
 const t = (text: string) => typeset(text, lang);
+// The studio's Instagram video of a porcelain flowerpot thrown on the wheel
+// (instagram.com/p/DHy6AnwI9tq, Sami, November 2026), kept here silent as
+// H.264 MP4 and VP9 WebM at 480 × 854, its first frame the poster.
+const poster = await getImage({ src: throwingPoster, width: 480, format: 'webp' });
+const videoLabel = {
+  cs: 'Točení porcelánového květináče na hrnčířském kruhu, od hnětení hmoty po hotový tvar',
+  en: 'A porcelain flowerpot thrown on the potter’s wheel, from wedging the clay to the finished form',
+}[lang];
 
 const copy = {
   cs: {
     title: 'O nás',
-    description: 'Porcelánový ateliér Daniely a Martina Kosových v Praze 6. Kdo jsme, jak pracujeme, kde jsou naše práce ve sbírkách.',
-    studio: 'Ateliér',
-    porcelain: 'Porcelán',
-    makers: 'Autoři',
-    more: 'Životopis a práce',
-    proof: 'Sbírky a výstavy',
-    collections: 'Práce Daniely Kosové jsou ve sbírkách:',
-    contact: 'Kde nás najdete',
+    description: 'Daniela a Martin Kosovi, výtvarníci a porcelánový ateliér v Praze 6. Modrobílý porcelán od roku 1995 a autorská tvorba obou.',
+    couple: 'Manželé Kosovi',
+    coupleText: [
+      'Daniela a Martin Kosovi tvoří ve svém pražském ateliéru už desítky let. Jejich práce sahají od jídelního porcelánu po výtvarné objekty pro vnitřní i venkovní prostory. Lidé znají především jejich modrobílý porcelán, který se používá v řadě domácností v Česku i v zahraničí. Každý kus je ručně točený i malovaný, a proto se jeden od druhého trochu liší.',
+      'Martin je vyučený hrnčíř. Hrnčířskému kruhu je věrný od dětství a pracuje převážně s porcelánem. Daniela často čerpá ze své pohádkové představivosti. Její díla jsou doprovázena kresbou nebo barvou. Ve své tvorbě využívá mnoho odlišných technik.',
+    ],
+    photoAlt: 'Martin a Daniela Kosovi se dívají dalekohledy, za nimi zděná stavba s velkými okny',
+    blueWhite: 'Modrobílý porcelán',
+    blueWhiteText: [
+      'Všechny výrobky z modrobílého porcelánu jsou točené z technického porcelánu. Ten se původně používal na elektrické izolátory, které jsou celý rok vystavené těžkým venkovním podmínkám.',
+      'Materiál je zdravotně nezávadný, práce s ním je ale náročnější než s klasickým porcelánem či keramikou.',
+      'Každý produkt je točen na hrnčířském kruhu a prochází dvěma výpaly. Po prvním výpalu v elektrické peci je výrobek ručně malován voskem a poté ponořen do kobaltu, který mu dává modrou barvu. Následně je střep ponořen do průhledné glazury, díky které se dekor neotírá. Při druhém, vysokém výpalu na 1 380 °C v plynové peci se všechny vrstvy slijí.',
+      'Vznikne tak slitý a odolný střep. Výrobky z něj můžete dávat do myčky i do mikrovlnné trouby a použít je třeba i jako zapékací mísu.',
+    ],
+    daniela: [
+      'Narodila jsem se v Bratislavě. Od dětství mě bavilo kreslení a modelování. Ve svém rodném městě jsem také vystudovala keramiku na střední škole uměleckého průmyslu, a poté jsem pokračovala na pražské UMPRUM. Za zásadní ve svém uměleckém vzdělání považuji sochařskou a keramickou praxi v ateliéru Andreje Rudavského a praxi v porcelánových fabrikách v Dubí a Duchcově.',
+      'Největší inspirací je pro mne porcelán. Je to materiál velmi něžný, citlivý a krásný. Práce s ním je sice technologicky velice náročná, ale poskytuje řadu možností, jak v oblasti tvarování, tak i dekorování.',
+      'Při dekorování používám různé technologie, jak podglazurové vypalované na 1 390 stupňů Celsia, vtavné vypalované na 1 250 stupňů, tak i naglazurové včetně zlacení (výpal na 800 stupňů). Tuto práci mám velmi ráda a jsem za ni vděčná.',
+      'S mou prací se mimo jiné můžete setkat ve sbírkách Uměleckoprůmyslového muzea v Praze, Jihočeské Alšově galerii, ve Slovenském centru designu v Bratislavě, v muzeu Darney ve Francii, v Porvoo ve Finsku a v mnohých soukromých sbírkách u nás i v zahraničí.',
+    ],
+    martin: [
+      'Narodil jsem se roku 1959 v Hradci Králové. Oba mí rodičové, povoláním keramici, mne vedli k lásce k tomuto povolání už jako dítě školou povinné. O prázdninách jsem docházel do hrnčířské dílny v Týništi nad Orlicí, kde jsem se později i vyučil hrnčířem. Následně jsem absolvoval SPŠK v Bechyni stejně jako mí rodičové, a dokonce i můj děda.',
+      'Po maturitě jsem pracoval v Družstvu Umělecké Výroby Keramo Praha a od roku 1987 jsem začal tvořit samostatně. Vždy jsem chtěl vyrábět zboží, za jehož řemeslné zpracování by mne pochválil můj děda i jiní staří mistři, které jsem poznal v učení i na různých hrnčířských soutěžích.',
+      'Časem jsem se naučil točit na hrnčířském kruhu i z porcelánu, a když jsem poznal jeho přednosti oproti klasické keramice, ke keramice jsem se už nevrátil. Již přes 25 let tak pracuji jenom s porcelánem. Poznal jsem, že je velmi náročný na zpracování, ale výrobky z něj jsou pevné a odolné.',
+      'Zboží, které vyrábím, si lidé nekupují proto, že ho nutně potřebují k životu, ale hlavně proto, že se jim líbí a při každodenním používání se jim osvědčilo. To mne těší a je mi motorem se stále zlepšovat. Stále je co se učit a stále je prostor pro zdokonalení.',
+    ],
   },
   en: {
     title: 'About',
-    description: 'The porcelain studio of Daniela and Martin Kos in Prague 6. Who we are, how we work, where our work is held.',
-    studio: 'The studio',
-    porcelain: 'Porcelain',
-    makers: 'The makers',
-    more: 'Biography and work',
-    proof: 'Collections and exhibitions',
-    collections: 'Work by Daniela Kosová is held in:',
-    contact: 'Where to find us',
+    description: 'Daniela and Martin Kos, artists and a porcelain studio in Prague 6. Blue and white porcelain since 1995 and the artwork of both.',
+    couple: 'Daniela and Martin Kos',
+    coupleText: [
+      'Daniela and Martin Kos have worked in their Prague studio for decades. Their work ranges from tableware to art objects for indoor and outdoor spaces. People know them above all for their blue and white porcelain, which is in use in many homes in the Czech Republic and abroad. Every piece is thrown and painted by hand, so no two are quite alike.',
+      'Martin is a trained potter. He has stayed with the potter’s wheel since childhood and works mostly in porcelain. Daniela often draws on her fairy-tale imagination. Her works come with drawing or colour. She uses many different techniques in her work.',
+    ],
+    photoAlt: 'Martin and Daniela Kos looking through binoculars, a brick building with large windows behind them',
+    blueWhite: 'Blue and white porcelain',
+    blueWhiteText: [
+      'All the blue and white pieces are thrown from technical porcelain. It was first used for electrical insulators, which stand outdoors in harsh conditions all year round.',
+      'The material is safe for food, but it is harder to work than ordinary porcelain or pottery.',
+      'Every piece is thrown on the potter’s wheel and fired twice. After the first firing in an electric kiln, it is painted by hand with wax and then dipped in cobalt, which gives it its blue colour. Then it is dipped in a clear glaze, which keeps the decoration from wearing off. In the second, high firing at 1,380 °C in a gas kiln, all the layers fuse.',
+      'The result is a fused, durable body. The pieces can go in the dishwasher and the microwave, and you can use them as an oven dish too.',
+    ],
+    daniela: [
+      'I was born in Bratislava. Since childhood I have loved drawing and modelling. In my home town I studied ceramics at the secondary school of applied arts, and then went on to UMPRUM in Prague. I consider the sculpture and ceramics training in Andrej Rudavský’s studio and the practice in the porcelain factories in Dubí and Duchcov essential to my artistic education.',
+      'My greatest inspiration is porcelain. It is a very delicate, sensitive and beautiful material. Working with it is technically very demanding, but it offers many possibilities in both shaping and decoration.',
+      'I decorate with various techniques: underglaze, fired at 1,390 °C, in-glaze, fired at 1,250 °C, and overglaze including gilding (fired at 800 °C). I love this work and I am grateful for it.',
+      'My work can be found in the collections of the Museum of Decorative Arts in Prague, the Aleš South Bohemian Gallery, the Slovak Design Centre in Bratislava, the museum in Darney in France, Porvoo in Finland, and in many private collections at home and abroad.',
+    ],
+    martin: [
+      'I was born in 1959 in Hradec Králové. My parents, both ceramicists, led me to love the craft when I was still a schoolboy. In the holidays I went to a pottery workshop in Týniště nad Orlicí, where I later trained as a potter. Then I graduated from the ceramics school in Bechyně, like my parents and even my grandfather.',
+      'After school I worked at the Keramo Praha arts and crafts cooperative, and in 1987 I began working on my own. I have always wanted to make things whose craftsmanship my grandfather and the other old masters I met in my training and at pottery competitions would praise.',
+      'In time I learned to throw porcelain on the wheel too, and once I knew its advantages over pottery, I never went back. For more than 25 years I have worked only in porcelain. I have learned that it is very demanding to work, but what is made from it is strong and durable.',
+      'People do not buy what I make because they need it to live, but mainly because they like it and it has proved itself in everyday use. That pleases me and drives me to keep improving. There is always more to learn and always room to improve.',
+    ],
   },
 }[lang];
 ---
 
 <Base title={copy.title} description={copy.description} alternates={alternatesOf('about')}>
-  <section class="section wrap">
-    <h1 class="section-head">{t(copy.title)}</h1>
-    <div class="split">
-      <Placeholder label="ateliér na Vlčovce" ratio="3 / 2" />
-      <div class="stack">
-        <h2>{copy.studio}</h2>
-        <Note>
-          <p>TODO(fakta): krátce o ateliéru. Od kdy spolu pracují, jak ateliér vypadá, co v něm vzniká.</p>
-        </Note>
-        <h3>{copy.porcelain}</h3>
-        <ul class="facts">
-          {porcelainFacts[lang].map((fact) => <li>{t(fact)}</li>)}
-        </ul>
+  <!-- no title on the label line (Sami, November 2026); the page keeps its h1 for readers -->
+  <h1 class="visually-hidden">{copy.title}</h1>
+  <section class="couple" aria-labelledby="manzele-kosovi">
+    <div class="text essay">
+      <h2 id="manzele-kosovi">{copy.couple}</h2>
+      {copy.coupleText.map((p) => <p>{t(p)}</p>)}
+    </div>
+    <div class="photo-half">
+      <Image
+        class="photo"
+        src={couplePhoto}
+        alt={copy.photoAlt}
+        widths={[480, 800, 1200, 1600, 2000]}
+        sizes="(min-width: 48rem) 50vw, 100vw"
+        loading="eager"
+      />
+    </div>
+  </section>
+
+  <section class="blue-white" aria-labelledby="modrobily-porcelan">
+    <div class="wrap columns essay">
+      <h2 id="modrobily-porcelan">{copy.blueWhite}</h2>
+      <div class="text">
+        {copy.blueWhiteText.map((p) => <p>{t(p)}</p>)}
       </div>
+      <video class="throwing" muted loop playsinline preload="metadata" poster={poster.src} aria-label={videoLabel} data-in-view>
+        <source src={throwingVideo} type="video/mp4" />
+        <source src={throwingVideoWebm} type="video/webm" />
+      </video>
     </div>
   </section>
 
-  <section class="section wrap">
-    <h2 class="section-head">{copy.makers}</h2>
-    <div class="split">
-      {
-        (['martin', 'daniela'] as const).map((key) => (
-          <article class="stack">
-            <h3>{makers[key].name}</h3>
-            <p>{t(makers[key].role[lang])}</p>
-            <p>
-              <a href={withBase(pathOf(key, lang))}>{t(copy.more)}</a>
-            </p>
-          </article>
-        ))
-      }
+  <div class="bios">
+    <div class="wrap columns">
+      <section class="text essay bio daniela" aria-labelledby="daniela-kosova">
+        <h2 id="daniela-kosova">Daniela Kosová</h2>
+        {copy.daniela.map((p) => <p>{t(p)}</p>)}
+      </section>
+      <section class="text essay bio martin" aria-labelledby="martin-kos">
+        <h2 id="martin-kos">Martin Kos</h2>
+        {copy.martin.map((p) => <p>{t(p)}</p>)}
+      </section>
     </div>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{t(copy.proof)}</h2>
-    <p>{copy.collections}</p>
-    <ul class="facts">
-      {danielaCollections[lang].map((c) => <li>{c}</li>)}
-    </ul>
-    <Note>
-      <p>TODO(fakta): výstavy obou autorů, sbírky s Martinovými pracemi.</p>
-    </Note>
-  </section>
-
-  <section class="section wrap">
-    <h2 class="section-head">{copy.contact}</h2>
-    <ContactBlock />
-  </section>
+  </div>
 </Base>
+
+<style>
+  /* The text's sizes are the shared .essay (src/styles/base.css); two
+     columns 658 wide and 25 apart inside the page's margins. */
+  .columns {
+    display: grid;
+    gap: var(--space-6) clamp(1rem, 1.65vw, 1.6rem);
+  }
+
+  /* The couple: the text on an olive field over the left half, the
+     photograph filling the right half to the screen's edge (Sami's screen,
+     November 2026); on phones one under the other. */
+  /* No page title on the label line: the band starts where the PDF has it,
+     118 points under the header's text at 1512. */
+  .couple {
+    margin-block-start: clamp(1.5rem, 4.5vw, 4.25rem);
+  }
+
+  .couple .text {
+    padding: clamp(2rem, 3.2vw, 3rem) var(--gutter) clamp(2.5rem, 4.9vw, 4.6rem);
+    background: #d6cf93;
+  }
+
+  .photo {
+    width: 100%;
+    height: auto;
+  }
+
+  .blue-white {
+    padding-block: clamp(2.75rem, 5.8vw, 5.5rem) clamp(3.5rem, 8.9vw, 8.4rem);
+  }
+
+  /* The video beside the text, about where Sami marked it (November 2026):
+     upright 3 : 4, from the first paragraph down, in the right column. */
+  .blue-white .columns {
+    row-gap: 0;
+  }
+
+  .throwing {
+    display: block;
+    width: min(100%, 24rem);
+    aspect-ratio: 3 / 4;
+    margin-block-start: var(--space-6);
+    margin-inline: auto;
+    object-fit: cover;
+    background: #e8e4dc;
+  }
+
+  /* Both biographies across the whole width: Daniela's field from the left
+     edge to the middle, Martin's from the middle to the right edge (the
+     fields reach past the page's frame, the section clips them). */
+  .bios {
+    overflow-x: clip;
+  }
+
+  .bios .columns {
+    row-gap: 0;
+  }
+
+  .bio {
+    padding-block: clamp(2.5rem, 4.6vw, 4.4rem) clamp(2.5rem, 5vw, 4.75rem);
+  }
+
+  /* the names stand two lines above the biographies, on tablets and phones
+     one (Sami, November 2026) */
+  .bio h2 {
+    margin-block-end: calc(2 * var(--text) * var(--line));
+  }
+
+  @media (max-width: 63.99rem) {
+    .bio h2 {
+      margin-block-end: calc(var(--text) * var(--line));
+    }
+  }
+
+  .daniela {
+    border-image: linear-gradient(#a6d3ff 0 0) fill 0 / / 0 100vw;
+  }
+
+  .martin {
+    border-image: linear-gradient(#ff8a00 0 0) fill 0 / / 0 100vw;
+  }
+
+  @media (min-width: 48rem) {
+    /* the band as tall as in the PDF (566 at 1512), more if the text needs it;
+       the text column as wide as the others on the page */
+    .couple {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 37.45vw;
+    }
+
+    .couple .text {
+      padding-inline: max(var(--gutter), calc((100vw - var(--page-max)) / 2 + var(--gutter))) calc(clamp(1rem, 1.65vw, 1.6rem) / 2);
+    }
+
+    .photo-half {
+      position: relative;
+    }
+
+    .photo {
+      position: absolute;
+      inset: 0;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .columns {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .blue-white h2 {
+      grid-column: 1 / -1;
+    }
+
+    /* about 63.5 % to 90.7 % across at 1512, as on Sami's screen */
+    .throwing {
+      grid-column: 2;
+      width: 62.5%;
+      margin-block-start: 0;
+      margin-inline: auto 8.4%;
+    }
+
+    .bios .columns {
+      align-items: stretch;
+    }
+
+    /* the fields meet in the middle of the gap between the columns */
+    .daniela {
+      border-image-outset: 0 calc(clamp(1rem, 1.65vw, 1.6rem) / 2) 0 100vw;
+    }
+
+    .martin {
+      border-image-outset: 0 100vw 0 calc(clamp(1rem, 1.65vw, 1.6rem) / 2);
+      /* Martin's text 16 points in from the column, as wide as Daniela's (the
+         PDF lets it run that much past the page's margin) */
+      margin-inline-end: -1.06vw;
+      padding-inline-start: 1.06vw;
+    }
+  }
+</style>
+
+<script>
+  // The video plays silent in a loop while it is on screen, except for
+  // visitors who asked for less motion, who see its first frame.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const watch = new IntersectionObserver((entries) => {
+      for (const { target, isIntersecting } of entries) {
+        const video = target as HTMLVideoElement;
+        if (isIntersecting) video.play().catch(() => {});
+        else video.pause();
+      }
+    });
+    for (const video of document.querySelectorAll<HTMLVideoElement>('video[data-in-view]')) watch.observe(video);
+  }
+</script>

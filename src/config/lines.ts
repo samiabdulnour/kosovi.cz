@@ -1,10 +1,46 @@
 import type { MakerKey } from './site';
 
+/** Who made a piece: Martin throws, Daniela paints. */
+export interface Makers {
+  thrownBy?: 'martin';
+  paintedBy?: 'daniela';
+}
+
 export type LineKey = 'spolecna' | 'martin' | 'daniela';
 
-export interface Category {
+/** Old shop category (and optionally subcategory or products) a menu entry shows. */
+export interface Match {
+  category: string;
+  subcategory?: string;
+  /** Product slugs, where the old shop has no subcategory to tell them apart;
+   *  a listing shows them in this order. */
+  slugs?: string[];
+}
+
+export interface MenuItem {
   slug: string;
   name: string;
+  match: Match[];
+  /** Line drawing in the size chart (src/assets/silhouettes/<name>.svg). */
+  silhouette?: string;
+  /** Size under the drawing, set by hand ("4–6 cm"). Without it the chart
+   *  takes the height (or diameter) from the product data, rounded. */
+  size?: string;
+}
+
+/** Kinds sold together, named under their drawings in the size chart. */
+export interface MenuSet {
+  name: string;
+  /** Item slugs, in the chart's order. */
+  items: string[];
+  /** One entry for them all in a list of kinds (the product page's panel). */
+  entry?: string;
+}
+
+/** A tab of the e-shop menu (a column in lines without a size chart) and its items. */
+export interface MenuGroup extends MenuItem {
+  items: MenuItem[];
+  sets?: MenuSet[];
 }
 
 export interface Line {
@@ -12,33 +48,116 @@ export interface Line {
   slug: { cs: string; en: string };
   name: { cs: string; en: string };
   makers: MakerKey[];
-  categories: Category[];
+  /** Credit shown on a product unless its own data says otherwise. */
+  defaultMakers: Makers;
+  menu: MenuGroup[];
+  /** Listings open with the tabs in one row under the header, as on product
+   *  pages, without the e-shop's ochre band (Sami, November 2026). */
+  tabs?: boolean;
+  /** The colour of the band the tabs stand on, the maker's own (Sami,
+   *  November 2026); the text on it is black. */
+  band?: string;
 }
 
-// TODO(fakta): nobody has confirmed that the blue-and-white line is joint work
-// (his forms, her painting). Until Sami confirms, change it only here.
-export const JOINT_LINE_CONFIRMED = false;
+const all = (...categories: string[]): Match[] => categories.map((category) => ({ category }));
 
-// Order matters: the joint line comes first everywhere.
-// Category slugs are provisional; phase 2 aligns them with the old shop.
+// The order of lines and menu columns follows the design (kosovi_navrh_01.pdf).
+// Menu names come from the design; `match` maps them onto the imported data.
+// An empty `match` is a design category with no products in the old shop yet.
 export const lines: Line[] = [
   {
     key: 'spolecna',
     slug: { cs: 'modrobily-porcelan', en: 'blue-and-white' },
     name: { cs: 'Modrobílý porcelán', en: 'Blue and white porcelain' },
     makers: ['martin', 'daniela'],
-    categories: [
-      { slug: 'hrnky', name: 'Hrnky' },
-      { slug: 'podsalky', name: 'Podšálky' },
-      { slug: 'talire', name: 'Talíře' },
-      { slug: 'misky', name: 'Misky' },
-      { slug: 'misy', name: 'Mísy' },
-      { slug: 'konvice-rovne', name: 'Konvice rovné' },
-      { slug: 'konvice-kulate', name: 'Konvice kulaté' },
-      { slug: 'cukrenky', name: 'Cukřenky' },
-      { slug: 'mlicenky', name: 'Mlíčenky' },
-      { slug: 'babovky', name: 'Bábovky' },
-      { slug: 'panaky', name: 'Panáky' },
+    // TODO(rozhodnutí): Martin makes all of it now, older pieces were painted
+    // by Daniela. Which credit should a product show?
+    defaultMakers: { thrownBy: 'martin', paintedBy: 'daniela' },
+    menu: [
+      // Tabs and size chart after kosovi_eshop_2.pdf (Sami, November 2026).
+      // Sizes come from the product data, rounded to whole centimetres (Sami,
+      // November 2026); the espresso cup has none and keeps the PDF's 6 cm, the
+      // shot glass is 4–6 cm.
+      // Kinds go from the largest down, as the mugs do in the PDF.
+      {
+        slug: 'hrnky',
+        name: 'Hrnky',
+        match: all('hrnky'),
+        items: [
+          { slug: 'pitny-rezim', name: 'Pitný režim', silhouette: 'pitny-rezim', match: [{ category: 'hrnky', subcategory: 'pitny-rezim' }] },
+          { slug: 'hrnek-velky', name: 'Hrnek velký', silhouette: 'hrnek-velky', match: [{ category: 'hrnky', subcategory: 'velky' }] },
+          { slug: 'hrnek-stredni', name: 'Hrnek střední', silhouette: 'hrnek-stredni', match: [{ category: 'hrnky', subcategory: 'stredni' }] },
+          { slug: 'hrnek-uzky', name: 'Hrnek úzký', silhouette: 'hrnek-uzky', match: [{ category: 'hrnky', subcategory: 'uzky' }] },
+          { slug: 'hrnek-siroky', name: 'Hrnek široký', silhouette: 'hrnek-siroky', match: [{ category: 'hrnky', subcategory: 'siroky' }] },
+          { slug: 'hrnek-mini', name: 'Hrnek mini', silhouette: 'hrnek-mini', match: [{ category: 'hrnky', subcategory: 'mini' }] },
+          { slug: 'hrnek-espresso', name: 'Hrnek espresso', size: '6 cm', silhouette: 'hrnek-espresso', match: [{ category: 'hrnky', subcategory: 'hrhen-na-presso-s-podsalkem' }] },
+        ],
+      },
+      // Plates, and bowls with dishes, are two tabs (Sami, November 2026); their
+      // drawings, names and order are kosovi_eshop_vektory.pdf's, as are the
+      // other tabs' (Sami, November 2026). The plates are drawn from above.
+      {
+        slug: 'talire',
+        name: 'Talíře',
+        match: all('talire'),
+        items: [
+          { slug: 'talir-zavesny', name: 'Talíř závěsný', silhouette: 'talir-zavesny', match: [{ category: 'talire', subcategory: 'talire-zavesne-talire' }] },
+          { slug: 'talir-praktik', name: 'Talíř Praktik', silhouette: 'talir-praktik', match: [{ category: 'talire', subcategory: 'talir-praktik' }] },
+          // the dinner set's plates open the dinner set, made to order (Sami, November 2026)
+          { slug: 'talir-jidelni', name: 'Talíř jídelní', silhouette: 'talir-jidelni', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
+          { slug: 'talir-desertni', name: 'Talíř desertní', silhouette: 'talir-desertni', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
+          { slug: 'talir-polevkovy', name: 'Talíř polévkový', silhouette: 'talir-polevkovy', match: [{ category: 'talire', subcategory: 'jidelni-soupravy' }] },
+        ],
+        sets: [{ name: 'Jídelní soupravy', items: ['talir-jidelni', 'talir-desertni', 'talir-polevkovy'], entry: 'Jídelní souprava' }],
+      },
+      {
+        slug: 'misky-a-misy',
+        name: 'Misky a mísy',
+        match: all('misky', 'misy'),
+        items: [
+          { slug: 'misa-salatova', name: 'Mísa salátová', silhouette: 'misa-salatova', match: [{ category: 'misky', subcategory: 'salatova' }] },
+          // the old shop's "Polévka/Snídaně" bowls (Sami's name, November 2026)
+          { slug: 'miska-polevkova', name: 'Miska polévková', silhouette: 'miska-polevkova', match: [{ category: 'misky', subcategory: 'polevkova-snidanova' }] },
+          { slug: 'miska-mala', name: 'Miska malá', silhouette: 'miska-mala', match: [{ category: 'misky', subcategory: 'mala' }] },
+        ],
+      },
+      {
+        slug: 'konvice',
+        name: 'Konve',
+        match: all('konvice-rovne', 'konvice-kulate'),
+        items: [
+          { slug: 'konev-rovna-velka', name: 'Konev rovná velká', silhouette: 'konev-rovna-velka', match: [{ category: 'konvice-rovne', subcategory: 'velka' }] },
+          { slug: 'konev-kulata-velka', name: 'Konev kulatá velká', silhouette: 'konev-kulata-velka', match: [{ category: 'konvice-kulate', subcategory: 'velka-konvice-kulate' }] },
+          { slug: 'konev-rovna-stredni', name: 'Konev rovná střední', silhouette: 'konev-rovna-stredni', match: [{ category: 'konvice-rovne', subcategory: 'stredni-konvice-rovne' }] },
+          { slug: 'konev-kulata-stredni', name: 'Konev kulatá střední', silhouette: 'konev-kulata-stredni', match: [{ category: 'konvice-kulate', subcategory: 'stredi' }] },
+          { slug: 'konev-rovna-mala', name: 'Konev rovná malá', silhouette: 'konev-rovna-mala', match: [{ category: 'konvice-rovne', subcategory: 'mala-konvice-rovne' }] },
+          { slug: 'konev-kulata-mala', name: 'Konev kulatá malá', silhouette: 'konev-kulata-mala', match: [{ category: 'konvice-kulate', subcategory: 'mala-konvice-kulate' }] },
+        ],
+      },
+      {
+        slug: 'cukrenky-a-mlicenky',
+        name: 'Cukřenky a mlíčenky',
+        match: all('cukrenky', 'mlicenky'),
+        items: [
+          { slug: 'cukrenka-velka', name: 'Cukřenka velká', silhouette: 'cukrenka-velka', match: [{ category: 'cukrenky', subcategory: 'velka-cukrenka' }] },
+          { slug: 'cukrenka-mala', name: 'Cukřenka malá', silhouette: 'cukrenka-mala', match: [{ category: 'cukrenky', subcategory: 'mala-cukrenka' }] },
+          { slug: 'mlicenka-velka', name: 'Mlíčenka velká', silhouette: 'mlicenka-velka', match: [{ category: 'mlicenky', subcategory: 'velka-mlicenka' }] },
+          { slug: 'mlicenka-mala', name: 'Mlíčenka malá', silhouette: 'mlicenka-mala', match: [{ category: 'mlicenky', subcategory: 'mala-mlicenka' }] },
+        ],
+      },
+      {
+        slug: 'ostatni',
+        name: 'Ostatní',
+        match: all('podsalky', 'babovky', 'panaky'),
+        items: [
+          { slug: 'babovka-velka', name: 'Bábovka velká', silhouette: 'babovka-velka', match: [{ category: 'babovky', slugs: ['babovka-velka-bila', 'babovka-velka-modra'] }] },
+          { slug: 'babovka-mala', name: 'Bábovka malá', silhouette: 'babovka-mala', match: [{ category: 'babovky', slugs: ['babovka-mala'] }] },
+          { slug: 'podsalek-velky', name: 'Podšálek velký', silhouette: 'podsalek-velky', match: [{ category: 'podsalky', subcategory: 'velky-podsalky' }] },
+          { slug: 'podsalek-maly', name: 'Podšálek malý', silhouette: 'podsalek-maly', match: [{ category: 'podsalky', subcategory: 'maly' }] },
+          // 4–6 cm high, no diameter (Sami, November 2026)
+          { slug: 'panaky', name: 'Panák', size: '4–6 cm', silhouette: 'panak', match: all('panaky') },
+        ],
+      },
     ],
   },
   {
@@ -46,29 +165,141 @@ export const lines: Line[] = [
     slug: { cs: 'martin-kos', en: 'martin-kos' },
     name: { cs: 'Martin Kos', en: 'Martin Kos' },
     makers: ['martin'],
-    categories: [
-      { slug: 'cajove-soupravy', name: 'Čajové soupravy' },
-      { slug: 'konve-solitery', name: 'Konve solitéry' },
-      { slug: 'vazy', name: 'Vázy' },
-      { slug: 'hrnky-s-plastickym-dekorem', name: 'Hrnky s\u00a0plastickým dekorem' },
+    defaultMakers: { thrownBy: 'martin' },
+    // Three categories, after the photos Sami chose for them (Dropbox, November
+    // 2026), as tabs in one row like the product pages' (Sami, November 2026).
+    menu: [
+      // listed in the order shown (Sami, November 2026); a new vase joins the list
+      {
+        slug: 'vazy',
+        name: 'Vázy',
+        match: [
+          {
+            category: 'vazy',
+            slugs: [
+              'bila-vaza', 'vaza-s-dulky', 'modra-vaza', 'vaza-modra-se-zlatym-okrajem', 'vaza-s-vazkami',
+              'vaza-s-teckami', 'mala-vaza-s-plastickymi-pruhy',
+            ],
+          },
+        ],
+        items: [],
+      },
+      {
+        slug: 'konve-a-cajove-soupravy',
+        name: 'Konve a čajové soupravy',
+        match: all('konve-solitery', 'cajove-soupravy'),
+        items: [],
+      },
+      { slug: 'hrnky-s-razitkem', name: 'Hrnky s razítkem', match: all('hrnky-s-plastickym-dekorem'), items: [] },
     ],
+    tabs: true,
+    band: '#ff5828',
   },
   {
     key: 'daniela',
     slug: { cs: 'daniela-kosova', en: 'daniela-kosova' },
     name: { cs: 'Daniela Kosová', en: 'Daniela Kosová' },
     makers: ['daniela'],
-    categories: [
-      { slug: 'dekory', name: 'Dekory' },
-      { slug: 'design', name: 'Design' },
-      { slug: 'obrazky', name: 'Obrázky' },
-      { slug: 'obklady', name: 'Obklady' },
+    // TODO(fakta): right for decors, pictures and tiles. Is it right for the
+    // hangers and knobs in "Design"?
+    defaultMakers: { paintedBy: 'daniela' },
+    // Three categories, after the photos Sami chose for them (Dropbox, November
+    // 2026); the rest of her work comes later. As tabs in one row like the
+    // product pages', like Martin's (Sami, November 2026).
+    menu: [
+      // Listed in the order shown, five a row: the photos' backdrops take
+      // turns, sand first, and the other colour runs in diagonals, never two
+      // under each other or side by side (Sami, November 2026).
+      {
+        slug: 'obtisky',
+        name: 'Obtisky',
+        match: [
+          {
+            category: 'dekory',
+            slugs: [
+              'miska-kulata-salatova-s-lodkami', 'talir-hluboky-1', 'miska-kulata-salatova-s-rybkami',
+              'miska-kulata-salatova-s-vlasovkami', 'talir-hluboky-2', 'talir-hluboky-3', 'miska-kulata-mala-1',
+              'miska-kulata-mala-2', 'talir-jidelni-2', 'miska-kulata-mala-4', 'miska-kulata-mala-5',
+              'miska-hranata-mala-3', 'talir-jidelni-3', 'miska-hranata-mala-4', 'miska-hranata-mala-8',
+              'tac-hranaty', 'miska-salatova', 'tac-hranaty-1', 'tac-hranaty-2', 'miska-snidane', 'miska-ovalna',
+              'tac-hranaty-3', 'tac-dlouhy-2', 'tac-ovalny', 'tac-ctverec-2',
+            ],
+          },
+          // the heart bowls, from the old shop's Design, with Sami's photos
+          // (November 2026), after the rest
+          { category: 'design', slugs: ['miska-srdce-1', 'miska-srdce-2', 'miska-srdce-3', 'miska-srdce-4'] },
+        ],
+        items: [],
+      },
+      {
+        slug: 'obtisky-na-cibulak',
+        name: 'Obtisky na cibulák',
+        match: [
+          {
+            category: 'dekory',
+            slugs: [
+              'salek-a-podsalek-3', 'salek-a-podsalek-1', 'salek-a-podsalek-4', 'salek-a-podsalek-2',
+              'talir-dezertni', 'talir-hluboky-4', 'salek-a-podsalek-5', 'talir-jidelni-4',
+            ],
+          },
+        ],
+        items: [],
+      },
+      {
+        slug: 'autorske-hrnky',
+        name: 'Autorské hrnky',
+        match: [{ category: 'dekory', slugs: ['hrnek-soliter-1', 'hrnek-soliter-2'] }],
+        items: [],
+      },
     ],
+    tabs: true,
+    band: '#fff45f',
   },
 ];
+
+/**
+ * A tab's kinds for a list: the kinds of a set with an entry of its own
+ * become that one entry (the dinner set's plates: "Jídelní souprava", Sami,
+ * November 2026), linking to its first kind.
+ */
+export function listEntries(group: MenuGroup): { name: string; slug: string; kinds: string[] }[] {
+  const out: { name: string; slug: string; kinds: string[] }[] = [];
+  for (const item of group.items) {
+    const set = group.sets?.find((s) => s.entry && s.items.includes(item.slug));
+    if (!set) out.push({ name: item.name, slug: item.slug, kinds: [item.slug] });
+    else if (set.items[0] === item.slug) out.push({ name: set.entry!, slug: item.slug, kinds: set.items });
+  }
+  return out;
+}
 
 export function getLine(key: LineKey): Line {
   const line = lines.find((l) => l.key === key);
   if (!line) throw new Error(`Unknown line: ${key}`);
   return line;
+}
+
+/** Every menu entry of a line: the column headings and the items under them. */
+export function menuEntries(line: Line): MenuItem[] {
+  return line.menu.flatMap((group) => [group, ...group.items]);
+}
+
+export function matches(entry: MenuItem, product: { category?: string; subcategory?: string; slug?: string }): boolean {
+  return entry.match.some(
+    (m) =>
+      m.category === product.category &&
+      (!m.subcategory || m.subcategory === product.subcategory) &&
+      (!m.slugs || (product.slug !== undefined && m.slugs.includes(product.slug))),
+  );
+}
+
+/** A line whose menu is tabs with a size chart (kosovi_eshop_2.pdf). */
+export function hasSizeChart(line: Line): boolean {
+  return line.menu.some((group) => group.items.some((item) => item.silhouette));
+}
+
+/** The menu column and item a product belongs to, for breadcrumbs. */
+export function placeOf(line: Line, product: { category?: string; subcategory?: string; slug?: string }) {
+  const group = line.menu.find((g) => matches(g, product));
+  const item = group?.items.find((i) => matches(i, product));
+  return { group, item };
 }
