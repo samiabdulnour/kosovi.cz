@@ -48,6 +48,9 @@ export function illustrationsFor(line: LineKey, entry?: string): Illustration[] 
 
 /** Products per page: five rows of five, or 26 around an illustration (six rows). */
 export function pageSizeFor(line: LineKey, entry?: string): number {
+  // Daniela's Obtisky on one page, the heart bowls as its sixth row (Sami,
+  // November 2026)
+  if (line === 'daniela' && entry === 'obtisky') return 30;
   return hasIllustration(line, entry) ? 26 : 25;
 }
 

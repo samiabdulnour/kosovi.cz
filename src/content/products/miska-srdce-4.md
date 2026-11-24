@@ -11,8 +11,9 @@ featured: false
 catalogNo: "369-1"
 images:
   - src: "../../assets/products/miska-srdce-4/01.jpg"
-    alt: "Miska srdce 4"
+    alt: "Miska ve tvaru srdce s plachetnicí na vlnách a řadou hvězdiček na růžovém pozadí"
 oldUrl: "https://kosovi.cz/produkt/miska-srdce-4/"
-description: |-
-  Rozměr 15cm x 16cm
+sizes:
+  - label: "Rozměr"
+    value: "15 × 16 cm"
 ---

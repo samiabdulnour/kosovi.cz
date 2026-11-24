@@ -225,6 +225,9 @@ export const lines: Line[] = [
               'tac-hranaty-3', 'tac-dlouhy-2', 'tac-ovalny', 'tac-ctverec-2',
             ],
           },
+          // the heart bowls, from the old shop's Design, with Sami's photos
+          // (November 2026), after the rest
+          { category: 'design', slugs: ['miska-srdce-1', 'miska-srdce-2', 'miska-srdce-3', 'miska-srdce-4'] },
         ],
         items: [],
       },

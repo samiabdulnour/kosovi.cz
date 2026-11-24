@@ -11,8 +11,9 @@ featured: false
 catalogNo: "368"
 images:
   - src: "../../assets/products/miska-srdce-2/01.jpg"
-    alt: "Miska srdce 2"
+    alt: "Miska ve tvaru srdce s barevnými kvítky, srdíčky a čtverečky na růžovém pozadí"
 oldUrl: "https://kosovi.cz/produkt/miska-srdce-2/"
-description: |-
-  Rozměr 15cm x 16cm
+sizes:
+  - label: "Rozměr"
+    value: "15 × 16 cm"
 ---
